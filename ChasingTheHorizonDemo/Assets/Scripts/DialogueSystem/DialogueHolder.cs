@@ -20,11 +20,15 @@ namespace DialogueSystem
             {
                 Deactivate();
                 transform.GetChild(i).gameObject.SetActive(true);
-                if(transform.GetChild(i).GetComponent<DialogueLine>().textBox1 == true)
+                if (transform.GetChild(i).GetComponent<TransitionLine>() == true)
+                {
+                    transform.GetChild(i).GetComponent<TransitionLine>().ChangeScene();
+                }
+                else if (transform.GetChild(i).GetComponent<DialogueLine>().textBox1 == true)
                 {
                     transform.GetChild(i).GetComponent<RectTransform>().localPosition = box1;
                 }
-                else
+                else if(transform.GetChild(i).GetComponent<DialogueLine>().textBox2 == true)
                 {
                     transform.GetChild(i).GetComponent<RectTransform>().localPosition = box2;
                 }

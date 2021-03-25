@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - MapLayer
   - 
   - 
   - 
@@ -38,7 +38,10 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
+  - name: Map
+    uniqueID: 785901841
+    locked: 0
+  - name: UI
     uniqueID: 3446367287
     locked: 0
   - name: Default
