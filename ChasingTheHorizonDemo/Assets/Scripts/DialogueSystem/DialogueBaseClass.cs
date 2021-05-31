@@ -25,7 +25,7 @@ namespace DialogueSystem
                 yield return new WaitForSeconds(delay);
             }
 
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            yield return new WaitUntil(() => Input.GetKeyDown(Controls.instance.confirmButton));
 
             finished = true;
         }

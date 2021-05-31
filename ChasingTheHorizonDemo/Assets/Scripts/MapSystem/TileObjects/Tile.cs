@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tile", menuName = "MapTile")]
 public class Tile : ScriptableObject
 {
-    [SerializeField] private Sprite sprite;
-    [SerializeField] private int tileCost;
+    public string tileName;
+    public int tileCost;
+    public bool walkable;
+
+    public int defenseBonus;
+    public int avoidBonus;
 }
