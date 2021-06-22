@@ -6,6 +6,8 @@ using UnityEngine;
 public class Unit : ScriptableObject
 {
     public Sprite sprite;
+    public Sprite portrait;
+
     public string unitName;
     public bool allyUnit;
 

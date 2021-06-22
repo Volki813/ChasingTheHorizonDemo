@@ -18,6 +18,7 @@ public class CursorController : MonoBehaviour
     public bool MenuCursor = false;
     public bool ActionMenuCursor = false;
     public bool DialogueCursor = false;
+    public bool EnemyTurnCursor = false;
 
     [Header("Main Camera")]
     [SerializeField]
@@ -95,6 +96,10 @@ public class CursorController : MonoBehaviour
 
         }
         else if(DialogueCursor == true)
+        {
+
+        }
+        else if(EnemyTurnCursor == true)
         {
 
         }
@@ -215,6 +220,7 @@ public class CursorController : MonoBehaviour
     {
         if(Input.GetKeyDown(Controls.instance.cancelButton) && selectedUnit != null)
         {
+            selectedUnit.animator.SetBool("Selected", false);
             selectedUnit.ResetTiles();
             selectedUnit = null;
 

@@ -21,6 +21,8 @@ public class UnitLoader : MonoBehaviour
 
     public Weapon equippedWeapon;
 
+    public Animator animator;
+
     [Header("Combat Stats")]
     public int hp;
     public int attack;
@@ -54,11 +56,13 @@ public class UnitLoader : MonoBehaviour
         avoid = attackSpeed + unit.motivation / 5;
         crit = equippedWeapon.crit + (unit.proficiency / 2) + (unit.motivation / 5);
         vigilance = (unit.proficiency / 3) + (unit.motivation / 5);
-    }
 
+        Death();
+    }
 
     public void Selected()
     {
+        animator.SetBool("Selected", true);
         GetWalkableTiles();
     }
     public void ResetTiles()
@@ -66,6 +70,13 @@ public class UnitLoader : MonoBehaviour
         foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
         {
             tile.ResetTiles();
+        }
+    }
+    public void UpdateTiles()
+    {
+        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
+        {
+            tile.UpdateOccupationStatus();
         }
     }
     public void Move(Vector2 targetPosition)
@@ -100,10 +111,14 @@ public class UnitLoader : MonoBehaviour
     {
         foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
         {
-            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.movement && tile.occupied == false)
+            if (tile.transform.position == transform.position)
             {
                 tile.HighlightTile();
             }
+            if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.movement && tile.occupied == false)
+            {
+                tile.HighlightTile();
+            }          
         }
     }
     private void GetEnemies()
@@ -128,18 +143,57 @@ public class UnitLoader : MonoBehaviour
     {
         while(transform.position.x != targetPosition.x)
         {
+            if(transform.position.x > targetPosition.x)
+            {
+                animator.SetBool("Left", true);
+            }
+            else
+            {
+                animator.SetBool("Right", true);
+            }
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(targetPosition.x, transform.position.y), 3f * Time.deltaTime);
             yield return null;
         }
         while(transform.position.y != targetPosition.y)
         {
+            if (transform.position.y > targetPosition.y)
+            {
+                animator.SetBool("Down", true);
+            }
+            else
+            {
+                animator.SetBool("Up", true);
+            }
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, targetPosition.y), 3f * Time.deltaTime);
             yield return null;
         }
         ResetTiles();
+        UpdateTiles();
         hasMoved = true;
         actionMenu.SetActive(true);
         actionMenu.transform.position = actionMenuSpawn.position;
         GetEnemies();
+
+        animator.SetBool("Up", false);
+        animator.SetBool("Down", false);
+        animator.SetBool("Selected", false);
+        animator.SetBool("Left", false);
+        animator.SetBool("Right", false);
+    }
+    private void Death()
+    {
+        if(hp <= 0)
+        {
+            if(unit.allyUnit)
+            {
+                TurnManager.instance.allyUnits.Remove(this);
+            }
+            else
+            {
+                TurnManager.instance.enemyUnits.Remove(this);
+                AIManager.instance.enemyOrder.Remove(this);
+            }
+            Destroy(gameObject);
+        }
     }
 }

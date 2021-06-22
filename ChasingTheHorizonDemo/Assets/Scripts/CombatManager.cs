@@ -1,570 +1,242 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
+    private Camera mainCamera;
+    private float originalCameraSize = 7.080622f;
+    private Vector3 originalCameraPosition = new Vector3(0, 1, -10);
+
     public static CombatManager instance { get; private set; }
+
+    public GameObject combatReadout;
+
+    public Image attackerPortrait;
+    public Image defenderPortrait;
+
+    public Slider attackerHealth;
+    public Slider defenderHealth;
 
     private void Awake()
     {
         instance = this;
     }
+    private void Start()
+    {
+        mainCamera = FindObjectOfType<Camera>();
+    }
+
+    private void Update()
+    {
+    }
 
     public void EngageAttack(UnitLoader attacker, UnitLoader defender)
     {
         StartCoroutine(Attack(attacker, defender));
+
+        attackerPortrait.sprite = attacker.unit.portrait;
+        defenderPortrait.sprite = defender.unit.portrait;
+
+        attackerHealth.maxValue = attacker.unit.health;
+        attackerHealth.value = attacker.hp;
+
+        defenderHealth.maxValue = defender.unit.health;
+        defenderHealth.value = defender.hp;
+
     }
+
     private IEnumerator Attack(UnitLoader attacker, UnitLoader defender)
     {
-        //Battle Starts
-        Debug.Log("Battle Start!");
+        ActionCamera(attacker, defender);
+
+        combatReadout.SetActive(true);
         yield return new WaitForSeconds(1f);
 
-        //Assaulting units hit chance is rolled
-        if (HitRoll(attacker) == true)
+        AttackAnimation(attacker, defender);
+        yield return new WaitForSeconds(1f);
+
+        PlayEffect(attacker, defender);
+        yield return new WaitForSeconds(1f);
+
+        InitiatorAttack(attacker, defender);
+        yield return new WaitForSeconds(1f);
+
+        if(CheckForDeaths(attacker, defender) == "Attacker")
         {
-            Debug.Log("Attacker Hit!");
+            combatReadout.SetActive(false);
+            ResetCamera();
+            yield return null;
+        }
+        else if(CheckForDeaths(attacker, defender) == "Defender")
+        {
+            combatReadout.SetActive(false);
+            attacker.Rest();
+            ResetCamera();
+            yield return null;
+        }
+        else
+        {
+            AttackAnimation(defender, attacker);
             yield return new WaitForSeconds(1f);
 
-            //If hit sucess is positive, the units crit chances are rolled
-            if (CritRoll(attacker) == true)
+            PlayEffect(defender, attacker);
+            yield return new WaitForSeconds(1f);
+
+            DefenderAttack(attacker, defender);
+            yield return new WaitForSeconds(1f);
+
+            if(CheckForDeaths(attacker, defender) == "Attacker")
             {
-                Debug.Log("Attacker Crit!");
-                yield return new WaitForSeconds(1f);
-
-                //Assulting unit deals crit damage
-                defender.hp = defender.hp - Critical(attacker, defender);
-
-                Debug.Log("Attacker dealt " + Critical(attacker, defender) + "damage");
-                yield return new WaitForSeconds(1f);
-
-                //If defendeing unit HP hits 0, they die and battle ends
-                if (CheckForDeaths(attacker, defender) == true)
-                {
-                    Debug.Log("Defender died!");
-                    yield return new WaitForSeconds(1f);
-                    yield return null;
-                }
-                else
-                {
-                    //Defending unit retaliates and follows steps 2 to 4
-                    Debug.Log("Defender Retaliates!");
-                    yield return new WaitForSeconds(1f);
-                    if (HitRoll(defender) == true)
-                    {
-                        Debug.Log("Defender hit!");
-                        yield return new WaitForSeconds(1f);
-
-                        if (CritRoll(defender) == true)
-                        {
-                            Debug.Log("Defender crit!");
-                            yield return new WaitForSeconds(1f);
-
-                            attacker.hp = attacker.hp - Critical(defender, attacker);
-
-                            Debug.Log("Defender dealt " + Critical(defender, attacker) + "damage");
-                            yield return new WaitForSeconds(1f);
-
-
-                            if (CheckForDeaths(attacker, defender) == true)
-                            {
-                                Debug.Log("Attacker died!");
-                                yield return new WaitForSeconds(1f);
-                                yield return null;
-                            }
-                            else
-                            {
-                                if(CheckAttackSpeed(attacker, defender) == true)
-                                {
-                                    Debug.Log("Attacker is fast enough for another attack");
-                                    yield return new WaitForSeconds(1f);
-
-                                    if (HitRoll(attacker) == true)
-                                    {
-                                        Debug.Log("Attacker hit!");
-                                        yield return new WaitForSeconds(1f);
-
-                                        if (CritRoll(attacker) == true)
-                                        {
-                                            Debug.Log("Attacker crit!");
-                                            yield return new WaitForSeconds(1f);
-
-                                            defender.hp = defender.hp - Critical(attacker, defender);
-
-                                            Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                            yield return new WaitForSeconds(1f);
-                                            yield return null;
-                                        }
-                                        else
-                                        {
-                                            defender.hp = defender.hp - Hit(attacker, defender);
-
-                                            Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-                                            yield return new WaitForSeconds(1f);
-                                            yield return null;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.Log("You missed");
-                                        yield return null;
-                                    }
-                                }
-                                else
-                                {
-                                    yield return null;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            attacker.hp = attacker.hp - Hit(defender, attacker);
-
-                            Debug.Log("Defender dealt " + Hit(defender, attacker) + "damage");
-
-
-                            if (CheckForDeaths(attacker, defender) == true)
-                            {
-                                yield return null;
-                            }
-                            else
-                            {
-                                if (CheckAttackSpeed(attacker, defender) == true)
-                                {
-                                    Debug.Log("Attacker is fast enough for another attack");
-                                    yield return new WaitForSeconds(1f);
-
-                                    if (HitRoll(attacker) == true)
-                                    {
-                                        Debug.Log("Attacker hit!");
-                                        yield return new WaitForSeconds(1f);
-
-                                        if (CritRoll(attacker) == true)
-                                        {
-                                            Debug.Log("Attacker crit!");
-                                            yield return new WaitForSeconds(1f);
-
-                                            defender.hp = defender.hp - Critical(attacker, defender);
-
-                                            Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                            yield return null;
-                                        }
-                                        else
-                                        {
-                                            defender.hp = defender.hp - Hit(attacker, defender);
-
-                                            Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                                            yield return null;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.Log("You missed");
-                                        yield return null;
-                                    }
-                                }
-                                else
-                                {
-                                    yield return null;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("Enemy Missed!");
-                        yield return new WaitForSeconds(1f);
-
-                        if (CheckAttackSpeed(attacker, defender) == true)
-                        {
-                            Debug.Log("Attacker is fast enough for another attack");
-                            yield return new WaitForSeconds(1f);
-
-                            if (HitRoll(attacker) == true)
-                            {
-                                Debug.Log("Attacker hit!");
-                                yield return new WaitForSeconds(1f);
-
-                                if (CritRoll(attacker) == true)
-                                {
-                                    Debug.Log("Attacker crit!");
-                                    yield return new WaitForSeconds(1f);
-
-                                    defender.hp = defender.hp - Critical(attacker, defender);
-
-                                    Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                    yield return null;
-                                }
-                                else
-                                {
-                                    defender.hp = defender.hp - Hit(attacker, defender);
-
-                                    Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                                    yield return null;
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log("You missed");
-                                yield return null;
-                            }
-                        }
-                        else
-                        {
-                            yield return null;
-                        }
-                    }
-                }
+                combatReadout.SetActive(false);
+                ResetCamera();
+                yield return null;
+            }
+            else if(CheckForDeaths(attacker, defender) == "Defender")
+            {
+                combatReadout.SetActive(false);
+                attacker.Rest();
+                ResetCamera();
+                yield return null;
             }
             else
             {
-                //Assulting unit deals normal damage
-                defender.hp = defender.hp - Hit(attacker, defender);
-
-                Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-                yield return new WaitForSeconds(1f);
-
-                //If defendeing unit HP hits 0, they die and battle ends
-                if (CheckForDeaths(attacker, defender) == true)
+                if(CheckAttackSpeed(attacker, defender))
                 {
+                    InitiatorAttack(attacker, defender);
                     yield return null;
                 }
-                else
-                {
-                    //Defending unit retaliates and follows steps 2 to 4
-                    Debug.Log("Defender Retaliates");
-                    yield return new WaitForSeconds(1f);
+                combatReadout.SetActive(false);
+                attacker.Rest();
+                ResetCamera();
+                yield return null;
+            }
+            combatReadout.SetActive(false);
+            if(CheckForDeaths(attacker, defender) == "Defender" || CheckForDeaths(attacker, defender) == null)
+            {
+                attacker.Rest();
+            }
+            ResetCamera();
+            yield return null;
+        }
+        combatReadout.SetActive(false);
+        if (CheckForDeaths(attacker, defender) == "Defender" || CheckForDeaths(attacker, defender) == null)
+        {
+            attacker.Rest();
+        }
+        ResetCamera();
+        yield return null;
+    }
 
-                    if (HitRoll(defender) == true)
-                    {
-                        Debug.Log("Defender hit!");
-                        yield return new WaitForSeconds(1f);
 
-                        if (CritRoll(defender) == true)
-                        {
-                            Debug.Log("Defender crit!");
-                            yield return new WaitForSeconds(1f);
 
-                            attacker.hp = attacker.hp - Critical(defender, attacker);
+    private void ActionCamera(UnitLoader attacker, UnitLoader defender)
+    {
+        var point1 = attacker.transform.position;
+        var point2 = defender.transform.position;
 
-                            Debug.Log("Attack did " + Critical(defender, attacker) + "damage");
-                            yield return new WaitForSeconds(1f);
+        var centerPoint = (point1 + point2) / 2;
+        Vector3 zoomPoint = new Vector3(centerPoint.x, centerPoint.y, -10);
 
-                            if (CheckForDeaths(attacker, defender) == true)
-                            {
-                                yield return null;
-                            }
-                            else
-                            {
-                                if (CheckAttackSpeed(attacker, defender) == true)
-                                {
-                                    Debug.Log("Attacker is fast enough for another attack");
-                                    yield return new WaitForSeconds(1f);
+        mainCamera.transform.position = zoomPoint;
+        mainCamera.orthographicSize = 2;
+    }
+    private void ResetCamera()
+    {
+        mainCamera.transform.position = originalCameraPosition;
+        mainCamera.orthographicSize = originalCameraSize;
 
-                                    if (HitRoll(attacker) == true)
-                                    {
-
-                                        if (CritRoll(attacker) == true)
-                                        {
-                                            Debug.Log("Attacker crit!");
-                                            yield return new WaitForSeconds(1f);
-
-                                            defender.hp = defender.hp - Critical(attacker, defender);
-
-                                            Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                            yield return null;
-                                        }
-                                        else
-                                        {
-                                            defender.hp = defender.hp - Hit(attacker, defender);
-
-                                            Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                                            yield return null;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.Log("You missed");
-                                        yield return null;
-                                    }
-                                }
-                                else
-                                {
-                                    yield return null;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            attacker.hp = attacker.hp - Hit(defender, attacker);
-                            Debug.Log("Defender did " + Hit(defender, attacker) + "damage");
-
-                            if (CheckForDeaths(attacker, defender) == true)
-                            {
-                                yield return null;
-                            }
-                            else
-                            {
-                                if (CheckAttackSpeed(attacker, defender) == true)
-                                {
-                                    Debug.Log("Attacker is fast enough for another attack");
-                                    yield return new WaitForSeconds(1f);
-
-                                    if (HitRoll(attacker) == true)
-                                    {
-                                        Debug.Log("Attacker hit!");
-                                        yield return new WaitForSeconds(1f);                                      
-
-                                        if (CritRoll(attacker) == true)
-                                        {
-                                            Debug.Log("Attacker crit!");
-                                            yield return new WaitForSeconds(1f);
-
-                                            defender.hp = defender.hp - Critical(attacker, defender);
-
-                                            Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                            yield return null;
-                                        }
-                                        else
-                                        {
-                                            defender.hp = defender.hp - Hit(attacker, defender);
-
-                                            Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                                            yield return null;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.Log("You missed");
-                                        yield return null;
-                                    }
-                                }
-                                else
-                                {
-                                    yield return null;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (CheckAttackSpeed(attacker, defender) == true)
-                        {
-                            Debug.Log("Attacker is fast enough for another attack");
-                            yield return new WaitForSeconds(1f);
-
-                            if (HitRoll(attacker) == true)
-                            {
-                                Debug.Log("Attacker hit!");
-                                yield return new WaitForSeconds(1f);
-
-                                if (CritRoll(attacker) == true)
-                                {
-                                    Debug.Log("Attacker crit!");
-                                    yield return new WaitForSeconds(1f);
-
-                                    defender.hp = defender.hp - Critical(attacker, defender);
-
-                                    Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                    yield return null;
-                                }
-                                else
-                                {
-                                    defender.hp = defender.hp - Hit(attacker, defender);
-
-                                    Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                                    yield return null;
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log("You missed");
-                                yield return null;
-                            }
-                        }
-                        else
-                        {
-                            yield return null;
-                        }
-                    }
-                }
+    }
+    
+    private void InitiatorAttack(UnitLoader attacker, UnitLoader defender)
+    {
+        //Check for a hit
+        if(HitRoll(attacker))
+        {
+            //Checks for a crit
+            if(CritRoll(attacker))
+            {
+                //Unit Crits
+                defender.hp = defender.hp - Critical(attacker, defender);
+                defenderHealth.value = defender.hp;
+            }
+            else
+            {
+                //Unit Hits
+                defender.hp = defender.hp - Hit(attacker, defender);
+                defenderHealth.value = defender.hp;
             }
         }
         else
         {
-            //Assulting unit missed
-            Debug.Log("You Missed!");
-            yield return new WaitForSeconds(1f);
-
-            //Defending unit attacks and follows steps 2 to 4
-            if (HitRoll(defender) == true)
+            //Unit Misses
+            return;
+        }
+    }
+    private void DefenderAttack(UnitLoader attacker, UnitLoader defender)
+    {
+        if(Vector3.Distance(defender.transform.position, attacker.transform.position) <= 1)
+        {
+            //Check for a hit
+            if (HitRoll(defender))
             {
-                Debug.Log("Defender hit!");
-                yield return new WaitForSeconds(1f);
-
-                if (CritRoll(defender) == true)
+                //Checks for a crit
+                if (CritRoll(defender))
                 {
-                    Debug.Log("Defender crit!");
-                    yield return new WaitForSeconds(1f);
-
+                    //Unit Crits
                     attacker.hp = attacker.hp - Critical(defender, attacker);
-
-                    Debug.Log("Attack did " + Critical(defender, attacker) + "damage");
-                    yield return new WaitForSeconds(1f);
-
-                    if (CheckForDeaths(attacker, defender) == true)
-                    {
-                        yield return null;
-                    }
-                    else
-                    {
-                        if (CheckAttackSpeed(attacker, defender) == true)
-                        {
-                            Debug.Log("Attacker is fast enough for another attack");
-                            yield return new WaitForSeconds(1f);
-
-                            if (HitRoll(attacker) == true)
-                            {
-                                Debug.Log("Attacker hit!");
-                                yield return new WaitForSeconds(1f);
-
-                                if (CritRoll(attacker) == true)
-                                {
-                                    Debug.Log("Attacker crit!");
-                                    yield return new WaitForSeconds(1f);
-
-                                    defender.hp = defender.hp - Critical(attacker, defender);
-
-                                    Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                    yield return null;
-                                }
-                                else
-                                {
-                                    defender.hp = defender.hp - Hit(attacker, defender);
-
-                                    Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                                    yield return null;
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log("You missed");
-                                yield return null;
-                            }
-                        }
-                        else
-                        {
-                            yield return null;
-                        }
-                    }
+                    attackerHealth.value = attacker.hp;
                 }
                 else
                 {
+                    //Unit Hits
                     attacker.hp = attacker.hp - Hit(defender, attacker);
-
-                    Debug.Log("Attack did " + Hit(defender, attacker) + "damage");
-                    yield return new WaitForSeconds(1f);
-
-                    if (CheckForDeaths(attacker, defender) == true)
-                    {
-                        yield return null;
-                    }
-                    else
-                    {
-                        if (CheckAttackSpeed(attacker, defender) == true)
-                        {
-                            Debug.Log("Attacker is fast enough for another attack");
-                            yield return new WaitForSeconds(1f);
-
-                            if (HitRoll(attacker) == true)
-                            {
-                                Debug.Log("Attacker hit!");
-                                yield return new WaitForSeconds(1f);
-
-                                if (CritRoll(attacker) == true)
-                                {
-                                    Debug.Log("Attacker crit!");
-                                    yield return new WaitForSeconds(1f);
-
-                                    defender.hp = defender.hp - Critical(attacker, defender);
-
-                                    Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                                    yield return null;
-                                }
-                                else
-                                {
-                                    defender.hp = defender.hp - Hit(attacker, defender);
-
-                                    Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                                    yield return null;
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log("You missed");
-                                yield return null;
-                            }
-                        }
-                        else
-                        {
-                            yield return null;
-                        }
-                    }
+                    attackerHealth.value = attacker.hp;
                 }
             }
             else
             {
-                if (CheckAttackSpeed(attacker, defender) == true)
-                {
-                    Debug.Log("Attacker is fast enough for another attack");
-                    yield return new WaitForSeconds(1f);
-
-                    if (HitRoll(attacker) == true)
-                    {
-                        Debug.Log("Attacker hit!");
-                        yield return new WaitForSeconds(1f);
-
-                        if (CritRoll(attacker) == true)
-                        {
-                            Debug.Log("Attacker crit!");
-                            yield return new WaitForSeconds(1f);
-
-                            defender.hp = defender.hp - Critical(attacker, defender);
-
-                            Debug.Log("Attack did " + Critical(attacker, defender) + "damage");
-                            yield return null;
-                        }
-                        else
-                        {
-                            defender.hp = defender.hp - Hit(attacker, defender);
-
-                            Debug.Log("Attack did " + Hit(attacker, defender) + "damage");
-
-                            yield return null;
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("You missed");
-                        yield return null;
-                    }
-                }
-                else
-                {
-                    yield return null;
-                }
+                //Unit Misses
+                return;
             }
         }
     }
 
+    private void AttackAnimation(UnitLoader attacker, UnitLoader defender)
+    {
+        if(attacker.transform.position.x > defender.transform.position.x)
+        {
+            attacker.animator.SetTrigger("AttackLeft"); //left
+        }
+        else if(attacker.transform.position.x < defender.transform.position.x)
+        {
+            attacker.animator.SetTrigger("AttackRight"); //right
+        }
+        else if(attacker.transform.position.y > defender.transform.position.y)
+        {
+            attacker.animator.SetTrigger("AttackDown"); //down
+        }
+        else
+        {
+            attacker.animator.SetTrigger("AttackUp"); //up
+        }
+    }
+    private void PlayEffect(UnitLoader attacker, UnitLoader defender)
+    {
+        StartCoroutine(EffectAnimation(attacker, defender));
+    }
+    private IEnumerator EffectAnimation(UnitLoader attacker, UnitLoader defender)
+    {
+        if(attacker.equippedWeapon.animation != null)
+        {
+            var effect = Instantiate(attacker.equippedWeapon.animation, defender.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.68f);
+            Destroy(effect);
+        }
+        yield return null;
+    }
+    
     private bool HitRoll(UnitLoader unit)
     {
         int roll = Random.Range(0, 99);
@@ -575,7 +247,6 @@ public class CombatManager : MonoBehaviour
         else
             return true;
     }
-
     private bool CritRoll(UnitLoader unit)
     {
         int roll = Random.Range(0, 99);
@@ -591,24 +262,23 @@ public class CombatManager : MonoBehaviour
     {
         return attacker.attack - defender.protection;
     }
-
     private int Critical(UnitLoader attacker, UnitLoader defender)
     {
         return attacker.attack * 2 - defender.protection;
     }
 
-    private bool CheckForDeaths(UnitLoader attacker, UnitLoader defender)
+    private string CheckForDeaths(UnitLoader attacker, UnitLoader defender)
     {
         if(defender.hp <= 0)
-            return true;
-
-        else if (attacker.hp <= 0)
-            return true;
-
-        else
-            return false;
+        {
+            return "Defender";
+        }
+        else if(attacker.hp <= 0)
+        {
+            return "Attacker";
+        }
+        return null;
     }
-
     private bool CheckAttackSpeed(UnitLoader attacker, UnitLoader defender)
     {
         if(attacker.attackSpeed > defender.attackSpeed + 5)

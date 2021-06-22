@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: SnowTile
   m_EditorClassIdentifier: 
   tileName: Snow
-  tileCost: 1
+  tileCost: 0
   walkable: 0
+  defenseBonus: 0
+  avoidBonus: 0

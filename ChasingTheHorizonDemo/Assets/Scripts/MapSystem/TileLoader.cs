@@ -14,7 +14,7 @@ public class TileLoader : MonoBehaviour
     public string tileName;
     public int tileCost;
     public bool walkable;
-    public bool occupied;
+    public bool occupied = false;
 
     private void Awake()
     {
@@ -30,11 +30,6 @@ public class TileLoader : MonoBehaviour
         tileCost = tile.tileCost;
     }
 
-    private void Update()
-    {
-        UpdateOccupationStatus();
-    }
-
     public void HighlightTile()
     {
         walkable = true;
@@ -44,14 +39,15 @@ public class TileLoader : MonoBehaviour
     public void ResetTiles()
     {
         walkable = false;
-        spriteRenderer.sprite = originalSprite;
+        spriteRenderer.sprite = originalSprite;        
     }
 
-    private void UpdateOccupationStatus()
-    {        
+    public void UpdateOccupationStatus()
+    {
+        occupied = false;
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(unit.transform.position == transform.position)
+            if(transform.position == unit.transform.position)
             {
                 occupied = true;
             }

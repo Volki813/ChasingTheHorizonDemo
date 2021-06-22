@@ -11,6 +11,7 @@ public class Weapon : Item
     public int range;
     public int weight;
 
+    public GameObject animation;
     public void Awake()
     {
         type = ItemType.Weapon;

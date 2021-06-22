@@ -32,6 +32,7 @@ public class Chapter0Events : MonoBehaviour
         if(TurnManager.instance.turnNumber == 2)
         {
             leah.SetActive(true);
+            TurnManager.instance.UpdateTiles();
             TurnManager.instance.allyUnits.Add(leah.GetComponent<UnitLoader>());
             leahSpawned = true;
             leahDialogue.transform.SetParent(dialogueHolder.transform);

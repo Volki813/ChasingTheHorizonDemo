@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: RoadTile
   m_EditorClassIdentifier: 
   tileName: Road
-  tileCost: 1
+  tileCost: 0
   walkable: 0
+  defenseBonus: 0
+  avoidBonus: 0

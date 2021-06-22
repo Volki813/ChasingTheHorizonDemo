@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ForestTile
   m_EditorClassIdentifier: 
   tileName: Forest
-  tileCost: 2
+  tileCost: 1
   walkable: 0
+  defenseBonus: 0
+  avoidBonus: 0

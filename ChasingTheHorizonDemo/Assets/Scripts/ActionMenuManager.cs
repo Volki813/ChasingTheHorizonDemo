@@ -137,7 +137,7 @@ public class ActionMenuManager : MonoBehaviour
     public void PreviewAttackButton()
     {
         CombatManager.instance.EngageAttack(cursor.selectedUnit, cursor.selectedUnit.target);
-        cursor.selectedUnit.Rest();
+        cursor.selectedUnit.target.GetComponent<SpriteRenderer>().color = Color.white;
         cursor.selectedUnit = null;
         combatPreview.SetActive(false);
         gameObject.SetActive(false);

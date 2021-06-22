@@ -21,9 +21,17 @@ namespace DialogueSystem
         [Header("Sound")]
         [SerializeField] private AudioClip sound;
 
-        [Header("Portrait")]
-        [SerializeField] private Sprite portraitSprite;
+        [Header("Character")]
+        [SerializeField] private Unit character;
+
+        [Header("Image Holder")]
         [SerializeField] private Image imageHolder;
+
+        [Header("Nameplates")]
+        [SerializeField] private Text namePlate1;
+        [SerializeField] private Text namePlate2;
+        
+        private Sprite portraitSprite;
 
         [Header("Textbox")]
         public bool textBox1;
@@ -34,11 +42,20 @@ namespace DialogueSystem
             textHolder = GetComponent<Text>();
             textHolder.text = "";
 
-            imageHolder.sprite = portraitSprite;
+            portraitSprite = character.portrait;
         }
 
         private void Start()
-        {
+        {            
+            imageHolder.sprite = portraitSprite;
+            if (textBox1)
+            {
+                namePlate1.text = character.unitName;
+            }
+            else
+            {
+                namePlate2.text = character.unitName;
+            }
             StartCoroutine(WriteText(input, textHolder, textColor, textFont, delay, sound));
         }
     }

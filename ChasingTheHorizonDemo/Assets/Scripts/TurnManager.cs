@@ -15,6 +15,13 @@ public class TurnManager : MonoBehaviour
     public List<UnitLoader> allyUnits = new List<UnitLoader>();
     public List<UnitLoader> enemyUnits = new List<UnitLoader>();
 
+    CursorController cursor;
+
+    public GameObject combatReadout;
+
+    public GameObject allyTurnObject;
+    public GameObject enemyTurnObject;
+
     private void Awake()
     {
         instance = this;
@@ -22,9 +29,12 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
+        cursor = FindObjectOfType<CursorController>();
+
         FindAllys();
         FindEnemies();
 
+        allyTurnObject.SetActive(true);
         Debug.Log("Ally Turn");
     }
 
@@ -32,19 +42,30 @@ public class TurnManager : MonoBehaviour
     {
         turnNumberText.text = turnNumber.ToString();
 
-        if(allyTurn == false)
+        if(combatReadout.activeSelf == false)
         {
-            AllyTurn();
+            if (allyTurn == false)
+            {
+                AllyTurn();
+            }
+            else
+            {
+                EnemyTurn();
+            }
         }
-        else
+    }
+
+    public void UpdateTiles()
+    {
+        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
         {
-            EnemyTurn();
+            tile.UpdateOccupationStatus();
         }
     }
 
     private void AllyTurn()
     {
-        for(int i=0; i<enemyUnits.Count; i++)
+        for (int i=0; i<enemyUnits.Count; i++)
         {
             if(enemyUnits[i].rested == false)
             {
@@ -52,10 +73,15 @@ public class TurnManager : MonoBehaviour
             }
         }
 
+        cursor.EnemyTurnCursor = false;
+        cursor.MapCursor = true;
         turnNumber++;
         RefreshAllys();
         allyTurn = true;
         Debug.Log("Ally Turn");
+        UpdateTiles();
+        allyTurnObject.SetActive(false);
+        enemyTurnObject.SetActive(true);
     }
     private void EnemyTurn()
     {
@@ -67,9 +93,15 @@ public class TurnManager : MonoBehaviour
             }
         }
 
+        cursor.MapCursor = false;
+        cursor.EnemyTurnCursor = true;
         allyTurn = false;
         Debug.Log("Enemy Turn");
+        UpdateTiles();
         RefreshEnemies();
+
+        AIManager.instance.enemyOrder.Clear();
+        AIManager.instance.SetEnemyOrder();
         AIManager.instance.StartAI();
     }
     public void FindAllys()

@@ -11,8 +11,12 @@ public class AIManager : MonoBehaviour
     public UnitLoader targetUnit;
     public TileLoader targetTile;
 
+    public GameObject combatReadout;
+
+    private Animator animator;
+
     [SerializeField]
-    private List<UnitLoader> enemyOrder = new List<UnitLoader>();
+    public List<UnitLoader> enemyOrder = new List<UnitLoader>();
 
     [SerializeField]
     private List<TileLoader> walkableTiles = new List<TileLoader>();
@@ -28,7 +32,6 @@ public class AIManager : MonoBehaviour
     private void Start()
     {
         Invoke("SetEnemyOrder", 2f);
-        
     }
 
     public void StartAI()
@@ -41,27 +44,67 @@ public class AIManager : MonoBehaviour
         //Iterates through each enemy in the enemy list
         for (int i = 0; i < enemyOrder.Count; i++)
         {
-            //Checks if it's a blitz type
-            if(enemyOrder[i].GetComponent<BehaviorTag>().blitz == true)
+            currentEnemy = enemyOrder[i];
+            animator = currentEnemy.GetComponent<Animator>();
+            if (enemyOrder[i].GetComponent<BehaviorTag>().blitz)
             {
-                //Move towards allies to get into attacking range
-                //Check if there are any allies in attacking range
-                    //Attack allies, rest
-                //Look for allie that would take the most expected damage from an attack
-                //Move to the tile closest to that unit
-
+                Blitz(currentEnemy);
+                yield return new WaitForSeconds(3f);
+                walkableTiles.Clear();
+                enemiesInRange.Clear();
+                targetTile = null;
+                targetUnit = null;
             }
-            //For now, else implies the defense type behavior until there are more
-            else
+            else if(enemyOrder[i].GetComponent<BehaviorTag>().defensive)
             {
-                //Only move to attack allies in range
+                Defensive();
+                yield return new WaitForSeconds(3f);
+                walkableTiles.Clear();
+                enemiesInRange.Clear();
+                targetTile = null;
+                targetUnit = null;
             }
+            yield return new WaitUntil(() => combatReadout.activeSelf == false);
         }
-
         yield return null;
     }
 
-    private void SetEnemyOrder()
+    private void Blitz(UnitLoader currentEnemy)
+    {
+        GetEnemies();
+        GetWalkableTiles();
+        if(enemiesInRange.Count > 0)
+        {
+            CombatManager.instance.EngageAttack(currentEnemy, targetUnit);
+        }
+        else
+        {
+            targetUnit = GetTarget();
+            FindClosestTile();
+            Move(currentEnemy, targetTile.transform.position);
+            GetEnemies();
+            if(enemiesInRange.Count > 0)
+            {
+                CombatManager.instance.EngageAttack(currentEnemy, targetUnit);
+            }
+        }
+    }
+
+    private void Defensive()
+    {
+        GetEnemies();
+        if(enemiesInRange.Count > 0)
+        {
+            CombatManager.instance.EngageAttack(currentEnemy, targetUnit);
+        }
+        else
+        {
+            currentEnemy.Rest();
+        }
+    }
+
+
+    public void SetEnemyOrder()
     {
         int i = 0;
         foreach (UnitLoader unit in TurnManager.instance.enemyUnits)
@@ -71,7 +114,7 @@ public class AIManager : MonoBehaviour
         }
         enemyOrder.Sort((x, y) => x.GetComponent<BehaviorTag>().order.CompareTo(y.GetComponent<BehaviorTag>().order));
     }
-
+    
     private void GetWalkableTiles()
     {
         foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
@@ -82,7 +125,6 @@ public class AIManager : MonoBehaviour
             }
         }
     }
-
     private void GetEnemies()
     {
         foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
@@ -92,14 +134,57 @@ public class AIManager : MonoBehaviour
                 if(Mathf.Abs(currentEnemy.transform.position.x - unit.transform.position.x) + Mathf.Abs(currentEnemy.transform.position.y - unit.transform.position.y) <= currentEnemy.equippedWeapon.range)
                 {
                     enemiesInRange.Add(unit);
+
+                    if(enemiesInRange.Count > 1)
+                    {
+                        targetUnit = GetTarget();
+                    }
+                    else
+                    {
+                        targetUnit = enemiesInRange[0];
+                    }
                 }
             }
         }
     }
-
-    private void MoveTowardsTarget()
+    private UnitLoader GetTarget()
+    {
+        for (int i = 0; i < TurnManager.instance.allyUnits.Count; i++)
+        {
+            int expectedDamage = CombatManager.instance.Hit(currentEnemy, TurnManager.instance.allyUnits[i]);
+            if(TurnManager.instance.allyUnits[i].hp <= expectedDamage)
+            {
+                return TurnManager.instance.allyUnits[i];
+            }
+            else if(TurnManager.instance.allyUnits[i].hp - expectedDamage <= 0)
+            {
+                return TurnManager.instance.allyUnits[i];
+            }
+            else if(TurnManager.instance.allyUnits[i].hp - expectedDamage == 1)
+            {
+                return TurnManager.instance.allyUnits[i];
+            }
+        }
+        return FindMostVulernerableUnit();
+    }
+    private UnitLoader FindMostVulernerableUnit()
+    {
+        int highestSoFar = 0;
+        for (int i = 0; i < TurnManager.instance.allyUnits.Count; i++)
+        {
+            int expectedDamage = CombatManager.instance.Hit(currentEnemy, TurnManager.instance.allyUnits[i]);
+            if(highestSoFar <= expectedDamage)
+            {
+                highestSoFar = expectedDamage;
+                targetUnit = TurnManager.instance.allyUnits[i];
+            }
+        }
+        return targetUnit;
+    }
+    private void FindClosestTile()
     {
         float lowestSoFar = 100;
+
         for (int i = 0; i < walkableTiles.Count; i++)
         {
             float distance = (Mathf.Abs(targetUnit.transform.position.x - walkableTiles[i].transform.position.x) + Mathf.Abs(targetUnit.transform.position.y - walkableTiles[i].transform.position.y));
@@ -108,13 +193,8 @@ public class AIManager : MonoBehaviour
                 lowestSoFar = distance;
                 targetTile = walkableTiles[i];
             }
-            else
-            {
-                Move(currentEnemy, targetTile.transform.position);
-            }
         }
     }
-
     private void Move(UnitLoader currentEnemy, Vector2 targetPosition)
     {
         StartCoroutine(Movement(currentEnemy, targetPosition));
@@ -123,21 +203,37 @@ public class AIManager : MonoBehaviour
     {
         while (currentEnemy.transform.position.x != targetPosition.x)
         {
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(targetPosition.x, currentEnemy.transform.position.y), 1f * Time.deltaTime);
+            if (currentEnemy.transform.position.x > targetPosition.x)
+            {
+                animator.SetBool("Left", true);
+            }
+            else
+            {
+                animator.SetBool("Right", true);
+            }
+            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(targetPosition.x, currentEnemy.transform.position.y), 2f * Time.deltaTime);
             yield return null;
         }
         while (currentEnemy.transform.position.y != targetPosition.y)
         {
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(currentEnemy.transform.position.x, targetPosition.y), 1f * Time.deltaTime);
+            if (currentEnemy.transform.position.y > targetPosition.y)
+            {
+                animator.SetBool("Down", true);
+            }
+            else
+            {
+                animator.SetBool("Up", true);
+            }
+            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(currentEnemy.transform.position.x, targetPosition.y), 2f * Time.deltaTime);
             yield return null;
         }
-        GetEnemies();
-        if (enemiesInRange.Count > 0)
-        {
-            Debug.Log("Attack");
-            currentEnemy.Rest();
-        }
-        else
-            currentEnemy.Rest();
+        currentEnemy.Rest();
+        TurnManager.instance.UpdateTiles();
+        
+        animator.SetBool("Up", false);
+        animator.SetBool("Down", false);
+        animator.SetBool("Selected", false);
+        animator.SetBool("Left", false);
+        animator.SetBool("Right", false);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace DialogueSystem
 {
@@ -10,7 +11,7 @@ namespace DialogueSystem
         [SerializeField] private Vector3 box1;
         [SerializeField] private Vector3 box2;
 
-        [Header("Portrait Images")]
+        [Header("Portraits")]
         [SerializeField] private Image portrait1;
         [SerializeField] private Image portrait2;
 
@@ -37,18 +38,25 @@ namespace DialogueSystem
 
         private IEnumerator DialogueSequence()
         {
-            for(int i=0; i<transform.childCount; i++)
+            Scene currentScene = SceneManager.GetActiveScene();
+            for (int i=0; i<transform.childCount; i++)
             {
-                screenDim.SetActive(true);
+                //Another check regarding whether it's a cutscene or not
+                if(!currentScene.name.Contains("Cutscene"))
+                {
+                    screenDim.SetActive(true);
+                }
+                
                 Deactivate();
                 transform.GetChild(i).gameObject.SetActive(true);
 
+              
                 //Checks for a transition line
                 if (transform.GetChild(i).GetComponent<TransitionLine>() == true)
                 {
                     transform.GetChild(i).GetComponent<TransitionLine>().ChangeScene();
                 }
-                //Checks for a DialogueLine
+                //Checks which Dialogue Box to use
                 else if (transform.GetChild(i).GetComponent<DialogueLine>().textBox1 == true)
                 {
                     transform.GetChild(i).GetComponent<RectTransform>().localPosition = box1;
@@ -57,8 +65,14 @@ namespace DialogueSystem
                 {
                     transform.GetChild(i).GetComponent<RectTransform>().localPosition = box2;
                 }
+                
                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().finished);
-                ClearDialogue();
+
+                //Checks if it's not a map scene
+                if (!currentScene.name.Contains("Cutscene"))
+                {
+                    ClearDialogue();
+                }
             }
         }
 
