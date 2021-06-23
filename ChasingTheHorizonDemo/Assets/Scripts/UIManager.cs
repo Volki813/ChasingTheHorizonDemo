@@ -50,15 +50,15 @@ public class UIManager : MonoBehaviour
             {
                 unitPortrait.sprite = unit.unit.sprite;
                 unitName.text = unit.name;
-                unitHP.text = "Health: " + unit.hp.ToString();
+                unitHP.text = "Health: " + unit.currentHealth.ToString() + " / " + unit.unit.statistics.health.ToString();
                 unitEXP.text = "EXP: " + unit.unit.exp.ToString();
                 unitLevel.text = "Level: " + unit.unit.level.ToString();
-                unitAgility.text = "Agility: " + unit.unit.agility.ToString();
+                unitAgility.text = "Agility: " + unit.unit.statistics.agility.ToString();
 
-                unitStrength.text = "Str: " + unit.unit.strength.ToString();
-                unitMagic.text = "Mag: " + unit.unit.magic.ToString();
-                unitDefense.text = "Def: " + unit.unit.defense.ToString();
-                unitResistance.text = "Res: " + unit.unit.resistance.ToString();
+                unitStrength.text = "Str: " + unit.unit.statistics.strength.ToString();
+                unitMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();
+                unitDefense.text = "Def: " + unit.unit.statistics.defense.ToString();
+                unitResistance.text = "Res: " + unit.unit.statistics.resistance.ToString();
             }
         }
     }
@@ -71,15 +71,15 @@ public class UIManager : MonoBehaviour
             {
                 enemyPortrait.sprite = unit.unit.sprite;
                 enemyName.text = unit.name;
-                enemyHP.text = "Health: " + unit.hp.ToString();
+                enemyHP.text = "Health: " + unit.currentHealth.ToString() + " / " + unit.unit.statistics.health.ToString();
                 enemyEXP.text = "EXP: " + unit.unit.exp.ToString();
                 enemyLevel.text = "Level: " + unit.unit.level.ToString();
-                enemyAgility.text = "Agility: " + unit.unit.agility.ToString();
+                enemyAgility.text = "Agility: " + unit.unit.statistics.agility.ToString();
 
-                enemyStrength.text = "Str: " + unit.unit.strength.ToString();
-                enemyMagic.text = "Mag: " + unit.unit.magic.ToString();
-                enemyDefense.text = "Def: " + unit.unit.defense.ToString();
-                enemyResistance.text = "Res: " + unit.unit.resistance.ToString();
+                enemyStrength.text = "Str: " + unit.unit.statistics.strength.ToString();
+                enemyMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();
+                enemyDefense.text = "Def: " + unit.unit.statistics.defense.ToString();
+                enemyResistance.text = "Res: " + unit.unit.statistics.resistance.ToString();
             }
         }
     }
