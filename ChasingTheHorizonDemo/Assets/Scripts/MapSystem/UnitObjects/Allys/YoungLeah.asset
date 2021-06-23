@@ -16,14 +16,15 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 9033e65722d483b47b0a3aadb758eb55, type: 3}
   unitName: Leah
   allyUnit: 1
-  health: 20
-  strength: 5
-  magic: 1
-  defense: 1
-  resistance: 1
-  proficiency: 0
-  motivation: 0
-  agility: 0
-  movement: 3
+  statistics:
+    health: 20
+    strength: 5
+    magic: 1
+    defense: 1
+    resistance: 1
+    proficiency: 0
+    motivation: 0
+    agility: 0
+    movement: 3
   level: 1
   exp: 0
