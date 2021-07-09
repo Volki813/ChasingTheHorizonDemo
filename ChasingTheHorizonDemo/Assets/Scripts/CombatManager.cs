@@ -32,7 +32,6 @@ public class CombatManager : MonoBehaviour
     {
     }
 
-    //Updated function to work with code changes
     public void EngageAttack(UnitLoader attacker, UnitLoader defender)
     {
         StartCoroutine(Attack(attacker, defender));
@@ -40,11 +39,11 @@ public class CombatManager : MonoBehaviour
         attackerPortrait.sprite = attacker.unit.portrait;
         defenderPortrait.sprite = defender.unit.portrait;
 
-        attackerHealth.maxValue = attacker.unit.statistics.health;
-        attackerHealth.value = attacker.currentHealth;
+        attackerHealth.maxValue = attacker.unit.health;
+        attackerHealth.value = attacker.hp;
 
-        defenderHealth.maxValue = defender.unit.statistics.health;
-        defenderHealth.value = defender.currentHealth;
+        defenderHealth.maxValue = defender.unit.health;
+        defenderHealth.value = defender.hp;
 
     }
 
@@ -150,8 +149,6 @@ public class CombatManager : MonoBehaviour
 
     }
     
-
-    //updated for vairable names
     private void InitiatorAttack(UnitLoader attacker, UnitLoader defender)
     {
         //Check for a hit
@@ -161,14 +158,14 @@ public class CombatManager : MonoBehaviour
             if(CritRoll(attacker))
             {
                 //Unit Crits
-                defender.currentHealth = defender.currentHealth - Critical(attacker, defender);
-                defenderHealth.value = defender.currentHealth;
+                defender.hp = defender.hp - Critical(attacker, defender);
+                defenderHealth.value = defender.hp;
             }
             else
             {
                 //Unit Hits
-                defender.currentHealth = defender.currentHealth - Hit(attacker, defender);
-                defenderHealth.value = defender.currentHealth;
+                defender.hp = defender.hp - Hit(attacker, defender);
+                defenderHealth.value = defender.hp;
             }
         }
         else
@@ -188,14 +185,14 @@ public class CombatManager : MonoBehaviour
                 if (CritRoll(defender))
                 {
                     //Unit Crits
-                    attacker.currentHealth = attacker.currentHealth - Critical(defender, attacker);
-                    attackerHealth.value = attacker.currentHealth;
+                    attacker.hp = attacker.hp - Critical(defender, attacker);
+                    attackerHealth.value = attacker.hp;
                 }
                 else
                 {
                     //Unit Hits
-                    attacker.currentHealth = attacker.currentHealth - Hit(defender, attacker);
-                    attackerHealth.value = attacker.currentHealth;
+                    attacker.hp = attacker.hp - Hit(defender, attacker);
+                    attackerHealth.value = attacker.hp;
                 }
             }
             else
@@ -240,61 +237,51 @@ public class CombatManager : MonoBehaviour
         yield return null;
     }
     
-    //changed to use combat stat function
     private bool HitRoll(UnitLoader unit)
     {
         int roll = Random.Range(0, 99);
 
-        if (roll > unit.CombatStatistics().hit)
+        if (roll > unit.hit)
             return false;
 
         else
             return true;
     }
-
-    //changed to use combat stat function
     private bool CritRoll(UnitLoader unit)
     {
         int roll = Random.Range(0, 99);
 
-        if (roll > unit.CombatStatistics().crit)
+        if (roll > unit.crit)
             return false;
 
         else
             return true;
     }
 
-    //changed to use combat stat function
     public int Hit(UnitLoader attacker, UnitLoader defender)
     {
-        return attacker.CombatStatistics().attack - defender.CombatStatistics().protection;
+        return attacker.attack - defender.protection;
     }
     private int Critical(UnitLoader attacker, UnitLoader defender)
     {
-        return attacker.CombatStatistics().attack * 2 - defender.CombatStatistics().protection;
+        return attacker.attack * 2 - defender.protection;
     }
 
-    //Added death function
-    //Updated variable names
     private string CheckForDeaths(UnitLoader attacker, UnitLoader defender)
     {
-        if(defender.currentHealth <= 0)
+        if(defender.hp <= 0)
         {
-            defender.Death();
             return "Defender";
         }
-        else if(attacker.currentHealth <= 0)
+        else if(attacker.hp <= 0)
         {
-            defender.Death();
             return "Attacker";
         }
         return null;
     }
-
-    //changed to use combat stat function
     private bool CheckAttackSpeed(UnitLoader attacker, UnitLoader defender)
     {
-        if(attacker.CombatStatistics().attackSpeed > defender.CombatStatistics().attackSpeed + 5)
+        if(attacker.attackSpeed > defender.attackSpeed + 5)
             return true;
         else
             return false;

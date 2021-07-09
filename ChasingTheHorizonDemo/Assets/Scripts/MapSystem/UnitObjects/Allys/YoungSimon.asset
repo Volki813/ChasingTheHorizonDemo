@@ -16,15 +16,14 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 242e00ec43778aa42a6617c6d4cb67e3, type: 3}
   unitName: Simon
   allyUnit: 1
-  statistics:
-    health: 20
-    strength: 5
-    magic: 4
-    defense: 1
-    resistance: 2
-    proficiency: 0
-    motivation: 0
-    agility: 0
-    movement: 3
+  health: 20
+  strength: 5
+  magic: 1
+  defense: 2
+  resistance: 1
+  proficiency: 0
+  motivation: 0
+  agility: 0
+  movement: 3
   level: 1
   exp: 0

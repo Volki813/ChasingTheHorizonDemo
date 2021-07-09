@@ -11,11 +11,16 @@ public class Unit : ScriptableObject
     public string unitName;
     public bool allyUnit;
 
-    //Put the statistics
-    public Statistics statistics;
+    public int health;
+    public int strength;
+    public int magic;
+    public int defense;
+    public int resistance;
+    public int proficiency;
+    public int motivation;
+    public int agility;
+    public int movement;
 
-    //wont change yet but these should be on the monobehaviour
-    //Scriptable objects aren't made to be changed during gameplay but define a data set to be loaded onto blank objects
     public int level;
     public int exp;
 }

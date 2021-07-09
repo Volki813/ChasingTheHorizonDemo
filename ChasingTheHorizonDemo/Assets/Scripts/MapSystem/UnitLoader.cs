@@ -23,28 +23,24 @@ public class UnitLoader : MonoBehaviour
 
     public Animator animator;
 
-    //Changed the variable name just to make it a bit more clear what does what
-    public int currentHealth;
-    /*
     [Header("Combat Stats")]
-        public int hp;
-        public int attack;
-        public int attackSpeed;
-        public int protection;
-        public int resilience;
-        public int hit;
-        public int avoid;
-        public int crit;
-        public int vigilance;
+    public int hp;
+    public int attack;
+    public int attackSpeed;
+    public int protection;
+    public int resilience;
+    public int hit;
+    public int avoid;
+    public int crit;
+    public int vigilance;
 
-        public int hitChance;
-        public int critChance;
-        public int damage;
-    */
+    public int hitChance;
+    public int critChance;
+    public int damage;
 
     private void Start()
     {
-        currentHealth = unit.statistics.health;
+        hp = unit.health;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -52,15 +48,6 @@ public class UnitLoader : MonoBehaviour
     }
     private void Update()
     {
-        //Removed this stuff out of here and replaced it with the struct and fucntion
-
-        //Update gets called every frame and we:
-        //  1.) don't need to access this data all the time, and
-        //  2.) shouldn't waste processing power calculating these stats every frame
-
-        //This approach works since we do have alot more processing power to work with considering we aren't rendering 3D objects or running physics calculations but it's good to keep this stuff optimised. 
-
-        /*
         attack = unit.strength + equippedWeapon.might;
         attackSpeed = unit.agility - ((unit.strength - equippedWeapon.weight) / 4);
         protection = unit.defense; //plus any shield
@@ -71,27 +58,6 @@ public class UnitLoader : MonoBehaviour
         vigilance = (unit.proficiency / 3) + (unit.motivation / 5);
 
         Death();
-        */
-    }
-
-    public BattleStatistics CombatStatistics()
-    {
-        //Instead when we need the battle stats we can call this function to run the calculation.
-        //It will return a battle stats struct containing the calculated stats for us to use
-        BattleStatistics stats = new BattleStatistics();
-
-        //Just use the same calculations here but make them apart of the struct
-        stats.attack = unit.statistics.strength + equippedWeapon.might;
-        stats.attackSpeed = unit.statistics.agility - ((unit.statistics.strength - equippedWeapon.weight) / 4);
-        stats.protection = unit.statistics.defense; //plus any shield
-        stats.resilience = unit.statistics.resistance; //plus any shield
-        stats.hit = equippedWeapon.hit + (unit.statistics.proficiency / 2) + (unit.statistics.motivation / 4);
-        stats.avoid = stats.attackSpeed + unit.statistics.motivation / 5;
-        stats.crit = equippedWeapon.crit + (unit.statistics.proficiency / 2) + (unit.statistics.motivation / 5);
-        stats.vigilance = (unit.statistics.proficiency / 3) + (unit.statistics.motivation / 5);
-
-        
-        return stats;
     }
 
     public void Selected()
@@ -149,7 +115,7 @@ public class UnitLoader : MonoBehaviour
             {
                 tile.HighlightTile();
             }
-            if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.statistics.movement && tile.occupied == false)
+            if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.movement && tile.occupied == false)
             {
                 tile.HighlightTile();
             }          
@@ -214,12 +180,9 @@ public class UnitLoader : MonoBehaviour
         animator.SetBool("Left", false);
         animator.SetBool("Right", false);
     }
-
-    //changed to public so it can be called in Combat Manager
-    //Updated for variable names
-    public void Death()
+    private void Death()
     {
-        if(currentHealth <= 0)
+        if(hp <= 0)
         {
             if(unit.allyUnit)
             {

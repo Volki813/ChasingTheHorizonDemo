@@ -113,20 +113,19 @@ public class ActionMenuManager : MonoBehaviour
         range.text = "Range:" + weapon.range.ToString();
     }
 
-    //updated with combat stat function and variable name changes
     private void FillCombatPreview()
     {
         attackerPortrait.sprite = cursor.selectedUnit.unit.sprite;
-        attackerHP.text = cursor.selectedUnit.currentHealth.ToString();
+        attackerHP.text = cursor.selectedUnit.hp.ToString();
         attackerDamage.text = CombatManager.instance.Hit(cursor.selectedUnit, cursor.selectedUnit.target).ToString();
-        attackerHit.text = (cursor.selectedUnit.CombatStatistics().hit - cursor.selectedUnit.target.CombatStatistics().avoid).ToString();
-        attackerCrit.text = cursor.selectedUnit.CombatStatistics().crit.ToString();
+        attackerHit.text = (cursor.selectedUnit.hit - cursor.selectedUnit.target.avoid).ToString();
+        attackerCrit.text = cursor.selectedUnit.crit.ToString();
 
         defenderPortrait.sprite = cursor.selectedUnit.target.unit.sprite;
-        defenderHP.text = cursor.selectedUnit.target.currentHealth.ToString();
+        defenderHP.text = cursor.selectedUnit.target.hp.ToString();
         defenderDamage.text = CombatManager.instance.Hit(cursor.selectedUnit.target, cursor.selectedUnit).ToString();
-        defenderHit.text = (cursor.selectedUnit.target.CombatStatistics().hit - cursor.selectedUnit.CombatStatistics().avoid).ToString();
-        defenderCrit.text = cursor.selectedUnit.target.CombatStatistics().crit.ToString();
+        defenderHit.text = (cursor.selectedUnit.target.hit - cursor.selectedUnit.avoid).ToString();
+        defenderCrit.text = cursor.selectedUnit.target.crit.ToString();
     }
 
     public void PreviewBackButton()

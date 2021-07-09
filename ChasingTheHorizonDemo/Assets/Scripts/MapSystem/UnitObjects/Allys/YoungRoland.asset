@@ -16,15 +16,14 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 3244e6ecb63781748b508dadcd28f48d, type: 3}
   unitName: Roland
   allyUnit: 1
-  statistics:
-    health: 20
-    strength: 5
-    magic: 1
-    defense: 2
-    resistance: 1
-    proficiency: 0
-    motivation: 0
-    agility: 0
-    movement: 3
+  health: 20
+  strength: 5
+  magic: 1
+  defense: 2
+  resistance: 1
+  proficiency: 0
+  motivation: 0
+  agility: 0
+  movement: 3
   level: 0
   exp: 0

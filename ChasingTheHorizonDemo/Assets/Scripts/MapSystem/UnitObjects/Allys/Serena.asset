@@ -15,16 +15,15 @@ MonoBehaviour:
   sprite: {fileID: 7636723911727702491, guid: d50b5c136dfb6dc4291f4b3ccfb6fd0c, type: 3}
   portrait: {fileID: 21300000, guid: 608ae880e2096dc45b14a8942fbd42c3, type: 3}
   unitName: Serena
-  allyUnit: 1
-  statistics:
-    health: 20
-    strength: 5
-    magic: 1
-    defense: 1
-    resistance: 2
-    proficiency: 0
-    motivation: 0
-    agility: 0
-    movement: 3
+  allyUnit: 0
+  health: 0
+  strength: 0
+  magic: 0
+  defense: 0
+  resistance: 0
+  proficiency: 0
+  motivation: 0
+  agility: 0
+  movement: 0
   level: 0
   exp: 0

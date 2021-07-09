@@ -16,15 +16,14 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 33db33ff5b1ed24449b5bd180c2c28e1, type: 3}
   unitName: Edgar
   allyUnit: 1
-  statistics:
-    health: 20
-    strength: 5
-    magic: 1
-    defense: 2
-    resistance: 1
-    proficiency: 0
-    motivation: 0
-    agility: 0
-    movement: 3
+  health: 20
+  strength: 5
+  magic: 1
+  defense: 2
+  resistance: 1
+  proficiency: 0
+  motivation: 0
+  agility: 0
+  movement: 3
   level: 0
   exp: 0
