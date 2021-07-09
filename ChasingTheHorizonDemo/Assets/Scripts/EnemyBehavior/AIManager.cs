@@ -119,7 +119,7 @@ public class AIManager : MonoBehaviour
     {
         foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
         {
-            if(Mathf.Abs(currentEnemy.transform.position.x - tile.transform.position.x) + Mathf.Abs(currentEnemy.transform.position.y - tile.transform.position.y) + tile.tileCost <= currentEnemy.unit.movement && tile.occupied == false)
+            if(Mathf.Abs(currentEnemy.transform.position.x - tile.transform.position.x) + Mathf.Abs(currentEnemy.transform.position.y - tile.transform.position.y) + tile.tileCost <= currentEnemy.unit.statistics.movement && tile.occupied == false)
             {
                 walkableTiles.Add(tile);
             }
@@ -147,20 +147,23 @@ public class AIManager : MonoBehaviour
             }
         }
     }
+
+    //changed variable names
     private UnitLoader GetTarget()
     {
+        // any reason this loop isn't a foreach loop? I'm too lazy to think ab it rn.
         for (int i = 0; i < TurnManager.instance.allyUnits.Count; i++)
         {
             int expectedDamage = CombatManager.instance.Hit(currentEnemy, TurnManager.instance.allyUnits[i]);
-            if(TurnManager.instance.allyUnits[i].hp <= expectedDamage)
+            if(TurnManager.instance.allyUnits[i].currentHealth <= expectedDamage)
             {
                 return TurnManager.instance.allyUnits[i];
             }
-            else if(TurnManager.instance.allyUnits[i].hp - expectedDamage <= 0)
+            else if(TurnManager.instance.allyUnits[i].currentHealth - expectedDamage <= 0)
             {
                 return TurnManager.instance.allyUnits[i];
             }
-            else if(TurnManager.instance.allyUnits[i].hp - expectedDamage == 1)
+            else if(TurnManager.instance.allyUnits[i].currentHealth - expectedDamage == 1)
             {
                 return TurnManager.instance.allyUnits[i];
             }
