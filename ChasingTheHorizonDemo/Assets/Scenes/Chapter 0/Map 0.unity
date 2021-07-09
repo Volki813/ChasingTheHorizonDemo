@@ -4588,7 +4588,7 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0, g: 0.88185906, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4623,7 +4623,7 @@ Animator:
   m_GameObject: {fileID: 155848867}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee6f7c9c029018499b0e6f0644150a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22da29d2795bc574b92c33a903e7ece7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5141,7 +5141,7 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0, g: 0.88185906, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5176,7 +5176,7 @@ Animator:
   m_GameObject: {fileID: 166102328}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee6f7c9c029018499b0e6f0644150a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22da29d2795bc574b92c33a903e7ece7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -12232,7 +12232,7 @@ Animator:
   m_GameObject: {fileID: 465964006}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0366a62ab8d037e4b8c0784d824d682a, type: 2}
+  m_Controller: {fileID: 9100000, guid: bcb5a3dc2e755554dbe1c096f03f62ba, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -12342,11 +12342,11 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0, g: 0.88185906, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.97, y: 0.83}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -12377,7 +12377,7 @@ Animator:
   m_GameObject: {fileID: 468930274}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee6f7c9c029018499b0e6f0644150a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22da29d2795bc574b92c33a903e7ece7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -36201,7 +36201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478825637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: -0.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1614305847}
@@ -36274,7 +36274,7 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0, g: 0.88185906, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -36309,7 +36309,7 @@ Animator:
   m_GameObject: {fileID: 1478825637}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee6f7c9c029018499b0e6f0644150a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22da29d2795bc574b92c33a903e7ece7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -39292,7 +39292,7 @@ MonoBehaviour:
   rested: 0
   attackable: 0
   actionMenu: {fileID: 13599902}
-  equippedWeapon: {fileID: 11400000, guid: fd87abcf07db22f4ab3671858696f8c6, type: 2}
+  equippedWeapon: {fileID: 11400000, guid: f4a3770a64f614e438c11ce39a5fd6dd, type: 2}
   animator: {fileID: 1589565373}
   currentHealth: 0
 --- !u!212 &1589565371
@@ -39335,11 +39335,11 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0, g: 0.88185906, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.73, y: 0.97}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -39370,7 +39370,7 @@ Animator:
   m_GameObject: {fileID: 1589565368}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee6f7c9c029018499b0e6f0644150a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 619c9efb01fcd4644a38b568f9bb94f9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -40080,7 +40080,7 @@ GameObject:
   - component: {fileID: 1625918924}
   - component: {fileID: 1625918926}
   m_Layer: 8
-  m_Name: Leah
+  m_Name: YoungLeah
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -40114,7 +40114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3784c3d22113147b8f9969ca42bb7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
+  unit: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   target: {fileID: 0}
   actionMenuSpawn: {fileID: 181921672}
   inventory: {fileID: 697433500}
@@ -40171,7 +40171,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.87, y: 0.97}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -40187,7 +40187,7 @@ Animator:
   m_GameObject: {fileID: 1625918922}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee6f7c9c029018499b0e6f0644150a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: c650f7e4b230c6e408ded740ff835c86, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -52932,7 +52932,7 @@ GameObject:
   - component: {fileID: 2096008266}
   - component: {fileID: 2096008267}
   m_Layer: 8
-  m_Name: Edgar
+  m_Name: YoungEdgar
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -52946,7 +52946,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096008263}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1398477644}
@@ -52998,7 +52998,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.85, y: 0.81}
+  m_Size: {x: 0.8, y: 0.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -53026,7 +53026,7 @@ MonoBehaviour:
   rested: 0
   attackable: 0
   actionMenu: {fileID: 13599902}
-  equippedWeapon: {fileID: 11400000, guid: fd87abcf07db22f4ab3671858696f8c6, type: 2}
+  equippedWeapon: {fileID: 11400000, guid: 8a6d5ab29e99a6249a4e36c6c56a2d53, type: 2}
   animator: {fileID: 2096008267}
   currentHealth: 0
 --- !u!95 &2096008267
@@ -53039,7 +53039,7 @@ Animator:
   m_GameObject: {fileID: 2096008263}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee6f7c9c029018499b0e6f0644150a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0b6e5f2cb7c6ff445987ae6f0b0aac0c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

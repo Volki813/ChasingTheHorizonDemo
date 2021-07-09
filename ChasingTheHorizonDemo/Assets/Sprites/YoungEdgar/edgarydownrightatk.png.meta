@@ -1,0 +1,344 @@
+fileFormatVersion: 2
+guid: cb1579efa4cf5c44a837c2006864d16e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3405015465023904564
+    second: edgarydownrightatk_0
+  - first:
+      213: -2095519285841404843
+    second: edgarydownrightatk_1
+  - first:
+      213: -3485584603583616672
+    second: edgarydownrightatk_2
+  - first:
+      213: -620094811016398804
+    second: edgarydownrightatk_3
+  - first:
+      213: 1626760625144803338
+    second: edgarydownrightatk_4
+  - first:
+      213: -7508749610133788451
+    second: edgarydownrightatk_5
+  - first:
+      213: 5972699235357905678
+    second: edgarydownrightatk_6
+  - first:
+      213: -7712390128708839007
+    second: edgarydownrightatk_7
+  - first:
+      213: 6262578419372919079
+    second: edgarydownrightatk_8
+  - first:
+      213: 5411678574446859829
+    second: edgarydownrightatk_9
+  - first:
+      213: 8827498261375807390
+    second: edgarydownrightatk_10
+  - first:
+      213: 2981179901622653870
+    second: edgarydownrightatk_11
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: edgarydownrightatk_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 498
+        width: 73
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc4e980a974feb0d0800000000000000
+      internalID: -3405015465023904564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownrightatk_1
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 495
+        width: 70
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55c5173ef483be2e0800000000000000
+      internalID: -2095519285841404843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownrightatk_2
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 492
+        width: 89
+        height: 99
+      alignment: 9
+      pivot: {x: 0.55394477, y: 0.5303098}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 069e3dc3547b0afc0800000000000000
+      internalID: -3485584603583616672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownrightatk_3
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 297
+        width: 73
+        height: 96
+      alignment: 9
+      pivot: {x: 0.54932624, y: 0.56876534}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c28fd460e0bf467f0800000000000000
+      internalID: -620094811016398804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownrightatk_4
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 290
+        width: 69
+        height: 103
+      alignment: 9
+      pivot: {x: 0.57392997, y: 0.53204584}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a00395c6b2a639610800000000000000
+      internalID: 1626760625144803338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownrightatk_5
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 284
+        width: 109
+        height: 112
+      alignment: 9
+      pivot: {x: 0.42016575, y: 0.5669793}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd86f9c33009bc790800000000000000
+      internalID: -7508749610133788451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownrightatk_7
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 42
+        width: 155
+        height: 153
+      alignment: 9
+      pivot: {x: 0.31547743, y: 0.6797444}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a994193a0618f490800000000000000
+      internalID: -7712390128708839007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownrightatk_9
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 92
+        width: 69
+        height: 103
+      alignment: 9
+      pivot: {x: 0.5771617, y: 0.5218691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5365f7cbdf42a1b40800000000000000
+      internalID: 5411678574446859829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

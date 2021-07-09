@@ -32,7 +32,6 @@ public class CombatManager : MonoBehaviour
     {
     }
 
-    //Updated function to work with code changes
     public void EngageAttack(UnitLoader attacker, UnitLoader defender)
     {
         StartCoroutine(Attack(attacker, defender));
@@ -56,13 +55,13 @@ public class CombatManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         AttackAnimation(attacker, defender);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length);
 
         PlayEffect(attacker, defender);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
 
         InitiatorAttack(attacker, defender);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
 
         if(CheckForDeaths(attacker, defender) == "Attacker")
         {
@@ -80,13 +79,13 @@ public class CombatManager : MonoBehaviour
         else
         {
             AttackAnimation(defender, attacker);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds((defender.animator.GetCurrentAnimatorClipInfo(0).Length));
 
             PlayEffect(defender, attacker);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.2f);
 
             DefenderAttack(attacker, defender);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.3f);
 
             if(CheckForDeaths(attacker, defender) == "Attacker")
             {
@@ -131,7 +130,6 @@ public class CombatManager : MonoBehaviour
     }
 
 
-
     private void ActionCamera(UnitLoader attacker, UnitLoader defender)
     {
         var point1 = attacker.transform.position;
@@ -141,17 +139,15 @@ public class CombatManager : MonoBehaviour
         Vector3 zoomPoint = new Vector3(centerPoint.x, centerPoint.y, -10);
 
         mainCamera.transform.position = zoomPoint;
-        mainCamera.orthographicSize = 2;
+        mainCamera.orthographicSize = 4;
     }
     private void ResetCamera()
     {
         mainCamera.transform.position = originalCameraPosition;
         mainCamera.orthographicSize = originalCameraSize;
-
     }
     
 
-    //updated for vairable names
     private void InitiatorAttack(UnitLoader attacker, UnitLoader defender)
     {
         //Check for a hit
@@ -179,7 +175,7 @@ public class CombatManager : MonoBehaviour
     }
     private void DefenderAttack(UnitLoader attacker, UnitLoader defender)
     {
-        if(Vector3.Distance(defender.transform.position, attacker.transform.position) <= 1)
+        if(Vector3.Distance(defender.transform.position, attacker.transform.position) <= 1 || defender.equippedWeapon.range == attacker.equippedWeapon.range)
         {
             //Check for a hit
             if (HitRoll(defender))
@@ -208,7 +204,33 @@ public class CombatManager : MonoBehaviour
 
     private void AttackAnimation(UnitLoader attacker, UnitLoader defender)
     {
-        if(attacker.transform.position.x > defender.transform.position.x)
+        //Diagonal Attacks
+        if(attacker.unit.allyUnit)
+        {
+            if(attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackDownLeft"); //Down Left
+                return;
+            }
+            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackDownRight"); //Down Left
+                return;
+            }
+            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackUpRight"); //Down Left
+                return;
+            }
+            if (attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackUpLeft"); //Down Left
+                return;
+            }
+        }
+
+        //XY Attacks
+        if (attacker.transform.position.x > defender.transform.position.x)
         {
             attacker.animator.SetTrigger("AttackLeft"); //left
         }
@@ -220,7 +242,7 @@ public class CombatManager : MonoBehaviour
         {
             attacker.animator.SetTrigger("AttackDown"); //down
         }
-        else
+        else if(attacker.transform.position.y < defender.transform.position.y)
         {
             attacker.animator.SetTrigger("AttackUp"); //up
         }
@@ -234,13 +256,12 @@ public class CombatManager : MonoBehaviour
         if(attacker.equippedWeapon.animation != null)
         {
             var effect = Instantiate(attacker.equippedWeapon.animation, defender.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(0.68f);
+            yield return new WaitForSeconds(attacker.equippedWeapon.animationLength.length);
             Destroy(effect);
         }
         yield return null;
     }
     
-    //changed to use combat stat function
     private bool HitRoll(UnitLoader unit)
     {
         int roll = Random.Range(0, 99);
@@ -252,7 +273,6 @@ public class CombatManager : MonoBehaviour
             return true;
     }
 
-    //changed to use combat stat function
     private bool CritRoll(UnitLoader unit)
     {
         int roll = Random.Range(0, 99);
@@ -264,7 +284,6 @@ public class CombatManager : MonoBehaviour
             return true;
     }
 
-    //changed to use combat stat function
     public int Hit(UnitLoader attacker, UnitLoader defender)
     {
         return attacker.CombatStatistics().attack - defender.CombatStatistics().protection;
@@ -274,24 +293,22 @@ public class CombatManager : MonoBehaviour
         return attacker.CombatStatistics().attack * 2 - defender.CombatStatistics().protection;
     }
 
-    //Added death function
-    //Updated variable names
     private string CheckForDeaths(UnitLoader attacker, UnitLoader defender)
     {
         if(defender.currentHealth <= 0)
         {
+            AIManager.instance.enemyOrder.Remove(defender);
             defender.Death();
             return "Defender";
         }
         else if(attacker.currentHealth <= 0)
         {
-            defender.Death();
+            attacker.Death();
             return "Attacker";
         }
         return null;
     }
 
-    //changed to use combat stat function
     private bool CheckAttackSpeed(UnitLoader attacker, UnitLoader defender)
     {
         if(attacker.CombatStatistics().attackSpeed > defender.CombatStatistics().attackSpeed + 5)

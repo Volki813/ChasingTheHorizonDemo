@@ -148,7 +148,6 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    //changed variable names
     private UnitLoader GetTarget()
     {
         // any reason this loop isn't a foreach loop? I'm too lazy to think ab it rn.
@@ -235,7 +234,6 @@ public class AIManager : MonoBehaviour
         
         animator.SetBool("Up", false);
         animator.SetBool("Down", false);
-        animator.SetBool("Selected", false);
         animator.SetBool("Left", false);
         animator.SetBool("Right", false);
     }

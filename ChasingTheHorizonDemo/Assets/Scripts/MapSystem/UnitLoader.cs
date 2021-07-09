@@ -50,29 +50,6 @@ public class UnitLoader : MonoBehaviour
 
         spriteRenderer.sprite = unit.sprite;
     }
-    private void Update()
-    {
-        //Removed this stuff out of here and replaced it with the struct and fucntion
-
-        //Update gets called every frame and we:
-        //  1.) don't need to access this data all the time, and
-        //  2.) shouldn't waste processing power calculating these stats every frame
-
-        //This approach works since we do have alot more processing power to work with considering we aren't rendering 3D objects or running physics calculations but it's good to keep this stuff optimised. 
-
-        /*
-        attack = unit.strength + equippedWeapon.might;
-        attackSpeed = unit.agility - ((unit.strength - equippedWeapon.weight) / 4);
-        protection = unit.defense; //plus any shield
-        resilience = unit.resistance; //plus any shield
-        hit = equippedWeapon.hit + (unit.proficiency / 2) + (unit.motivation / 4);
-        avoid = attackSpeed + unit.motivation / 5;
-        crit = equippedWeapon.crit + (unit.proficiency / 2) + (unit.motivation / 5);
-        vigilance = (unit.proficiency / 3) + (unit.motivation / 5);
-
-        Death();
-        */
-    }
 
     public BattleStatistics CombatStatistics()
     {
@@ -224,13 +201,14 @@ public class UnitLoader : MonoBehaviour
             if(unit.allyUnit)
             {
                 TurnManager.instance.allyUnits.Remove(this);
+                Destroy(gameObject);
             }
             else
             {
                 TurnManager.instance.enemyUnits.Remove(this);
                 AIManager.instance.enemyOrder.Remove(this);
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }

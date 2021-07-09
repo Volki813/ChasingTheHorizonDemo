@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29e0aa87f4336d438c9fa10c504d1fa, type: 3}
   m_Name: Roy
   m_EditorClassIdentifier: 
-  sprite: {fileID: 7636723911727702491, guid: d50b5c136dfb6dc4291f4b3ccfb6fd0c, type: 3}
+  sprite: {fileID: -8357188086974385125, guid: 6f956a36a5580f148bc6cfbad2cd0a8a, type: 3}
   portrait: {fileID: 21300000, guid: fa721595fa475e044bf4e177b9c43e5a, type: 3}
   unitName: Roy
   allyUnit: 0

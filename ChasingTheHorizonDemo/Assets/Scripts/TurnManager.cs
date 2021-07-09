@@ -78,10 +78,9 @@ public class TurnManager : MonoBehaviour
         turnNumber++;
         RefreshAllys();
         allyTurn = true;
-        Debug.Log("Ally Turn");
         UpdateTiles();
-        allyTurnObject.SetActive(false);
-        enemyTurnObject.SetActive(true);
+        allyTurnObject.SetActive(true);
+        enemyTurnObject.SetActive(false);
     }
     private void EnemyTurn()
     {
@@ -96,12 +95,13 @@ public class TurnManager : MonoBehaviour
         cursor.MapCursor = false;
         cursor.EnemyTurnCursor = true;
         allyTurn = false;
-        Debug.Log("Enemy Turn");
+        allyTurnObject.SetActive(false);
+        enemyTurnObject.SetActive(true);
         UpdateTiles();
-        RefreshEnemies();
 
         AIManager.instance.enemyOrder.Clear();
         AIManager.instance.SetEnemyOrder();
+        RefreshEnemies();
         AIManager.instance.StartAI();
     }
     public void FindAllys()

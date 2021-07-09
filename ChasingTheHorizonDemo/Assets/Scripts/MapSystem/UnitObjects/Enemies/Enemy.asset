@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29e0aa87f4336d438c9fa10c504d1fa, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
-  sprite: {fileID: 7636723911727702491, guid: d50b5c136dfb6dc4291f4b3ccfb6fd0c, type: 3}
+  sprite: {fileID: 378912892361772757, guid: 9b1d05ddbb549a94f9895ea7f324af5c, type: 3}
   portrait: {fileID: 21300000, guid: fa721595fa475e044bf4e177b9c43e5a, type: 3}
   unitName: Kingdom Soldier
   allyUnit: 0

@@ -21,3 +21,4 @@ MonoBehaviour:
   weight: 1
   animation: {fileID: 1087997730662671387, guid: 74d7415c57ee55f42b3a5caf4ade90bd,
     type: 3}
+  animationLength: {fileID: 7400000, guid: 9c8436b2ee9d07c4b827e74c1d25a3f0, type: 2}
