@@ -138,4 +138,12 @@ public class TurnManager : MonoBehaviour
             unit.Stand();
         }
     }
+    public void RefreshTiles()
+    {
+        foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
+        {
+            tile.UpdateOccupationStatus();
+        }
+    }
+
 }

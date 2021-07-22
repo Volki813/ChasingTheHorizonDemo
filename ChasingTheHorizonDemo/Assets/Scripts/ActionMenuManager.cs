@@ -143,6 +143,6 @@ public class ActionMenuManager : MonoBehaviour
         combatPreview.SetActive(false);
         gameObject.SetActive(false);
         cursor.ActionMenuCursor = false;
-        cursor.MapCursor = true;
+        cursor.NeutralCursor = true;
     }
 }

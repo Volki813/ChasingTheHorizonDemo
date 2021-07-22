@@ -23,24 +23,8 @@ public class UnitLoader : MonoBehaviour
 
     public Animator animator;
 
-    //Changed the variable name just to make it a bit more clear what does what
     public int currentHealth;
-    /*
-    [Header("Combat Stats")]
-        public int hp;
-        public int attack;
-        public int attackSpeed;
-        public int protection;
-        public int resilience;
-        public int hit;
-        public int avoid;
-        public int crit;
-        public int vigilance;
-
-        public int hitChance;
-        public int critChance;
-        public int damage;
-    */
+    public Vector2 originalPosition;
 
     private void Start()
     {
@@ -76,6 +60,7 @@ public class UnitLoader : MonoBehaviour
         animator.SetBool("Selected", true);
         GetWalkableTiles();
     }
+
     public void ResetTiles()
     {
         foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
@@ -92,6 +77,7 @@ public class UnitLoader : MonoBehaviour
     }
     public void Move(Vector2 targetPosition)
     {
+        originalPosition = transform.position;
         StartCoroutine(Movement(targetPosition));
     }
     public void Rest()
@@ -147,8 +133,15 @@ public class UnitLoader : MonoBehaviour
         }
     }
     private void AttackableHighlight()
-    {
-        GetComponent<SpriteRenderer>().color = Color.red;
+    {        
+        if(GetComponent<SpriteRenderer>().color == Color.red)
+        {
+            GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
     }
     private IEnumerator Movement(Vector2 targetPosition)
     {
@@ -180,8 +173,9 @@ public class UnitLoader : MonoBehaviour
         }
         ResetTiles();
         UpdateTiles();
+        TurnManager.instance.RefreshTiles();
         hasMoved = true;
-        actionMenu.SetActive(true);
+        ActionMenu();
         actionMenu.transform.position = actionMenuSpawn.position;
         GetEnemies();
 
@@ -191,9 +185,6 @@ public class UnitLoader : MonoBehaviour
         animator.SetBool("Left", false);
         animator.SetBool("Right", false);
     }
-
-    //changed to public so it can be called in Combat Manager
-    //Updated for variable names
     public void Death()
     {
         if(currentHealth <= 0)
@@ -209,6 +200,21 @@ public class UnitLoader : MonoBehaviour
                 AIManager.instance.enemyOrder.Remove(this);
                 Destroy(gameObject);
             }
+        }
+    }
+    public void ActionMenu()
+    {
+        if(actionMenu.activeSelf == true)
+        {
+            actionMenu.SetActive(false);
+            if(target != null)
+            {
+                target.AttackableHighlight();
+            }
+        }
+        else
+        {
+            actionMenu.SetActive(true);
         }
     }
 }

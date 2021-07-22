@@ -17,7 +17,7 @@ public class CursorController : MonoBehaviour
     public bool UnitCursor = false;
     public bool MenuCursor = false;
     public bool ActionMenuCursor = false;
-    public bool DialogueCursor = false;
+    public bool NeutralCursor = false;
     public bool EnemyTurnCursor = false;
 
     [Header("Main Camera")]
@@ -93,9 +93,9 @@ public class CursorController : MonoBehaviour
         }    
         else if(ActionMenuCursor == true)
         {
-
+            UndoMove();
         }
-        else if(DialogueCursor == true)
+        else if(NeutralCursor == true)
         {
 
         }
@@ -215,7 +215,23 @@ public class CursorController : MonoBehaviour
         }
     }
 
-    //This deselects any selected unit 0
+    //This puts the unit that just moved back in its original position
+    private void UndoMove()
+    {
+        if(Input.GetKeyDown(Controls.instance.cancelButton))
+        {
+            selectedUnit.transform.position = selectedUnit.originalPosition;
+            selectedUnit.hasMoved = false;
+            TurnManager.instance.RefreshTiles();
+            selectedUnit.ActionMenu();
+            selectedUnit.target = null;
+            selectedUnit = null;
+            ActionMenuCursor = false;
+            MapCursor = true;
+        }
+    }
+
+    //This deselects any selected unit
     private void DeselectUnit()
     {
         if(Input.GetKeyDown(Controls.instance.cancelButton) && selectedUnit != null)
@@ -265,6 +281,6 @@ public class CursorController : MonoBehaviour
         UnitCursor = false;
         MenuCursor = false;
         ActionMenuCursor = false;
-        DialogueCursor = false;
+        NeutralCursor = false;
     }
 }

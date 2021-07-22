@@ -8,6 +8,7 @@ public class CombatManager : MonoBehaviour
     private Camera mainCamera;
     private float originalCameraSize = 7.080622f;
     private Vector3 originalCameraPosition = new Vector3(0, 1, -10);
+    private CursorController cursor;
 
     public static CombatManager instance { get; private set; }
 
@@ -26,10 +27,7 @@ public class CombatManager : MonoBehaviour
     private void Start()
     {
         mainCamera = FindObjectOfType<Camera>();
-    }
-
-    private void Update()
-    {
+        cursor = FindObjectOfType<CursorController>();
     }
 
     public void EngageAttack(UnitLoader attacker, UnitLoader defender)
@@ -67,6 +65,8 @@ public class CombatManager : MonoBehaviour
         {
             combatReadout.SetActive(false);
             ResetCamera();
+            cursor.NeutralCursor = false;
+            cursor.MapCursor = true;
             yield return null;
         }
         else if(CheckForDeaths(attacker, defender) == "Defender")
@@ -74,23 +74,30 @@ public class CombatManager : MonoBehaviour
             combatReadout.SetActive(false);
             attacker.Rest();
             ResetCamera();
+            cursor.NeutralCursor = false;
+            cursor.MapCursor = true;
             yield return null;
         }
         else
         {
-            AttackAnimation(defender, attacker);
-            yield return new WaitForSeconds((defender.animator.GetCurrentAnimatorClipInfo(0).Length));
+            if(Vector2.Distance(attacker.transform.position, defender.transform.position) <= 1)
+            {
+                AttackAnimation(defender, attacker);
+                yield return new WaitForSeconds((defender.animator.GetCurrentAnimatorClipInfo(0).Length));
 
-            PlayEffect(defender, attacker);
-            yield return new WaitForSeconds(1.2f);
+                PlayEffect(defender, attacker);
+                yield return new WaitForSeconds(1.2f);
 
-            DefenderAttack(attacker, defender);
-            yield return new WaitForSeconds(0.3f);
+                DefenderAttack(attacker, defender);
+                yield return new WaitForSeconds(0.3f);
+            }
 
             if(CheckForDeaths(attacker, defender) == "Attacker")
             {
                 combatReadout.SetActive(false);
                 ResetCamera();
+                cursor.NeutralCursor = false;
+                cursor.MapCursor = true;
                 yield return null;
             }
             else if(CheckForDeaths(attacker, defender) == "Defender")
@@ -98,6 +105,8 @@ public class CombatManager : MonoBehaviour
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
+                cursor.NeutralCursor = false;
+                cursor.MapCursor = true;
                 yield return null;
             }
             else
@@ -105,11 +114,15 @@ public class CombatManager : MonoBehaviour
                 if(CheckAttackSpeed(attacker, defender))
                 {
                     InitiatorAttack(attacker, defender);
+                    cursor.NeutralCursor = false;
+                    cursor.MapCursor = true;
                     yield return null;
                 }
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
+                cursor.NeutralCursor = false;
+                cursor.MapCursor = true;
                 yield return null;
             }
             combatReadout.SetActive(false);
@@ -118,6 +131,8 @@ public class CombatManager : MonoBehaviour
                 attacker.Rest();
             }
             ResetCamera();
+            cursor.NeutralCursor = false;
+            cursor.MapCursor = true;
             yield return null;
         }
         combatReadout.SetActive(false);
@@ -126,6 +141,8 @@ public class CombatManager : MonoBehaviour
             attacker.Rest();
         }
         ResetCamera();
+        cursor.NeutralCursor = false;
+        cursor.MapCursor = true;
         yield return null;
     }
 
@@ -298,11 +315,13 @@ public class CombatManager : MonoBehaviour
         if(defender.currentHealth <= 0)
         {
             AIManager.instance.enemyOrder.Remove(defender);
+            TurnManager.instance.RefreshTiles();
             defender.Death();
             return "Defender";
         }
         else if(attacker.currentHealth <= 0)
         {
+            TurnManager.instance.RefreshTiles();
             attacker.Death();
             return "Attacker";
         }

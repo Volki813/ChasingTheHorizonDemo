@@ -72,21 +72,17 @@ public class AIManager : MonoBehaviour
     private void Blitz(UnitLoader currentEnemy)
     {
         GetEnemies();
-        GetWalkableTiles();
         if(enemiesInRange.Count > 0)
         {
             CombatManager.instance.EngageAttack(currentEnemy, targetUnit);
         }
         else
         {
+            GetWalkableTiles();
             targetUnit = GetTarget();
             FindClosestTile();
             Move(currentEnemy, targetTile.transform.position);
-            GetEnemies();
-            if(enemiesInRange.Count > 0)
-            {
-                CombatManager.instance.EngageAttack(currentEnemy, targetUnit);
-            }
+
         }
     }
 
@@ -229,7 +225,15 @@ public class AIManager : MonoBehaviour
             currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(currentEnemy.transform.position.x, targetPosition.y), 2f * Time.deltaTime);
             yield return null;
         }
-        currentEnemy.Rest();
+        GetEnemies();
+        if(enemiesInRange.Count > 0)
+        {
+            CombatManager.instance.EngageAttack(currentEnemy, targetUnit);
+        }
+        else
+        {
+            currentEnemy.Rest();
+        }
         TurnManager.instance.UpdateTiles();
         
         animator.SetBool("Up", false);
