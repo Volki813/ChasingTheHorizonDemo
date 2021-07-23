@@ -10,6 +10,7 @@ public class Unit : ScriptableObject
 
     public string unitName;
     public bool allyUnit;
+    public bool diagonal;
 
     //Put the statistics
     public Statistics statistics;

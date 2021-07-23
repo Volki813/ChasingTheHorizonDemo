@@ -51,9 +51,9 @@ public class UIManager : MonoBehaviour
                 unitPortrait.sprite = unit.unit.portrait;
                 unitName.text = unit.name;
                 unitHP.text = "HP: " + unit.currentHealth.ToString() + "/" + unit.unit.statistics.health.ToString();
-                unitEXP.text = unit.unit.exp.ToString() + "/100";
-                unitLevel.text = "Level: " + unit.unit.level.ToString();
-                unitAgility.text = "Agility: " + unit.unit.statistics.agility.ToString();
+                unitEXP.text = "Exp: " + unit.unit.exp.ToString();
+                unitLevel.text = "Lvl: " + unit.unit.level.ToString();
+                unitAgility.text = "Agl: " + unit.unit.statistics.agility.ToString();
 
                 unitStrength.text = "Str: " + unit.unit.statistics.strength.ToString();
                 unitMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();
@@ -72,9 +72,9 @@ public class UIManager : MonoBehaviour
                 enemyPortrait.sprite = unit.unit.portrait;
                 enemyName.text = unit.name;
                 enemyHP.text = "HP: " + unit.currentHealth.ToString() + "/" + unit.unit.statistics.health.ToString();
-                unitEXP.text = unit.unit.exp.ToString() + "/100";
-                enemyLevel.text = "Level: " + unit.unit.level.ToString();
-                enemyAgility.text = "Agility: " + unit.unit.statistics.agility.ToString();
+                unitEXP.text = "Exp: " + unit.unit.exp.ToString();
+                enemyLevel.text = "Lvl: " + unit.unit.level.ToString();
+                enemyAgility.text = "Agl: " + unit.unit.statistics.agility.ToString();
 
                 enemyStrength.text = "Str: " + unit.unit.statistics.strength.ToString();
                 enemyMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();

@@ -16,6 +16,7 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 33db33ff5b1ed24449b5bd180c2c28e1, type: 3}
   unitName: Edgar
   allyUnit: 1
+  diagonal: 1
   statistics:
     health: 20
     strength: 5

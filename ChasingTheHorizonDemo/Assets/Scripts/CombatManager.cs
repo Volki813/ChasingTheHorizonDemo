@@ -63,24 +63,32 @@ public class CombatManager : MonoBehaviour
 
         if(CheckForDeaths(attacker, defender) == "Attacker")
         {
+            attacker.Death();
             combatReadout.SetActive(false);
             ResetCamera();
-            cursor.NeutralCursor = false;
-            cursor.MapCursor = true;
+            cursor.ResetState();
+            if(attacker.unit.allyUnit)
+            {
+                cursor.MapCursor = true;
+            }
             yield return null;
         }
         else if(CheckForDeaths(attacker, defender) == "Defender")
         {
+            defender.Death();
             combatReadout.SetActive(false);
             attacker.Rest();
             ResetCamera();
-            cursor.NeutralCursor = false;
-            cursor.MapCursor = true;
+            cursor.ResetState();
+            if (attacker.unit.allyUnit)
+            {
+                cursor.MapCursor = true;
+            }
             yield return null;
         }
         else
         {
-            if(Vector2.Distance(attacker.transform.position, defender.transform.position) <= 1)
+            if(CheckDistance(defender, attacker) <= 1 || defender.equippedWeapon.range >= attacker.equippedWeapon.range)
             {
                 AttackAnimation(defender, attacker);
                 yield return new WaitForSeconds((defender.animator.GetCurrentAnimatorClipInfo(0).Length));
@@ -94,45 +102,68 @@ public class CombatManager : MonoBehaviour
 
             if(CheckForDeaths(attacker, defender) == "Attacker")
             {
+                attacker.Death();
                 combatReadout.SetActive(false);
                 ResetCamera();
-                cursor.NeutralCursor = false;
-                cursor.MapCursor = true;
+                cursor.ResetState();
+                if (attacker.unit.allyUnit)
+                {
+                    cursor.MapCursor = true;
+                }
                 yield return null;
             }
             else if(CheckForDeaths(attacker, defender) == "Defender")
             {
+                defender.Death();
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
-                cursor.NeutralCursor = false;
-                cursor.MapCursor = true;
-                yield return null;
+                cursor.ResetState();
+                if (attacker.unit.allyUnit)
+                {
+                    cursor.MapCursor = true;
+                }
+                yield break;
             }
             else
             {
                 if(CheckAttackSpeed(attacker, defender))
                 {
+                    AttackAnimation(attacker, defender);
+                    yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length);
+
+                    PlayEffect(attacker, defender);
+                    yield return new WaitForSeconds(1.2f);
+
                     InitiatorAttack(attacker, defender);
-                    cursor.NeutralCursor = false;
+                    yield return new WaitForSeconds(0.3f);
+
+                    cursor.ResetState();
                     cursor.MapCursor = true;
                     yield return null;
                 }
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
-                cursor.NeutralCursor = false;
-                cursor.MapCursor = true;
+                cursor.ResetState();
+                if (attacker.unit.allyUnit)
+                {
+                    cursor.MapCursor = true;
+                }
                 yield return null;
             }
             combatReadout.SetActive(false);
             if(CheckForDeaths(attacker, defender) == "Defender" || CheckForDeaths(attacker, defender) == null)
             {
+                defender.Death();
                 attacker.Rest();
             }
             ResetCamera();
-            cursor.NeutralCursor = false;
-            cursor.MapCursor = true;
+            cursor.ResetState();
+            if (attacker.unit.allyUnit)
+            {
+                cursor.MapCursor = true;
+            }
             yield return null;
         }
         combatReadout.SetActive(false);
@@ -141,8 +172,11 @@ public class CombatManager : MonoBehaviour
             attacker.Rest();
         }
         ResetCamera();
-        cursor.NeutralCursor = false;
-        cursor.MapCursor = true;
+        cursor.ResetState();
+        if(attacker.unit.allyUnit)
+        {
+            cursor.MapCursor = true;
+        }
         yield return null;
     }
 
@@ -192,7 +226,7 @@ public class CombatManager : MonoBehaviour
     }
     private void DefenderAttack(UnitLoader attacker, UnitLoader defender)
     {
-        if(Vector3.Distance(defender.transform.position, attacker.transform.position) <= 1 || defender.equippedWeapon.range == attacker.equippedWeapon.range)
+        if(CheckDistance(defender, attacker) <= 1 || defender.equippedWeapon.range >= attacker.equippedWeapon.range)
         {
             //Check for a hit
             if (HitRoll(defender))
@@ -222,46 +256,48 @@ public class CombatManager : MonoBehaviour
     private void AttackAnimation(UnitLoader attacker, UnitLoader defender)
     {
         //Diagonal Attacks
-        if(attacker.unit.allyUnit)
+        if(attacker.unit.allyUnit && attacker.unit.diagonal)
         {
-            if(attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
+            if(attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
             {
-                attacker.animator.SetTrigger("AttackDownLeft"); //Down Left
-                return;
-            }
-            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
-            {
-                attacker.animator.SetTrigger("AttackDownRight"); //Down Left
-                return;
-            }
-            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
-            {
-                attacker.animator.SetTrigger("AttackUpRight"); //Down Left
+                attacker.animator.SetTrigger("AttackUpRight"); //Unit is down left of the enemy so it attacks up right
                 return;
             }
             if (attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
             {
-                attacker.animator.SetTrigger("AttackUpLeft"); //Down Left
+                attacker.animator.SetTrigger("AttackUpLeft"); //Down Right
+                return;
+            }
+            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackDownLeft"); //Up Right
+                return;
+            }
+            if (attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackUpRight"); //Up Left
                 return;
             }
         }
-
-        //XY Attacks
-        if (attacker.transform.position.x > defender.transform.position.x)
+        else
         {
-            attacker.animator.SetTrigger("AttackLeft"); //left
-        }
-        else if(attacker.transform.position.x < defender.transform.position.x)
-        {
-            attacker.animator.SetTrigger("AttackRight"); //right
-        }
-        else if(attacker.transform.position.y > defender.transform.position.y)
-        {
-            attacker.animator.SetTrigger("AttackDown"); //down
-        }
-        else if(attacker.transform.position.y < defender.transform.position.y)
-        {
-            attacker.animator.SetTrigger("AttackUp"); //up
+            //XY Attacks
+            if (attacker.transform.position.x < defender.transform.position.x)
+            {
+                attacker.animator.SetTrigger("AttackRight"); //Unit is to the left of enemy so it attacks right
+            }
+            else if (attacker.transform.position.x > defender.transform.position.x)
+            {
+                attacker.animator.SetTrigger("AttackLeft"); //Unit is to the right of the enemy so it attacks left
+            }
+            else if (attacker.transform.position.y < defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackUp"); //Unit is below the enemy so it attacks up
+            }
+            else if (attacker.transform.position.y > defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackDown"); //Unit is above the enemy so it attacks down
+            }
         }
     }
     private void PlayEffect(UnitLoader attacker, UnitLoader defender)
@@ -316,13 +352,11 @@ public class CombatManager : MonoBehaviour
         {
             AIManager.instance.enemyOrder.Remove(defender);
             TurnManager.instance.RefreshTiles();
-            defender.Death();
             return "Defender";
         }
         else if(attacker.currentHealth <= 0)
         {
             TurnManager.instance.RefreshTiles();
-            attacker.Death();
             return "Attacker";
         }
         return null;
@@ -334,5 +368,10 @@ public class CombatManager : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    private float CheckDistance(UnitLoader unit1, UnitLoader unit2)
+    {
+        return Mathf.Abs(unit1.transform.position.x - unit2.transform.position.x) + Mathf.Abs(unit1.transform.position.y - unit2.transform.position.y);
     }
 }

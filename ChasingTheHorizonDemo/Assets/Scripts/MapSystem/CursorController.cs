@@ -282,5 +282,6 @@ public class CursorController : MonoBehaviour
         MenuCursor = false;
         ActionMenuCursor = false;
         NeutralCursor = false;
+        EnemyTurnCursor = false;
     }
 }
