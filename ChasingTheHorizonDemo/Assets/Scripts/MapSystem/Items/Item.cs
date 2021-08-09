@@ -13,7 +13,7 @@ public abstract class Item : ScriptableObject
     public ItemType type;
     public string description;
 
-    public virtual void Use()
+    public virtual void Use(UnitLoader unit)
     {
         
     }

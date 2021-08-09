@@ -11,7 +11,7 @@ public class Consumable : Item
         type = ItemType.Consumable;
     }
 
-    public override void Use()
+    public override void Use(UnitLoader unit)
     {
         ItemLibrary.instance.UseItem(ID);
     }

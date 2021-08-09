@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 namespace DialogueSystem
 {
@@ -25,7 +26,7 @@ namespace DialogueSystem
                 yield return new WaitForSeconds(delay);
             }
 
-            yield return new WaitUntil(() => Input.GetKeyDown(Controls.instance.confirmButton));
+            yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
             finished = true;
         }

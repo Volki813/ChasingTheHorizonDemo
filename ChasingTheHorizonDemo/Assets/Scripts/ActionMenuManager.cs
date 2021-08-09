@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ActionMenuManager : MonoBehaviour
 {
+    public static ActionMenuManager instance;
+
     [SerializeField]
     private Button actionMenuButton;
     [SerializeField]
@@ -40,18 +43,30 @@ public class ActionMenuManager : MonoBehaviour
     public Text defenderHit;
     public Text defenderCrit;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
-        actionMenuButton.Select();
         cursor = FindObjectOfType<CursorController>();
+    }
+
+    private void OnEnable()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(actionMenuButton.gameObject);
     }
 
     public void Attack()
     {
-        if(cursor.selectedUnit.target != null)
+        if(cursor.selectedUnit.enemiesInRange.Count >= 1)
         {
-            combatPreview.SetActive(true);
-            FillCombatPreview();
+            cursor.ResetState();
+            cursor.controls.AttackCursor.Enable();
+            GetComponent<RectTransform>().localPosition = new Vector2(-1058, 40.1f);
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 
@@ -68,8 +83,8 @@ public class ActionMenuManager : MonoBehaviour
         cursor.selectedUnit.Rest();
         cursor.selectedUnit = null;
         gameObject.SetActive(false);
-        cursor.ActionMenuCursor = false;
-        cursor.MapCursor = true;
+        cursor.controls.ActionMenuCursor.Disable();
+        cursor.controls.MapCursor.Enable();
     }
 
     private void FillInventory()
@@ -91,7 +106,7 @@ public class ActionMenuManager : MonoBehaviour
     {
         if(cursor.selectedUnit.inventory.inventory[item].type == ItemType.Consumable)
         {
-            cursor.selectedUnit.inventory.inventory[item].Use();
+            cursor.selectedUnit.inventory.inventory[item].Use(cursor.selectedUnit);
             cursor.selectedUnit.inventory.inventory.RemoveAt(item);
             itemSlots[item].text = "";
         }
@@ -113,8 +128,7 @@ public class ActionMenuManager : MonoBehaviour
         range.text = "Range:" + weapon.range.ToString();
     }
 
-    //updated with combat stat function and variable name changes
-    private void FillCombatPreview()
+    public void FillCombatPreview()
     {
         attackerPortrait.sprite = cursor.selectedUnit.unit.sprite;
         attackerHP.text = cursor.selectedUnit.currentHealth.ToString();
@@ -142,7 +156,7 @@ public class ActionMenuManager : MonoBehaviour
         cursor.selectedUnit = null;
         combatPreview.SetActive(false);
         gameObject.SetActive(false);
-        cursor.ActionMenuCursor = false;
-        cursor.NeutralCursor = true;
+        cursor.controls.ActionMenuCursor.Disable();
+        cursor.controls.Disable();
     }
 }

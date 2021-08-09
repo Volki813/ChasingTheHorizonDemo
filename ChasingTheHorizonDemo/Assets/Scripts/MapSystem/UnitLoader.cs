@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DialogueSystem;
 
 public class UnitLoader : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class UnitLoader : MonoBehaviour
 
     [SerializeField] private Transform actionMenuSpawn;
     public Inventory inventory;
+
+    public List<UnitLoader> enemiesInRange = new List<UnitLoader>();
 
     public SpriteRenderer spriteRenderer;
     public bool hasMoved = false;
@@ -25,6 +28,9 @@ public class UnitLoader : MonoBehaviour
 
     public int currentHealth;
     public Vector2 originalPosition;
+
+    public DialogueLine attackedDialogue;
+    public DialogueLine defeatedDialogue;
 
     private void Start()
     {
@@ -127,7 +133,7 @@ public class UnitLoader : MonoBehaviour
                 if(Mathf.Abs(transform.position.x - unit.transform.position.x) + Mathf.Abs(transform.position.y - unit.transform.position.y) <= equippedWeapon.range)
                 {
                     unit.AttackableHighlight();
-                    target = unit;
+                    enemiesInRange.Add(unit);
                 }
             }
         }
@@ -197,7 +203,6 @@ public class UnitLoader : MonoBehaviour
             else
             {
                 TurnManager.instance.enemyUnits.Remove(this);
-                AIManager.instance.enemyOrder.Remove(this);
                 Destroy(gameObject);
             }
         }

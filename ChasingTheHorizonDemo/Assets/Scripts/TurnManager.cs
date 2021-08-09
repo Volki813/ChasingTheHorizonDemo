@@ -35,6 +35,8 @@ public class TurnManager : MonoBehaviour
         FindEnemies();
 
         allyTurnObject.SetActive(true);
+        cursor.ResetState();
+        Invoke("MapCursor", 1f);
         Debug.Log("Ally Turn");
     }
 
@@ -44,7 +46,7 @@ public class TurnManager : MonoBehaviour
 
         if(combatReadout.activeSelf == false)
         {
-            if (allyTurn == false)
+            if(allyTurn == false)
             {
                 AllyTurn();
             }
@@ -63,6 +65,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    
     private void AllyTurn()
     {
         for (int i=0; i<enemyUnits.Count; i++)
@@ -73,6 +76,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
+        StopAllCoroutines();
         cursor.ResetState();
         turnNumber++;
         RefreshAllys();
@@ -80,8 +84,15 @@ public class TurnManager : MonoBehaviour
         UpdateTiles();
         allyTurnObject.SetActive(true);
         enemyTurnObject.SetActive(false);
-        cursor.MapCursor = true;
+        Invoke("MapCursor", 1f);
+    }  
+
+    private void MapCursor()
+    {
+        cursor.controls.MapCursor.Enable();
     }
+
+
     private void EnemyTurn()
     {
         for (int i = 0; i < allyUnits.Count; i++)
@@ -92,8 +103,9 @@ public class TurnManager : MonoBehaviour
             }
         }
 
+        StopAllCoroutines();
         cursor.ResetState();
-        cursor.EnemyTurnCursor = true;
+        cursor.controls.Disable();
         allyTurn = false;
         allyTurnObject.SetActive(false);
         enemyTurnObject.SetActive(true);
@@ -103,7 +115,7 @@ public class TurnManager : MonoBehaviour
         AIManager.instance.SetEnemyOrder();
         RefreshEnemies();
         AIManager.instance.StopAllCoroutines();
-        AIManager.instance.StartAI();
+        AIManager.instance.Invoke("StartAI", 1.5f);
     }
     public void FindAllys()
     {
@@ -146,5 +158,4 @@ public class TurnManager : MonoBehaviour
             tile.UpdateOccupationStatus();
         }
     }
-
 }

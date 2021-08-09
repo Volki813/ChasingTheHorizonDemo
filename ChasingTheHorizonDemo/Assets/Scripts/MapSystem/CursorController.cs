@@ -2,23 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class CursorController : MonoBehaviour
 {
+    public CursorControls controls;
+
     private Vector3 currentPosition;
 
     public UnitLoader selectedUnit;
 
     [SerializeField]
     private GameObject menu;
-
-    [Header("Cursor State Machine")]
-    public bool MapCursor = false;
-    public bool UnitCursor = false;
-    public bool MenuCursor = false;
-    public bool ActionMenuCursor = false;
-    public bool NeutralCursor = false;
-    public bool EnemyTurnCursor = false;
 
     [Header("Main Camera")]
     [SerializeField]
@@ -60,49 +55,39 @@ public class CursorController : MonoBehaviour
     [SerializeField]
     private Text tileCost;
 
+    private void Awake()
+    {
+        controls = new CursorControls();
+        //MapCursor Controls
+        controls.MapCursor.SelectUnit.performed += ctx => SelectUnit();
+        controls.MapCursor.DisplayMenu.performed += ctx => DisplayMenu();
+        controls.MapCursor.Movement.performed += ctx => MapMovement(ctx.ReadValue<Vector2>());
+        
+        //UnitCursor Controls
+        controls.UnitCursor.DeselectUnit.performed += ctx => DeselectUnit();
+        controls.UnitCursor.Movement.performed += ctx => MapMovement(ctx.ReadValue<Vector2>());
+        controls.UnitCursor.MoveUnit.performed += ctx => MoveUnit();
+
+        //AttackCursor Controls
+        controls.AttackCursor.Attack.performed += ctx => AttackUnit();
+        controls.AttackCursor.Cancel.performed += ctx => CancelAttack();
+        controls.AttackCursor.Movement.performed += ctx => MapMovement(ctx.ReadValue<Vector2>());
+
+        //ActionMenuCursor Controls
+        controls.ActionMenuCursor.UndoMove.performed += ctx => UndoMove();
+
+        //MenuCursor Controls
+        controls.MenuCursor.CloseMenu.performed += ctx => CloseMenu();
+    }
+
     private void Start()
     {
-        MapCursor = true;
         currentPosition = transform.position;
     }
 
     private void Update()
     {
-        StateManager();
-    }
-
-    //Manages all the Cursor states
-    private void StateManager()
-    {
         CursorCameraMovement();
-        if(MapCursor == true)
-        {
-            MapMovement();
-            SelectUnit();
-            DisplayMenu();
-        }
-        else if(UnitCursor == true)
-        {
-            MapMovement();
-            DeselectUnit();
-            MoveUnit();
-        }
-        else if(MenuCursor == true)
-        {
-            CloseMenu();
-        }    
-        else if(ActionMenuCursor == true)
-        {
-            UndoMove();
-        }
-        else if(NeutralCursor == true)
-        {
-
-        }
-        else if(EnemyTurnCursor == true)
-        {
-
-        }
     }
 
     //This allows the cursor to move the camera when it moves to the edge of the viewport
@@ -142,17 +127,17 @@ public class CursorController : MonoBehaviour
     }
 
     //This is for the Cursor to move along the grid of the map
-    private void MapMovement()
+    private void MapMovement(Vector2 direction)
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if(direction == new Vector2(-1, 0))
         {
-            if (currentPosition.x > leftMost.x)
+            if(currentPosition.x > leftMost.x)
             {
                 currentPosition.x -= 1;
                 transform.position = currentPosition;
             }
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if(direction == new Vector2(1, 0))
         {
             if (currentPosition.x < rightMost.x)
             {
@@ -160,7 +145,7 @@ public class CursorController : MonoBehaviour
                 transform.position = currentPosition;
             }
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if(direction == new Vector2(0, 1))
         {
             if (currentPosition.y < topMost.y)
             {
@@ -168,7 +153,7 @@ public class CursorController : MonoBehaviour
                 transform.position = currentPosition;
             }
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if(direction == new Vector2(0, -1))
         {
             if (currentPosition.y > bottomMost.y)
             {
@@ -183,18 +168,29 @@ public class CursorController : MonoBehaviour
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(Input.GetKeyDown(Controls.instance.confirmButton) && transform.position == unit.transform.position && selectedUnit == null)
+            if(transform.position == unit.transform.position && selectedUnit == null)
             {
                 if(unit.unit.allyUnit && unit.rested == false)
                 {
                     selectedUnit = unit;
                     unit.Selected();
 
-                    MapCursor = false;
-                    UnitCursor = true;
+                    controls.MapCursor.Disable();
+                    controls.UnitCursor.Enable();
                 }
             }
         }
+    }
+
+    //This deselects any selected unit
+    private void DeselectUnit()
+    {
+        selectedUnit.animator.SetBool("Selected", false);
+        selectedUnit.ResetTiles();
+        selectedUnit = null;
+
+        controls.UnitCursor.Disable();
+        controls.MapCursor.Enable();
     }
 
     //This lets you move the selected unit to a new tile
@@ -202,14 +198,14 @@ public class CursorController : MonoBehaviour
     {
         foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
         {
-            if(Input.GetKeyDown(Controls.instance.confirmButton) && transform.position == tile.transform.position)
+            if(transform.position == tile.transform.position)
             {
                 if(tile.walkable == true && selectedUnit.hasMoved == false)
                 {
                     selectedUnit.Move(tile.transform.position);
 
-                    UnitCursor = false;
-                    ActionMenuCursor = true;
+                    controls.UnitCursor.Disable();
+                    controls.ActionMenuCursor.Enable();
                 }
             }
         }
@@ -218,31 +214,44 @@ public class CursorController : MonoBehaviour
     //This puts the unit that just moved back in its original position
     private void UndoMove()
     {
-        if(Input.GetKeyDown(Controls.instance.cancelButton))
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            selectedUnit.transform.position = selectedUnit.originalPosition;
-            selectedUnit.hasMoved = false;
-            TurnManager.instance.RefreshTiles();
-            selectedUnit.ActionMenu();
-            selectedUnit.target = null;
-            selectedUnit = null;
-            ActionMenuCursor = false;
-            MapCursor = true;
+            if(!unit.unit.allyUnit)
+            {
+                unit.spriteRenderer.color = Color.white;
+            }
+        }
+        selectedUnit.transform.position = selectedUnit.originalPosition;
+        selectedUnit.hasMoved = false;
+        TurnManager.instance.RefreshTiles();
+        selectedUnit.ActionMenu();
+        selectedUnit.target = null;
+        selectedUnit = null;
+        controls.ActionMenuCursor.Disable();
+        controls.MapCursor.Enable();
+    }
+
+    //This lets you choose a unit to attack
+    private void AttackUnit()
+    {
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        {
+            if(transform.position == unit.transform.position && selectedUnit.enemiesInRange.Contains(unit))
+            {
+                selectedUnit.target = unit;
+                ActionMenuManager.instance.combatPreview.SetActive(true);
+                ActionMenuManager.instance.FillCombatPreview();
+            }
         }
     }
 
-    //This deselects any selected unit
-    private void DeselectUnit()
+    //This lets you cancel your attack 
+    private void CancelAttack()
     {
-        if(Input.GetKeyDown(Controls.instance.cancelButton) && selectedUnit != null)
-        {
-            selectedUnit.animator.SetBool("Selected", false);
-            selectedUnit.ResetTiles();
-            selectedUnit = null;
-
-            UnitCursor = false;
-            MapCursor = true;
-        }
+        selectedUnit.target = null;
+        ActionMenuManager.instance.combatPreview.SetActive(false);
+        ResetState();
+        UndoMove();
     }
 
     //Opens the Menu
@@ -252,13 +261,10 @@ public class CursorController : MonoBehaviour
         {
             if(transform.position == tile.transform.position && tile.occupied == false)
             {
-                if(Input.GetKeyDown(Controls.instance.confirmButton))
-                {
-                    MapCursor = false;
-                    UnitCursor = false;
-                    MenuCursor = true;
-                    menu.SetActive(true);
-                }
+                controls.MapCursor.Disable();
+                controls.UnitCursor.Disable();
+                controls.MenuCursor.Enable();
+                menu.SetActive(true);
             }
         }
     }
@@ -266,22 +272,19 @@ public class CursorController : MonoBehaviour
     //Closes the Menu
     private void CloseMenu()
     {
-        if(Input.GetKeyDown(Controls.instance.cancelButton))
-        {
-            menu.SetActive(false);
-            MenuCursor = false;
-            MapCursor = true;
-        }
+        menu.SetActive(false);
+        controls.MenuCursor.Disable();
+        controls.MapCursor.Enable();
     } 
 
     //Turns all the cursor booleans false making changing the cursor state less tedious
     public void ResetState()
     {
-        MapCursor = false;
-        UnitCursor = false;
-        MenuCursor = false;
-        ActionMenuCursor = false;
-        NeutralCursor = false;
-        EnemyTurnCursor = false;
+        controls.MapCursor.Disable();
+        controls.UnitCursor.Disable();
+        controls.MenuCursor.Disable();
+        controls.ActionMenuCursor.Disable();
+        controls.NeutralCursor.Disable();
+        controls.AttackCursor.Disable();
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DialogueSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class CombatManager : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class CombatManager : MonoBehaviour
     public Slider attackerHealth;
     public Slider defenderHealth;
 
+    DialogueHolder dialogueHolder;
+
     private void Awake()
     {
         instance = this;
@@ -28,6 +32,7 @@ public class CombatManager : MonoBehaviour
     {
         mainCamera = FindObjectOfType<Camera>();
         cursor = FindObjectOfType<CursorController>();
+        dialogueHolder = FindObjectOfType<DialogueHolder>();
     }
 
     public void EngageAttack(UnitLoader attacker, UnitLoader defender)
@@ -47,6 +52,14 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator Attack(UnitLoader attacker, UnitLoader defender)
     {
+        //check if defending unit has dialogue when attacked
+        if(defender.attackedDialogue != null)
+        {
+            defender.attackedDialogue.transform.SetParent(dialogueHolder.transform);
+            dialogueHolder.StartDialogue();
+        }
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
         ActionCamera(attacker, defender);
 
         combatReadout.SetActive(true);
@@ -63,18 +76,27 @@ public class CombatManager : MonoBehaviour
 
         if(CheckForDeaths(attacker, defender) == "Attacker")
         {
+            //if unit has death dialogue, display it
             attacker.Death();
             combatReadout.SetActive(false);
             ResetCamera();
             cursor.ResetState();
             if(attacker.unit.allyUnit)
             {
-                cursor.MapCursor = true;
+                cursor.controls.MapCursor.Enable();
             }
             yield return null;
         }
         else if(CheckForDeaths(attacker, defender) == "Defender")
         {
+            //if unit has death dialogue, display it
+            if(defender.defeatedDialogue != null)
+            {
+                defender.defeatedDialogue.transform.SetParent(dialogueHolder.transform);
+                defender.defeatedDialogue.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                dialogueHolder.StartDialogue();
+            }
+            yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
             defender.Death();
             combatReadout.SetActive(false);
             attacker.Rest();
@@ -82,7 +104,7 @@ public class CombatManager : MonoBehaviour
             cursor.ResetState();
             if (attacker.unit.allyUnit)
             {
-                cursor.MapCursor = true;
+                cursor.controls.MapCursor.Enable();
             }
             yield return null;
         }
@@ -108,12 +130,20 @@ public class CombatManager : MonoBehaviour
                 cursor.ResetState();
                 if (attacker.unit.allyUnit)
                 {
-                    cursor.MapCursor = true;
+                    cursor.controls.MapCursor.Enable();
                 }
                 yield return null;
             }
             else if(CheckForDeaths(attacker, defender) == "Defender")
-            {
+            {   
+                //if unit has death dialogue, display it
+                if (defender.defeatedDialogue != null)
+                {
+                    defender.defeatedDialogue.transform.SetParent(dialogueHolder.transform);
+                    defender.defeatedDialogue.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                    dialogueHolder.StartDialogue();
+                }
+                yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
                 defender.Death();
                 combatReadout.SetActive(false);
                 attacker.Rest();
@@ -121,7 +151,7 @@ public class CombatManager : MonoBehaviour
                 cursor.ResetState();
                 if (attacker.unit.allyUnit)
                 {
-                    cursor.MapCursor = true;
+                    cursor.controls.MapCursor.Enable();
                 }
                 yield break;
             }
@@ -139,8 +169,7 @@ public class CombatManager : MonoBehaviour
                     yield return new WaitForSeconds(0.3f);
 
                     cursor.ResetState();
-                    cursor.MapCursor = true;
-                    yield return null;
+                    cursor.controls.MapCursor.Enable(); yield return null;
                 }
                 combatReadout.SetActive(false);
                 attacker.Rest();
@@ -148,7 +177,7 @@ public class CombatManager : MonoBehaviour
                 cursor.ResetState();
                 if (attacker.unit.allyUnit)
                 {
-                    cursor.MapCursor = true;
+                    cursor.controls.MapCursor.Enable();
                 }
                 yield return null;
             }
@@ -162,7 +191,7 @@ public class CombatManager : MonoBehaviour
             cursor.ResetState();
             if (attacker.unit.allyUnit)
             {
-                cursor.MapCursor = true;
+                cursor.controls.MapCursor.Enable();
             }
             yield return null;
         }
@@ -175,11 +204,10 @@ public class CombatManager : MonoBehaviour
         cursor.ResetState();
         if(attacker.unit.allyUnit)
         {
-            cursor.MapCursor = true;
+            cursor.controls.MapCursor.Enable();
         }
         yield return null;
     }
-
 
     private void ActionCamera(UnitLoader attacker, UnitLoader defender)
     {
@@ -255,33 +283,9 @@ public class CombatManager : MonoBehaviour
 
     private void AttackAnimation(UnitLoader attacker, UnitLoader defender)
     {
-        //Diagonal Attacks
-        if(attacker.unit.allyUnit && attacker.unit.diagonal)
+        //XY Attacks
+        if(attacker.transform.position.y == defender.transform.position.y)
         {
-            if(attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
-            {
-                attacker.animator.SetTrigger("AttackUpRight"); //Unit is down left of the enemy so it attacks up right
-                return;
-            }
-            if (attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
-            {
-                attacker.animator.SetTrigger("AttackUpLeft"); //Down Right
-                return;
-            }
-            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
-            {
-                attacker.animator.SetTrigger("AttackDownLeft"); //Up Right
-                return;
-            }
-            if (attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
-            {
-                attacker.animator.SetTrigger("AttackUpRight"); //Up Left
-                return;
-            }
-        }
-        else
-        {
-            //XY Attacks
             if (attacker.transform.position.x < defender.transform.position.x)
             {
                 attacker.animator.SetTrigger("AttackRight"); //Unit is to the left of enemy so it attacks right
@@ -290,13 +294,41 @@ public class CombatManager : MonoBehaviour
             {
                 attacker.animator.SetTrigger("AttackLeft"); //Unit is to the right of the enemy so it attacks left
             }
-            else if (attacker.transform.position.y < defender.transform.position.y)
+        }
+        else if (attacker.transform.position.x == defender.transform.position.x)
+        {
+            if (attacker.transform.position.y < defender.transform.position.y)
             {
                 attacker.animator.SetTrigger("AttackUp"); //Unit is below the enemy so it attacks up
             }
             else if (attacker.transform.position.y > defender.transform.position.y)
             {
                 attacker.animator.SetTrigger("AttackDown"); //Unit is above the enemy so it attacks down
+            }
+        }
+
+        //Diagonal Attacks
+        else if(attacker.unit.diagonal)
+        {
+            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackUpRight"); //Unit is down left of the enemy so it attacks up right
+                return;
+            }
+            if (attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y < defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackUpLeft"); //Unit is down right of the enemy so it attacks up left
+                return;
+            }
+            if (attacker.transform.position.x < defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackDownRight"); //Unit is up right of the enemy so it attacks down left
+                return;
+            }
+            if (attacker.transform.position.x > defender.transform.position.x && attacker.transform.position.y > defender.transform.position.y)
+            {
+                attacker.animator.SetTrigger("AttackDownLeft"); //Unit is up left of the enemy so it attacks down right
+                return;
             }
         }
     }

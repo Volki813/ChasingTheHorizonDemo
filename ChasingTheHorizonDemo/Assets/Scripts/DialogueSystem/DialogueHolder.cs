@@ -33,7 +33,7 @@ namespace DialogueSystem
         {
             StartCoroutine(DialogueSequence());
             cursor.ResetState();
-            cursor.NeutralCursor = true;
+            cursor.controls.NeutralCursor.Enable();
         }
 
         private IEnumerator DialogueSequence()
@@ -96,7 +96,7 @@ namespace DialogueSystem
                     Deactivate();
 
                     cursor.ResetState();
-                    cursor.MapCursor = true;
+                    cursor.controls.MapCursor.Enable();
                 }
             }
         }

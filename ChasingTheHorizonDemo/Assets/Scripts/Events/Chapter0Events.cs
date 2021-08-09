@@ -5,14 +5,19 @@ using DialogueSystem;
 
 public class Chapter0Events : MonoBehaviour
 {
+    private CursorControls controls;
+
     public bool leahSpawned;
 
     public GameObject leah;
     DialogueHolder dialogueHolder;
 
     public GameObject leahDialogue;
-    public GameObject royAttacked;
-    public GameObject royDefeated;
+
+    private void Awake()
+    {
+        controls = new CursorControls();
+    }
 
     private void Start()
     {
@@ -31,6 +36,7 @@ public class Chapter0Events : MonoBehaviour
     {
         if(TurnManager.instance.turnNumber == 2)
         {
+            controls.NeutralCursor.Enable();
             leah.SetActive(true);
             TurnManager.instance.UpdateTiles();
             TurnManager.instance.allyUnits.Add(leah.GetComponent<UnitLoader>());
@@ -38,15 +44,5 @@ public class Chapter0Events : MonoBehaviour
             leahDialogue.transform.SetParent(dialogueHolder.transform);
             dialogueHolder.StartDialogue();
         }
-    }
-
-    private void RoyAttacked()
-    {
-
-    }
-
-    private void RoyDefeated()
-    {
-
     }
 }

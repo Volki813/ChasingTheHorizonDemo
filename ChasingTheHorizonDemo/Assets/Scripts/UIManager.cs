@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
             if(transform.position == unit.transform.position && unit.unit.allyUnit)
             {
                 unitPortrait.sprite = unit.unit.portrait;
-                unitName.text = unit.name;
+                unitName.text = unit.unit.unitName;
                 unitHP.text = "HP: " + unit.currentHealth.ToString() + "/" + unit.unit.statistics.health.ToString();
                 unitEXP.text = "Exp: " + unit.unit.exp.ToString();
                 unitLevel.text = "Lvl: " + unit.unit.level.ToString();
@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
             if (transform.position == unit.transform.position && !unit.unit.allyUnit)
             {
                 enemyPortrait.sprite = unit.unit.portrait;
-                enemyName.text = unit.name;
+                enemyName.text = unit.unit.unitName;
                 enemyHP.text = "HP: " + unit.currentHealth.ToString() + "/" + unit.unit.statistics.health.ToString();
                 unitEXP.text = "Exp: " + unit.unit.exp.ToString();
                 enemyLevel.text = "Lvl: " + unit.unit.level.ToString();
