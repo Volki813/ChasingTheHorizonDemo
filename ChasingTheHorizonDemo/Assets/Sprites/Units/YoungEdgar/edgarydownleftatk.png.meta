@@ -1,0 +1,373 @@
+fileFormatVersion: 2
+guid: 6d4373ed5098c3d4ca67cc758422ce8a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5798807751940301519
+    second: edgarydownleftatk_0
+  - first:
+      213: -6752412172459906648
+    second: edgarydownleftatk_1
+  - first:
+      213: -513348285018251153
+    second: edgarydownleftatk_2
+  - first:
+      213: -276193555119160412
+    second: edgarydownleftatk_3
+  - first:
+      213: -1640995697908574377
+    second: edgarydownleftatk_4
+  - first:
+      213: 2014343806380984082
+    second: edgarydownleftatk_5
+  - first:
+      213: -5711784697200761000
+    second: edgarydownleftatk_6
+  - first:
+      213: 722800174272176428
+    second: edgarydownleftatk_7
+  - first:
+      213: -4427188610345913531
+    second: edgarydownleftatk_8
+  - first:
+      213: -8332329433880924151
+    second: edgarydownleftatk_9
+  - first:
+      213: 5358105238786820736
+    second: edgarydownleftatk_10
+  - first:
+      213: 8642518248672095257
+    second: edgarydownleftatk_11
+  - first:
+      213: 8856876931985236092
+    second: edgarydownleftatk_12
+  - first:
+      213: 6588241889159518550
+    second: edgarydownleftatk_13
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: edgarydownleftatk_0
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 503
+        width: 73
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13d11d0b21f768fa0800000000000000
+      internalID: -5798807751940301519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_1
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 500
+        width: 70
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a9e08ba7ec9a42a0800000000000000
+      internalID: -6752412172459906648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_2
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 497
+        width: 90
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f606e61647830e8f0800000000000000
+      internalID: -513348285018251153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_3
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 300
+        width: 73
+        height: 97
+      alignment: 9
+      pivot: {x: 0.60794425, y: 0.53446376}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a3ced9cc63ca2cf0800000000000000
+      internalID: -276193555119160412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_4
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 293
+        width: 70
+        height: 104
+      alignment: 9
+      pivot: {x: 0.54775697, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 757173c6b130a39e0800000000000000
+      internalID: -1640995697908574377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_5
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 293
+        width: 73
+        height: 104
+      alignment: 9
+      pivot: {x: 0.52616817, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 217c8daf40364fb10800000000000000
+      internalID: 2014343806380984082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_6
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 37
+        width: 163
+        height: 163
+      alignment: 9
+      pivot: {x: 0.76222444, y: 0.70216185}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85726d9841aabb0b0800000000000000
+      internalID: -5711784697200761000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_9
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 17
+        width: 183
+        height: 183
+      alignment: 9
+      pivot: {x: 0.7727111, y: 0.7192127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 900fef5c68e9d5c80800000000000000
+      internalID: -8332329433880924151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edgarydownleftatk_10
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 17
+        width: 173
+        height: 180
+      alignment: 9
+      pivot: {x: 0.8188406, y: 0.69766116}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08a4c038350db5a40800000000000000
+      internalID: 5358105238786820736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

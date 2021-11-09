@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2abe4e95c9d2594e8aeb930167e9b2f, type: 3}
+  m_Name: Ice
+  m_EditorClassIdentifier: 
+  itemName: Ice
+  itemIcon: {fileID: 21300000, guid: 22a6283faf56660489eda8ed8a8ad8cf, type: 3}
+  itemDescription: Freezing ice magic!
+  type: 1
+  might: 5
+  hit: 95
+  crit: 10
+  range: 2
+  weight: 1
+  animation: {fileID: 1087997730662671387, guid: 74d7415c57ee55f42b3a5caf4ade90bd,
+    type: 3}
+  animationLength: {fileID: 7400000, guid: 9c8436b2ee9d07c4b827e74c1d25a3f0, type: 2}
