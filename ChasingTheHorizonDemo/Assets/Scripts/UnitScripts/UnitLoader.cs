@@ -26,8 +26,6 @@ public class UnitLoader : MonoBehaviour
     public GameObject actionMenu = null;
     public Weapon equippedWeapon = null;
     public List<UnitLoader> enemiesInRange = new List<UnitLoader>();
-    public DialogueLine attackedDialogue = null;
-    public DialogueLine defeatedDialogue = null;
     [SerializeField] private Transform actionMenuSpawn = null;
 
     private void Start()
@@ -108,7 +106,7 @@ public class UnitLoader : MonoBehaviour
         }
         hasMoved = true;
         rested = true;
-        GetComponent<SpriteRenderer>().color = Color.grey;        
+        GetComponent<SpriteRenderer>().color = Color.grey;         
     }
     public void Stand()
     {
@@ -213,7 +211,7 @@ public class UnitLoader : MonoBehaviour
         {
             if(unit.allyUnit)
             {
-                TurnManager.instance.allyUnits.Remove(this);
+                TurnManager.instance.allyUnits.Remove(this);                
                 Destroy(gameObject);
             }
             else
@@ -237,5 +235,10 @@ public class UnitLoader : MonoBehaviour
         {
             actionMenu.SetActive(true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        TurnManager.instance.RefreshTiles();
     }
 }

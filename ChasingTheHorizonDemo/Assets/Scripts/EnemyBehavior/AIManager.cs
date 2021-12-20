@@ -51,7 +51,7 @@ public class AIManager : MonoBehaviour
 
             if(enemies[i].GetComponent<BehaviorTag>().blitz)
             {
-                Blitz(currentEnemy);
+                Blitz(currentEnemy);                
                 yield return new WaitForSeconds(3f);
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
@@ -59,15 +59,20 @@ public class AIManager : MonoBehaviour
             else if(enemies[i].GetComponent<BehaviorTag>().defensive)
             {
                 Defensive();
-                yield return new WaitForSeconds(3f);
+                if(IsLastEnemy() && combatReadout.activeSelf == false) {
+                    yield return new WaitForSeconds(1f);
+                }
+                else{
+                    yield return new WaitForSeconds(3f);
+                }
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
             }
             yield return new WaitUntil(() => combatReadout.activeSelf == false);
         }
-        cursor.enemyTurn = false;
         enemyOrder.Clear();
         SetEnemyOrder();
+        cursor.enemyTurn = false;
         yield return null;
     }
 
@@ -103,10 +108,9 @@ public class AIManager : MonoBehaviour
         }
         else if(enemiesInRange.Count >= 2)
         {
-            CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
+            UnitLoader weakestUnit = DetermineWeakestUnit();
+            CombatManager.instance.EngageAttack(currentEnemy, weakestUnit);
         }
-        StopAllCoroutines();
-        mainCamera.transform.position = new Vector3(0, 1, -10);
     }
     public void SetEnemyOrder()
     {
@@ -147,10 +151,12 @@ public class AIManager : MonoBehaviour
     private UnitLoader DetermineWeakestUnit()
     {
         UnitLoader weakestUnit = null;
-        foreach (UnitLoader unit in enemiesInRange)
+        int highestDamage = 0;
+        foreach(UnitLoader unit in enemiesInRange)
         {
-            if(unit.currentHealth - CombatManager.instance.Hit(currentEnemy, unit) <= 0)
+            if (CombatManager.instance.Hit(currentEnemy, unit) > highestDamage)
             {
+                highestDamage = CombatManager.instance.Hit(currentEnemy, unit);
                 weakestUnit = unit;
             }
         }
@@ -183,6 +189,14 @@ public class AIManager : MonoBehaviour
             }
         }
         return closestTile;
+    }
+
+    private bool IsLastEnemy()
+    {
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits) {
+            if (unit.rested == false) return false;
+        }
+        return true;
     }
 
     public void Move(UnitLoader currentEnemy, Vector2 targetPosition)
@@ -238,12 +252,11 @@ public class AIManager : MonoBehaviour
 
         TurnManager.instance.UpdateTiles();
     }
-
     private IEnumerator MoveCamera(UnitLoader enemy)
     {
         while(mainCamera.transform.position != new Vector3(enemy.transform.localPosition.x, enemy.transform.localPosition.y, -10))
         {
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, new Vector3(enemy.transform.localPosition.x, enemy.transform.localPosition.y, -10), 3f * Time.fixedDeltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, new Vector3(enemy.transform.localPosition.x, enemy.transform.localPosition.y, -10), 3.7f * Time.fixedDeltaTime);
             yield return null;
         }
     }

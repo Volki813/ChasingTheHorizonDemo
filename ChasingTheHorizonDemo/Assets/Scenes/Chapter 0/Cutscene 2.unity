@@ -1420,6 +1420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf2b004373e65d4790b76b5dac46ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundFXs: []
 --- !u!82 &821606844
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4043,8 +4044,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 11}
-  m_SizeDelta: {x: 1280, y: 680}
+  m_AnchoredPosition: {x: 8.1, y: 3.6}
+  m_SizeDelta: {x: 1298.5051, y: 694.7168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2110932885
 MonoBehaviour:

@@ -98,6 +98,17 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                     ""action"": ""BDialogueNext"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4a4f471-2a82-4ef0-90b5-5c3faa1a2d29"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""BDialogueNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }

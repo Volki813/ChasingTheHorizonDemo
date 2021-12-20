@@ -9,6 +9,8 @@ public class SoundManager : MonoBehaviour
 
     private AudioSource source;
 
+    [SerializeField] private AudioClip[] soundFXs = null;
+
     private void Awake()
     {
         instance = this;
@@ -18,5 +20,10 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(AudioClip sound)
     {
         source.PlayOneShot(sound);
+    }
+
+    public void PlayFX(int fx)
+    {
+        source.PlayOneShot(soundFXs[fx]);
     }
 }

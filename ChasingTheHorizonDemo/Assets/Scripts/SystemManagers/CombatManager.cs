@@ -52,9 +52,14 @@ public class CombatManager : MonoBehaviour
         defenderHealth.value = defender.currentHealth;
 
     }
-
     private IEnumerator Attack(UnitLoader attacker, UnitLoader defender)
     {
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>()) {
+            if(unit.GetComponent<SpriteRenderer>().color == Color.red) {
+                unit.GetComponent<SpriteRenderer>().color = Color.white;
+            }
+        }
+
         cursor.controls.Disable();
         cursor.GetComponent<SpriteRenderer>().sprite = null;
 
@@ -64,7 +69,7 @@ public class CombatManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         AttackAnimation(attacker, defender);
-        yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length);
+        yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length);        
 
         if(attacker.equippedWeapon.animation)
         {
@@ -80,10 +85,11 @@ public class CombatManager : MonoBehaviour
             attacker.DelayedDeath();
             combatReadout.SetActive(false);
             ResetCamera();
-            cursor.ResetState();
             if(attacker.unit.allyUnit)
             {
-                cursor.controls.MapCursor.Enable();
+                cursor.controls.UI.Disable();
+                cursor.controls.MapScene.Enable();
+                cursor.SetState(new MapState(cursor));
             }
             yield return null;
         }
@@ -93,10 +99,11 @@ public class CombatManager : MonoBehaviour
             combatReadout.SetActive(false);
             attacker.Rest();
             ResetCamera();
-            cursor.ResetState();
             if (attacker.unit.allyUnit)
             {
-                cursor.controls.MapCursor.Enable();
+                cursor.controls.UI.Disable();
+                cursor.controls.MapScene.Enable();
+                cursor.SetState(new MapState(cursor));
             }
             yield return null;
         }
@@ -122,10 +129,11 @@ public class CombatManager : MonoBehaviour
                 attacker.DelayedDeath();
                 combatReadout.SetActive(false);
                 ResetCamera();
-                cursor.ResetState();
                 if (attacker.unit.allyUnit)
                 {
-                    cursor.controls.MapCursor.Enable();
+                    cursor.controls.UI.Disable();
+                    cursor.controls.MapScene.Enable();
+                    cursor.SetState(new MapState(cursor));
                 }
                 yield return null;
             }
@@ -135,10 +143,11 @@ public class CombatManager : MonoBehaviour
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
-                cursor.ResetState();
                 if (attacker.unit.allyUnit)
                 {
-                    cursor.controls.MapCursor.Enable();
+                    cursor.controls.UI.Disable();
+                    cursor.controls.MapScene.Enable();
+                    cursor.SetState(new MapState(cursor));
                 }
                 yield break;
             }
@@ -158,16 +167,17 @@ public class CombatManager : MonoBehaviour
                     InitiatorAttack(attacker, defender);
                     yield return new WaitForSeconds(0.3f);
 
-                    cursor.ResetState();
-                    cursor.controls.MapCursor.Enable(); yield return null;
+                    cursor.SetState(new MapState(cursor));
+                    yield return null;
                 }
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
-                cursor.ResetState();
                 if (attacker.unit.allyUnit)
                 {
-                    cursor.controls.MapCursor.Enable();
+                    cursor.controls.UI.Disable();
+                    cursor.controls.MapScene.Enable();
+                    cursor.SetState(new MapState(cursor));
                 }
                 yield return null;
             }
@@ -178,10 +188,11 @@ public class CombatManager : MonoBehaviour
                 attacker.Rest();
             }
             ResetCamera();
-            cursor.ResetState();
             if (attacker.unit.allyUnit)
             {
-                cursor.controls.MapCursor.Enable();
+                cursor.controls.UI.Disable();
+                cursor.controls.MapScene.Enable();
+                cursor.SetState(new MapState(cursor));
             }
             yield return null;
         }
@@ -191,25 +202,25 @@ public class CombatManager : MonoBehaviour
             attacker.Rest();
         }
         ResetCamera();
-        cursor.ResetState();
         if(attacker.unit.allyUnit)
         {
-            cursor.controls.MapCursor.Enable();
+            cursor.controls.UI.Disable();
+            cursor.controls.MapScene.Enable();
+            cursor.SetState(new MapState(cursor));
         }
 
         //This block checks if an Ally Unit is below 50% health, which if true triggers their battle dialogue
-        if(!BattleDialogueManager.instance.busy && attacker.unit.allyUnit && attacker.currentHealth < attacker.unit.statistics.health * 0.5f && attacker.currentHealth > 0)
-        {
-            int randomNumber = Random.Range(0, attacker.GetComponent<BattleDialogue>().under50Quotes.Length);
-            BattleDialogueManager.instance.WriteDialogue(attacker.GetComponent<BattleDialogue>().under50Quotes[randomNumber], attacker);
+        if(attacker.unit.allyUnit && attacker.currentHealth < (attacker.unit.statistics.health * .5f)){
+            MapDialogueManager.instance.WriteSingle(attacker.GetComponent<BattleDialogue>().under50Quote);
         }
-        else if(!BattleDialogueManager.instance.busy && defender.unit.allyUnit && defender.currentHealth < defender.unit.statistics.health * 0.5f && defender.currentHealth > 0)
-        {
-            int randomNumber = Random.Range(0, defender.GetComponent<BattleDialogue>().under50Quotes.Length);
-            BattleDialogueManager.instance.WriteDialogue(defender.GetComponent<BattleDialogue>().under50Quotes[randomNumber], defender);
+        else if(defender.unit.allyUnit && defender.currentHealth < (defender.unit.statistics.health * .5f)){
+            MapDialogueManager.instance.WriteSingle(defender.GetComponent<BattleDialogue>().under50Quote);
         }
 
-        cursor.GetComponent<SpriteRenderer>().sprite = cursor.highlight;
+        if(TurnManager.instance.currentState.stateType == TurnState.StateType.Player)
+        {
+            cursor.GetComponent<SpriteRenderer>().sprite = cursor.highlight;
+        }        
         yield return null;
     }
 
@@ -230,7 +241,6 @@ public class CombatManager : MonoBehaviour
         mainCamera.orthographicSize = originalCameraSize;
     }
     
-
     private void InitiatorAttack(UnitLoader attacker, UnitLoader defender)
     {
         //Check for a hit
@@ -240,20 +250,22 @@ public class CombatManager : MonoBehaviour
             if(CritRoll(attacker))
             {
                 //Unit Crits                
+                SoundManager.instance.PlayFX(4);
                 battleText.SetText("Crit");                
                 Instantiate(battleText, defender.transform.position, Quaternion.identity);
                 defender.currentHealth = defender.currentHealth - Critical(attacker, defender);
                 defenderHealth.value = defender.currentHealth;
-                if (attacker.unit.allyUnit)
+                
+                //Display critial quote
+                if(attacker.unit.allyUnit)
                 {
-                    BattleDialogueManager.instance.busy = true;
-                    int randomNumber = Random.Range(0, attacker.GetComponent<BattleDialogue>().criticalQuotes.Length);
-                    BattleDialogueManager.instance.WriteDialogue(attacker.GetComponent<BattleDialogue>().criticalQuotes[randomNumber], attacker);
+                    MapDialogueManager.instance.WriteSingle(attacker.GetComponent<BattleDialogue>().RandomCritQuote());
                 }
             }
             else
             {
                 //Unit Hits
+                SoundManager.instance.PlayFX(3);
                 battleText.SetText("Hit");
                 Instantiate(battleText, defender.transform.position, Quaternion.identity);
                 defender.currentHealth = defender.currentHealth - Hit(attacker, defender);
@@ -263,6 +275,7 @@ public class CombatManager : MonoBehaviour
         else
         {
             //Unit Misses
+            SoundManager.instance.PlayFX(5);
             battleText.SetText("Miss");
             Instantiate(battleText, defender.transform.position, Quaternion.identity);
             return;
@@ -278,21 +291,23 @@ public class CombatManager : MonoBehaviour
                 //Checks for a crit
                 if (CritRoll(defender))
                 {
-                    //Unit Crits                    
+                    //Unit Crits
+                    SoundManager.instance.PlayFX(4);
                     battleText.SetText("Crit");
                     Instantiate(battleText, attacker.transform.position, Quaternion.identity);
                     attacker.currentHealth = attacker.currentHealth - Critical(defender, attacker);
                     attackerHealth.value = attacker.currentHealth;
-                    if (defender.unit.allyUnit)
+                    
+                    //Display critial quote
+                    if(defender.unit.allyUnit)
                     {
-                        BattleDialogueManager.instance.busy = true;
-                        int randomNumber = Random.Range(0, defender.GetComponent<BattleDialogue>().criticalQuotes.Length);
-                        BattleDialogueManager.instance.WriteDialogue(defender.GetComponent<BattleDialogue>().criticalQuotes[randomNumber], defender);
+                        MapDialogueManager.instance.WriteSingle(defender.GetComponent<BattleDialogue>().RandomCritQuote());
                     }
                 }
                 else
                 {
                     //Unit Hits
+                    SoundManager.instance.PlayFX(3);
                     battleText.SetText("Hit");
                     Instantiate(battleText, attacker.transform.position, Quaternion.identity);
                     attacker.currentHealth = attacker.currentHealth - Hit(defender, attacker);
@@ -302,6 +317,7 @@ public class CombatManager : MonoBehaviour
             else
             {
                 //Unit Misses
+                SoundManager.instance.PlayFX(5);
                 battleText.SetText("Miss");
                 Instantiate(battleText, attacker.transform.position, Quaternion.identity);
                 return;
@@ -446,7 +462,6 @@ public class CombatManager : MonoBehaviour
         }
         return null;
     }
-
     private bool CheckAttackSpeed(UnitLoader attacker, UnitLoader defender)
     {
         if(attacker.CombatStatistics().attackSpeed > defender.CombatStatistics().attackSpeed + 5)
@@ -454,7 +469,6 @@ public class CombatManager : MonoBehaviour
         else
             return false;
     }
-
     private float CheckDistance(UnitLoader unit1, UnitLoader unit2)
     {
         return Mathf.Abs(unit1.transform.position.x - unit2.transform.position.x) + Mathf.Abs(unit1.transform.position.y - unit2.transform.position.y);
