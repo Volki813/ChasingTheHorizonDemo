@@ -25,6 +25,7 @@ public class LeahEvent : Event
         Vector3 targetPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, -10);
 
         leahObject.SetActive(true);
+        TurnManager.instance.allyUnits.Add(leahObject.GetComponent<UnitLoader>());
         
         cursor.transform.position = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);
         cursor.currentPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);

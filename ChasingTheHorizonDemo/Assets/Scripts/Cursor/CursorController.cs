@@ -1,6 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 //Handles the functionality of the Cursor
 //There should only be 1 CursorController script in any given scene
 public class CursorController : MonoBehaviour
@@ -34,8 +35,8 @@ public class CursorController : MonoBehaviour
     private CursorState currentState;
     public CursorState previousState;
 
-    private InputAction.CallbackContext moveContext;
-    private bool movePressed = false;
+    public bool moveHeld = false;
+    public List<MovementRequest> movementRequests = new List<MovementRequest>();
 
     public void SetState(CursorState state)
     {
@@ -52,8 +53,10 @@ public class CursorController : MonoBehaviour
         controls.MapScene.Cancel.performed += ctx => Cancel();
         controls.UI.Confirm.performed += ctx => Confirm();
         controls.UI.Cancel.performed += ctx => Cancel();
+;
+        controls.MapScene.Movement.performed += ctx => ButtonPressed(ctx, ctx.ReadValue<Vector2>());
+        controls.MapScene.Movement.canceled += ctx => ButtonReleased(ctx);
 
-        controls.MapScene.Movement.performed += ctx => MapMovement(ctx.ReadValue<Vector2>());
     }
     private void Start()
     {
@@ -63,6 +66,41 @@ public class CursorController : MonoBehaviour
         controls.MapScene.Enable();
         SetState(new MapState(this));
     }
+
+    private void ButtonPressed(CallbackContext ctx, Vector2 direction)
+    {
+        movementRequests.Add(new MovementRequest(direction));
+        StartMovement();
+        StartCoroutine(MoveHeld(ctx, direction));
+        moveHeld = true;
+    }
+    private void ButtonReleased(CallbackContext ctx)
+    {
+        StopCoroutine(MoveHeld(ctx, new Vector2(0, 0)));
+        moveHeld = false;
+        movementRequests.Clear();
+    }
+    private IEnumerator MoveHeld(CallbackContext ctx, Vector2 direction)
+    {
+        yield return new WaitForSecondsRealtime(2f);        
+        while(moveHeld)
+        {
+            yield return new WaitForSecondsRealtime(1f);
+            movementRequests.Add(new MovementRequest(direction));
+            StartMovement();
+        }
+        yield return null;
+    }
+    private void StartMovement()
+    {
+        for(int i = 0; i < movementRequests.Count; i++)
+        {
+            currentPosition += movementRequests[i].moveDirection;
+            transform.position = currentPosition;
+            movementRequests.RemoveAt(i);
+        }
+    }
+
 
     private void CursorCameraMovement()
     {
@@ -135,15 +173,6 @@ public class CursorController : MonoBehaviour
         }
         SoundManager.instance.PlayFX(2);
     }   
-
-    private void MoveCursor(Vector2 direction, InputAction.CallbackContext context)
-    {        
-        StartCoroutine(CursorMovement(direction, context));
-    }
-    private IEnumerator CursorMovement(Vector2 direction, InputAction.CallbackContext context)
-    {
-        yield return null;
-    }
 
     private void Confirm()
     {

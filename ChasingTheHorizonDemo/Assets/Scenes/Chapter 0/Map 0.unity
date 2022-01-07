@@ -29312,8 +29312,6 @@ MonoBehaviour:
   frameBottom: {fileID: 492123076}
   frameLeft: {fileID: 1588230084}
   frameRight: {fileID: 681225795}
-  moveAction: {fileID: 4053732215274948253, guid: 7dead05c54ca85b4681351aafd8bd03a,
-    type: 3}
 --- !u!114 &1088729402
 MonoBehaviour:
   m_ObjectHideFlags: 0
