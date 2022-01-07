@@ -1,0 +1,35 @@
+Chasing the Horizon Objectives/Bugs:
+
+Title Screen:
+Options Menu
+
+Prebattle Scenes:
+
+Battle:
+The two squares above unit stats need to have army symbols
+Stats on the left need to be reformated
+
+Options Menu
+Grid should appear on top of movement range
+Add red attack squares to grid
+Button UI
+Add an input buffer to cursor movement
+EXP and Skills
+Create Ophelia Cutscene once all the enemies have been defeated
+Create a Thanks For Playing screen that displays after Ophelias cutscene
+Create a Game Over screen for if all ally units are killed
+During the enemy turn, the camera shouldn't move all the way to the left showing dark space
+
+Bugs:
+Last dialogue line in a cutscene before the fade out shouldn't disapeer
+Peepy portrait in cutscene 5
+UI needs to be consistently scaled in each scene, switching from the cutscenes to the map scene is jarring because of this 
+Weapon selection before confirming attack
+Enemy window shows dead enemy with negative health (not sure if intentional or not)
+Able to scroll screen to see the black void where map texture ends
+Enemy phase takes time to watch roy end his turn doing nothing instead of just ending enemy phase 
+Would like to be able to hold down a direction to move cursor faster
+No way to see enemy inventory (unsure if intentional or not)
+Add attack range on top of move range
+Silly ai mentioned before, about the guard walking through an occupied tile and then walking against a player unit forever, softlocking
+Slide screen to cursor on start of player phase instead of teleport

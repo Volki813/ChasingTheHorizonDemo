@@ -1,0 +1,19 @@
+Cursor Movement:
+Pressing any directional button will move the cursor 1 unit in that direction at X frames per second.
+Holding any directional button will move the cursor 1 unit in that direction every X amount of seconds, at Y amount of frames per second until the button is released. After Z amount of seconds of a direction being held, the speed of the cursor will increase.
+
+
+Holding any directional button will add a movement command to a queue every x amount of seconds. Releasing the button will stop adding movement commands to the queue.
+When you press a directional button, a function will start that initiates all the movement commands in the queue. This function doesn't stop when the button is released 
+
+MovementRequests are a class that have a direction. When you press a button you create a new MovementRequest with the direction you just pressed. That new MovementRequest is then added to the MovementRequests queue and the movement function is called.
+
+MovementFunction: Goes through the queue and moves the cursor in the direction the current MovementRequest denotes
+
+If button is tapped, add movement command to queue and start movement function.
+If button is held, add movement command to queue every 0.5 seconds the button is held and call the movement function each time.
+
+
+
+If button is tapped, add MovementRequest to the list of movement requests. Start the movement function which moves the cursor in the direction of the movement request then removes it from the list. The movement function must wait for the first movement request to be completed before moving on to the next one.
+If the button is held for 1 second, it will add a movement request to the list and call the movement function every second until the button is released.
