@@ -24,6 +24,19 @@ public class LeahEvent : Event
     {
         Vector3 targetPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, -10);
 
+        if(targetPosition.x > cursor.cameraRight){
+            targetPosition.x = cursor.cameraRight;
+        }
+        if(targetPosition.x < cursor.cameraLeft){
+            targetPosition.x = cursor.cameraLeft;
+        }
+        if(targetPosition.y > cursor.cameraTop){
+            targetPosition.y = cursor.cameraTop;
+        }
+        if(targetPosition.y < cursor.cameraBottom){
+            targetPosition.y = cursor.cameraBottom;
+        }
+
         leahObject.SetActive(true);
         TurnManager.instance.allyUnits.Add(leahObject.GetComponent<UnitLoader>());
         

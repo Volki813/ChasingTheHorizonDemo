@@ -12,16 +12,14 @@ public class TileLoader : MonoBehaviour
     
     //REFERENCES
     public Tile tile = null;
-    public SpriteRenderer spriteRenderer = null;
-    private Sprite originalSprite = null;
-    [SerializeField] private Sprite highlightSprite = null;
-    [SerializeField] private Sprite enemyHighlight = null;
+    public SpriteRenderer spriteRenderer = null;    
+    private GameObject walkableHighlight = null;
+    private GameObject attackableHighlight = null;
 
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        originalSprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     private void Start()
@@ -30,25 +28,38 @@ public class TileLoader : MonoBehaviour
 
         tileName = tile.tileName;
         tileCost = tile.tileCost;
-    }
 
+        walkableHighlight = transform.GetChild(0).gameObject;
+        attackableHighlight = transform.GetChild(1).gameObject;
+        
+        walkableHighlight.GetComponent<SpriteRenderer>().sortingLayerName = "Map";
+        walkableHighlight.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        attackableHighlight.GetComponent<SpriteRenderer>().sortingLayerName = "Map";
+        attackableHighlight.GetComponent<SpriteRenderer>().sortingOrder = 1;
+    }
 
     public void HighlightTile(Unit unit)
     {
         if(unit.allyUnit)
         {
             walkable = true;
-            spriteRenderer.sprite = highlightSprite;
+            walkableHighlight.SetActive(true);
         }
         else
         {
-            spriteRenderer.sprite = enemyHighlight;
+            attackableHighlight.SetActive(true);
         }
+    }
+    public void AttackableTile()
+    {
+        attackableHighlight.SetActive(true);
     }
     public void ResetTiles()
     {
         walkable = false;
-        spriteRenderer.sprite = originalSprite;        
+        walkableHighlight.SetActive(false);
+        attackableHighlight.SetActive(false);
     }
     public void UpdateOccupationStatus()
     {

@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && unit.unit.allyUnit)
+            if(transform.position == unit.transform.position && unit.unit.allyUnit && unit.currentHealth > 0)
             {
                 unitName.text = unit.unit.unitName;
                 unitHP.text = "HP: " + unit.currentHealth.ToString() + "/" + unit.unit.statistics.health.ToString();
@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if (transform.position == unit.transform.position && !unit.unit.allyUnit)
+            if(transform.position == unit.transform.position && !unit.unit.allyUnit && unit.currentHealth > 0)
             {
                 enemyName.text = unit.unit.unitName;
                 enemyHP.text = "HP: " + unit.currentHealth.ToString() + "/" + unit.unit.statistics.health.ToString();
@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
                 enemyMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();
                 enemyDefense.text = "Def: " + unit.unit.statistics.defense.ToString();
                 enemyResistance.text = "Res: " + unit.unit.statistics.resistance.ToString();
-            }
+            }            
         }
     }
     private void TileUI()
@@ -91,5 +91,5 @@ public class UIManager : MonoBehaviour
                 tileCost.text = tile.tileCost.ToString();
             }
         }
-    }
+    }  
 }

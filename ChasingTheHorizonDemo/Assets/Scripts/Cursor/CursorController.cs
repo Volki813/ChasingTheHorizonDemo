@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.InputSystem.InputAction;
 //Handles the functionality of the Cursor
 //There should only be 1 CursorController script in any given scene
 public class CursorController : MonoBehaviour
@@ -11,22 +9,22 @@ public class CursorController : MonoBehaviour
     public UnitLoader selectedUnit = null;
     public bool enemyTurn = false;
 
-    [Header("Movement Contraints")] //These variables keep the cursor from being able to move off the map
+    [Header("Movement Contraints")] //These variables define the limits of the cursors range of movement
     [SerializeField] private float topMost = 0;
     [SerializeField] private float bottomMost = 0;
     [SerializeField] private float leftMost = 0;
     [SerializeField] private float rightMost = 0;
-    [Header("Camera Constraints")] //These variables make sure the Camera doesnt move too far when moving with the cursor
-    [SerializeField] private float cameraTop = 0;
-    [SerializeField] private float cameraBottom = 0;
-    [SerializeField] private float cameraLeft = 0;
-    [SerializeField] private float cameraRight = 0;
+    [Header("Camera Constraints")] //These variables define the limits where the camera can move
+    public float cameraTop = 0;
+    public float cameraBottom = 0;
+    public float cameraLeft = 0;
+    public float cameraRight = 0;
 
     //REFERENCES
     public CursorControls controls;
     [SerializeField] private GameObject menu = null;    
     [SerializeField] private Camera mapCamera = null;
-    [Header("Map Frame Points")] //These variables make sure the Camera always moves when your cursor reaches any of these points
+    [Header("Map Frame Points")] //These variables define at which point your cursor needs to be for the camera to move in the respective direction
     [SerializeField] private Transform frameTop = null;
     [SerializeField] private Transform frameBottom = null;
     [SerializeField] private Transform frameLeft = null;
@@ -35,8 +33,11 @@ public class CursorController : MonoBehaviour
     private CursorState currentState;
     public CursorState previousState;
 
-    public bool moveHeld = false;
-    public List<MovementRequest> movementRequests = new List<MovementRequest>();
+    private bool cursorMoving = false;
+    private Stack movementRequests = new Stack();
+    public bool buttonHeld = false;
+
+    private Coroutine buttonHeldCoroutine = null;
 
     public void SetState(CursorState state)
     {
@@ -44,7 +45,6 @@ public class CursorController : MonoBehaviour
         currentState = state;
         currentState.Start();
     }
-
     private void Awake()
     {
         controls = new CursorControls();
@@ -53,10 +53,9 @@ public class CursorController : MonoBehaviour
         controls.MapScene.Cancel.performed += ctx => Cancel();
         controls.UI.Confirm.performed += ctx => Confirm();
         controls.UI.Cancel.performed += ctx => Cancel();
-;
-        controls.MapScene.Movement.performed += ctx => ButtonPressed(ctx, ctx.ReadValue<Vector2>());
-        controls.MapScene.Movement.canceled += ctx => ButtonReleased(ctx);
 
+        controls.MapScene.Movement.performed += ctx => RequestMove(ctx.ReadValue<Vector2>());
+        controls.MapScene.Movement.canceled += ctx => ButtonReleased();
     }
     private void Start()
     {
@@ -67,112 +66,97 @@ public class CursorController : MonoBehaviour
         SetState(new MapState(this));
     }
 
-    private void ButtonPressed(CallbackContext ctx, Vector2 direction)
-    {
-        movementRequests.Add(new MovementRequest(direction));
-        StartMovement();
-        StartCoroutine(MoveHeld(ctx, direction));
-        moveHeld = true;
+    private void RequestMove(Vector2 direction)
+    {        
+        buttonHeldCoroutine = StartCoroutine(ButtonHeld(direction));
+        if(!cursorMoving){
+            movementRequests.Push(direction);
+            StartCoroutine(StartMovement(10f));
+        }
     }
-    private void ButtonReleased(CallbackContext ctx)
+    private void ButtonReleased()
     {
-        StopCoroutine(MoveHeld(ctx, new Vector2(0, 0)));
-        moveHeld = false;
+        buttonHeld = false;
         movementRequests.Clear();
+        StopCoroutine(buttonHeldCoroutine);
     }
-    private IEnumerator MoveHeld(CallbackContext ctx, Vector2 direction)
+    private IEnumerator ButtonHeld(Vector2 direction)
     {
-        yield return new WaitForSecondsRealtime(2f);        
-        while(moveHeld)
+        yield return new WaitForSeconds(0.3f);
+        buttonHeld = true;
+        while(buttonHeld)
         {
-            yield return new WaitForSecondsRealtime(1f);
-            movementRequests.Add(new MovementRequest(direction));
-            StartMovement();
-        }
-        yield return null;
-    }
-    private void StartMovement()
-    {
-        for(int i = 0; i < movementRequests.Count; i++)
-        {
-            currentPosition += movementRequests[i].moveDirection;
-            transform.position = currentPosition;
-            movementRequests.RemoveAt(i);
+            movementRequests.Push(direction);
+            StartCoroutine(StartMovement(20f));
+            yield return new WaitForSeconds(0.2f);
         }
     }
-
-
-    private void CursorCameraMovement()
+    private IEnumerator StartMovement(float moveSpeed)
     {
-        //Vertical Movement
-        if (transform.position.y >= frameTop.position.y)
-        {
-            if (mapCamera.transform.position.y < cameraTop)
-            {
-                mapCamera.transform.position += new Vector3(0, 1, 0);
-            }
-        }
-        if (transform.position.y <= frameBottom.position.y)
-        {
-            if (mapCamera.transform.position.y > cameraBottom)
-            {
-                mapCamera.transform.position -= new Vector3(0, 1, 0);
-            }
-        }
-
-        //Horizontal Movement
-        if (transform.position.x >= frameRight.position.x)
-        {
-            if (mapCamera.transform.position.x < cameraRight)
-            {
-                mapCamera.transform.position += new Vector3(1, 0, 0);
-            }
-        }
-        if (transform.position.x <= frameLeft.position.x)
-        {
-            if (mapCamera.transform.position.x > cameraLeft)
-            {
-                mapCamera.transform.position -= new Vector3(1, 0, 0);
-            }
-        }
-    }
-    private void MapMovement(Vector2 direction)
-    {
-        CursorCameraMovement();
-        if (direction == new Vector2(-1, 0))
-        {
-            if (currentPosition.x > leftMost)
-            {
-                currentPosition.x -= 1;
-                transform.position = currentPosition;                
-            }
-        }
-        if (direction == new Vector2(1, 0))
-        {
-            if (currentPosition.x < rightMost)
-            {
-                currentPosition.x += 1;
-                transform.position = currentPosition;
-            }
-        }
-        if (direction == new Vector2(0, 1))
-        {
-            if (currentPosition.y < topMost)
-            {
-                currentPosition.y += 1;
-                transform.position = currentPosition;
-            }
-        }
-        if (direction == new Vector2(0, -1))
-        {
-            if (currentPosition.y > bottomMost)
-            {
-                currentPosition.y -= 1;
-                transform.position = currentPosition;
-            }
-        }
         SoundManager.instance.PlayFX(2);
-    }   
+
+        Vector2 poppedRequest = (Vector2)movementRequests.Peek();
+        currentPosition += (Vector2)movementRequests.Pop();        
+        if(currentPosition.x < leftMost || currentPosition.x > rightMost){
+            currentPosition -= poppedRequest;
+            yield break;
+        }
+        if(currentPosition.y < bottomMost || currentPosition.y > topMost){
+            currentPosition -= poppedRequest;
+            yield break;
+        }
+
+        MoveCamera();
+
+        while((Vector2)transform.position != currentPosition)
+        {
+            cursorMoving = true;
+            transform.position = Vector2.MoveTowards(transform.position, currentPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        cursorMoving = false;
+    }
+
+    private void MoveCamera()
+    {
+        if(currentPosition.x >= frameRight.position.x)
+        {
+            if(mapCamera.transform.position.x < cameraRight)
+            {
+                StartCoroutine(StartCameraMove(new Vector3(mapCamera.transform.position.x + 1f, mapCamera.transform.position.y, -10)));
+            }
+        }
+        if(currentPosition.x <= frameLeft.position.x)
+        {
+            if(mapCamera.transform.position.x > cameraLeft)
+            {
+                StartCoroutine(StartCameraMove(new Vector3(mapCamera.transform.position.x - 1f, mapCamera.transform.position.y, -10)));
+            }
+        }
+
+        if(currentPosition.y >= frameTop.position.y)
+        {
+            if(mapCamera.transform.position.y < cameraTop)
+            {
+                StartCoroutine(StartCameraMove(new Vector3(mapCamera.transform.position.x, mapCamera.transform.position.y + 1f, -10)));
+            }
+        }
+        if(currentPosition.y <= frameBottom.position.y)
+        {
+            if(mapCamera.transform.position.y > cameraBottom)
+            {
+                StartCoroutine(StartCameraMove(new Vector3(mapCamera.transform.position.x, mapCamera.transform.position.y - 1f, -10)));
+            }
+        }
+    }
+    private IEnumerator StartCameraMove(Vector3 targetPosition)
+    {
+        while(mapCamera.transform.position != targetPosition)
+        {
+            mapCamera.transform.position = Vector3.MoveTowards(mapCamera.transform.position, targetPosition, 10f * Time.deltaTime);
+            yield return null;
+        }
+    }
 
     private void Confirm()
     {

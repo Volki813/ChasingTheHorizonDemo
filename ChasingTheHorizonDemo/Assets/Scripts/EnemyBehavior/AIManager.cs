@@ -11,13 +11,15 @@ public class AIManager : MonoBehaviour
     //REFERENCES
     private Camera mainCamera = null;
     private CursorController cursor;
-    [SerializeField] private UnitLoader currentEnemy = null;
     private Animator enemyAnimator = null;
+    [SerializeField] private UnitLoader currentEnemy = null;
     [SerializeField] private GameObject combatReadout = null;
 
     public List<UnitLoader> enemyOrder = new List<UnitLoader>();
     [SerializeField] private List<TileLoader> walkableTiles = new List<TileLoader>();
     [SerializeField] private List<UnitLoader> enemiesInRange = new List<UnitLoader>();
+
+    private Vector3 cameraTarget = new Vector3(0, 0, 0);
 
     private void Awake()
     {
@@ -47,7 +49,7 @@ public class AIManager : MonoBehaviour
             enemyAnimator = currentEnemy.GetComponent<Animator>();
 
             StartCoroutine(MoveCamera(enemies[i]));
-            yield return new WaitUntil(() => mainCamera.transform.position == new Vector3(enemies[i].transform.localPosition.x, enemies[i].transform.localPosition.y, -10));
+            yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
 
             if(enemies[i].GetComponent<BehaviorTag>().blitz)
             {
@@ -60,7 +62,7 @@ public class AIManager : MonoBehaviour
             {
                 Defensive();
                 if(IsLastEnemy() && combatReadout.activeSelf == false) {
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.5f);
                 }
                 else{
                     yield return new WaitForSeconds(3f);
@@ -254,9 +256,23 @@ public class AIManager : MonoBehaviour
     }
     private IEnumerator MoveCamera(UnitLoader enemy)
     {
-        while(mainCamera.transform.position != new Vector3(enemy.transform.localPosition.x, enemy.transform.localPosition.y, -10))
+        cameraTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, -10);
+        if(cameraTarget.x > cursor.cameraRight){
+            cameraTarget.x = cursor.cameraRight;
+        }
+        if(cameraTarget.x < cursor.cameraLeft){
+            cameraTarget.x = cursor.cameraLeft;
+        }
+        if(cameraTarget.y > cursor.cameraTop){
+            cameraTarget.y = cursor.cameraTop;
+        }
+        if(cameraTarget.y < cursor.cameraBottom){
+            cameraTarget.y = cursor.cameraBottom;
+        }
+
+        while(mainCamera.transform.position != cameraTarget)
         {
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, new Vector3(enemy.transform.localPosition.x, enemy.transform.localPosition.y, -10), 3.7f * Time.fixedDeltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraTarget, 3.7f * Time.fixedDeltaTime);
             yield return null;
         }
     }

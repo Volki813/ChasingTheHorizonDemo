@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DialogueSystem;
 using InventorySystem;
 
 //UnitLoader script loads all the data and functions each Unit needs
@@ -122,14 +121,14 @@ public class UnitLoader : MonoBehaviour
     {
         foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
         {
-            if (tile.transform.position == transform.position)
+            if(tile.transform.position == transform.position)
+            {
+                tile.HighlightTile(unit);
+            }            
+            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.statistics.movement && tile.occupied == false)
             {
                 tile.HighlightTile(unit);
             }
-            if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.statistics.movement && tile.occupied == false)
-            {
-                tile.HighlightTile(unit);
-            }          
         }
     }
     private void GetEnemies()
