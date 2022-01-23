@@ -554,7 +554,7 @@ MonoBehaviour:
   input: I'm betting a fire, quick -- go get Roland! You know he sleeps like a damn
     bear!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -563,6 +563,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035440515850}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &395816773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +585,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -666,7 +667,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -701,7 +702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Simon! Simon! Wake up!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -710,6 +711,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035440515850}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!95 &409661239
 Animator:
   serializedVersion: 3
@@ -781,7 +783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: ...The alarm bell? What is it?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -790,6 +792,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035440515850}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &418335837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,7 +814,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1311,7 +1314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "I\u2019m on it!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -1320,6 +1323,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035440515850}
   textBox1: 0
   textBox2: 1
+  lastLine: 1
 --- !u!114 &1200798162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1341,7 +1345,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1472,8 +1476,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -132.22, y: 441.34}
-  m_SizeDelta: {x: 1544.3086, y: 150.48627}
+  m_AnchoredPosition: {x: -128.92, y: 441.34}
+  m_SizeDelta: {x: 1534.3162, y: 150.48627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1373065500
 MonoBehaviour:
@@ -1548,8 +1552,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 146.9, y: -429.4}
-  m_SizeDelta: {x: 1538.7297, y: 143.38513}
+  m_AnchoredPosition: {x: 148.07, y: -429.4}
+  m_SizeDelta: {x: 1515.3542, y: 143.38513}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1704172792
 MonoBehaviour:
@@ -1655,7 +1659,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.09019608, g: 0.09411765, b: 0.09803922, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1754,8 +1758,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.6
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

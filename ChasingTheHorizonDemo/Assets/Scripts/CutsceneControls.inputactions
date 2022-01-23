@@ -28,6 +28,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "SDialogueNext",
+                    "type": "Button",
+                    "id": "65b1841e-d5bd-4768-b3af-6522d7315b74",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -94,6 +102,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "BDialogueNext",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd4e99e6-03c1-46bd-b4d4-953820d978d3",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SDialogueNext",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4a875e7-0392-42aa-97e6-70669d99f4e2",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SDialogueNext",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

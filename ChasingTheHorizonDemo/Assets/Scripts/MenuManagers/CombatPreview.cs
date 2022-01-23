@@ -45,7 +45,7 @@ public class CombatPreview : MonoBehaviour
         defenderHit.text = null;
         defenderCrit.text = null;
     }
-    private void FillPreview()
+    public void FillPreview()
     {
         attackerPortrait.sprite = cursor.selectedUnit.unit.portrait;
         attackerHP.text = cursor.selectedUnit.currentHealth.ToString();
@@ -58,5 +58,19 @@ public class CombatPreview : MonoBehaviour
         defenderDamage.text = CombatManager.instance.Hit(cursor.selectedUnit.target, cursor.selectedUnit).ToString();
         defenderHit.text = (cursor.selectedUnit.target.CombatStatistics().hit - cursor.selectedUnit.CombatStatistics().avoid).ToString();
         defenderCrit.text = cursor.selectedUnit.target.CombatStatistics().crit.ToString();
+    }
+    public void ClearPreview()
+    {
+        attackerPortrait.sprite = null;
+        attackerHP.text = null;
+        attackerDamage.text = null;
+        attackerHit.text = null;
+        attackerCrit.text = null;
+
+        defenderPortrait.sprite = null;
+        defenderHP.text = null;
+        defenderDamage.text = null;
+        defenderHit.text = null;
+        defenderCrit.text = null;
     }
 }

@@ -123,7 +123,7 @@ namespace DialogueSystem
 
         private void Deactivate()
         {
-            if(previousLine != null)
+            if(previousLine != null && !previousLine.lastLine)
             {
                 previousLine.gameObject.SetActive(false);
             }

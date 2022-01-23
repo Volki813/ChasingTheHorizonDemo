@@ -37,6 +37,8 @@ namespace DialogueSystem
         public bool textBox1;
         public bool textBox2;
 
+        public bool lastLine = false;
+
         private void Awake()
         {
             textHolder = GetComponent<Text>();

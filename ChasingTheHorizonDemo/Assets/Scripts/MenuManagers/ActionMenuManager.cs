@@ -16,6 +16,7 @@ public class ActionMenuManager : MonoBehaviour
 
     public GameObject inventoryMenu = null;
     public GameObject combatPreview = null;
+    public GameObject weaponSelection = null;
 
     private void Awake()
     {

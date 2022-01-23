@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7a53ad37e936e4d9955f76ae0644a1, type: 3}
+  m_Name: Ophelia1
+  m_EditorClassIdentifier: 
+  textBox1: 1
+  textBox2: 0
+  battleDialogue: 0
+  scriptDialogue: 1
+  unit: {fileID: 11400000, guid: a3d7b9b3af39b8247a2bf7bea7313b90, type: 2}
+  dialogue: What exactly is going on here?
+  finished: 0

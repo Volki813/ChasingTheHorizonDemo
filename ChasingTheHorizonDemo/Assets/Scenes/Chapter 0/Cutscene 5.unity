@@ -321,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Hell no. If anyone\u2019s gonna be running it's going to be our royal guests!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -330,6 +330,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035619399185}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &17553411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,15 +344,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -745,8 +746,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 145.6, y: -429}
-  m_SizeDelta: {x: 1537.5005, y: 143.79608}
+  m_AnchoredPosition: {x: 148.04, y: -429}
+  m_SizeDelta: {x: 1514.3474, y: 143.79608}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &832192017
 MonoBehaviour:
@@ -821,8 +822,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -133.48, y: 442.6}
-  m_SizeDelta: {x: 1546.8438, y: 145.25632}
+  m_AnchoredPosition: {x: -129.17, y: 442.6}
+  m_SizeDelta: {x: 1535.7778, y: 145.25632}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &866249141
 MonoBehaviour:
@@ -1238,7 +1239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Hey, they\u2019ve got Serena and a couple of the others over there!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -1247,6 +1248,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035619399185}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1243910061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,15 +1262,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1343,7 +1345,7 @@ MonoBehaviour:
     queen of Costamar, has deemed your service in the local mines an absolute necessity
     in the fight against Aradus. As such, from this day forth, your labour will be--
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9b7ba59209b8b1149bdf640216601f9a, type: 2}
@@ -1352,6 +1354,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035619399185}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1391964773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1365,16 +1368,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 37
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_FontSize: 35
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -1446,7 +1449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Gah! Let me get something to fight with!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -1455,6 +1458,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035619399185}
   textBox1: 1
   textBox2: 0
+  lastLine: 1
 --- !u!114 &1502664372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,15 +1472,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1549,8 +1553,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.6
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1656,7 +1660,7 @@ MonoBehaviour:
   input: "Roland wait! I guess I\u2019d better help. Using magic against the army
     though\u2026"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -1665,6 +1669,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035619399185}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1676941208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1678,15 +1683,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1841,7 +1846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Leah! You guys should run!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
@@ -1850,6 +1855,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035619399185}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1767757800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,15 +1869,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1928,7 +1934,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.08677464, g: 0.09365188, b: 0.09433961, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2029,7 +2035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "What\u2019s going on here?!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -2038,6 +2044,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781035619399185}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1880847090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2051,15 +2058,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0

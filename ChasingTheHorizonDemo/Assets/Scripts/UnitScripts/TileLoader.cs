@@ -31,6 +31,8 @@ public class TileLoader : MonoBehaviour
 
         walkableHighlight = transform.GetChild(0).gameObject;
         attackableHighlight = transform.GetChild(1).gameObject;
+
+        spriteRenderer.sortingOrder = 2;
         
         walkableHighlight.GetComponent<SpriteRenderer>().sortingLayerName = "Map";
         walkableHighlight.GetComponent<SpriteRenderer>().sortingOrder = 1;

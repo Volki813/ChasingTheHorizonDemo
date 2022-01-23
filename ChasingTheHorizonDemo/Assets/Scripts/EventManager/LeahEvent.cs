@@ -6,6 +6,8 @@ public class LeahEvent : Event
 {
     private Camera mainCamera;
     private CursorController cursor;
+    private LoseManager loseManager = null;
+    public GameObject screenDim = null;
     public GameObject leahObject;
     public MapDialogue leahDialogue;
 
@@ -13,6 +15,7 @@ public class LeahEvent : Event
     {
         cursor = FindObjectOfType<CursorController>();
         mainCamera = FindObjectOfType<Camera>();
+        loseManager = FindObjectOfType<LoseManager>();
     }
 
     public override void StartEvent()
@@ -22,8 +25,9 @@ public class LeahEvent : Event
 
     private IEnumerator MoveCamera()
     {
-        Vector3 targetPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, -10);
+        loseManager.gameObject.SetActive(false);
 
+        Vector3 targetPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, -10);
         if(targetPosition.x > cursor.cameraRight){
             targetPosition.x = cursor.cameraRight;
         }
@@ -38,26 +42,47 @@ public class LeahEvent : Event
         }
 
         leahObject.SetActive(true);
-        TurnManager.instance.allyUnits.Add(leahObject.GetComponent<UnitLoader>());
-        
-        cursor.transform.position = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);
-        cursor.currentPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);
+        TurnManager.instance.allyUnits.Add(leahObject.GetComponent<UnitLoader>());        
 
         while(mainCamera.transform.position.x != targetPosition.x)
         {
             Vector3 xTarget = new Vector3(targetPosition.x, mainCamera.transform.position.y, -10);
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, xTarget, 3f * Time.fixedDeltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, xTarget, 5f * Time.deltaTime);
             yield return null;
         }
         while(mainCamera.transform.position.y != targetPosition.y)
         {
             Vector3 yTarget = new Vector3(mainCamera.transform.position.x, targetPosition.y, -10);
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, yTarget, 3f * Time.fixedDeltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, yTarget, 5f * Time.deltaTime);
             yield return null;
         }
         yield return new WaitUntil(() => mainCamera.transform.position == targetPosition);
-        yield return new WaitForSeconds(1f);
+
+        StartCoroutine(MoveUnit(new Vector2(5.5f, -2.5f)));
+        yield return new WaitUntil(() => (Vector2)leahObject.transform.position == new Vector2(5.5f, -2.5f));
+
+        cursor.transform.position = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);
+        cursor.currentPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);
+
         MapDialogueManager.instance.WriteSingle(leahDialogue);
+        yield return new WaitForSeconds(1f);
+        yield return new WaitUntil(() => !screenDim.activeSelf);
+        loseManager.gameObject.SetActive(true);
         finished = true;
+    }
+    private IEnumerator MoveUnit(Vector2 targetPosition)
+    {
+        while(leahObject.transform.position.x != targetPosition.x)
+        {
+            if(leahObject.transform.position.x > targetPosition.x)
+            {
+                leahObject.GetComponent<Animator>().SetBool("Selected", true);
+                leahObject.GetComponent<Animator>().SetBool("Left", true);
+            }
+            leahObject.transform.position = Vector2.MoveTowards(leahObject.transform.position, new Vector2(targetPosition.x, leahObject.transform.position.y), 2f * Time.deltaTime);
+            yield return null;
+        }
+        leahObject.GetComponent<Animator>().SetBool("Selected", false);
+        leahObject.GetComponent<Animator>().SetBool("Left", false);
     }
 }

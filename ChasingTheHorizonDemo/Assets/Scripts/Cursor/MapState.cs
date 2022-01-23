@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MapState : CursorState
+﻿public class MapState : CursorState
 {
     public MapState(CursorController cursor) : base(cursor)
     {

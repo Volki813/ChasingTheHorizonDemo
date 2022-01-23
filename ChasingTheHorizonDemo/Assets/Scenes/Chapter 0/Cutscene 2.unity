@@ -244,8 +244,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 145, y: -429.4}
-  m_SizeDelta: {x: 1542.9565, y: 143.18604}
+  m_AnchoredPosition: {x: 146.76, y: -429.4}
+  m_SizeDelta: {x: 1514.5161, y: 143.18604}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &74566845
 MonoBehaviour:
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "He got promoted? That\u2019s great news!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -346,6 +346,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &75700933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +368,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -424,7 +425,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.09019608, g: 0.09411765, b: 0.09803922, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -605,7 +606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Well, alright then. Scamper away.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -614,6 +615,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &231311601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,7 +637,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -709,7 +711,7 @@ MonoBehaviour:
   input: "Well, it\u2019s certainly delicious! I can\u2019t say I\u2019ve ever tasted
     this spice before; what is it?"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -718,6 +720,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &265622996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,7 +742,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -887,7 +890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "That\u2019s what I\u2019m saying. The soup is great, Serena."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -896,6 +899,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &412023241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,7 +921,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -991,7 +995,7 @@ MonoBehaviour:
   input: "Dad sent it to us. Apparently it\u2019s a popular spice in the occupation
     zone. He says it\u2019s called schoff."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -1000,6 +1004,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &497881819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,7 +1026,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1221,7 +1226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "He\u2019s right, this spice even makes Serena\u2019s soup taste good!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -1230,6 +1235,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &568047953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,7 +1257,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1325,7 +1331,7 @@ MonoBehaviour:
   input: ' I only received it this afternoon. And I figured it could wait until after
     we ate before-'
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -1334,6 +1340,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &748634189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1355,7 +1362,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1683,7 +1690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I quite literally did no-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -1692,6 +1699,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &943778843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1713,7 +1721,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1861,7 +1869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: See ya bright and early, we can work on your aim a little.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -1870,6 +1878,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1037996747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1891,7 +1900,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1964,7 +1973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Are you saying my cooking is normally bad?!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
@@ -1973,6 +1982,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1139566465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1994,7 +2004,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2067,7 +2077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "That\u2019s why I thought to make this soup to celebrate!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
@@ -2076,6 +2086,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1202557833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,7 +2108,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2170,7 +2181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "No, I\u2019m just saying the schoff makes it good."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -2179,6 +2190,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1226982630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2200,7 +2212,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2303,7 +2315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Come on, Leah, where is it? What does it say?\r"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -2312,6 +2324,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1311759404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2333,7 +2346,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2406,7 +2419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Goodnight, Serena. Thank you again for dinner.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -2415,6 +2428,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 1
 --- !u!114 &1346114835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2436,7 +2450,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2509,7 +2523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Dad sent it? You didn\u2019t tell me he had sent anything recently."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -2518,6 +2532,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1371766078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2539,7 +2554,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2612,7 +2627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "The soup is good, right? That\u2019s all that matters."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -2621,6 +2636,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1391784047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2642,7 +2658,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2715,7 +2731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Calm down Edgar. Here, I'll read it.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -2724,6 +2740,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1401355585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2745,7 +2762,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2818,7 +2835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Well thank you, I\u2019m glad. Oh, Simon, are you done?"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
@@ -2827,6 +2844,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1412334379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2848,7 +2866,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2921,8 +2939,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.6
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3010,8 +3028,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -132.13, y: 439.8599}
-  m_SizeDelta: {x: 1548.1191, y: 151.51468}
+  m_AnchoredPosition: {x: -130.14, y: 439.8599}
+  m_SizeDelta: {x: 1532.864, y: 151.51468}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1506620949
 MonoBehaviour:
@@ -3103,7 +3121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Yeah. Bright eyed, bushy tailed and whatever. Goodnight.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -3112,6 +3130,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1620670916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3133,7 +3152,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3290,7 +3309,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3325,7 +3344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Mmm, this soup is delicious! Did you do something different this time Serena?\r"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -3334,6 +3353,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!95 &1684616176
 Animator:
   serializedVersion: 3
@@ -3406,7 +3426,7 @@ MonoBehaviour:
   input: "I did! It\u2019s been a while since we all ate together so I figured I\u2019d
     try something new, to celebrate!\r"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
@@ -3415,6 +3435,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1714840954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3436,7 +3457,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3509,7 +3530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Then you\u2019re implying it wasn\u2019t good before!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -3518,6 +3539,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1766005142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3539,7 +3561,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3752,7 +3774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Yeah. The soup was great. I\u2019m gonna go ahead and write dad back."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -3761,6 +3783,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1959349173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3782,7 +3805,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3855,7 +3878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I better go, too.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
@@ -3864,6 +3887,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1960939167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3885,7 +3909,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3959,7 +3983,7 @@ MonoBehaviour:
   input: "I\u2019d better head to my place then. It\u2019s late. Thank you again
     for the soup.\r\n"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -3968,6 +3992,7 @@ MonoBehaviour:
   namePlate2: {fileID: 7108781036850832005}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &2025270402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3989,7 +4014,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0

@@ -23,7 +23,6 @@ public class UIManager : MonoBehaviour
     public Text enemyName;
     public Text enemyHP;
     public Text enemyLevel;
-    public Text enemyEXP;
     public Text enemyAgility;
 
     public Text enemyStrength;
@@ -60,6 +59,19 @@ public class UIManager : MonoBehaviour
                 unitDefense.text = "Def: " + unit.unit.statistics.defense.ToString();
                 unitResistance.text = "Res: " + unit.unit.statistics.resistance.ToString();
             }
+            else if(unit.unit.allyUnit && unit.currentHealth <= 0)
+            {
+                unitName.text = "";
+                unitHP.text = "";
+                unitEXP.text = "";
+                unitLevel.text = "";
+                unitAgility.text = "";
+
+                unitStrength.text = "";
+                unitMagic.text = "";
+                unitDefense.text = "";
+                unitResistance.text = "";
+            }
         }
     }
     private void EnemyUnitUI()
@@ -70,7 +82,6 @@ public class UIManager : MonoBehaviour
             {
                 enemyName.text = unit.unit.unitName;
                 enemyHP.text = "HP: " + unit.currentHealth.ToString() + "/" + unit.unit.statistics.health.ToString();
-                enemyEXP.text = "Exp: " + unit.unit.exp.ToString();
                 enemyLevel.text = "Lvl: " + unit.unit.level.ToString();
                 enemyAgility.text = "Agl: " + unit.unit.statistics.agility.ToString();
 
@@ -78,7 +89,19 @@ public class UIManager : MonoBehaviour
                 enemyMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();
                 enemyDefense.text = "Def: " + unit.unit.statistics.defense.ToString();
                 enemyResistance.text = "Res: " + unit.unit.statistics.resistance.ToString();
-            }            
+            }
+            else if(!unit.unit.allyUnit && unit.currentHealth <= 0)
+            {
+                enemyName.text = "";
+                enemyHP.text = "";
+                enemyLevel.text = "";
+                enemyAgility.text = "";
+
+                enemyStrength.text = "";
+                enemyMagic.text = "";
+                enemyDefense.text = "";
+                enemyResistance.text = "";
+            }
         }
     }
     private void TileUI()

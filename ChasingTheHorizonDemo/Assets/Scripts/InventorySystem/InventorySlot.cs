@@ -15,7 +15,9 @@ namespace InventorySystem
 
         private void Awake()
         {
-            slotButton = GetComponent<Button>();
+            if(GetComponent<Button>()){
+                slotButton = GetComponent<Button>();
+            }
             slotIcon = gameObject.transform.GetChild(0).GetComponent<Image>();
             equippedIcon = gameObject.transform.GetChild(1).gameObject;
         }
@@ -29,7 +31,6 @@ namespace InventorySystem
         {
             slotIcon.sprite = item.itemIcon;
         }
-
         public void ClearSlot()
         {
             item = null;

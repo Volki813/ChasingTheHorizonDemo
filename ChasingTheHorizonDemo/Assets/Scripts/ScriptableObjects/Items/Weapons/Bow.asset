@@ -18,7 +18,7 @@ MonoBehaviour:
   type: 1
   might: 10
   hit: 95
-  crit: 50
+  crit: 15
   range: 2
   weight: 1
   animation: {fileID: 0}

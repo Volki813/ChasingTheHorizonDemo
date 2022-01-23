@@ -26,6 +26,8 @@ public class UnitLoader : MonoBehaviour
     public Weapon equippedWeapon = null;
     public List<UnitLoader> enemiesInRange = new List<UnitLoader>();
     [SerializeField] private Transform actionMenuSpawn = null;
+    public MapDialogue attackedDialogue = null;
+    public MapDialogue defeatedDialogue = null;
 
     private void Start()
     {
@@ -105,6 +107,7 @@ public class UnitLoader : MonoBehaviour
         }
         hasMoved = true;
         rested = true;
+        enemiesInRange.Clear();
         GetComponent<SpriteRenderer>().color = Color.grey;         
     }
     public void Stand()
@@ -124,10 +127,21 @@ public class UnitLoader : MonoBehaviour
             if(tile.transform.position == transform.position)
             {
                 tile.HighlightTile(unit);
-            }            
+            }
             if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.statistics.movement && tile.occupied == false)
             {
                 tile.HighlightTile(unit);
+            }
+            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= (unit.statistics.movement + equippedWeapon.range) && tile.walkable == false)
+            {
+                tile.AttackableTile();
+                foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+                {
+                    if(unit.transform.position == tile.transform.position && !unit.unit.allyUnit)
+                    {
+                        enemiesInRange.Add(unit);
+                    }
+                }
             }
         }
     }
@@ -140,7 +154,9 @@ public class UnitLoader : MonoBehaviour
                 if(Mathf.Abs(transform.position.x - unit.transform.position.x) + Mathf.Abs(transform.position.y - unit.transform.position.y) <= equippedWeapon.range)
                 {
                     unit.AttackableHighlight();
-                    enemiesInRange.Add(unit);
+                    if(!enemiesInRange.Contains(unit)){
+                        enemiesInRange.Add(unit);
+                    }
                 }
             }
         }
@@ -200,21 +216,17 @@ public class UnitLoader : MonoBehaviour
     }
     
     public void DelayedDeath()
-    {
+    {        
         Invoke("Death", 0.1f);
     }
-
     private void Death()
-    {
-        if(currentHealth <= 0)
-        {
-            if(unit.allyUnit)
-            {
+    {        
+        if (currentHealth <= 0){
+            if(unit.allyUnit){
                 TurnManager.instance.allyUnits.Remove(this);                
                 Destroy(gameObject);
             }
-            else
-            {
+            else{
                 TurnManager.instance.enemyUnits.Remove(this);
                 Destroy(gameObject);
             }
@@ -238,6 +250,13 @@ public class UnitLoader : MonoBehaviour
 
     private void OnDestroy()
     {
+        if(GameObject.Find("LoseManager")){
+            if(GetComponent<BattleDialogue>()){
+                if(GetComponent<BattleDialogue>().deathQuote){
+                    MapDialogueManager.instance.WriteSingle(GetComponent<BattleDialogue>().deathQuote);
+                }
+            }
+        }
         TurnManager.instance.RefreshTiles();
     }
 }

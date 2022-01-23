@@ -10,7 +10,7 @@ public class CombatPreviewState : CursorState
 
     public override void Confirm()
     {
-        cursorController.AttackTarget();
+
     }
 
     public override void Cancel()

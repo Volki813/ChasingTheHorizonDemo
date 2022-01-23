@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private Button primaryButton = null;
     [SerializeField] private GameObject unitsMenu = null;
+    [SerializeField] private GameObject optionsMenu = null;
 
     private void OnEnable()
     {
@@ -20,21 +21,28 @@ public class MenuManager : MonoBehaviour
     private void OnDisable()
     {
         unitsMenu.SetActive(false);
+        optionsMenu.SetActive(false);
     }
 
     public void UnitMenu()
     {
-        if(unitsMenu.activeSelf == false) {
+        if(!unitsMenu.activeSelf){
             unitsMenu.SetActive(true);
         }
-        else {
+        else{
             unitsMenu.SetActive(false);
         }
     }
     public void Options()
     {
-        
+        if(!optionsMenu.activeSelf){
+            optionsMenu.SetActive(true);
+        }  
+        else{
+            optionsMenu.SetActive(false);
+        }
     }
+
     public void EndTurn()
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>()) {

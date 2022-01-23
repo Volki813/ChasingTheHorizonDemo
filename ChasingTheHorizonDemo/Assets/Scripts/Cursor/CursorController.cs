@@ -8,6 +8,7 @@ public class CursorController : MonoBehaviour
     public Vector2 currentPosition = new Vector3(0, 0);
     public UnitLoader selectedUnit = null;
     public bool enemyTurn = false;
+    public GameObject enemyInventory = null;
 
     [Header("Movement Contraints")] //These variables define the limits of the cursors range of movement
     [SerializeField] private float topMost = 0;
@@ -36,7 +37,7 @@ public class CursorController : MonoBehaviour
     private bool cursorMoving = false;
     private Stack movementRequests = new Stack();
     public bool buttonHeld = false;
-
+    
     private Coroutine buttonHeldCoroutine = null;
 
     public void SetState(CursorState state)
@@ -202,6 +203,8 @@ public class CursorController : MonoBehaviour
             {
                 unit.GetWalkableTiles();
                 unit.GetComponent<SpriteRenderer>().color = Color.red;
+                enemyInventory.SetActive(true);
+                enemyInventory.GetComponent<EnemyInventory>().DisplayInventory(unit);
             }
         }
     }
@@ -216,17 +219,15 @@ public class CursorController : MonoBehaviour
             if(!unit.unit.allyUnit)
             {
                 unit.GetComponent<SpriteRenderer>().color = Color.white;
+                enemyInventory.SetActive(false);
             }
         }
     }
     public void MoveUnit()
     {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
-        {
-            if(transform.position == tile.transform.position)
-            {
-                if(tile.walkable == true && selectedUnit.hasMoved == false)
-                {
+        foreach(TileLoader tile in FindObjectsOfType<TileLoader>()){
+            if(transform.position == tile.transform.position){
+                if(tile.walkable == true && selectedUnit.hasMoved == false){
                     selectedUnit.Move(tile.transform.position);
                     SetState(new ActionMenuState(this));
                     controls.MapScene.Disable();
@@ -234,6 +235,33 @@ public class CursorController : MonoBehaviour
                 }
             }
         }
+    }
+    public void AttackMove()
+    {
+        foreach(UnitLoader unit in selectedUnit.enemiesInRange){
+            if(transform.position == unit.transform.position){
+                if(!selectedUnit.hasMoved){
+                    selectedUnit.Move(FindClosestTile(unit.transform.position));
+                    SetState(new ActionMenuState(this));
+                    controls.MapScene.Disable();
+                    controls.UI.Enable();
+                }
+            }
+        }
+    }
+    private Vector2 FindClosestTile(Vector2 position)
+    {
+        foreach(TileLoader tile in FindObjectsOfType<TileLoader>()){
+            if(tile.walkable && !tile.occupied){
+                if(Vector2.Distance(selectedUnit.transform.position, position) == selectedUnit.equippedWeapon.range){
+                    return selectedUnit.transform.position;
+                }
+                if(Vector2.Distance(tile.transform.position, position) == selectedUnit.equippedWeapon.range){
+                    return tile.transform.position;
+                }
+            }
+        }
+        return selectedUnit.transform.position;
     }
     public void UndoMove()
     {
@@ -244,6 +272,7 @@ public class CursorController : MonoBehaviour
                 unit.spriteRenderer.color = Color.white;
             }
         }
+        selectedUnit.enemiesInRange.Clear();
         selectedUnit.transform.position = selectedUnit.originalPosition;
         selectedUnit.hasMoved = false;
         TurnManager.instance.RefreshTiles();
@@ -262,10 +291,12 @@ public class CursorController : MonoBehaviour
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && selectedUnit.enemiesInRange.Contains(unit))
+            if(transform.position == unit.transform.position && selectedUnit.enemiesInRange.Contains(unit) && 
+                Vector2.Distance(selectedUnit.transform.position, unit.transform.position) <= selectedUnit.equippedWeapon.range)
             {
                 selectedUnit.target = unit;
                 ActionMenuManager.instance.combatPreview.SetActive(true);
+                ActionMenuManager.instance.weaponSelection.SetActive(true);
                 controls.MapScene.Disable();
                 controls.UI.Enable();
                 SetState(new CombatPreviewState(this));
@@ -275,7 +306,8 @@ public class CursorController : MonoBehaviour
     public void CancelAttack()
     {
         selectedUnit.target = null;
-        ActionMenuManager.instance.combatPreview.SetActive(false);        
+        ActionMenuManager.instance.combatPreview.SetActive(false);
+        ActionMenuManager.instance.weaponSelection.SetActive(false);
         controls.UI.Disable();
         controls.MapScene.Enable();
         SetState(new AttackState(this));
@@ -286,6 +318,7 @@ public class CursorController : MonoBehaviour
         selectedUnit.target.GetComponent<SpriteRenderer>().color = Color.white;
         selectedUnit = null;
         ActionMenuManager.instance.combatPreview.SetActive(false);
+        ActionMenuManager.instance.weaponSelection.SetActive(false);
         ActionMenuManager.instance.gameObject.SetActive(false);
     }
     public void DisplayMenu()

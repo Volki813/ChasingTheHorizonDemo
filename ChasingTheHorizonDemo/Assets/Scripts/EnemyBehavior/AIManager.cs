@@ -52,20 +52,22 @@ public class AIManager : MonoBehaviour
             yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
 
             if(enemies[i].GetComponent<BehaviorTag>().blitz)
-            {
-                Blitz(currentEnemy);                
-                yield return new WaitForSeconds(3f);
+            {                
+                Blitz(currentEnemy);
+                yield return new WaitUntil(() => currentEnemy.rested || !currentEnemy);
+                yield return new WaitForSeconds(0.5f);
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
             }
             else if(enemies[i].GetComponent<BehaviorTag>().defensive)
             {
                 Defensive();
-                if(IsLastEnemy() && combatReadout.activeSelf == false) {
+                if(IsLastEnemy() && combatReadout.activeSelf == false){
                     yield return new WaitForSeconds(0.5f);
                 }
                 else{
-                    yield return new WaitForSeconds(3f);
+                    yield return new WaitUntil(() => currentEnemy.rested || !currentEnemy);
+                    yield return new WaitForSeconds(0.5f);
                 }
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
@@ -246,7 +248,6 @@ public class AIManager : MonoBehaviour
         {
             currentEnemy.Rest();
         }
-
         enemyAnimator.SetBool("Up", false);
         enemyAnimator.SetBool("Down", false);
         enemyAnimator.SetBool("Left", false);
@@ -272,7 +273,7 @@ public class AIManager : MonoBehaviour
 
         while(mainCamera.transform.position != cameraTarget)
         {
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraTarget, 3.7f * Time.fixedDeltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraTarget, 5f * Time.deltaTime);
             yield return null;
         }
     }

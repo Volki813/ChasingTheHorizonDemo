@@ -15,11 +15,13 @@ public class CombatManager : MonoBehaviour
     //VARIABLES 
     private float originalCameraSize = 7.080622f;
     private Vector3 originalCameraPosition = new Vector3(0, 1, -10);
+    private bool dialoguePlayed = false;
 
     //REFERENCES
     DialogueHolder dialogueHolder;
     CursorController cursor;
     private Camera mainCamera = null;
+    [SerializeField] private GameObject screenDim = null;
     [SerializeField] private GameObject combatReadout = null;
     [SerializeField] private Image attackerPortrait = null;
     [SerializeField] private Image defenderPortrait = null;
@@ -54,14 +56,24 @@ public class CombatManager : MonoBehaviour
     }
     private IEnumerator Attack(UnitLoader attacker, UnitLoader defender)
     {
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>()) {
-            if(unit.GetComponent<SpriteRenderer>().color == Color.red) {
+        dialoguePlayed = false;
+
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>()){
+            if(unit.GetComponent<SpriteRenderer>().color == Color.red){
                 unit.GetComponent<SpriteRenderer>().color = Color.white;
             }
         }
 
         cursor.controls.Disable();
         cursor.GetComponent<SpriteRenderer>().sprite = null;
+
+        //Check if defender has dialogue for when it's attacked
+        if(defender.attackedDialogue != null){
+            MapDialogueManager.instance.WriteSingle(defender.attackedDialogue);
+            yield return new WaitForSeconds(0.5f);
+            defender.attackedDialogue = null;
+        }
+        yield return new WaitUntil(() => !screenDim.activeSelf);
 
         ActionCamera(attacker, defender);
 
@@ -95,6 +107,14 @@ public class CombatManager : MonoBehaviour
         }
         else if(CheckForDeaths(attacker, defender) == "Defender")
         {
+            //Checks if the defender has dialogue for when its defeated
+            if(!dialoguePlayed && defender.defeatedDialogue != null){
+                MapDialogueManager.instance.WriteSingle(defender.defeatedDialogue);
+                dialoguePlayed = true;
+                yield return new WaitForSeconds(0.5f);
+            }
+            yield return new WaitUntil(() => !screenDim.activeSelf);
+
             defender.DelayedDeath();
             combatReadout.SetActive(false);
             attacker.Rest();
@@ -138,12 +158,20 @@ public class CombatManager : MonoBehaviour
                 yield return null;
             }
             else if(CheckForDeaths(attacker, defender) == "Defender")
-            {   
+            {
+                //Checks if the defender has dialogue for when its defeated
+                if(!dialoguePlayed && defender.defeatedDialogue != null){
+                    MapDialogueManager.instance.WriteSingle(defender.defeatedDialogue);
+                    dialoguePlayed = true;
+                    yield return new WaitForSeconds(0.5f);
+                }
+                yield return new WaitUntil(() => !screenDim.activeSelf);
+
                 defender.DelayedDeath();
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
-                if (attacker.unit.allyUnit)
+                if(attacker.unit.allyUnit)
                 {
                     cursor.controls.UI.Disable();
                     cursor.controls.MapScene.Enable();
@@ -173,7 +201,7 @@ public class CombatManager : MonoBehaviour
                 combatReadout.SetActive(false);
                 attacker.Rest();
                 ResetCamera();
-                if (attacker.unit.allyUnit)
+                if(attacker.unit.allyUnit)
                 {
                     cursor.controls.UI.Disable();
                     cursor.controls.MapScene.Enable();
@@ -197,7 +225,7 @@ public class CombatManager : MonoBehaviour
             yield return null;
         }
         combatReadout.SetActive(false);
-        if (CheckForDeaths(attacker, defender) == "Defender" || CheckForDeaths(attacker, defender) == null)
+        if(CheckForDeaths(attacker, defender) == "Defender" || CheckForDeaths(attacker, defender) == null)
         {
             attacker.Rest();
         }
@@ -210,11 +238,13 @@ public class CombatManager : MonoBehaviour
         }
 
         //This block checks if an Ally Unit is below 50% health, which if true triggers their battle dialogue
-        if(attacker.unit.allyUnit && attacker.currentHealth < (attacker.unit.statistics.health * .5f)){
+        if(attacker.unit.allyUnit && attacker.currentHealth < (attacker.unit.statistics.health * .5f) && attacker.currentHealth > 0 && !dialoguePlayed){
             MapDialogueManager.instance.WriteSingle(attacker.GetComponent<BattleDialogue>().under50Quote);
+            dialoguePlayed = true;
         }
-        else if(defender.unit.allyUnit && defender.currentHealth < (defender.unit.statistics.health * .5f)){
+        else if(defender.unit.allyUnit && defender.currentHealth < (defender.unit.statistics.health * .5f) && defender.currentHealth > 0 && !dialoguePlayed){
             MapDialogueManager.instance.WriteSingle(defender.GetComponent<BattleDialogue>().under50Quote);
+            dialoguePlayed = true;
         }
 
         if(TurnManager.instance.currentState.stateType == TurnState.StateType.Player)
@@ -257,9 +287,10 @@ public class CombatManager : MonoBehaviour
                 defenderHealth.value = defender.currentHealth;
                 
                 //Display critial quote
-                if(attacker.unit.allyUnit)
+                if(attacker.unit.allyUnit && !defender.defeatedDialogue)
                 {
                     MapDialogueManager.instance.WriteSingle(attacker.GetComponent<BattleDialogue>().RandomCritQuote());
+                    dialoguePlayed = true;
                 }
             }
             else
@@ -299,9 +330,10 @@ public class CombatManager : MonoBehaviour
                     attackerHealth.value = attacker.currentHealth;
                     
                     //Display critial quote
-                    if(defender.unit.allyUnit)
+                    if(defender.unit.allyUnit && !attacker.defeatedDialogue)
                     {
                         MapDialogueManager.instance.WriteSingle(defender.GetComponent<BattleDialogue>().RandomCritQuote());
+                        dialoguePlayed = true;
                     }
                 }
                 else

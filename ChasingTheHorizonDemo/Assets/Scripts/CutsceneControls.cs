@@ -41,6 +41,14 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""SDialogueNext"",
+                    ""type"": ""Button"",
+                    ""id"": ""65b1841e-d5bd-4768-b3af-6522d7315b74"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -109,6 +117,28 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                     ""action"": ""BDialogueNext"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd4e99e6-03c1-46bd-b4d4-953820d978d3"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SDialogueNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4a875e7-0392-42aa-97e6-70669d99f4e2"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SDialogueNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +173,7 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
         m_Cutscenes_Next = m_Cutscenes.FindAction("Next", throwIfNotFound: true);
         m_Cutscenes_Skip = m_Cutscenes.FindAction("Skip", throwIfNotFound: true);
         m_Cutscenes_BDialogueNext = m_Cutscenes.FindAction("BDialogueNext", throwIfNotFound: true);
+        m_Cutscenes_SDialogueNext = m_Cutscenes.FindAction("SDialogueNext", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -195,6 +226,7 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Cutscenes_Next;
     private readonly InputAction m_Cutscenes_Skip;
     private readonly InputAction m_Cutscenes_BDialogueNext;
+    private readonly InputAction m_Cutscenes_SDialogueNext;
     public struct CutscenesActions
     {
         private @CutsceneControls m_Wrapper;
@@ -202,6 +234,7 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
         public InputAction @Next => m_Wrapper.m_Cutscenes_Next;
         public InputAction @Skip => m_Wrapper.m_Cutscenes_Skip;
         public InputAction @BDialogueNext => m_Wrapper.m_Cutscenes_BDialogueNext;
+        public InputAction @SDialogueNext => m_Wrapper.m_Cutscenes_SDialogueNext;
         public InputActionMap Get() { return m_Wrapper.m_Cutscenes; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -220,6 +253,9 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                 @BDialogueNext.started -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnBDialogueNext;
                 @BDialogueNext.performed -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnBDialogueNext;
                 @BDialogueNext.canceled -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnBDialogueNext;
+                @SDialogueNext.started -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnSDialogueNext;
+                @SDialogueNext.performed -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnSDialogueNext;
+                @SDialogueNext.canceled -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnSDialogueNext;
             }
             m_Wrapper.m_CutscenesActionsCallbackInterface = instance;
             if (instance != null)
@@ -233,6 +269,9 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                 @BDialogueNext.started += instance.OnBDialogueNext;
                 @BDialogueNext.performed += instance.OnBDialogueNext;
                 @BDialogueNext.canceled += instance.OnBDialogueNext;
+                @SDialogueNext.started += instance.OnSDialogueNext;
+                @SDialogueNext.performed += instance.OnSDialogueNext;
+                @SDialogueNext.canceled += instance.OnSDialogueNext;
             }
         }
     }
@@ -260,5 +299,6 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSkip(InputAction.CallbackContext context);
         void OnBDialogueNext(InputAction.CallbackContext context);
+        void OnSDialogueNext(InputAction.CallbackContext context);
     }
 }

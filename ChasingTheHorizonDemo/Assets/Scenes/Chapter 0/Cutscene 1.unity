@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: 'Remember: One clean motion. No hesitation.'
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -184,6 +184,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &127018926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +206,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -601,7 +602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Oh, you know I've hunted more than my fair share this season already!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -610,6 +611,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &364212973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,7 +633,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -713,7 +715,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -748,7 +750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Gah! Damn it all... I'm going after it!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 8300000, guid: a932ef6e20d27c941947e697efe6d50c, type: 3}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -757,6 +759,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!95 &399718402
 Animator:
   serializedVersion: 3
@@ -828,7 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Oh! Simon! Here they are! Though it doesn't look like they've caught much...
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -837,6 +840,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &446825856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,7 +862,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -915,7 +919,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.09019608, g: 0.09411765, b: 0.09803922, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1014,7 +1018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Alright... let's try this again. H-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -1023,6 +1027,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &588730325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,7 +1049,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1117,8 +1122,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.6
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1224,7 +1229,7 @@ MonoBehaviour:
   input: And yet, you sit here empty handed. Sounds like larger portions for us tonight,
     wouldn't you say, Simon?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -1233,6 +1238,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &849465502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,7 +1260,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1414,7 +1420,7 @@ MonoBehaviour:
     well with the snow, but I'd like to think I've gotten pretty good at spotting
     them.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -1423,6 +1429,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &918879848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1444,11 +1451,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_FontSize: 37
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -1575,8 +1582,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -133.87, y: 441.7}
-  m_SizeDelta: {x: 1543.1787, y: 155.4859}
+  m_AnchoredPosition: {x: -129.23, y: 441.7}
+  m_SizeDelta: {x: 1533.0049, y: 155.4859}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1000825300
 MonoBehaviour:
@@ -1669,7 +1676,7 @@ MonoBehaviour:
   input: I guess we'll just have to wait and see. Now, what say we get back and start
     cooking dinner before it gets dark? Serena's waiting, I'm sure.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -1678,6 +1685,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 1
 --- !u!114 &1081975194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1699,7 +1707,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1773,7 +1781,7 @@ MonoBehaviour:
   input: Hmmm, maybe we should take pity? Roland is pretty handy when the mines are
     running. Edgar though...
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -1782,6 +1790,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1090711304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,7 +1812,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2097,7 +2106,7 @@ MonoBehaviour:
   input: Oh, speaking of mines, the mail came today, right Simon? Any word about
     that rock we sent off to the Royal Institute last autumn?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -2106,6 +2115,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1314665741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2127,7 +2137,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2201,7 +2211,7 @@ MonoBehaviour:
   input: Hmm, I'm not sure that the tree would make a great dinner even if he had
     hit it, though I guess that doesn't make much of a difference in retrospect.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
@@ -2210,6 +2220,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1382457328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2231,11 +2242,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -2365,7 +2376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Well Simon, that would be because he was aiming for the tree!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -2374,6 +2385,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1391762974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2395,7 +2407,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2469,7 +2481,7 @@ MonoBehaviour:
   input: Still none. Though I can't blame them. I'm sure "hayseed up in Taldur Mountains"
     sending them a rock isn't very high on the priority list, given the war and all.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -2478,6 +2490,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &1423296186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2499,11 +2512,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_FontSize: 37
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -2572,7 +2585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: The rabbit? It'll be long gone by now, Roland.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -2581,6 +2594,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1522049379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2602,7 +2616,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2675,7 +2689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Edgar!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -2684,6 +2698,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1615069652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2705,7 +2720,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2778,7 +2793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Here, let's try this again. Try to hit that knot in the tree over there...
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -2787,6 +2802,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1623046865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2808,7 +2824,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2965,6 +2981,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c64f1769-cd71-499b-a886-d4b8c9af9f33
     m_ActionName: Cutscenes/BDialogueNext[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 65b1841e-d5bd-4768-b3af-6522d7315b74
+    m_ActionName: Cutscenes/SDialogueNext[/Keyboard/z]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Cutscenes
@@ -3005,8 +3025,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 145.78, y: -428.74}
-  m_SizeDelta: {x: 1537.5359, y: 144.63776}
+  m_AnchoredPosition: {x: 147.69, y: -428.74}
+  m_SizeDelta: {x: 1514.1211, y: 144.63776}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1660634534
 MonoBehaviour:
@@ -3100,7 +3120,7 @@ MonoBehaviour:
     little piece. I'm sure someone who knew what they were doing could make something
     good out of it.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -3109,6 +3129,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1671692770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3130,11 +3151,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_FontSize: 37
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -3203,7 +3224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Wait, wh-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -3212,6 +3233,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &1871025222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3233,7 +3255,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3622,7 +3644,7 @@ MonoBehaviour:
     we're making any money from the mines for the next couple of months with this
     weather.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
@@ -3631,6 +3653,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 0
   textBox2: 1
+  lastLine: 0
 --- !u!114 &2002802228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3652,11 +3675,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_FontSize: 37
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -3804,7 +3827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Ah! Leah, you threw off my-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -3813,6 +3836,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &2061506993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3834,7 +3858,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3907,7 +3931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I mean, with how that thing glows, there's no way it could be just a rock.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
@@ -3916,6 +3940,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &2098307566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3937,7 +3962,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -4010,7 +4035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Hahaha, the tables have turned!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
@@ -4019,6 +4044,7 @@ MonoBehaviour:
   namePlate2: {fileID: 1155768848}
   textBox1: 1
   textBox2: 0
+  lastLine: 0
 --- !u!114 &2136392268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4040,7 +4066,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
