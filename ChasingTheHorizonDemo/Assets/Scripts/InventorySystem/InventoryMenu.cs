@@ -44,8 +44,8 @@ namespace InventorySystem
 
         private void OnEnable()
         {
-            Invoke("FillSlots", 0.01f);
-            Invoke("ResetEquippedWeapon", 0.01f);
+            Invoke("FillSlots", 0.05f);
+            Invoke("ResetEquippedWeapon", 0.05f);
         }
 
         private void OnDisable()
@@ -61,7 +61,7 @@ namespace InventorySystem
             {
                 cursor.selectedUnit.equippedWeapon = null;
                 cursor.selectedUnit.equippedWeapon = (Weapon)item.item;
-                Invoke("ResetEquippedWeapon", 0.01f);
+                Invoke("ResetEquippedWeapon", 0.05f);
             }
             else if (item.item.type == ItemType.Consumable)
             {
@@ -80,7 +80,7 @@ namespace InventorySystem
                 }
                 cursor.selectedUnit.inventory.inventory.Remove(consumable);
                 ClearSlots();
-                Invoke("FillSlots", 0.01f);
+                Invoke("FillSlots", 0.05f);
             }
         }
 

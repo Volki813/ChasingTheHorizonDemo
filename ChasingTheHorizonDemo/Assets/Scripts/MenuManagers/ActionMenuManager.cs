@@ -42,7 +42,7 @@ public class ActionMenuManager : MonoBehaviour
         if(cursor.selectedUnit.enemiesInRange.Count >= 1)
         {
             cursor.SetState(new ActionMenuState(cursor));
-            GetComponent<RectTransform>().localPosition = new Vector2(-1400, 40);
+            GetComponent<RectTransform>().anchoredPosition = new Vector2(-1400, 40);
             EventSystem.current.SetSelectedGameObject(null);
             cursor.controls.UI.Disable();
             cursor.controls.MapScene.Enable();

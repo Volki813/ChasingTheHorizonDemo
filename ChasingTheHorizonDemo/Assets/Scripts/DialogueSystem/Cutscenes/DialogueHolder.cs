@@ -92,11 +92,11 @@ namespace DialogueSystem
                 //Checks which Dialogue Box to place the dialogue in 
                 else if (transform.GetChild(i).GetComponent<DialogueLine>().textBox1 == true)
                 {
-                    transform.GetChild(i).GetComponent<RectTransform>().localPosition = box1;
+                    transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = box1;
                 }
                 else if(transform.GetChild(i).GetComponent<DialogueLine>().textBox2 == true)
                 {
-                    transform.GetChild(i).GetComponent<RectTransform>().localPosition = box2;
+                    transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = box2;
                 }
 
                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().finished);

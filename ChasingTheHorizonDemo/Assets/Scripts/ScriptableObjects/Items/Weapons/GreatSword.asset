@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2abe4e95c9d2594e8aeb930167e9b2f, type: 3}
+  m_Name: GreatSword
+  m_EditorClassIdentifier: 
+  itemName: GreatSword
+  itemIcon: {fileID: 21300000, guid: 6b5b9535497e005498882710ead86b98, type: 3}
+  itemDescription: A really big sword.
+  type: 1
+  might: 6
+  hit: 95
+  crit: 15
+  range: 1
+  weight: 3
+  animation: {fileID: 9095977760381259380, guid: ab8decf6a6279834aabb421303a24d84,
+    type: 3}
+  animationLength: {fileID: 7400000, guid: f44c914a0e0738f429277191892da098, type: 2}

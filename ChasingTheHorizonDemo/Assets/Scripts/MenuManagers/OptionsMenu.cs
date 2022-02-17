@@ -28,9 +28,45 @@ public class OptionsMenu : MonoBehaviour
     {
         musicVolume.volume = musicSlider.value;
         soundFXVolume.volume = soundFXSlider.value;
-        ChangeTiles((int)gridSlider.value);
+        OpacityControl(gridSlider.value);
     }
-    private void ChangeTiles(int value)
+
+    private void OpacityControl(float opacityLevel)
+    {
+        switch(opacityLevel){
+            case 1:
+                ChangeTiles(0);
+                break;
+            case 2:
+                ChangeTiles(25.5f);
+                break;
+            case 3:
+                ChangeTiles(51f);
+                break;
+            case 4:
+                ChangeTiles(76.5f);
+                break;
+            case 5:
+                ChangeTiles(102);
+                break;
+            case 6:
+                ChangeTiles(127.5f);
+                break;
+            case 7:
+                ChangeTiles(153);
+                break;
+            case 8:
+                ChangeTiles(178.5f);
+                break;
+            case 9:
+                ChangeTiles(204);
+                break;
+            case 10:
+                ChangeTiles(255);
+                break;
+        }
+    }
+    private void ChangeTiles(float value)
     {
         foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
         {

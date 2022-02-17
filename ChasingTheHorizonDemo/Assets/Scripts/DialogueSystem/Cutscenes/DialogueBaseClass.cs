@@ -24,6 +24,7 @@ namespace DialogueSystem
             for (int i=0; i<input.Length; i++)
             {
                 textHolder.text += input[i];
+                SoundManager.instance.PlayFX(7);
                 yield return new WaitForSeconds(delay);
             }            
 

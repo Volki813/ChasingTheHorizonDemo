@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [Header("Ally Unit UI")]
-    public Image unitPortrait;
     public Text unitName;
     public Text unitHP;
     public Text unitLevel;
@@ -18,8 +17,11 @@ public class UIManager : MonoBehaviour
     public Text unitDefense;
     public Text unitResistance;
 
+    public Text unitProficiency;
+    public Text unitMovement;
+    public Text unitMotivation;
+
     [Header("Enemy UI Info")]
-    public Image enemyPortrait;
     public Text enemyName;
     public Text enemyHP;
     public Text enemyLevel;
@@ -58,6 +60,10 @@ public class UIManager : MonoBehaviour
                 unitMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();
                 unitDefense.text = "Def: " + unit.unit.statistics.defense.ToString();
                 unitResistance.text = "Res: " + unit.unit.statistics.resistance.ToString();
+
+                unitProficiency.text = "Pro: " + unit.unit.statistics.proficiency.ToString();
+                unitMovement.text = "Mov: " + unit.unit.statistics.movement.ToString();
+                unitMotivation.text = "Mot: " + unit.unit.statistics.motivation.ToString();
             }
             else if(unit.unit.allyUnit && unit.currentHealth <= 0)
             {
@@ -71,6 +77,10 @@ public class UIManager : MonoBehaviour
                 unitMagic.text = "";
                 unitDefense.text = "";
                 unitResistance.text = "";
+
+                unitProficiency.text = "";
+                unitMovement.text = "";
+                unitMotivation.text = "";
             }
         }
     }

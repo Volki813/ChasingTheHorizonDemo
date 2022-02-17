@@ -21,10 +21,9 @@ public class CombatManager : MonoBehaviour
     DialogueHolder dialogueHolder;
     CursorController cursor;
     private Camera mainCamera = null;
+    [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject screenDim = null;
     [SerializeField] private GameObject combatReadout = null;
-    [SerializeField] private Image attackerPortrait = null;
-    [SerializeField] private Image defenderPortrait = null;
     [SerializeField] private Slider attackerHealth = null;
     [SerializeField] private Slider defenderHealth = null;
     [SerializeField] private BattleText battleText = null;
@@ -44,15 +43,11 @@ public class CombatManager : MonoBehaviour
     {
         StartCoroutine(Attack(attacker, defender));
 
-        attackerPortrait.sprite = attacker.unit.portrait;
-        defenderPortrait.sprite = defender.unit.portrait;
-
         attackerHealth.maxValue = attacker.unit.statistics.health;
         attackerHealth.value = attacker.currentHealth;
 
         defenderHealth.maxValue = defender.unit.statistics.health;
         defenderHealth.value = defender.currentHealth;
-
     }
     private IEnumerator Attack(UnitLoader attacker, UnitLoader defender)
     {
@@ -81,12 +76,12 @@ public class CombatManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         AttackAnimation(attacker, defender);
-        yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length);        
+        yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length - 0.2f);        
 
         if(attacker.equippedWeapon.animation)
         {
             PlayEffect(attacker, defender);
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(attacker.equippedWeapon.animationLength.length);
         }
 
         InitiatorAttack(attacker, defender);
@@ -119,7 +114,7 @@ public class CombatManager : MonoBehaviour
             combatReadout.SetActive(false);
             attacker.Rest();
             ResetCamera();
-            if (attacker.unit.allyUnit)
+            if(attacker.unit.allyUnit)
             {
                 cursor.controls.UI.Disable();
                 cursor.controls.MapScene.Enable();
@@ -132,12 +127,12 @@ public class CombatManager : MonoBehaviour
             if(CheckDistance(defender, attacker) <= 1 || defender.equippedWeapon.range >= attacker.equippedWeapon.range)
             {
                 AttackAnimation(defender, attacker);
-                yield return new WaitForSeconds((defender.animator.GetCurrentAnimatorClipInfo(0).Length));
+                yield return new WaitForSeconds((defender.animator.GetCurrentAnimatorClipInfo(0).Length - 0.2f));
 
                 if(defender.equippedWeapon.animation)
                 {
-                    PlayEffect(defender, attacker);
-                    yield return new WaitForSeconds(1.2f);
+                    PlayEffect(defender, attacker); 
+                    yield return new WaitForSeconds(defender.equippedWeapon.animationLength.length);
                 }
 
                 DefenderAttack(attacker, defender);
@@ -184,12 +179,12 @@ public class CombatManager : MonoBehaviour
                 if(CheckAttackSpeed(attacker, defender))
                 {
                     AttackAnimation(attacker, defender);
-                    yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length);
+                    yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length - 0.2f);
 
                     if(attacker.equippedWeapon.animation)
                     {
                         PlayEffect(attacker, defender);
-                        yield return new WaitForSeconds(1.2f);
+                        yield return new WaitForSeconds(attacker.equippedWeapon.animationLength.length);
                     }
 
                     InitiatorAttack(attacker, defender);
@@ -264,6 +259,9 @@ public class CombatManager : MonoBehaviour
 
         mainCamera.transform.position = zoomPoint;
         mainCamera.orthographicSize = 4;
+
+        attackerHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(attacker.gameObject); 
+        defenderHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(defender.gameObject);
     }
     private void ResetCamera()
     {
@@ -271,6 +269,55 @@ public class CombatManager : MonoBehaviour
         mainCamera.orthographicSize = originalCameraSize;
     }
     
+    private Vector3 WorldToCanvasSpace(GameObject unit)
+    {
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        Vector2 uiOffset = new Vector2((float)canvasRect.sizeDelta.x / 2f, (float)canvasRect.sizeDelta.y / 2f);
+        Vector2 viewPortPosition = mainCamera.WorldToViewportPoint(unit.transform.position);
+        Vector2 proportionalPosition = new Vector2(viewPortPosition.x * canvasRect.sizeDelta.x, viewPortPosition.y * canvasRect.sizeDelta.y);
+        return proportionalPosition - uiOffset - new Vector2(0, 75);
+    }
+    private IEnumerator Shake(float intensity, bool attacker)
+    {
+        Vector3 originalPosition = new Vector3(0, 0, 0);
+        GameObject healthBar = null;
+        bool isShaking = true;
+        var startTime = Time.time;
+        
+        //Determine which healthbar to shake
+        if(attacker){
+            originalPosition = defenderHealth.gameObject.transform.position;
+            healthBar = defenderHealth.gameObject;
+        }
+        else{
+            originalPosition = attackerHealth.gameObject.transform.position;
+            healthBar = attackerHealth.gameObject;
+        }
+
+        //Determine intensity of shake
+        if(intensity > 10){
+            intensity = 0.35f;
+        }
+        else if(intensity < 10){
+            intensity = 0.2f;
+        }
+
+        //Shake the healthbar
+        while(isShaking && (Time.time - startTime) < 0.2f){
+            healthBar.transform.position = originalPosition + Random.insideUnitSphere * intensity;
+            yield return null;
+        }
+
+        //Resets healthbar position
+        isShaking = false;
+        if(attacker){
+            defenderHealth.transform.position = originalPosition;
+        }
+        else{
+            attackerHealth.transform.position = originalPosition;
+        }
+    }
+
     private void InitiatorAttack(UnitLoader attacker, UnitLoader defender)
     {
         //Check for a hit
@@ -282,12 +329,13 @@ public class CombatManager : MonoBehaviour
                 //Unit Crits                
                 SoundManager.instance.PlayFX(4);
                 battleText.SetText("Crit");                
-                Instantiate(battleText, defender.transform.position, Quaternion.identity);
+                Instantiate(battleText, defender.transform.position, Quaternion.identity);                
                 defender.currentHealth = defender.currentHealth - Critical(attacker, defender);
+                StartCoroutine(Shake(Critical(attacker, defender), true));
                 defenderHealth.value = defender.currentHealth;
-                
+
                 //Display critial quote
-                if(attacker.unit.allyUnit && !defender.defeatedDialogue)
+                if (attacker.unit.allyUnit && !defender.defeatedDialogue)
                 {
                     MapDialogueManager.instance.WriteSingle(attacker.GetComponent<BattleDialogue>().RandomCritQuote());
                     dialoguePlayed = true;
@@ -300,7 +348,8 @@ public class CombatManager : MonoBehaviour
                 battleText.SetText("Hit");
                 Instantiate(battleText, defender.transform.position, Quaternion.identity);
                 defender.currentHealth = defender.currentHealth - Hit(attacker, defender);
-                defenderHealth.value = defender.currentHealth;
+                StartCoroutine(Shake(Hit(attacker, defender), true));
+                defenderHealth.value = defender.currentHealth;                
             }
         }
         else
@@ -327,6 +376,7 @@ public class CombatManager : MonoBehaviour
                     battleText.SetText("Crit");
                     Instantiate(battleText, attacker.transform.position, Quaternion.identity);
                     attacker.currentHealth = attacker.currentHealth - Critical(defender, attacker);
+                    StartCoroutine(Shake(Critical(defender, attacker), false));
                     attackerHealth.value = attacker.currentHealth;
                     
                     //Display critial quote
@@ -341,8 +391,9 @@ public class CombatManager : MonoBehaviour
                     //Unit Hits
                     SoundManager.instance.PlayFX(3);
                     battleText.SetText("Hit");
-                    Instantiate(battleText, attacker.transform.position, Quaternion.identity);
+                    Instantiate(battleText, attacker.transform.position, Quaternion.identity);                    
                     attacker.currentHealth = attacker.currentHealth - Hit(defender, attacker);
+                    StartCoroutine(Shake(Hit(defender, attacker), false));
                     attackerHealth.value = attacker.currentHealth;
                 }
             }
@@ -355,7 +406,7 @@ public class CombatManager : MonoBehaviour
                 return;
             }
         }
-    }    
+    }        
 
     private void AttackAnimation(UnitLoader attacker, UnitLoader defender)
     {

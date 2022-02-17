@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 378912892361772757, guid: 9b1d05ddbb549a94f9895ea7f324af5c, type: 3}
   portrait: {fileID: 21300000, guid: fa721595fa475e044bf4e177b9c43e5a, type: 3}
-  unitName: Kingdom Soldier
+  unitName: Soldier
   allyUnit: 0
+  diagonal: 0
   statistics:
     health: 15
     strength: 3

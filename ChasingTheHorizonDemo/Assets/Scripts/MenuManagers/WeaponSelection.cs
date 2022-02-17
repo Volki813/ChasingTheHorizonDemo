@@ -88,8 +88,8 @@ public class WeaponSelection : MonoBehaviour
     
     private IEnumerator HighlightButton()
     {
-        EventSystem.current.SetSelectedGameObject(null);
-        yield return null;
+        EventSystem.current.SetSelectedGameObject(null);        
+        yield return new WaitForSeconds(0.05f);
         EventSystem.current.SetSelectedGameObject(slots[0].gameObject);
     }
 }

@@ -65,10 +65,12 @@ public class MapDialogueManager : MonoBehaviour
         {
             if(dialogue.textBox1){
                 textBox1.text += dialogue.dialogue[i];
+                SoundManager.instance.PlayFX(7);
                 yield return new WaitForSeconds(0.01f);
             }
             else{
                 textBox2.text += dialogue.dialogue[i];
+                SoundManager.instance.PlayFX(7);
                 yield return new WaitForSeconds(0.01f);
             }
         }
@@ -111,10 +113,12 @@ public class MapDialogueManager : MonoBehaviour
         for(int i = 0; i < dialogue.dialogue.Length; i++) {
             if(dialogue.textBox1){
                 textBox1.text += dialogue.dialogue[i];
+                SoundManager.instance.PlayFX(7);
                 yield return new WaitForSeconds(0.01f);
             }
             else{
                 textBox2.text += dialogue.dialogue[i];
+                SoundManager.instance.PlayFX(7);
                 yield return new WaitForSeconds(0.01f);
             }
         }

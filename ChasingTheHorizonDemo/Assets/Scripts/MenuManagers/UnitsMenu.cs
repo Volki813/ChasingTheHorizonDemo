@@ -37,19 +37,19 @@ public class UnitsMenu : MonoBehaviour
         switch (currentSlot)
         {
             case 1:
-                selectedSlot.GetComponent<RectTransform>().localPosition = new Vector2(0, slot1);
+                selectedSlot.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, slot1);
                 currentSlot++;
                 break;
             case 2:
-                selectedSlot.GetComponent<RectTransform>().localPosition = new Vector3(0, slot2);
+                selectedSlot.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, slot2);
                 currentSlot++;
                 break;
             case 3:
-                selectedSlot.GetComponent<RectTransform>().localPosition = new Vector3(0, slot3);
+                selectedSlot.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, slot3);
                 currentSlot++;
                 break;
             case 4:
-                selectedSlot.GetComponent<RectTransform>().localPosition = new Vector3(0, slot4);
+                selectedSlot.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, slot4);
                 currentSlot++;
                 break;
         }

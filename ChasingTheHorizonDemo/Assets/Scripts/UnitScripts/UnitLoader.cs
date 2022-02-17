@@ -128,14 +128,14 @@ public class UnitLoader : MonoBehaviour
             {
                 tile.HighlightTile(unit);
             }
-            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.statistics.movement && tile.occupied == false)
+            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.statistics.movement && !tile.occupied)
             {
                 tile.HighlightTile(unit);
             }
-            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= (unit.statistics.movement + equippedWeapon.range) && tile.walkable == false)
+            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= (unit.statistics.movement + equippedWeapon.range) && !tile.walkable)
             {
                 tile.AttackableTile();
-                foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+                foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
                 {
                     if(unit.transform.position == tile.transform.position && !unit.unit.allyUnit)
                     {

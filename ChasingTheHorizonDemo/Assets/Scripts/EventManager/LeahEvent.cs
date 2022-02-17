@@ -47,13 +47,13 @@ public class LeahEvent : Event
         while(mainCamera.transform.position.x != targetPosition.x)
         {
             Vector3 xTarget = new Vector3(targetPosition.x, mainCamera.transform.position.y, -10);
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, xTarget, 5f * Time.deltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, xTarget, 10f * Time.deltaTime);
             yield return null;
         }
         while(mainCamera.transform.position.y != targetPosition.y)
         {
             Vector3 yTarget = new Vector3(mainCamera.transform.position.x, targetPosition.y, -10);
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, yTarget, 5f * Time.deltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, yTarget, 10f * Time.deltaTime);
             yield return null;
         }
         yield return new WaitUntil(() => mainCamera.transform.position == targetPosition);
