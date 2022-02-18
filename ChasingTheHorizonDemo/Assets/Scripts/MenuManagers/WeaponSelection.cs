@@ -19,7 +19,7 @@ public class WeaponSelection : MonoBehaviour
     {
         StartCoroutine(HighlightButton());
         Invoke("GetUnitWeapons", 0.01f);
-        Invoke("FillSlots", 0.01f);
+        Invoke("FillSlots", 0.02f);
     }
     private void OnDisable()
     {
@@ -70,7 +70,6 @@ public class WeaponSelection : MonoBehaviour
             }
         }
     }
-
     public void EquipWeapon(InventorySlot item)
     {
         if(cursor.selectedUnit.equippedWeapon == (Weapon)item.item){
@@ -84,8 +83,7 @@ public class WeaponSelection : MonoBehaviour
             combatPreview.ClearPreview();
             combatPreview.FillPreview();
         }
-    }
-    
+    }    
     private IEnumerator HighlightButton()
     {
         EventSystem.current.SetSelectedGameObject(null);        

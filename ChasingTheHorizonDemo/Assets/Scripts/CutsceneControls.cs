@@ -49,6 +49,14 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""FastMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""caa21cf2-f4e8-4610-be6c-1e0cce357313"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                     ""action"": ""SDialogueNext"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f114dab1-9735-4301-9c3b-5a652f8bed47"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FastMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -174,6 +193,7 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
         m_Cutscenes_Skip = m_Cutscenes.FindAction("Skip", throwIfNotFound: true);
         m_Cutscenes_BDialogueNext = m_Cutscenes.FindAction("BDialogueNext", throwIfNotFound: true);
         m_Cutscenes_SDialogueNext = m_Cutscenes.FindAction("SDialogueNext", throwIfNotFound: true);
+        m_Cutscenes_FastMode = m_Cutscenes.FindAction("FastMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +247,7 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Cutscenes_Skip;
     private readonly InputAction m_Cutscenes_BDialogueNext;
     private readonly InputAction m_Cutscenes_SDialogueNext;
+    private readonly InputAction m_Cutscenes_FastMode;
     public struct CutscenesActions
     {
         private @CutsceneControls m_Wrapper;
@@ -235,6 +256,7 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
         public InputAction @Skip => m_Wrapper.m_Cutscenes_Skip;
         public InputAction @BDialogueNext => m_Wrapper.m_Cutscenes_BDialogueNext;
         public InputAction @SDialogueNext => m_Wrapper.m_Cutscenes_SDialogueNext;
+        public InputAction @FastMode => m_Wrapper.m_Cutscenes_FastMode;
         public InputActionMap Get() { return m_Wrapper.m_Cutscenes; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +278,9 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                 @SDialogueNext.started -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnSDialogueNext;
                 @SDialogueNext.performed -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnSDialogueNext;
                 @SDialogueNext.canceled -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnSDialogueNext;
+                @FastMode.started -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnFastMode;
+                @FastMode.performed -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnFastMode;
+                @FastMode.canceled -= m_Wrapper.m_CutscenesActionsCallbackInterface.OnFastMode;
             }
             m_Wrapper.m_CutscenesActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,6 +297,9 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
                 @SDialogueNext.started += instance.OnSDialogueNext;
                 @SDialogueNext.performed += instance.OnSDialogueNext;
                 @SDialogueNext.canceled += instance.OnSDialogueNext;
+                @FastMode.started += instance.OnFastMode;
+                @FastMode.performed += instance.OnFastMode;
+                @FastMode.canceled += instance.OnFastMode;
             }
         }
     }
@@ -300,5 +328,6 @@ public class @CutsceneControls : IInputActionCollection, IDisposable
         void OnSkip(InputAction.CallbackContext context);
         void OnBDialogueNext(InputAction.CallbackContext context);
         void OnSDialogueNext(InputAction.CallbackContext context);
+        void OnFastMode(InputAction.CallbackContext context);
     }
 }

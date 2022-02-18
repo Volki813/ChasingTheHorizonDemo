@@ -38,7 +38,7 @@ public class CursorController : MonoBehaviour
     private Stack movementRequests = new Stack();
     public bool buttonHeld = false;
     
-    private Coroutine buttonHeldCoroutine = null;
+    private IEnumerator buttonHeldCoroutine = null;
 
     public void SetState(CursorState state)
     {
@@ -68,8 +68,9 @@ public class CursorController : MonoBehaviour
     }
 
     private void RequestMove(Vector2 direction)
-    {        
-        buttonHeldCoroutine = StartCoroutine(ButtonHeld(direction));
+    {
+        buttonHeldCoroutine = ButtonHeld(direction);
+        StartCoroutine(buttonHeldCoroutine);
         if(!cursorMoving){
             movementRequests.Push(direction);
             StartCoroutine(StartMovement(10f));

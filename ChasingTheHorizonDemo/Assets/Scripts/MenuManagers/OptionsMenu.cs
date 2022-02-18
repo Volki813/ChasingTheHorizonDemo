@@ -17,6 +17,9 @@ public class OptionsMenu : MonoBehaviour
 
     private void Start()
     {
+        musicVolume = FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>();
+        soundFXVolume = FindObjectOfType<SoundManager>().GetComponent<AudioSource>();
+
         musicSlider.value = musicVolume.volume;
         soundFXSlider.value = soundFXVolume.volume;
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 //The AI Manager handles all the enemy unit AI in a Map scene automatically given there are enemy units in the scene
 //There should be 1 AI Manager per Map Scene
@@ -14,12 +15,15 @@ public class AIManager : MonoBehaviour
     private Animator enemyAnimator = null;
     [SerializeField] private UnitLoader currentEnemy = null;
     [SerializeField] private GameObject combatReadout = null;
+    [SerializeField] private GameObject fastModeIndicator = null;
 
     public List<UnitLoader> enemyOrder = new List<UnitLoader>();
     [SerializeField] private List<TileLoader> walkableTiles = new List<TileLoader>();
     [SerializeField] private List<UnitLoader> enemiesInRange = new List<UnitLoader>();
 
     private Vector3 cameraTarget = new Vector3(0, 0, 0);
+
+    private bool fastMode = false;
 
     private void Awake()
     {
@@ -29,19 +33,41 @@ public class AIManager : MonoBehaviour
     private void Start()
     {
         mainCamera = FindObjectOfType<Camera>();
-        cursor = FindObjectOfType<CursorController>();
+        cursor = FindObjectOfType<CursorController>();        
         Invoke("SetEnemyOrder", 1f);
     }
 
     public void StartAI()
     {
+        fastMode = false;
         StartCoroutine(BehaviorSystem());
+    }
+
+    public void FastAI(InputAction.CallbackContext context)
+    {
+        if(cursor.enemyTurn){
+            if(context.started){
+                if (!fastMode){
+                    fastMode = true;
+                    if (fastModeIndicator.activeSelf){
+                        fastModeIndicator.GetComponent<Animator>().SetTrigger("Enter");
+                    }
+                    else{
+                        fastModeIndicator.SetActive(true);
+                    }
+                }
+                else{
+                    fastMode = false;
+                    fastModeIndicator.GetComponent<Animator>().SetTrigger("Exit");
+                }
+            }
+        }
     }
 
     private IEnumerator BehaviorSystem()
     {
         cursor.enemyTurn = true;
-        List<UnitLoader> enemies = enemyOrder;
+        List<UnitLoader> enemies = enemyOrder;        
         //Iterates through each enemy in the enemy list
         for(int i = 0; i < enemies.Count; i++)
         {
@@ -72,11 +98,12 @@ public class AIManager : MonoBehaviour
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
             }
-            yield return new WaitUntil(() => combatReadout.activeSelf == false);
+            yield return new WaitUntil(() => !combatReadout.activeSelf);
         }
         enemyOrder.Clear();
         SetEnemyOrder();
         cursor.enemyTurn = false;
+        fastModeIndicator.GetComponent<Animator>().SetTrigger("Exit");
         yield return null;
     }
 
@@ -99,6 +126,7 @@ public class AIManager : MonoBehaviour
             CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
         }
     }
+
     private void Defensive()
     {
         GetEnemies();
@@ -209,6 +237,14 @@ public class AIManager : MonoBehaviour
     }
     private IEnumerator Movement(UnitLoader currentEnemy, Vector2 targetPosition)
     {
+        var moveSpeed = 2;
+        if(fastMode){
+            moveSpeed = 8;
+        }
+        else{
+            moveSpeed = 2;
+        }
+
         while (currentEnemy.transform.position.x != targetPosition.x)
         {
             if (currentEnemy.transform.position.x > targetPosition.x)
@@ -219,7 +255,7 @@ public class AIManager : MonoBehaviour
             {
                 enemyAnimator.SetBool("Right", true);
             }
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(targetPosition.x, currentEnemy.transform.position.y), 2f * Time.deltaTime);
+            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(targetPosition.x, currentEnemy.transform.position.y), moveSpeed * Time.deltaTime);
             yield return null;
         }
         while (currentEnemy.transform.position.y != targetPosition.y)
@@ -232,7 +268,7 @@ public class AIManager : MonoBehaviour
             {
                 enemyAnimator.SetBool("Up", true);
             }
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(currentEnemy.transform.position.x, targetPosition.y), 2f * Time.deltaTime);
+            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(currentEnemy.transform.position.x, targetPosition.y), moveSpeed * Time.deltaTime);
             yield return null;
         }
         GetEnemies();
@@ -257,6 +293,14 @@ public class AIManager : MonoBehaviour
     }
     private IEnumerator MoveCamera(UnitLoader enemy)
     {
+        var moveSpeed = 5;
+        if (fastMode){
+            moveSpeed = 10;
+        }
+        else{
+            moveSpeed = 5;
+        }
+
         cameraTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, -10);
         if(cameraTarget.x > cursor.cameraRight){
             cameraTarget.x = cursor.cameraRight;
@@ -273,7 +317,7 @@ public class AIManager : MonoBehaviour
 
         while(mainCamera.transform.position != cameraTarget)
         {
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraTarget, 5f * Time.deltaTime);
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraTarget, moveSpeed * Time.deltaTime);
             yield return null;
         }
     }

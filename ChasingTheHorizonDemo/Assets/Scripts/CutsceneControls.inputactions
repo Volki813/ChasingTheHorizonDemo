@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "FastMode",
+                    "type": "Button",
+                    "id": "caa21cf2-f4e8-4610-be6c-1e0cce357313",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -124,6 +132,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "SDialogueNext",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f114dab1-9735-4301-9c3b-5a652f8bed47",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "FastMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

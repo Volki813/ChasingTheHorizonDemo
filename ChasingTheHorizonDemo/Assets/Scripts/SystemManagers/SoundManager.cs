@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         instance = this;
         source = GetComponent<AudioSource>();
     }
