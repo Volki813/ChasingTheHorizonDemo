@@ -132,19 +132,45 @@ public class UnitLoader : MonoBehaviour
             {
                 tile.HighlightTile(unit);
             }
+            if(tile.tileCost >= 50)
+            {
+                DehighlightTile(transform.position, tile.transform.position);
+            }
             if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= (unit.statistics.movement + equippedWeapon.range) && !tile.walkable)
             {
                 tile.AttackableTile();
-                foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
-                {
-                    if(unit.transform.position == tile.transform.position && !unit.unit.allyUnit)
-                    {
-                        enemiesInRange.Add(unit);
-                    }
+            }
+            foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+            {
+                unit.AttackableHighlight();
+                if(unit.transform.position == tile.transform.position && !unit.unit.allyUnit){
+                    enemiesInRange.Add(unit);
                 }
             }
         }
     }
+
+    private void DehighlightTile(Vector2 unitPosition, Vector2 tilePosition)
+    {
+        Vector2 targetTile = new Vector2(0, 0);
+        if(tilePosition.x < unitPosition.x)
+        {
+            //Unhighlight the tile to the left
+            targetTile = new Vector2(tilePosition.x - 1, tilePosition.y);
+        }
+        else if(tilePosition.x < unitPosition.x)
+        {
+            targetTile = new Vector2(tilePosition.x + 1, tilePosition.y);
+        }
+        foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
+        {
+            if(tile.transform.position == (Vector3)targetTile && tile.walkable)
+            {
+                tile.ResetTiles();
+            }
+        }
+    }
+
     private void GetEnemies()
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
