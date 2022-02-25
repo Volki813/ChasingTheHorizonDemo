@@ -10,7 +10,7 @@ public class AttackState : CursorState
 
     public override void Confirm()
     {
-        cursorController.SelectTarget();
+        cursorController.SelectTarget();        
     }
 
     public override void Cancel()

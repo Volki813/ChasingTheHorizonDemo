@@ -20,6 +20,16 @@ public class UnitsMenu : MonoBehaviour
 
     private void OnEnable()
     {
+        Invoke("SetSlots", 0.26f);
+    }
+    private void OnDisable()
+    {
+        currentSlot = 1;
+    }
+
+
+    private void SetSlots()
+    {
         for (int i = 0; i < TurnManager.instance.allyUnits.Count; i++)
         {
             selectedSlot = Instantiate(unitSlot, transform);
@@ -27,11 +37,6 @@ public class UnitsMenu : MonoBehaviour
             selectedSlot.FillSlot(TurnManager.instance.allyUnits[i]);
         }
     }
-    private void OnDisable()
-    {
-        currentSlot = 1;
-    }
-
     private void SlotPosition()
     {
         switch (currentSlot)

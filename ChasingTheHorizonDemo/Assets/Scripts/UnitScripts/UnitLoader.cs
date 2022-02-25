@@ -81,7 +81,7 @@ public class UnitLoader : MonoBehaviour
     {
         foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
         {
-            tile.ResetTiles();
+            tile.ResetTile();
         }
     }
     public void UpdateTiles()
@@ -98,9 +98,9 @@ public class UnitLoader : MonoBehaviour
     }
     public void Rest()
     {
-        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(unit.unit.allyUnit == false && unit.GetComponent<SpriteRenderer>().color == Color.red)
+            if(!unit.unit.allyUnit && unit.GetComponent<SpriteRenderer>().color == Color.red)
             {
                 unit.GetComponent<SpriteRenderer>().color = Color.white;
             }
@@ -108,7 +108,7 @@ public class UnitLoader : MonoBehaviour
         hasMoved = true;
         rested = true;
         enemiesInRange.Clear();
-        GetComponent<SpriteRenderer>().color = Color.grey;         
+        GetComponent<SpriteRenderer>().color = Color.grey; 
     }
     public void Stand()
     {
@@ -166,7 +166,7 @@ public class UnitLoader : MonoBehaviour
         {
             if(tile.transform.position == (Vector3)targetTile && tile.walkable)
             {
-                tile.ResetTiles();
+                tile.ResetTile();
             }
         }
     }

@@ -23,7 +23,9 @@ public class CursorController : MonoBehaviour
 
     //REFERENCES
     public CursorControls controls;
-    [SerializeField] private GameObject menu = null;    
+    [SerializeField] private GameObject menu = null;
+    private GameObject unitsMenu = null;
+    private GameObject optionsMenu = null;
     [SerializeField] private Camera mapCamera = null;
     [Header("Map Frame Points")] //These variables define at which point your cursor needs to be for the camera to move in the respective direction
     [SerializeField] private Transform frameTop = null;
@@ -63,6 +65,8 @@ public class CursorController : MonoBehaviour
         currentPosition = transform.position;
         highlight = GetComponent<SpriteRenderer>().sprite;
         enemyTurn = false;
+        unitsMenu = menu.transform.GetChild(0).gameObject;
+        optionsMenu = menu.transform.GetChild(1).gameObject;
         controls.MapScene.Enable();
         SetState(new MapState(this));
     }
@@ -213,7 +217,7 @@ public class CursorController : MonoBehaviour
     {
         foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
         {
-            tile.ResetTiles();
+            tile.ResetTile();
         }
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
@@ -265,14 +269,14 @@ public class CursorController : MonoBehaviour
         return selectedUnit.transform.position;
     }
     public void UndoMove()
-    {
+    {        
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
             if(!unit.unit.allyUnit)
             {
                 unit.spriteRenderer.color = Color.white;
             }
-        }
+        }        
         selectedUnit.enemiesInRange.Clear();
         selectedUnit.transform.position = selectedUnit.originalPosition;
         selectedUnit.hasMoved = false;
@@ -337,9 +341,23 @@ public class CursorController : MonoBehaviour
     }
     public void CloseMenu()
     {
-        menu.SetActive(false);
-        SetState(new MapState(this));
-        controls.UI.Disable();
-        controls.MapScene.Enable();
+        if(unitsMenu.activeSelf)
+        {
+            unitsMenu.SetActive(false);
+            return;
+        }
+        else if(optionsMenu.activeSelf)
+        {
+            optionsMenu.SetActive(false);
+            StartCoroutine(menu.GetComponent<MenuManager>().HighlightButton());
+            return;
+        }
+        else if(!unitsMenu.activeSelf && !optionsMenu.activeSelf && menu.activeSelf)
+        {
+            menu.SetActive(false);
+            SetState(new MapState(this));
+            controls.UI.Disable();
+            controls.MapScene.Enable();
+        }
     }    
 }

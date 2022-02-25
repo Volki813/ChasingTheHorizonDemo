@@ -29,7 +29,7 @@ public class CombatPreview : MonoBehaviour
 
     private void OnEnable()
     {
-        FillPreview();
+        Invoke("FillPreview", 0.26f);
     }
     private void OnDisable()
     {

@@ -103,7 +103,8 @@ public class AIManager : MonoBehaviour
         enemyOrder.Clear();
         SetEnemyOrder();
         cursor.enemyTurn = false;
-        fastModeIndicator.GetComponent<Animator>().SetTrigger("Exit");
+        if(fastModeIndicator.activeSelf)
+            fastModeIndicator.GetComponent<Animator>().SetTrigger("Exit");
         yield return null;
     }
 

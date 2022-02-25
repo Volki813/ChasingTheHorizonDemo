@@ -2,7 +2,7 @@
 using DialogueSystem;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 //The CombatManager handles all combat between units
 //There should only be 1 CombatManager in a given scene
@@ -21,6 +21,7 @@ public class CombatManager : MonoBehaviour
     DialogueHolder dialogueHolder;
     CursorController cursor;
     private Camera mainCamera = null;
+    private Animator cameraAnimator = null;
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject screenDim = null;
     [SerializeField] private GameObject combatReadout = null;
@@ -35,6 +36,7 @@ public class CombatManager : MonoBehaviour
     private void Start()
     {
         mainCamera = FindObjectOfType<Camera>();
+        cameraAnimator = mainCamera.GetComponent<Animator>();
         cursor = FindObjectOfType<CursorController>();
         dialogueHolder = FindObjectOfType<DialogueHolder>();
     }
@@ -60,7 +62,7 @@ public class CombatManager : MonoBehaviour
         }
 
         cursor.controls.Disable();
-        cursor.GetComponent<SpriteRenderer>().sprite = null;
+        cursor.GetComponent<Animator>().SetBool("Invisible", true);
 
         //Check if defender has dialogue for when it's attacked
         if(defender.attackedDialogue != null){
@@ -71,9 +73,12 @@ public class CombatManager : MonoBehaviour
         yield return new WaitUntil(() => !screenDim.activeSelf);
 
         ActionCamera(attacker, defender);
+        yield return new WaitUntil(() => mainCamera.orthographicSize == 4);
+        attackerHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(attacker.gameObject);
+        defenderHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(defender.gameObject);
 
         combatReadout.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         AttackAnimation(attacker, defender);
         yield return new WaitForSeconds(attacker.animator.GetCurrentAnimatorClipInfo(0).Length - 0.2f);        
@@ -244,7 +249,7 @@ public class CombatManager : MonoBehaviour
 
         if(TurnManager.instance.currentState.stateType == TurnState.StateType.Player)
         {
-            cursor.GetComponent<SpriteRenderer>().sprite = cursor.highlight;
+            cursor.GetComponent<Animator>().SetBool("Invisible", false);
         }        
         yield return null;
     }
@@ -257,16 +262,22 @@ public class CombatManager : MonoBehaviour
         var centerPoint = (point1 + point2) / 2;
         Vector3 zoomPoint = new Vector3(centerPoint.x, centerPoint.y, -10);
 
-        mainCamera.transform.position = zoomPoint;
-        mainCamera.orthographicSize = 4;
-
-        attackerHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(attacker.gameObject); 
-        defenderHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(defender.gameObject);
+        StartCoroutine(MoveCamera(zoomPoint));
+        //mainCamera.transform.position = zoomPoint;
+        //cameraAnimator.SetTrigger("ZoomIn");
+    }
+    private IEnumerator MoveCamera(Vector3 targetPosition)
+    {
+        while(mainCamera.transform.position != targetPosition)
+        {
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, targetPosition, 7f * Time.deltaTime);
+            yield return null;
+        }
+        cameraAnimator.SetTrigger("ZoomIn");
     }
     private void ResetCamera()
-    {
-        mainCamera.transform.position = originalCameraPosition;
-        mainCamera.orthographicSize = originalCameraSize;
+    {                
+        cameraAnimator.SetTrigger("ZoomOut");  
     }
     
     private Vector3 WorldToCanvasSpace(GameObject unit)
@@ -296,7 +307,7 @@ public class CombatManager : MonoBehaviour
 
         //Determine intensity of shake
         if(intensity > 10){
-            intensity = 0.35f;
+            intensity = 0.4f;
         }
         else if(intensity < 10){
             intensity = 0.2f;

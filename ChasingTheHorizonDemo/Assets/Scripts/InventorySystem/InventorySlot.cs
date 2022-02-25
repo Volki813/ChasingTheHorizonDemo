@@ -30,11 +30,16 @@ namespace InventorySystem
         public void FillSlot()
         {
             slotIcon.sprite = item.itemIcon;
+            slotIcon.color = new Color32(255, 255, 255, 255);
         }
         public void ClearSlot()
         {
-            item = null;
-            slotIcon.sprite = null;
+            if(item){
+                item = null;
+            }
+            if(slotIcon){
+                slotIcon.sprite = null;
+            }
         }
     }
 }

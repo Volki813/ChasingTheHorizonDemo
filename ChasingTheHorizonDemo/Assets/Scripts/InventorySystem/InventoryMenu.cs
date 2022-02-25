@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -30,10 +31,6 @@ namespace InventorySystem
         private void Awake()
         {
             cursor = FindObjectOfType<CursorController>();
-        }
-
-        private void Start()
-        {
             SetSlots();
         }
 
@@ -44,8 +41,9 @@ namespace InventorySystem
 
         private void OnEnable()
         {
-            Invoke("FillSlots", 0.05f);
-            Invoke("ResetEquippedWeapon", 0.05f);
+            Invoke("FillSlots", 0.26f);
+            Invoke("ResetEquippedWeapon", 0.27f);
+            StartCoroutine(HighlightButton());
         }
 
         private void OnDisable()
@@ -86,7 +84,7 @@ namespace InventorySystem
 
         private void ItemPreview()
         {
-            if (EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>() && EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>().item != null)
+            if(EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>() && EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>().item != null)
             {
                 InventorySlot highlightedSlot = EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>();
 
@@ -96,6 +94,7 @@ namespace InventorySystem
 
                     itemName.text = highlightedSlot.item.itemName;
                     itemIcon.sprite = highlightedSlot.item.itemIcon;
+                    itemIcon.color = new Color32(255, 255, 255, 255);
                     itemDescription.text = highlightedSlot.item.itemDescription;
 
                     weaponMight.text = "Might: " + weapon.might.ToString();
@@ -109,6 +108,7 @@ namespace InventorySystem
                     ClearItemPreview();
                     itemName.text = highlightedSlot.item.itemName;
                     itemIcon.sprite = highlightedSlot.item.itemIcon;
+                    itemIcon.color = new Color32(255, 255, 255, 255);
                     itemDescription.text = highlightedSlot.item.itemDescription;
                 }
             }
@@ -121,6 +121,7 @@ namespace InventorySystem
         {
             itemName.text = null;
             itemIcon.sprite = null;
+            itemIcon.color = new Color32(255, 255, 255, 0);
             itemDescription.text = null;
             weaponMight.text = null;
             weaponHit.text = null;
@@ -140,12 +141,11 @@ namespace InventorySystem
         }
         private void FillSlots()
         {
-            EventSystem.current.SetSelectedGameObject(inventorySlots[0].gameObject);
             for (int i = 0; i < cursor.selectedUnit.inventory.inventory.Count; i++)
             {
                 inventorySlots[i].item = cursor.selectedUnit.inventory.inventory[i];
                 inventorySlots[i].FillSlot();
-            }            
+            }
         }
         private void ResetEquippedWeapon()
         {
@@ -168,6 +168,12 @@ namespace InventorySystem
             {
                 inventorySlots[i].ClearSlot();
             }
+        }
+       
+        private IEnumerator HighlightButton()
+        {
+            yield return new WaitForSeconds(0.3f);
+            EventSystem.current.SetSelectedGameObject(inventorySlots[0].gameObject);
         }
     }
 }

@@ -57,7 +57,7 @@ public class TileLoader : MonoBehaviour
     {
         attackableHighlight.SetActive(true);
     }
-    public void ResetTiles()
+    public void ResetTile()
     {
         walkable = false;
         walkableHighlight.SetActive(false);

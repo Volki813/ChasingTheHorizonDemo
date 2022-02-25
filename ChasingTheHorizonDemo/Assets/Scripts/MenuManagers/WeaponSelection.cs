@@ -17,15 +17,16 @@ public class WeaponSelection : MonoBehaviour
     }
     private void OnEnable()
     {
+        Invoke("GetUnitWeapons", 0.26f);
+        Invoke("FillSlots", 0.27f);
         StartCoroutine(HighlightButton());
-        Invoke("GetUnitWeapons", 0.01f);
-        Invoke("FillSlots", 0.02f);
     }
     private void OnDisable()
     {
         unitWeapons.Clear();
         foreach(InventorySlot slot in slots){
             slot.ClearSlot();
+            slot.gameObject.SetActive(false);
         }
     }
 
@@ -39,9 +40,6 @@ public class WeaponSelection : MonoBehaviour
     }
     private void FillSlots()
     {
-        for(int i = 0; i < slots.Length; i++){
-            slots[i].gameObject.SetActive(false);
-        }
         for(int i = 0; i < unitWeapons.Count; i++){
             slots[i].gameObject.SetActive(true);
         }
@@ -59,7 +57,10 @@ public class WeaponSelection : MonoBehaviour
     {
         foreach (InventorySlot slot in slots)
         {
-            slot.equippedIcon.SetActive(false);
+            if(slot.equippedIcon)
+            {
+                slot.equippedIcon.SetActive(false);
+            }
         }
         foreach (InventorySlot slot in slots)
         {
@@ -86,6 +87,7 @@ public class WeaponSelection : MonoBehaviour
     }    
     private IEnumerator HighlightButton()
     {
+        yield return new WaitForSeconds(0.28f);
         EventSystem.current.SetSelectedGameObject(null);        
         yield return new WaitForSeconds(0.05f);
         EventSystem.current.SetSelectedGameObject(slots[0].gameObject);

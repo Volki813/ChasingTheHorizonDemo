@@ -28,7 +28,7 @@ public abstract class TurnState
         turnManager.cursor.controls.Disable();
         turnManager.cursor.controls.UI.Disable();
         turnManager.cursor.controls.MapScene.Disable();
-        turnManager.cursor.GetComponent<SpriteRenderer>().sprite = null;
+        turnManager.cursor.GetComponent<Animator>().SetBool("Invisible", true);
     }
 
     protected void EnableCursor()
@@ -36,7 +36,7 @@ public abstract class TurnState
         turnManager.cursor.controls.Enable();
         turnManager.cursor.controls.MapScene.Enable();
         turnManager.cursor.SetState(new MapState(turnManager.cursor));
-        turnManager.cursor.GetComponent<SpriteRenderer>().sprite = turnManager.cursor.highlight;
+        turnManager.cursor.GetComponent<Animator>().SetBool("Invisible", false);
     }
 
     protected void Test()

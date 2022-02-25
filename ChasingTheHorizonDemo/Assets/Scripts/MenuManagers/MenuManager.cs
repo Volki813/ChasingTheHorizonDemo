@@ -53,7 +53,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    private IEnumerator HighlightButton()
+    public IEnumerator HighlightButton()
     {
         EventSystem.current.SetSelectedGameObject(null);
         yield return null;
