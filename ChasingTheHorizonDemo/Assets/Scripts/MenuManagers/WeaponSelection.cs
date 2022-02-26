@@ -9,11 +9,13 @@ public class WeaponSelection : MonoBehaviour
     [SerializeField] private CombatPreview combatPreview = null;
     [SerializeField] private InventorySlot[] slots = null;
     private CursorController cursor = null;
+    private TileMap map;
     public List<Item> unitWeapons = new List<Item>();
 
     private void Awake()
     {
         cursor = FindObjectOfType<CursorController>();
+        map = FindObjectOfType<TileMap>();
     }
     private void OnEnable()
     {
@@ -31,9 +33,9 @@ public class WeaponSelection : MonoBehaviour
 
     private void GetUnitWeapons()
     {
-        for(int i = 0; i < cursor.selectedUnit.inventory.inventory.Count; i++){
-            if(cursor.selectedUnit.inventory.inventory[i].type == ItemType.Weapon){
-                unitWeapons.Add(cursor.selectedUnit.inventory.inventory[i]);
+        for(int i = 0; i < map.selectedUnit.inventory.inventory.Count; i++){
+            if(map.selectedUnit.inventory.inventory[i].type == ItemType.Weapon){
+                unitWeapons.Add(map.selectedUnit.inventory.inventory[i]);
             }
         }
     }
@@ -50,7 +52,7 @@ public class WeaponSelection : MonoBehaviour
             slots[i].FillSlot();
         }
         foreach(InventorySlot slot in slots){
-            if(cursor.selectedUnit.equippedWeapon == slot.item){
+            if(map.selectedUnit.equippedWeapon == slot.item){
                 slot.equippedIcon.SetActive(true);
             }
         }
@@ -63,7 +65,7 @@ public class WeaponSelection : MonoBehaviour
         }
         foreach (InventorySlot slot in slots)
         {
-            if (cursor.selectedUnit.equippedWeapon == slot.item)
+            if (map.selectedUnit.equippedWeapon == slot.item)
             {
                 slot.equippedIcon.SetActive(true);
                 return;
@@ -72,12 +74,12 @@ public class WeaponSelection : MonoBehaviour
     }
     public void EquipWeapon(InventorySlot item)
     {
-        if(cursor.selectedUnit.equippedWeapon == (Weapon)item.item){
+        if(map.selectedUnit.equippedWeapon == (Weapon)item.item){
             cursor.AttackTarget();
         }
         else{
-            cursor.selectedUnit.equippedWeapon = null;
-            cursor.selectedUnit.equippedWeapon = (Weapon)item.item;
+            map.selectedUnit.equippedWeapon = null;
+            map.selectedUnit.equippedWeapon = (Weapon)item.item;
             ResetEquippedWeapon();
             combatPreview.gameObject.SetActive(true);
             combatPreview.ClearPreview();

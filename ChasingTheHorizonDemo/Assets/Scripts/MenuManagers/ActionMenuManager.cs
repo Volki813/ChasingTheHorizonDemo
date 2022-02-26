@@ -11,7 +11,8 @@ public class ActionMenuManager : MonoBehaviour
     public static ActionMenuManager instance;
 
     [Header("Other References")]
-    CursorController cursor;    
+    CursorController cursor;
+    private TileMap map;
     [SerializeField] private Button actionMenuButton = null;
 
     public GameObject inventoryMenu = null;
@@ -26,6 +27,7 @@ public class ActionMenuManager : MonoBehaviour
     private void Start()
     {
         cursor = FindObjectOfType<CursorController>();
+        map = FindObjectOfType<TileMap>();
     }
 
     private void OnEnable()
@@ -39,7 +41,7 @@ public class ActionMenuManager : MonoBehaviour
 
     public void Attack()
     {
-        if(cursor.selectedUnit.enemiesInRange.Count >= 1)
+        if(map.selectedUnit.enemiesInRange.Count >= 1)
         {
             cursor.SetState(new ActionMenuState(cursor));
             GetComponent<RectTransform>().anchoredPosition = new Vector2(-1400, 40);
@@ -62,8 +64,8 @@ public class ActionMenuManager : MonoBehaviour
     }
     public void Wait()
     {
-        cursor.selectedUnit.Rest();
-        cursor.selectedUnit = null;
+        map.selectedUnit.Rest();
+        map.selectedUnit = null;
         gameObject.SetActive(false);
         cursor.controls.UI.Disable();
         cursor.controls.MapScene.Enable();

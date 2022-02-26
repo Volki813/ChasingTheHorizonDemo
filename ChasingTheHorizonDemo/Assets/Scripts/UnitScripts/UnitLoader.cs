@@ -15,8 +15,11 @@ public class UnitLoader : MonoBehaviour
     public bool rested = false;
     public bool attackable = false;
     public Vector2 originalPosition = new Vector2(0, 0);
+    public int tileX;
+    public int tileY;
 
     //REFERENCES
+    public TileMap map;
     public Unit unit;
     public UnitLoader target;
     public SpriteRenderer spriteRenderer = null;
@@ -31,6 +34,7 @@ public class UnitLoader : MonoBehaviour
 
     private void Start()
     {
+        map = FindObjectOfType<TileMap>();
         currentHealth = unit.statistics.health;        
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = unit.sprite;
@@ -93,7 +97,6 @@ public class UnitLoader : MonoBehaviour
     }
     public void Move(Vector2 targetPosition)
     {
-        originalPosition = transform.position;
         StartCoroutine(Movement(targetPosition));
     }
     public void Rest()
@@ -122,28 +125,8 @@ public class UnitLoader : MonoBehaviour
     }
     public void GetWalkableTiles()
     {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
-        {
-            if(tile.transform.position == transform.position)
-            {
-                tile.HighlightTile(unit);
-            }
-            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= unit.statistics.movement && !tile.occupied)
-            {
-                tile.HighlightTile(unit);
-            }
-            if(Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) + tile.tileCost <= (unit.statistics.movement + equippedWeapon.range) && !tile.walkable)
-            {
-                tile.AttackableTile();
-                foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
-                {
-                    if(unit.transform.position == tile.transform.position && !unit.unit.allyUnit)
-                    {
-                        enemiesInRange.Add(unit);
-                    }
-                }
-            }
-        }
+        map.walkableTiles = map.GenerateRange((int)(transform.position.x - 0.5f), (int)(transform.position.y - 0.5f), unit.statistics.movement, this);
+        map.HighlightTiles();
     }
     private void GetEnemies()
     {
@@ -174,6 +157,9 @@ public class UnitLoader : MonoBehaviour
     }
     private IEnumerator Movement(Vector2 targetPosition)
     {
+        originalPosition = transform.position;
+        yield return new WaitForEndOfFrame();
+
         while(transform.position.x != targetPosition.x)
         {
             if(transform.position.x > targetPosition.x)
@@ -200,13 +186,9 @@ public class UnitLoader : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, targetPosition.y), 3f * Time.deltaTime);
             yield return null;
         }
-        ResetTiles();
-        UpdateTiles();
-        TurnManager.instance.RefreshTiles();
         hasMoved = true;
         ActionMenu();
         actionMenu.transform.position = actionMenuSpawn.position;
-        GetEnemies();
 
         animator.SetBool("Up", false);
         animator.SetBool("Down", false);
@@ -236,11 +218,7 @@ public class UnitLoader : MonoBehaviour
     {
         if(actionMenu.activeSelf == true)
         {
-            actionMenu.SetActive(false);
-            if(target != null)
-            {
-                target.AttackableHighlight();
-            }
+            actionMenu.SetActive(false);            
         }
         else
         {
