@@ -123,7 +123,7 @@ public class UIManager : MonoBehaviour
     }
     private void TileUI()
     {
-        TileType currentTile = map.ReturnTileAt((int)(transform.position.x - 0.5f), (int)(transform.position.y - 0.5f));
+        TileType currentTile = map.ReturnTileAt((int)(transform.localPosition.x), (int)(transform.localPosition.y));
 
         if(currentTile != null)
         {

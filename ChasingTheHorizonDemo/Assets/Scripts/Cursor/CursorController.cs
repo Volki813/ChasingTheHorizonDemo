@@ -61,7 +61,7 @@ public class CursorController : MonoBehaviour
     private void Start()
     {
         map = FindObjectOfType<TileMap>();
-        currentPosition = transform.position;
+        currentPosition = transform.localPosition;
         highlight = GetComponent<SpriteRenderer>().sprite;
         enemyTurn = false;
         controls.MapScene.Enable();
@@ -111,10 +111,10 @@ public class CursorController : MonoBehaviour
 
         MoveCamera();
 
-        while((Vector2)transform.position != currentPosition)
+        while((Vector2)transform.localPosition != currentPosition)
         {
             cursorMoving = true;
-            transform.position = Vector2.MoveTowards(transform.position, currentPosition, moveSpeed * Time.deltaTime);
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, currentPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
         cursorMoving = false;
@@ -176,7 +176,7 @@ public class CursorController : MonoBehaviour
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && map.selectedUnit == null)
+            if(transform.localPosition == unit.transform.localPosition && map.selectedUnit == null)
             {
                 if(unit.unit.allyUnit && unit.rested == false)
                 {
@@ -191,17 +191,20 @@ public class CursorController : MonoBehaviour
     {
         if(map.selectedUnit != null)
         {
-            map.selectedUnit.animator.SetBool("Selected", false);                        
-            map.selectedUnit = null;
-            map.DehighlightTiles();
-            SetState(new MapState(this));
+            if(map.selectedUnit.currentPath == null)
+            {
+                map.selectedUnit.animator.SetBool("Selected", false);
+                map.selectedUnit = null;
+                map.DehighlightTiles();
+                SetState(new MapState(this));
+            }
         }
     }
     public void SelectEnemy()
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && !unit.unit.allyUnit)
+            if(transform.localPosition == unit.transform.localPosition && !unit.unit.allyUnit)
             {          
                 unit.GetWalkableTiles();                
                 unit.spriteRenderer.color = Color.red;
@@ -226,14 +229,14 @@ public class CursorController : MonoBehaviour
     {
         foreach(Node n in map.walkableTiles)
         {
-            if(new Vector3(currentPosition.x - 0.5f, currentPosition.y - 0.5f) == new Vector3(n.x, n.y))
-            {
+            if(new Vector3(currentPosition.x, currentPosition.y) == new Vector3(n.x, n.y) && map.CanTraverse(n.x, n.y))
+            {                
                 if(map.selectedUnit.hasMoved == false)
                 {
-                    map.selectedUnit.Move(new Vector2(n.x + 0.5f, n.y + 0.5f));
-                    SetState(new ActionMenuState(this));
-                    controls.MapScene.Disable();
-                    controls.UI.Enable();
+                    map.selectedUnit.originalPosition = map.selectedUnit.transform.localPosition;
+                    map.GeneratePathTo(n.x, n.y);
+                    map.selectedUnit.FollowPath();
+                    break;
                 }
             }
         }
@@ -248,8 +251,9 @@ public class CursorController : MonoBehaviour
             }
         }
         map.selectedUnit.enemiesInRange.Clear();
-        map.selectedUnit.transform.position = map.selectedUnit.originalPosition;
+        map.selectedUnit.transform.localPosition = map.selectedUnit.originalPosition;
         map.selectedUnit.hasMoved = false;
+        map.selectedUnit.currentPath = null;
         map.DehighlightTiles();
         map.selectedUnit.ActionMenu();
         map.selectedUnit.target = null;
@@ -258,34 +262,6 @@ public class CursorController : MonoBehaviour
         controls.UI.Disable();
         controls.MapScene.Enable();
     }
-
-    public void AttackMove()
-    {
-        foreach(UnitLoader unit in map.selectedUnit.enemiesInRange){
-            if(transform.position == unit.transform.position){
-                if(!map.selectedUnit.hasMoved){
-                    map.selectedUnit.Move(FindClosestTile(unit.transform.position));
-                    SetState(new ActionMenuState(this));
-                    controls.MapScene.Disable();
-                    controls.UI.Enable();
-                }
-            }
-        }
-    }
-    private Vector2 FindClosestTile(Vector2 position)
-    {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>()){
-            if(tile.walkable && !tile.occupied){
-                if(Vector2.Distance(map.selectedUnit.transform.position, position) == map.selectedUnit.equippedWeapon.range){
-                    return map.selectedUnit.transform.position;
-                }
-                if(Vector2.Distance(tile.transform.position, position) == map.selectedUnit.equippedWeapon.range){
-                    return tile.transform.position;
-                }
-            }
-        }
-        return map.selectedUnit.transform.position;
-    }   
     public void CloseInventory()
     {
         ActionMenuManager.instance.CloseInventory();
@@ -294,8 +270,8 @@ public class CursorController : MonoBehaviour
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && map.selectedUnit.enemiesInRange.Contains(unit) && 
-                Vector2.Distance(map.selectedUnit.transform.position, unit.transform.position) <= map.selectedUnit.equippedWeapon.range)
+            if(transform.localPosition == unit.transform.localPosition && map.selectedUnit.enemiesInRange.Contains(unit) && 
+                Vector2.Distance(map.selectedUnit.transform.localPosition, unit.transform.localPosition) <= map.selectedUnit.equippedWeapon.range)
             {
                 map.selectedUnit.target = unit;
                 ActionMenuManager.instance.combatPreview.SetActive(true);

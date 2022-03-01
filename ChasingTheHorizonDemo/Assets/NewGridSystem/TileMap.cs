@@ -1,22 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.Linq;
 
 public class TileMap : MonoBehaviour
 {
     public TextAsset mapData;
-    public string mapValues;
+    private string mapValues;
+
+    public int mapSizeX = 0;
+    public int mapSizeY = 0;
+
     public UnitLoader selectedUnit; 
 
     public TileType[] tileTypes;
     public int[,] tiles;
     public Node[,] graph;
-
-    int mapSizeX = 20;
-    int mapSizeY = 20;
-
-    public List<UnitLoader> allyUnits;
-    public List<UnitLoader> enemyUnits;
 
     public GameObject redHighlight;
     public GameObject blueHighlight;
@@ -26,17 +24,16 @@ public class TileMap : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < mapData.text.Length; i++)
-        {
-            mapValues = mapValues + mapData.text[i];
-        }
+        mapValues = string.Concat(mapData.text.Where(c => !char.IsWhiteSpace(c)));
 
-        GenerateMapData();
+        InitializeMapData();
         GeneratePathfindingGraph();
+        GenerateMapFromFile();
         GenerateMapVisuals();
     }
 
-    private void GenerateMapData()
+
+    private void InitializeMapData()
     {       
         // Allocate our map tiles
         tiles = new int[mapSizeX, mapSizeY];
@@ -46,12 +43,6 @@ public class TileMap : MonoBehaviour
             for(int y = 0; y < mapSizeY; y++){
                 tiles[x, y] = 0;
             }
-        }
-
-        // Fill in tile values according to map data
-        for(int x = 0; x < mapSizeX; x++)
-        {
-            tiles[x, 0] = (int)Char.GetNumericValue(mapValues[x]);
         }
     }
     private void GeneratePathfindingGraph()
@@ -108,16 +99,34 @@ public class TileMap : MonoBehaviour
             }
         }
     }
+    private void GenerateMapFromFile()
+    {        
+        int y = 0;
+        while(y < mapSizeY)
+        {
+            for(int x = 0; x < mapSizeX; x++)
+            {
+                tiles[x, y] = (int)char.GetNumericValue(mapValues[x]);
+            }
+            mapValues = mapValues.Remove(0, 20);
+            y++;
+        }   
+    }
 
     public void GeneratePathTo(int x, int y)
     {
+        selectedUnit.currentPath = null;
+
         Dictionary<Node, float> distance = new Dictionary<Node, float>();
         Dictionary<Node, Node> previous = new Dictionary<Node, Node>();
 
         // List of nodes we haven't checked yet
         List<Node> unvisitedNodes = new List<Node>();
 
-        Node source = graph[selectedUnit.GetComponent<UnitLoader>().tileX, selectedUnit.GetComponent<UnitLoader>().tileY];
+        int sourceX = (int)(selectedUnit.transform.localPosition.x);
+        int sourceY = (int)(selectedUnit.transform.localPosition.y);
+        Node source = graph[sourceX, sourceY];
+        Node target = graph[x, y];
 
         distance[source] = 0;
         previous[source] = null;
@@ -134,29 +143,78 @@ public class TileMap : MonoBehaviour
             unvisitedNodes.Add(n);
         }
 
-        // The main loop
-        while (unvisitedNodes.Count > 0)
+        // This makes sure we don't throw an error if you try to move to the tile you're current standing on
+        if(source == target)
         {
-            // "u" is going to be the unvisited node with the smallest distance.
-            Node u = null;
+            return;
+        }        
 
-            foreach (Node possibleU in unvisitedNodes)
+        // The main loop
+        while(unvisitedNodes.Count > 0)
+        {
+            // The unvisited node with the smallest distance.
+            Node closestNode = null;
+
+            foreach(Node possibleClosest in unvisitedNodes)
             {
-                if (u == null || distance[possibleU] < distance[u])
-                    u = possibleU;
+                if(closestNode == null || distance[possibleClosest] < distance[closestNode])
+                    closestNode = possibleClosest;
             }
 
-            unvisitedNodes.Remove(u);
-
-            foreach (Node n in u.neighbors)
+            if(closestNode == target)
             {
-                float temp = distance[u] + CostToEnterTile(n.x, n.y);
+                // Target found!
+                break;
+            }
+
+            // Now we have visited it, remove it
+            unvisitedNodes.Remove(closestNode);
+
+            foreach(Node n in closestNode.neighbors)
+            {
+                float temp = distance[closestNode] + CostToEnterTile(n.x, n.y);
                 if (temp < distance[n])
                 {
                     distance[n] = temp;
-                    previous[n] = u;
+                    previous[n] = closestNode;
                 }
             }
+        }
+
+        if(previous[target] == null)
+        {
+            //no route between target and source
+            return;
+        }
+
+        List<Node> currentPath = new List<Node>();
+        Node current = target;
+
+        // Step back through to find route from the target
+        while(current != null)
+        {
+            currentPath.Add(current);
+            current = previous[current];
+        }
+
+        // Reverse path from target to source to make it a path from source to target
+        currentPath.Reverse();
+
+        // Check if the target node is occupied by a unit, if so move to the tile adjacent to that unit
+        Node finalNode = currentPath[currentPath.Count - 1];
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
+        {
+            if(unit.transform.localPosition == new Vector3(finalNode.x, finalNode.y))
+            {
+                currentPath.Remove(finalNode);
+            }
+        }
+
+        selectedUnit.currentPath = currentPath;
+
+        foreach (Node n in currentPath)
+        {
+            n.redHighlight.SetActive(true);
         }
     }
     public List<Node> GenerateRange(int x, int y, int size, UnitLoader unit)
@@ -180,7 +238,7 @@ public class TileMap : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < size; i++)
+        for(int i = 0; i < size; i++)
         {
             // Clear the temp list
             tempList.Clear();
@@ -228,22 +286,15 @@ public class TileMap : MonoBehaviour
 
         return tt.movementCost;
     }
-    private bool CanTraverse(int x, int y)
+    public bool CanTraverse(int x, int y)
     {
         if(tileTypes[tiles[x, y]].isWalkable == false)
         {
             return false;
         }
-        foreach(UnitLoader u in enemyUnits)
+        foreach(UnitLoader u in TurnManager.instance.allyUnits)
         {
-            if (x == (int)(u.transform.position.x - 0.5f) && y == (int)(u.transform.position.y - 0.5f))
-            {
-                return false;
-            }
-        }
-        foreach(UnitLoader u in allyUnits)
-        {
-            if (x == (int)(u.transform.position.x - 0.5f) && y == (int)(u.transform.position.y - 0.5f) && u != selectedUnit)
+            if(x == (int)(u.transform.localPosition.x) && y == (int)(u.transform.localPosition.y) && u != selectedUnit)
             {
                 return false;
             }
@@ -256,15 +307,19 @@ public class TileMap : MonoBehaviour
     }
 
     public void HighlightTiles()
-    {        
+    {    
+        if(attackableTiles != null)
+        {
+            foreach(Node n in attackableTiles)
+            {
+                n.redHighlight.SetActive(true);
+            }
+        }
         if(walkableTiles != null)
         {
             foreach(Node n in walkableTiles)
             {
-                if(CanTraverse(n.x, n.y))
-                {
-                    n.blueHighlight.SetActive(true);
-                }
+                n.blueHighlight.SetActive(true);
             }
         }
     }
