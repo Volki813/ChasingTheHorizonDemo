@@ -1,5 +1,0 @@
-0 = snow
-1 = road
-2 = forest
-3 = mountain
-4 = house

@@ -14,7 +14,7 @@ public class CombatManager : MonoBehaviour
 
     //VARIABLES 
     private float originalCameraSize = 7.080622f;
-    private Vector3 originalCameraPosition = new Vector3(10.5f, 10.5f, -10);
+    private Vector3 originalCameraPosition = new Vector3(0, 1, -10);
     private bool dialoguePlayed = false;
 
     //REFERENCES

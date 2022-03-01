@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -12,7 +13,6 @@ namespace InventorySystem
 {
     public class InventoryMenu : MonoBehaviour
     {
-        private TileMap map;
         [SerializeField] private CursorController cursor = null;
         [SerializeField] private List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
@@ -31,11 +31,6 @@ namespace InventorySystem
         private void Awake()
         {
             cursor = FindObjectOfType<CursorController>();
-            map = FindObjectOfType<TileMap>();
-        }
-
-        private void Start()
-        {
             SetSlots();
         }
 
@@ -46,8 +41,9 @@ namespace InventorySystem
 
         private void OnEnable()
         {
-            Invoke("FillSlots", 0.05f);
-            Invoke("ResetEquippedWeapon", 0.05f);
+            Invoke("FillSlots", 0.26f);
+            Invoke("ResetEquippedWeapon", 0.27f);
+            StartCoroutine(HighlightButton());
         }
 
         private void OnDisable()
@@ -61,26 +57,26 @@ namespace InventorySystem
             //check what kind of item you have
             if (item.item.type == ItemType.Weapon)
             {
-                map.selectedUnit.equippedWeapon = null;
-                map.selectedUnit.equippedWeapon = (Weapon)item.item;
+                cursor.selectedUnit.equippedWeapon = null;
+                cursor.selectedUnit.equippedWeapon = (Weapon)item.item;
                 Invoke("ResetEquippedWeapon", 0.05f);
             }
             else if (item.item.type == ItemType.Consumable)
             {
                 Consumable consumable = (Consumable)item.item;
-                if (map.selectedUnit.currentHealth == map.selectedUnit.unit.statistics.health)
+                if (cursor.selectedUnit.currentHealth == cursor.selectedUnit.unit.statistics.health)
                 {
                     return;
                 }
-                else if (map.selectedUnit.currentHealth + consumable.healValue > map.selectedUnit.unit.statistics.health)
+                else if (cursor.selectedUnit.currentHealth + consumable.healValue > cursor.selectedUnit.unit.statistics.health)
                 {
-                    map.selectedUnit.currentHealth += map.selectedUnit.unit.statistics.health - map.selectedUnit.currentHealth;
+                    cursor.selectedUnit.currentHealth += cursor.selectedUnit.unit.statistics.health - cursor.selectedUnit.currentHealth;
                 }
                 else
                 {
-                    map.selectedUnit.currentHealth += consumable.healValue;
+                    cursor.selectedUnit.currentHealth += consumable.healValue;
                 }
-                map.selectedUnit.inventory.inventory.Remove(consumable);
+                cursor.selectedUnit.inventory.inventory.Remove(consumable);
                 ClearSlots();
                 Invoke("FillSlots", 0.05f);
             }
@@ -88,7 +84,7 @@ namespace InventorySystem
 
         private void ItemPreview()
         {
-            if (EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>() && EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>().item != null)
+            if(EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>() && EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>().item != null)
             {
                 InventorySlot highlightedSlot = EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>();
 
@@ -98,6 +94,7 @@ namespace InventorySystem
 
                     itemName.text = highlightedSlot.item.itemName;
                     itemIcon.sprite = highlightedSlot.item.itemIcon;
+                    itemIcon.color = new Color32(255, 255, 255, 255);
                     itemDescription.text = highlightedSlot.item.itemDescription;
 
                     weaponMight.text = "Might: " + weapon.might.ToString();
@@ -111,6 +108,7 @@ namespace InventorySystem
                     ClearItemPreview();
                     itemName.text = highlightedSlot.item.itemName;
                     itemIcon.sprite = highlightedSlot.item.itemIcon;
+                    itemIcon.color = new Color32(255, 255, 255, 255);
                     itemDescription.text = highlightedSlot.item.itemDescription;
                 }
             }
@@ -123,6 +121,7 @@ namespace InventorySystem
         {
             itemName.text = null;
             itemIcon.sprite = null;
+            itemIcon.color = new Color32(255, 255, 255, 0);
             itemDescription.text = null;
             weaponMight.text = null;
             weaponHit.text = null;
@@ -142,12 +141,11 @@ namespace InventorySystem
         }
         private void FillSlots()
         {
-            EventSystem.current.SetSelectedGameObject(inventorySlots[0].gameObject);
-            for (int i = 0; i < map.selectedUnit.inventory.inventory.Count; i++)
+            for (int i = 0; i < cursor.selectedUnit.inventory.inventory.Count; i++)
             {
-                inventorySlots[i].item = map.selectedUnit.inventory.inventory[i];
+                inventorySlots[i].item = cursor.selectedUnit.inventory.inventory[i];
                 inventorySlots[i].FillSlot();
-            }            
+            }
         }
         private void ResetEquippedWeapon()
         {
@@ -157,7 +155,7 @@ namespace InventorySystem
             }
             foreach (InventorySlot slot in inventorySlots)
             {
-                if (map.selectedUnit.equippedWeapon == slot.item)
+                if (cursor.selectedUnit.equippedWeapon == slot.item)
                 {
                     slot.equippedIcon.SetActive(true);
                     return;
@@ -170,6 +168,12 @@ namespace InventorySystem
             {
                 inventorySlots[i].ClearSlot();
             }
+        }
+       
+        private IEnumerator HighlightButton()
+        {
+            yield return new WaitForSeconds(0.3f);
+            EventSystem.current.SetSelectedGameObject(inventorySlots[0].gameObject);
         }
     }
 }

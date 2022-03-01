@@ -21,12 +21,10 @@ public class CombatPreview : MonoBehaviour
     public Text defenderCrit = null;
 
     CursorController cursor;
-    private TileMap map;
 
     private void Awake()
     {
         cursor = FindObjectOfType<CursorController>();
-        map = FindObjectOfType<TileMap>();
     }
 
     private void OnEnable()
@@ -49,17 +47,17 @@ public class CombatPreview : MonoBehaviour
     }
     public void FillPreview()
     {
-        attackerPortrait.sprite = map.selectedUnit.unit.portrait;
-        attackerHP.text = map.selectedUnit.currentHealth.ToString();
-        attackerDamage.text = CombatManager.instance.Hit(map.selectedUnit, map.selectedUnit.target).ToString();
-        attackerHit.text = (map.selectedUnit.CombatStatistics().hit - map.selectedUnit.target.CombatStatistics().avoid).ToString();
-        attackerCrit.text = map.selectedUnit.CombatStatistics().crit.ToString();
+        attackerPortrait.sprite = cursor.selectedUnit.unit.portrait;
+        attackerHP.text = cursor.selectedUnit.currentHealth.ToString();
+        attackerDamage.text = CombatManager.instance.Hit(cursor.selectedUnit, cursor.selectedUnit.target).ToString();
+        attackerHit.text = (cursor.selectedUnit.CombatStatistics().hit - cursor.selectedUnit.target.CombatStatistics().avoid).ToString();
+        attackerCrit.text = cursor.selectedUnit.CombatStatistics().crit.ToString();
 
-        defenderPortrait.sprite = map.selectedUnit.target.unit.portrait;
-        defenderHP.text = map.selectedUnit.target.currentHealth.ToString();
-        defenderDamage.text = CombatManager.instance.Hit(map.selectedUnit.target, map.selectedUnit).ToString();
-        defenderHit.text = (map.selectedUnit.target.CombatStatistics().hit - map.selectedUnit.CombatStatistics().avoid).ToString();
-        defenderCrit.text = map.selectedUnit.target.CombatStatistics().crit.ToString();
+        defenderPortrait.sprite = cursor.selectedUnit.target.unit.portrait;
+        defenderHP.text = cursor.selectedUnit.target.currentHealth.ToString();
+        defenderDamage.text = CombatManager.instance.Hit(cursor.selectedUnit.target, cursor.selectedUnit).ToString();
+        defenderHit.text = (cursor.selectedUnit.target.CombatStatistics().hit - cursor.selectedUnit.CombatStatistics().avoid).ToString();
+        defenderCrit.text = cursor.selectedUnit.target.CombatStatistics().crit.ToString();
     }
     public void ClearPreview()
     {
