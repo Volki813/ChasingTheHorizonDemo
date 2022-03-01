@@ -302,9 +302,9 @@ public class CursorController : MonoBehaviour
     }
     public void DisplayMenu()
     {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
+        foreach(Node n in map.graph)
         {
-            if(transform.position == tile.transform.position && tile.occupied == false)
+            if(transform.localPosition == new Vector3(n.x, n.y) && map.IsOccupied(n.x, n.y) == false)
             {
                 menu.SetActive(true);
                 SetState(new MenuState(this));

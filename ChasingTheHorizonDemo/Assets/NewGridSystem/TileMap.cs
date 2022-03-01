@@ -301,6 +301,17 @@ public class TileMap : MonoBehaviour
         }
         return true;
     }
+    public bool IsOccupied(int x, int y)
+    {
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        {
+            if(unit.transform.localPosition == new Vector3(x, y))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public TileType ReturnTileAt(int x, int y)
     {
         return tileTypes[tiles[x, y]];
