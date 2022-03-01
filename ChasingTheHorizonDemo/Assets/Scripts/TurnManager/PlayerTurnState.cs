@@ -25,7 +25,7 @@ public class PlayerTurnState : TurnState
         }
         yield return new WaitUntil(() => MapDialogueManager.instance.screenDim.activeSelf == false);
 
-        //Resets Camera Position if an event did not occur
+        //Resets Camera Position if an event did not occur        
         if(!eventPlayed)
         {
             Vector3 targetPosition = new Vector3(turnManager.cursor.transform.position.x, turnManager.cursor.transform.position.y, -10);

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 //Currently manages the Tile Info UI, I may move that to it's own script we'll see
 public class UIManager : MonoBehaviour
 {
+    private TileMap map;
+
     [Header("Ally Unit UI")]
     public Text unitName;
     public Text unitHP;
@@ -35,6 +37,11 @@ public class UIManager : MonoBehaviour
     [Header("Tile UI Info")]
     public Text tileName;
     public Text tileCost;
+
+    private void Start()
+    {
+        map = FindObjectOfType<TileMap>();
+    }
 
     private void Update()
     {
@@ -116,13 +123,12 @@ public class UIManager : MonoBehaviour
     }
     private void TileUI()
     {
-        foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
+        TileType currentTile = map.ReturnTileAt((int)(transform.localPosition.x), (int)(transform.localPosition.y));
+
+        if(currentTile != null)
         {
-            if (transform.position == tile.transform.position)
-            {
-                tileName.text = tile.tileName;
-                tileCost.text = tile.tileCost.ToString();
-            }
+            tileName.text = currentTile.name;
+            tileCost.text = currentTile.movementCost.ToString();
         }
     }  
 }

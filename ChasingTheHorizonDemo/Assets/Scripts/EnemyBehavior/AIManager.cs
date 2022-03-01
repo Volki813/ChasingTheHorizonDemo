@@ -127,7 +127,6 @@ public class AIManager : MonoBehaviour
             CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
         }
     }
-
     private void Defensive()
     {
         GetEnemies();

@@ -11,7 +11,6 @@ public class UnitState : MapState
     public override void Confirm()
     {
         cursorController.MoveUnit();
-        cursorController.AttackMove();
     }
 
     public override void Cancel()
