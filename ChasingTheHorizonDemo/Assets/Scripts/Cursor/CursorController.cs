@@ -6,7 +6,6 @@ public class CursorController : MonoBehaviour
 {
     public Sprite highlight = null;
     public Vector2 currentPosition = new Vector3(0, 0);
-    public UnitLoader selectedUnit = null;
     public bool enemyTurn = false;
     public GameObject enemyInventory = null;
 
@@ -22,10 +21,9 @@ public class CursorController : MonoBehaviour
     public float cameraRight = 0;
 
     //REFERENCES
+    private TileMap map;
     public CursorControls controls;
-    [SerializeField] private GameObject menu = null;
-    private GameObject unitsMenu = null;
-    private GameObject optionsMenu = null;
+    [SerializeField] private GameObject menu = null;    
     [SerializeField] private Camera mapCamera = null;
     [Header("Map Frame Points")] //These variables define at which point your cursor needs to be for the camera to move in the respective direction
     [SerializeField] private Transform frameTop = null;
@@ -62,11 +60,10 @@ public class CursorController : MonoBehaviour
     }
     private void Start()
     {
-        currentPosition = transform.position;
+        map = FindObjectOfType<TileMap>();
+        currentPosition = transform.localPosition;
         highlight = GetComponent<SpriteRenderer>().sprite;
         enemyTurn = false;
-        unitsMenu = menu.transform.GetChild(0).gameObject;
-        optionsMenu = menu.transform.GetChild(1).gameObject;
         controls.MapScene.Enable();
         SetState(new MapState(this));
     }
@@ -114,10 +111,10 @@ public class CursorController : MonoBehaviour
 
         MoveCamera();
 
-        while((Vector2)transform.position != currentPosition)
+        while((Vector2)transform.localPosition != currentPosition)
         {
             cursorMoving = true;
-            transform.position = Vector2.MoveTowards(transform.position, currentPosition, moveSpeed * Time.deltaTime);
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, currentPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
         cursorMoving = false;
@@ -162,7 +159,7 @@ public class CursorController : MonoBehaviour
             mapCamera.transform.position = Vector3.MoveTowards(mapCamera.transform.position, targetPosition, 10f * Time.deltaTime);
             yield return null;
         }
-    }
+    }   
 
     private void Confirm()
     {
@@ -179,11 +176,11 @@ public class CursorController : MonoBehaviour
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && selectedUnit == null)
+            if(transform.localPosition == unit.transform.localPosition && map.selectedUnit == null)
             {
                 if(unit.unit.allyUnit && unit.rested == false)
                 {
-                    selectedUnit = unit;
+                    map.selectedUnit = unit;
                     unit.Selected();
                     SetState(new UnitState(this));
                 }
@@ -192,98 +189,75 @@ public class CursorController : MonoBehaviour
     }
     public void DeselectUnit()
     {
-        if(selectedUnit != null)
+        if(map.selectedUnit != null)
         {
-            selectedUnit.animator.SetBool("Selected", false);
-            selectedUnit.ResetTiles();
-            selectedUnit = null;
-            SetState(new MapState(this));
+            if(map.selectedUnit.currentPath == null)
+            {
+                map.selectedUnit.animator.SetBool("Selected", false);
+                map.selectedUnit = null;
+                map.DehighlightTiles();
+                SetState(new MapState(this));
+            }
         }
     }
     public void SelectEnemy()
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && !unit.unit.allyUnit)
-            {
-                unit.GetWalkableTiles();
-                unit.GetComponent<SpriteRenderer>().color = Color.red;
+            if(transform.localPosition == unit.transform.localPosition && !unit.unit.allyUnit)
+            {          
+                unit.GetWalkableTiles();                
+                unit.spriteRenderer.color = Color.red;
                 enemyInventory.SetActive(true);
-                enemyInventory.GetComponent<EnemyInventory>().DisplayInventory(unit);
+                enemyInventory.GetComponent<EnemyInventory>().DisplayInventory(unit);                
             }
         }
     }
     public void ResetTiles()
     {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
-        {
-            tile.ResetTile();
-        }
+        map.DehighlightTiles();
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(!unit.unit.allyUnit)
+            if(unit.spriteRenderer.color == Color.red)
             {
-                unit.GetComponent<SpriteRenderer>().color = Color.white;
+                unit.spriteRenderer.color = Color.white;
                 enemyInventory.SetActive(false);
             }
         }
     }
     public void MoveUnit()
     {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>()){
-            if(transform.position == tile.transform.position){
-                if(tile.walkable == true && selectedUnit.hasMoved == false){
-                    selectedUnit.Move(tile.transform.position);
-                    SetState(new ActionMenuState(this));
-                    controls.MapScene.Disable();
-                    controls.UI.Enable();
+        foreach(Node n in map.walkableTiles)
+        {
+            if(new Vector3(currentPosition.x, currentPosition.y) == new Vector3(n.x, n.y) && map.CanTraverse(n.x, n.y))
+            {                
+                if(map.selectedUnit.hasMoved == false)
+                {
+                    map.selectedUnit.originalPosition = map.selectedUnit.transform.localPosition;
+                    map.GeneratePathTo(n.x, n.y);
+                    map.selectedUnit.FollowPath();
+                    break;
                 }
             }
         }
-    }
-    public void AttackMove()
-    {
-        foreach(UnitLoader unit in selectedUnit.enemiesInRange){
-            if(transform.position == unit.transform.position){
-                if(!selectedUnit.hasMoved){
-                    selectedUnit.Move(FindClosestTile(unit.transform.position));
-                    SetState(new ActionMenuState(this));
-                    controls.MapScene.Disable();
-                    controls.UI.Enable();
-                }
-            }
-        }
-    }
-    private Vector2 FindClosestTile(Vector2 position)
-    {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>()){
-            if(tile.walkable && !tile.occupied){
-                if(Vector2.Distance(selectedUnit.transform.position, position) == selectedUnit.equippedWeapon.range){
-                    return selectedUnit.transform.position;
-                }
-                if(Vector2.Distance(tile.transform.position, position) == selectedUnit.equippedWeapon.range){
-                    return tile.transform.position;
-                }
-            }
-        }
-        return selectedUnit.transform.position;
     }
     public void UndoMove()
-    {        
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+    {
+        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(!unit.unit.allyUnit)
+            if (!unit.unit.allyUnit)
             {
                 unit.spriteRenderer.color = Color.white;
             }
-        }        
-        selectedUnit.enemiesInRange.Clear();
-        selectedUnit.transform.position = selectedUnit.originalPosition;
-        selectedUnit.hasMoved = false;
-        TurnManager.instance.RefreshTiles();
-        selectedUnit.ActionMenu();
-        selectedUnit.target = null;
-        selectedUnit = null;
+        }
+        map.selectedUnit.enemiesInRange.Clear();
+        map.selectedUnit.transform.localPosition = map.selectedUnit.originalPosition;
+        map.selectedUnit.hasMoved = false;
+        map.selectedUnit.currentPath = null;
+        map.DehighlightTiles();
+        map.selectedUnit.ActionMenu();
+        map.selectedUnit.target = null;
+        map.selectedUnit = null;
         SetState(new MapState(this));
         controls.UI.Disable();
         controls.MapScene.Enable();
@@ -296,10 +270,10 @@ public class CursorController : MonoBehaviour
     {
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(transform.position == unit.transform.position && selectedUnit.enemiesInRange.Contains(unit) && 
-                Vector2.Distance(selectedUnit.transform.position, unit.transform.position) <= selectedUnit.equippedWeapon.range)
+            if(transform.localPosition == unit.transform.localPosition && map.selectedUnit.enemiesInRange.Contains(unit) && 
+                Vector2.Distance(map.selectedUnit.transform.localPosition, unit.transform.localPosition) <= map.selectedUnit.equippedWeapon.range)
             {
-                selectedUnit.target = unit;
+                map.selectedUnit.target = unit;
                 ActionMenuManager.instance.combatPreview.SetActive(true);
                 ActionMenuManager.instance.weaponSelection.SetActive(true);
                 controls.MapScene.Disable();
@@ -310,7 +284,7 @@ public class CursorController : MonoBehaviour
     }    
     public void CancelAttack()
     {
-        selectedUnit.target = null;
+        map.selectedUnit.target = null;
         ActionMenuManager.instance.combatPreview.SetActive(false);
         ActionMenuManager.instance.weaponSelection.SetActive(false);
         controls.UI.Disable();
@@ -319,9 +293,9 @@ public class CursorController : MonoBehaviour
     }
     public void AttackTarget()
     {
-        CombatManager.instance.EngageAttack(selectedUnit, selectedUnit.target);
-        selectedUnit.target.GetComponent<SpriteRenderer>().color = Color.white;
-        selectedUnit = null;
+        CombatManager.instance.EngageAttack(map.selectedUnit, map.selectedUnit.target);
+        map.selectedUnit.target.GetComponent<SpriteRenderer>().color = Color.white;
+        map.selectedUnit = null;
         ActionMenuManager.instance.combatPreview.SetActive(false);
         ActionMenuManager.instance.weaponSelection.SetActive(false);
         ActionMenuManager.instance.gameObject.SetActive(false);
@@ -341,23 +315,9 @@ public class CursorController : MonoBehaviour
     }
     public void CloseMenu()
     {
-        if(unitsMenu.activeSelf)
-        {
-            unitsMenu.SetActive(false);
-            return;
-        }
-        else if(optionsMenu.activeSelf)
-        {
-            optionsMenu.SetActive(false);
-            StartCoroutine(menu.GetComponent<MenuManager>().HighlightButton());
-            return;
-        }
-        else if(!unitsMenu.activeSelf && !optionsMenu.activeSelf && menu.activeSelf)
-        {
-            menu.SetActive(false);
-            SetState(new MapState(this));
-            controls.UI.Disable();
-            controls.MapScene.Enable();
-        }
+        menu.SetActive(false);
+        SetState(new MapState(this));
+        controls.UI.Disable();
+        controls.MapScene.Enable();
     }    
 }
