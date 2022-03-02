@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -28,6 +29,8 @@ namespace InventorySystem
         [SerializeField] private Text weaponRange = null;
         [SerializeField] private Text weaponWeight = null;
 
+        private bool previewReady = false;
+
         private void Awake()
         {
             cursor = FindObjectOfType<CursorController>();
@@ -41,63 +44,73 @@ namespace InventorySystem
 
         private void Update()
         {
-            ItemPreview();
+            if(previewReady == true)
+            {
+                ItemPreview();
+            }
         }
 
         private void OnEnable()
         {
-            Invoke("FillSlots", 0.05f);
-            Invoke("ResetEquippedWeapon", 0.05f);
+            Invoke("FillSlots", 0.2f);
+            Invoke("ResetEquippedWeapon", 0.2f);
+            Invoke("HighlightButton", 0.3f);
+            StartCoroutine(StartItemPreview());
         }
 
         private void OnDisable()
         {
             ClearSlots();
             ClearItemPreview();
+            previewReady = false;
         }
 
         public void UseItem(InventorySlot item)
         {
             //check what kind of item you have
-            if (item.item.type == ItemType.Weapon)
+            if(item != null)
             {
-                map.selectedUnit.equippedWeapon = null;
-                map.selectedUnit.equippedWeapon = (Weapon)item.item;
-                Invoke("ResetEquippedWeapon", 0.05f);
-            }
-            else if (item.item.type == ItemType.Consumable)
-            {
-                Consumable consumable = (Consumable)item.item;
-                if (map.selectedUnit.currentHealth == map.selectedUnit.unit.statistics.health)
+                if(item.item.type == ItemType.Weapon)
                 {
-                    return;
+                    map.selectedUnit.equippedWeapon = null;
+                    map.selectedUnit.equippedWeapon = (Weapon)item.item;
+                    Invoke("ResetEquippedWeapon", 0.05f);
                 }
-                else if (map.selectedUnit.currentHealth + consumable.healValue > map.selectedUnit.unit.statistics.health)
+                else if (item.item.type == ItemType.Consumable)
                 {
-                    map.selectedUnit.currentHealth += map.selectedUnit.unit.statistics.health - map.selectedUnit.currentHealth;
+                    Consumable consumable = (Consumable)item.item;
+                    if (map.selectedUnit.currentHealth == map.selectedUnit.unit.statistics.health)
+                    {
+                        return;
+                    }
+                    else if (map.selectedUnit.currentHealth + consumable.healValue > map.selectedUnit.unit.statistics.health)
+                    {
+                        map.selectedUnit.currentHealth += map.selectedUnit.unit.statistics.health - map.selectedUnit.currentHealth;
+                    }
+                    else
+                    {
+                        map.selectedUnit.currentHealth += consumable.healValue;
+                    }
+                    map.selectedUnit.inventory.inventory.Remove(consumable);
+                    ClearSlots();
+                    Invoke("FillSlots", 0.05f);
                 }
-                else
-                {
-                    map.selectedUnit.currentHealth += consumable.healValue;
-                }
-                map.selectedUnit.inventory.inventory.Remove(consumable);
-                ClearSlots();
-                Invoke("FillSlots", 0.05f);
             }
         }
 
         private void ItemPreview()
         {
-            if (EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>() && EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>().item != null)
+            if(EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>() && EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>().item != null)
             {
                 InventorySlot highlightedSlot = EventSystem.current.currentSelectedGameObject.GetComponent<InventorySlot>();
 
-                if (highlightedSlot.item.type == ItemType.Weapon)
+                if(highlightedSlot.item.type == ItemType.Weapon)
                 {
                     Weapon weapon = (Weapon)highlightedSlot.item;
 
                     itemName.text = highlightedSlot.item.itemName;
                     itemIcon.sprite = highlightedSlot.item.itemIcon;
+                    itemIcon.color = new Color32(255, 255, 255, 255);
                     itemDescription.text = highlightedSlot.item.itemDescription;
 
                     weaponMight.text = "Might: " + weapon.might.ToString();
@@ -111,6 +124,7 @@ namespace InventorySystem
                     ClearItemPreview();
                     itemName.text = highlightedSlot.item.itemName;
                     itemIcon.sprite = highlightedSlot.item.itemIcon;
+                    itemIcon.color = new Color32(255, 255, 255, 255);
                     itemDescription.text = highlightedSlot.item.itemDescription;
                 }
             }
@@ -123,6 +137,7 @@ namespace InventorySystem
         {
             itemName.text = null;
             itemIcon.sprite = null;
+            itemIcon.color = new Color32(255, 255, 255, 0);
             itemDescription.text = null;
             weaponMight.text = null;
             weaponHit.text = null;
@@ -142,12 +157,11 @@ namespace InventorySystem
         }
         private void FillSlots()
         {
-            EventSystem.current.SetSelectedGameObject(inventorySlots[0].gameObject);
             for (int i = 0; i < map.selectedUnit.inventory.inventory.Count; i++)
             {
                 inventorySlots[i].item = map.selectedUnit.inventory.inventory[i];
                 inventorySlots[i].FillSlot();
-            }            
+            }
         }
         private void ResetEquippedWeapon()
         {
@@ -170,6 +184,18 @@ namespace InventorySystem
             {
                 inventorySlots[i].ClearSlot();
             }
+        }
+
+        private void HighlightButton()
+        {
+            EventSystem.current.SetSelectedGameObject(inventorySlots[0].gameObject);
+        }
+
+        private IEnumerator StartItemPreview()
+        {
+            yield return new WaitForSeconds(0.26f);
+            previewReady = true;
+
         }
     }
 }

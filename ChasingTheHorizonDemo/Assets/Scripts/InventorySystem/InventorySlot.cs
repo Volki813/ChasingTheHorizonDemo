@@ -39,6 +39,7 @@ namespace InventorySystem
             }
             if(slotIcon){
                 slotIcon.sprite = null;
+                slotIcon.color = new Color32(255, 255, 255, 0);
             }
         }
     }

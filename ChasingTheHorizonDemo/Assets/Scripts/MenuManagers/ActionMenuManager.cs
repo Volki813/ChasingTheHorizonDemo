@@ -50,10 +50,6 @@ public class ActionMenuManager : MonoBehaviour
             cursor.controls.MapScene.Enable();
             cursor.SetState(new AttackState(cursor));
         }
-        else if(cursor.selectedUnit.enemiesInRange.Count == 0)
-        {
-            Debug.Log("test");
-        }
     }
     public void Items()
     {
@@ -63,7 +59,7 @@ public class ActionMenuManager : MonoBehaviour
         }
         else
         {
-            inventoryMenu.SetActive(false);
+            CloseInventory();
         }
     }
     public void Wait()

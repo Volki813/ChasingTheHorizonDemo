@@ -84,20 +84,6 @@ public class UnitLoader : MonoBehaviour
         GetWalkableTiles();       
     }
 
-    public void ResetTiles()
-    {
-        foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
-        {
-            tile.ResetTiles();
-        }
-    }
-    public void UpdateTiles()
-    {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
-        {
-            tile.UpdateOccupationStatus();
-        }
-    }
     public void Move(Vector2 targetPosition)
     {
         StartCoroutine(Movement(targetPosition));

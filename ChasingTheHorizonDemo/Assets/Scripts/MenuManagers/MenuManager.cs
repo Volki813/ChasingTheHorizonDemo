@@ -53,7 +53,11 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public IEnumerator HighlightButton()
+    public void Highlight()
+    {
+        StartCoroutine(HighlightButton());
+    }
+    private IEnumerator HighlightButton()
     {
         EventSystem.current.SetSelectedGameObject(null);
         yield return null;
