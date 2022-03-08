@@ -71,14 +71,14 @@ public class OptionsMenu : MonoBehaviour
     }
     private void ChangeTiles(float value)
     {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
+        foreach(SelectableTile tile in FindObjectsOfType<SelectableTile>())
         {
             tile.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, (byte)value);
         }
     }
     private IEnumerator HighlightSlider()
     {
-        yield return new WaitForSeconds(0.26f);
+        yield return new WaitForSeconds(0.17f);
         EventSystem.current.SetSelectedGameObject(null);
         yield return null;
         EventSystem.current.SetSelectedGameObject(musicSlider.gameObject);

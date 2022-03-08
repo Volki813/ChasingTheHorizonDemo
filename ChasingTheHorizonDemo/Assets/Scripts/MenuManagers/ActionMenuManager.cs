@@ -49,6 +49,9 @@ public class ActionMenuManager : MonoBehaviour
             cursor.controls.UI.Disable();
             cursor.controls.MapScene.Enable();
             cursor.SetState(new AttackState(cursor));
+            map.DehighlightTiles();
+            map.attackableTiles = map.GenerateRange((int)map.selectedUnit.transform.localPosition.x, (int)map.selectedUnit.transform.localPosition.y, map.selectedUnit.equippedWeapon.range, map.selectedUnit);
+            map.HighlightTiles();
         }
     }
     public void Items()

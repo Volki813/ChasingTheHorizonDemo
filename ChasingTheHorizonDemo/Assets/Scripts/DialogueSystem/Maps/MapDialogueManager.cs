@@ -15,6 +15,9 @@ public class MapDialogueManager : MonoBehaviour
     private bool multipleLines = false;
     public bool dialogueFinished = false;
 
+    [SerializeField] private GameObject dialogueCursorTop = null;
+    [SerializeField] private GameObject dialogueCursorBot = null;
+
     [Header("Top Textbox")]
     [SerializeField] private Text textBox1 = null;
     [SerializeField] private Text namePlate1 = null;
@@ -97,6 +100,7 @@ public class MapDialogueManager : MonoBehaviour
 
         if(dialogue.scriptDialogue && !screenDim.activeSelf){
             screenDim.SetActive(true);
+            screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
         }
         
         if(dialogue.textBox1){
@@ -122,6 +126,12 @@ public class MapDialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
             }
         }
+
+        if(dialogue.textBox1)
+            dialogueCursorTop.SetActive(true);
+        else
+            dialogueCursorBot.SetActive(true);
+
         dialogue.finished = true;
         busy = false;
     }
@@ -162,7 +172,9 @@ public class MapDialogueManager : MonoBehaviour
             namePlate1.text = "";
             portrait1.sprite = null;
             portrait1.gameObject.SetActive(false);
-            screenDim.SetActive(false);
+            screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
+            dialogueCursorBot.SetActive(false);
+            dialogueCursorTop.SetActive(false);
         }
     }
     public void NextDialogue()

@@ -30,9 +30,9 @@ public class TileMap : MonoBehaviour
         GeneratePathfindingGraph();
         GenerateMapFromFile();
         GenerateMapVisuals();
+
     }
-
-
+    
     private void InitializeMapData()
     {       
         // Allocate our map tiles
@@ -91,6 +91,7 @@ public class TileMap : MonoBehaviour
 
         for(int x = 0; x < mapSizeX; x++){
             for(int y = 0; y < mapSizeY; y++){
+
                 graph[x, y].redHighlight = Instantiate(redHighlight, new Vector2(x + 0.5f, y + 0.5f), Quaternion.identity, transform);
                 graph[x, y].blueHighlight = Instantiate(blueHighlight, new Vector2(x + 0.5f, y + 0.5f), Quaternion.identity, transform);
 
@@ -113,9 +114,9 @@ public class TileMap : MonoBehaviour
         }   
     }
 
-    public void GeneratePathTo(int x, int y)
+    public void GeneratePathTo(int x, int y, UnitLoader unit)
     {
-        selectedUnit.currentPath = null;
+        unit.currentPath = null;
 
         Dictionary<Node, float> distance = new Dictionary<Node, float>();
         Dictionary<Node, Node> previous = new Dictionary<Node, Node>();
@@ -123,8 +124,8 @@ public class TileMap : MonoBehaviour
         // List of nodes we haven't checked yet
         List<Node> unvisitedNodes = new List<Node>();
 
-        int sourceX = (int)(selectedUnit.transform.localPosition.x);
-        int sourceY = (int)(selectedUnit.transform.localPosition.y);
+        int sourceX = (int)(unit.transform.localPosition.x);
+        int sourceY = (int)(unit.transform.localPosition.y);
         Node source = graph[sourceX, sourceY];
         Node target = graph[x, y];
 
@@ -195,27 +196,12 @@ public class TileMap : MonoBehaviour
         {
             currentPath.Add(current);
             current = previous[current];
-        }
+        }        
 
         // Reverse path from target to source to make it a path from source to target
-        currentPath.Reverse();
+        currentPath.Reverse();        
 
-        // Check if the target node is occupied by a unit, if so move to the tile adjacent to that unit
-        Node finalNode = currentPath[currentPath.Count - 1];
-        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
-        {
-            if(unit.transform.localPosition == new Vector3(finalNode.x, finalNode.y))
-            {
-                currentPath.Remove(finalNode);
-            }
-        }
-
-        selectedUnit.currentPath = currentPath;
-
-        foreach (Node n in currentPath)
-        {
-            n.redHighlight.SetActive(true);
-        }
+        unit.currentPath = currentPath;
     }
     public List<Node> GenerateRange(int x, int y, int size, UnitLoader unit)
     {
@@ -224,7 +210,7 @@ public class TileMap : MonoBehaviour
 
         // Temporary list of nodes that still need to be searched
         List<Node> workingList = new List<Node>();
-
+        
         List<Node> tempList = new List<Node>();
 
         // Add starting position to temp list
@@ -238,7 +224,7 @@ public class TileMap : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < size; i++)
+        for(int i = 1; i <= size;)
         {
             // Clear the temp list
             tempList.Clear();
@@ -276,7 +262,7 @@ public class TileMap : MonoBehaviour
                 foreach(Node n in workingList)
                     finalList.Add(n);
             }
-        }
+        }        
         return finalList;
     }
     
@@ -299,6 +285,13 @@ public class TileMap : MonoBehaviour
                 return false;
             }
         }
+        foreach (UnitLoader u in TurnManager.instance.enemyUnits)
+        {
+            if (x == (int)(u.transform.localPosition.x) && y == (int)(u.transform.localPosition.y) && u != selectedUnit)
+            {
+                return false;
+            }
+        }
         return true;
     }
     public bool IsOccupied(int x, int y)
@@ -316,9 +309,13 @@ public class TileMap : MonoBehaviour
     {
         return tileTypes[tiles[x, y]];
     }
+    public Node ReturnNodeAt(int x, int y)
+    {
+        return graph[x, y];
+    }
 
     public void HighlightTiles()
-    {    
+    {
         if(attackableTiles != null)
         {
             foreach(Node n in attackableTiles)

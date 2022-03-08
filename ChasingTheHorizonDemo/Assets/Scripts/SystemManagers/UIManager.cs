@@ -23,6 +23,8 @@ public class UIManager : MonoBehaviour
     public Text unitMovement;
     public Text unitMotivation;
 
+    public Image unitWeapon;
+
     [Header("Enemy UI Info")]
     public Text enemyName;
     public Text enemyHP;
@@ -33,6 +35,8 @@ public class UIManager : MonoBehaviour
     public Text enemyMagic;
     public Text enemyDefense;
     public Text enemyResistance;
+
+    public Image enemyWeapon;
 
     [Header("Tile UI Info")]
     public Text tileName;
@@ -71,6 +75,9 @@ public class UIManager : MonoBehaviour
                 unitProficiency.text = "Pro: " + unit.unit.statistics.proficiency.ToString();
                 unitMovement.text = "Mov: " + unit.unit.statistics.movement.ToString();
                 unitMotivation.text = "Mot: " + unit.unit.statistics.motivation.ToString();
+
+                unitWeapon.color = new Color32(255, 255, 255, 255);
+                unitWeapon.sprite = unit.equippedWeapon.itemIcon;
             }
             else if(unit.unit.allyUnit && unit.currentHealth <= 0)
             {
@@ -88,6 +95,9 @@ public class UIManager : MonoBehaviour
                 unitProficiency.text = "";
                 unitMovement.text = "";
                 unitMotivation.text = "";
+
+                unitWeapon.color = new Color32(255, 255, 255, 0);
+                unitWeapon.sprite = null;
             }
         }
     }
@@ -106,6 +116,9 @@ public class UIManager : MonoBehaviour
                 enemyMagic.text = "Mag: " + unit.unit.statistics.magic.ToString();
                 enemyDefense.text = "Def: " + unit.unit.statistics.defense.ToString();
                 enemyResistance.text = "Res: " + unit.unit.statistics.resistance.ToString();
+
+                enemyWeapon.color = new Color32(255, 255, 255, 255);
+                enemyWeapon.sprite = unit.equippedWeapon.itemIcon;
             }
             else if(!unit.unit.allyUnit && unit.currentHealth <= 0)
             {
@@ -118,6 +131,9 @@ public class UIManager : MonoBehaviour
                 enemyMagic.text = "";
                 enemyDefense.text = "";
                 enemyResistance.text = "";
+
+                enemyWeapon.color = new Color32(255, 255, 255, 0);
+                enemyWeapon.sprite = unit.equippedWeapon.itemIcon;
             }
         }
     }

@@ -18,6 +18,9 @@ namespace DialogueSystem
         [SerializeField] private Vector2 box1 = new Vector3(0, 0, 0);
         [SerializeField] private Vector2 box2 = new Vector3(0, 0, 0);
 
+        [SerializeField] private GameObject dialogueCursorTop = null;
+        [SerializeField] private GameObject dialogueCursorBot = null;
+
         private void Awake()
         {
             StartCoroutine(DialogueSequence());
@@ -99,7 +102,18 @@ namespace DialogueSystem
                     transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = box2;
                 }
 
+
                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().finished);
+
+                if(currentLine.GetComponent<DialogueLine>().textBox1)
+                {
+                    dialogueCursorTop.SetActive(true);
+                }
+                else if(currentLine.GetComponent<DialogueLine>().textBox2)
+                {
+                    dialogueCursorBot.SetActive(true);
+                }
+
                 buttonPressed = false;
                 yield return new WaitUntil(() => buttonPressed == true);
             }
@@ -110,6 +124,8 @@ namespace DialogueSystem
             if(context.started)
             {
                 buttonPressed = true;
+                dialogueCursorTop.SetActive(false);
+                dialogueCursorBot.SetActive(false);
             }
         }
 

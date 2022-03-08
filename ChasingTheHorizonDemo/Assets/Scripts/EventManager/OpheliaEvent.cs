@@ -41,7 +41,7 @@ public class OpheliaEvent : Event
         yield return new WaitForSeconds(1f);
         //Move Ophelia on screen
         opheliaObject.SetActive(true);
-        StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(-6.5f, 0.5f)));
+        StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(2f, 10f)));
         yield return new WaitForSeconds(2f);
         MapDialogueManager.instance.ClearDialogue();
         yield return new WaitForSeconds(1f);
@@ -51,8 +51,8 @@ public class OpheliaEvent : Event
         //Ophelia attacks Roland
         yield return new WaitForSeconds(0.5f);
         //Move next to Roland
-        StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(rolandObject.transform.position.x - 1, rolandObject.transform.position.y)));
-        yield return new WaitUntil(() => (Vector2)opheliaObject.transform.position == new Vector2(rolandObject.transform.position.x - 1, rolandObject.transform.position.y));
+        StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(rolandObject.transform.localPosition.x - 1, rolandObject.transform.localPosition.y)));
+        yield return new WaitUntil(() => (Vector2)opheliaObject.transform.localPosition == new Vector2(rolandObject.transform.localPosition.x - 1, rolandObject.transform.localPosition.y));
         yield return new WaitForSeconds(0.5f);
         //Attack Roland
         CombatManager.instance.EngageAttack(opheliaObject.GetComponent<UnitLoader>(), rolandObject);
@@ -70,9 +70,9 @@ public class OpheliaEvent : Event
     }
     private IEnumerator MoveUnit(UnitLoader currentEnemy, Vector2 targetPosition)
     {
-        while(currentEnemy.transform.position.x != targetPosition.x)
+        while(currentEnemy.transform.localPosition.x != targetPosition.x)
         {
-            if (currentEnemy.transform.position.x > targetPosition.x)
+            if (currentEnemy.transform.localPosition.x > targetPosition.x)
             {
                 currentEnemy.GetComponent<Animator>().SetBool("Left", true);
             }
@@ -80,12 +80,12 @@ public class OpheliaEvent : Event
             {
                 currentEnemy.GetComponent<Animator>().SetBool("Right", true);
             }
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(targetPosition.x, currentEnemy.transform.position.y), 2f * Time.deltaTime);
+            currentEnemy.transform.localPosition = Vector2.MoveTowards(currentEnemy.transform.localPosition, new Vector2(targetPosition.x, currentEnemy.transform.localPosition.y), 2f * Time.deltaTime);
             yield return null;
         }
-        while(currentEnemy.transform.position.y != targetPosition.y)
+        while(currentEnemy.transform.localPosition.y != targetPosition.y)
         {
-            if (currentEnemy.transform.position.y > targetPosition.y)
+            if (currentEnemy.transform.localPosition.y > targetPosition.y)
             {
                 currentEnemy.GetComponent<Animator>().SetBool("Down", true);
             }
@@ -93,7 +93,7 @@ public class OpheliaEvent : Event
             {
                 currentEnemy.GetComponent<Animator>().SetBool("Up", true);
             }
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(currentEnemy.transform.position.x, targetPosition.y), 2f * Time.deltaTime);
+            currentEnemy.transform.localPosition = Vector2.MoveTowards(currentEnemy.transform.localPosition, new Vector2(currentEnemy.transform.localPosition.x, targetPosition.y), 2f * Time.deltaTime);
             yield return null;
         }
         currentEnemy.GetComponent<Animator>().SetBool("Right", false);

@@ -12,13 +12,14 @@ public class AIManager : MonoBehaviour
     //REFERENCES
     private Camera mainCamera = null;
     private CursorController cursor;
+    private TileMap map;
     private Animator enemyAnimator = null;
     [SerializeField] private UnitLoader currentEnemy = null;
     [SerializeField] private GameObject combatReadout = null;
     [SerializeField] private GameObject fastModeIndicator = null;
 
     public List<UnitLoader> enemyOrder = new List<UnitLoader>();
-    [SerializeField] private List<TileLoader> walkableTiles = new List<TileLoader>();
+    [SerializeField] private List<Node> walkableTiles = new List<Node>();
     [SerializeField] private List<UnitLoader> enemiesInRange = new List<UnitLoader>();
 
     private Vector3 cameraTarget = new Vector3(0, 0, 0);
@@ -33,7 +34,8 @@ public class AIManager : MonoBehaviour
     private void Start()
     {
         mainCamera = FindObjectOfType<Camera>();
-        cursor = FindObjectOfType<CursorController>();        
+        cursor = FindObjectOfType<CursorController>();
+        map = FindObjectOfType<TileMap>();
         Invoke("SetEnemyOrder", 1f);
     }
 
@@ -113,10 +115,11 @@ public class AIManager : MonoBehaviour
         GetEnemies();
         if(enemiesInRange.Count == 0)
         {
-            GetWalkableTiles();
+            GetWalkableTiles();            
             UnitLoader closestAlly = FindClosestAlly();
-            TileLoader closestTile = FindClosestTile(closestAlly);
-            Move(currentEnemy, closestTile.transform.position);
+            Node closestTile = FindClosestTile(closestAlly);
+            map.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);
+            NodeMove();
         }
         else if(enemiesInRange.Count == 1)
         {
@@ -127,6 +130,7 @@ public class AIManager : MonoBehaviour
             CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
         }
     }
+
     private void Defensive()
     {
         GetEnemies();
@@ -157,25 +161,25 @@ public class AIManager : MonoBehaviour
     
     private void GetWalkableTiles()
     {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
-        {
-            if (tile.transform.position == transform.position)
-            {
-                tile.HighlightTile(currentEnemy.unit);
-            }
-            if (Mathf.Abs(currentEnemy.transform.position.x - tile.transform.position.x) + Mathf.Abs(currentEnemy.transform.position.y - tile.transform.position.y) + tile.tileCost <= currentEnemy.unit.statistics.movement && tile.occupied == false)
-            {
-                walkableTiles.Add(tile);
-            }
-        }
+        walkableTiles = map.GenerateRange((int)(currentEnemy.transform.localPosition.x), (int)(currentEnemy.transform.localPosition.y), currentEnemy.unit.statistics.movement, currentEnemy);
     }
     private void GetEnemies()
     {
-        foreach(UnitLoader unit in TurnManager.instance.allyUnits)
+        Vector2 currentPosition = new Vector2(currentEnemy.transform.localPosition.x, currentEnemy.transform.localPosition.y);
+        Vector2 enemyPosition = new Vector2(0, 0);
+
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
         {
-            if(Mathf.Abs(currentEnemy.transform.position.x - unit.transform.position.x) + Mathf.Abs(currentEnemy.transform.position.y - unit.transform.position.y) <= currentEnemy.equippedWeapon.range)
+            if(unit.unit.allyUnit)
             {
-                enemiesInRange.Add(unit);
+                enemyPosition = new Vector2(unit.transform.localPosition.x, unit.transform.localPosition.y);
+                if(Vector2.Distance(currentPosition, enemyPosition) <= currentEnemy.equippedWeapon.range)
+                {
+                    if(!enemiesInRange.Contains(unit))
+                    {
+                        enemiesInRange.Add(unit);
+                    }
+                }
             }
         }
     }
@@ -200,23 +204,23 @@ public class AIManager : MonoBehaviour
         UnitLoader closestUnit = null;
         foreach(UnitLoader unit in TurnManager.instance.allyUnits)
         {
-            if(Mathf.Abs(currentEnemy.transform.position.x - unit.transform.position.x) + Mathf.Abs(currentEnemy.transform.position.y - unit.transform.position.y) <= closestSoFar)
+            if(Vector2.Distance(currentEnemy.transform.localPosition, unit.transform.localPosition) <= closestSoFar)
             {
-                closestSoFar = Mathf.Abs(currentEnemy.transform.position.x - unit.transform.position.x) + Mathf.Abs(currentEnemy.transform.position.y - unit.transform.position.y);
+                closestSoFar = Vector2.Distance(currentEnemy.transform.localPosition, unit.transform.localPosition);
                 closestUnit = unit;
             }
         }
         return closestUnit;
     }
-    private TileLoader FindClosestTile(UnitLoader unit)
+    private Node FindClosestTile(UnitLoader unit)
     {
         float lowestSoFar = 100;
-        TileLoader closestTile = null;
-        foreach(TileLoader tile in walkableTiles)
+        Node closestTile = null;        
+        foreach(Node tile in walkableTiles)
         {
-            if(Mathf.Abs(tile.transform.position.x - unit.transform.position.x) + Mathf.Abs(tile.transform.position.y - unit.transform.position.y) <= lowestSoFar)
+            if(Vector2.Distance(unit.transform.localPosition, new Vector2(tile.x, tile.y)) <= lowestSoFar && map.IsOccupied(tile.x, tile.y) == false)
             {
-                lowestSoFar = Mathf.Abs(tile.transform.position.x - unit.transform.position.x) + Mathf.Abs(tile.transform.position.y - unit.transform.position.y);
+                lowestSoFar = Vector2.Distance(unit.transform.localPosition, new Vector2(tile.x, tile.y));
                 closestTile = tile;
             }
         }
@@ -291,6 +295,43 @@ public class AIManager : MonoBehaviour
 
         TurnManager.instance.UpdateTiles();
     }
+    private void NodeMove()
+    {
+        StartCoroutine(NodeMovement());
+    }
+    private IEnumerator NodeMovement()
+    {
+        var moveSpeed = 2;
+        if(fastMode)
+            moveSpeed = 8;
+        else
+            moveSpeed = 2;
+
+        if(currentEnemy.currentPath != null)
+        {
+            Vector3 finalNode = new Vector3(currentEnemy.currentPath[currentEnemy.currentPath.Count - 1].x, currentEnemy.currentPath[currentEnemy.currentPath.Count - 1].y);
+            while(currentEnemy.transform.localPosition != finalNode)
+            {
+                Vector3 nextNode = new Vector3(currentEnemy.currentPath[1].x, currentEnemy.currentPath[1].y);
+
+                while(currentEnemy.transform.localPosition != nextNode)
+                {
+                    currentEnemy.transform.localPosition = Vector2.MoveTowards(currentEnemy.transform.localPosition, nextNode, moveSpeed * Time.deltaTime);
+                    yield return null;
+                }
+
+                currentEnemy.currentPath.RemoveAt(0);
+            }
+            GetEnemies();
+            if(enemiesInRange.Count == 1)
+                CombatManager.instance.EngageAttack(currentEnemy, enemiesInRange[0]);
+            else if(enemiesInRange.Count >= 2)
+                CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
+            else
+                currentEnemy.Rest();
+        }
+    }
+
     private IEnumerator MoveCamera(UnitLoader enemy)
     {
         var moveSpeed = 5;

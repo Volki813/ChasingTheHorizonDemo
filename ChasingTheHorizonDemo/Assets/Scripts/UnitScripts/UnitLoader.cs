@@ -84,10 +84,6 @@ public class UnitLoader : MonoBehaviour
         GetWalkableTiles();       
     }
 
-    public void Move(Vector2 targetPosition)
-    {
-        StartCoroutine(Movement(targetPosition));
-    }
     public void Rest()
     {
         foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
@@ -115,7 +111,10 @@ public class UnitLoader : MonoBehaviour
     public void GetWalkableTiles()
     {
         map.DehighlightTiles();
-        map.walkableTiles = map.GenerateRange((int)(transform.localPosition.x), (int)(transform.localPosition.y), unit.statistics.movement, this);
+
+        map.walkableTiles = map.GenerateRange((int)transform.localPosition.x, (int)transform.localPosition.y, unit.statistics.movement, this);
+        map.attackableTiles = map.GenerateRange((int)transform.localPosition.x, (int)transform.localPosition.y, (unit.statistics.movement + equippedWeapon.range), this);
+
         map.HighlightTiles();
     }
     public void GetEnemies()
@@ -131,7 +130,8 @@ public class UnitLoader : MonoBehaviour
                 if(Vector2.Distance(currentPosition, enemyPosition) <= equippedWeapon.range)
                 {
                     unit.AttackableHighlight();
-                    if(!enemiesInRange.Contains(unit)){
+                    if(!enemiesInRange.Contains(unit))
+                    {
                         enemiesInRange.Add(unit);
                     }
                 }
@@ -149,51 +149,10 @@ public class UnitLoader : MonoBehaviour
             GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
-    private IEnumerator Movement(Vector2 targetPosition)
-    {
-        originalPosition = transform.localPosition;
-        yield return new WaitForEndOfFrame();
-
-        while(transform.localPosition.x != targetPosition.x)
-        {
-            if (transform.localPosition.x > targetPosition.x)
-            {
-                animator.SetBool("Left", true);
-            }
-            else
-            {
-                animator.SetBool("Right", true);
-            }
-            transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector2(targetPosition.x, transform.localPosition.y), 3f * Time.deltaTime);
-            yield return null;
-        }
-        while(transform.localPosition.y != targetPosition.y)
-        {
-            if (transform.localPosition.y > targetPosition.y)
-            {
-                animator.SetBool("Down", true);
-            }
-            else
-            {
-                animator.SetBool("Up", true);
-            }
-            transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector2(transform.localPosition.x, targetPosition.y), 3f * Time.deltaTime);
-            yield return null;
-        }
-        hasMoved = true;
-        ActionMenu();
-        actionMenu.transform.position = actionMenuSpawn.position;
-        map.DehighlightTiles();
-
-        animator.SetBool("Up", false);
-        animator.SetBool("Down", false);
-        animator.SetBool("Selected", false);
-        animator.SetBool("Left", false);
-        animator.SetBool("Right", false);        
-    }
 
     private IEnumerator NodeMovement()
     {
+        cursor.controls.Disable();
         if(currentPath != null)
         {
             Vector3 finalNode = new Vector3(currentPath[currentPath.Count - 1].x, currentPath[currentPath.Count - 1].y);
@@ -201,7 +160,17 @@ public class UnitLoader : MonoBehaviour
             {
                 Vector3 nextNode = new Vector3(currentPath[1].x, currentPath[1].y);
 
-                while (transform.localPosition != nextNode)
+                // Setting the proper animations
+                if(nextNode.x > transform.localPosition.x && nextNode.y == transform.localPosition.y)
+                    animator.SetBool("Right", true);
+                else if(nextNode.x < transform.localPosition.x && nextNode.y == transform.localPosition.y)
+                    animator.SetBool("Left", true);
+                else if(nextNode.x == transform.localPosition.x && nextNode.y > transform.localPosition.y)
+                    animator.SetBool("Up", true);
+                else if (nextNode.x == transform.localPosition.x && nextNode.y < transform.localPosition.y)
+                    animator.SetBool("Down", true);
+
+                while(transform.localPosition != nextNode)
                 {
                     transform.localPosition = Vector2.MoveTowards(transform.localPosition, nextNode, 3f * Time.deltaTime);
                     yield return null;
@@ -210,11 +179,13 @@ public class UnitLoader : MonoBehaviour
                 currentPath.RemoveAt(0);
             }
         }
+        cursor.controls.Enable();
         hasMoved = true;
+        map.DehighlightTiles();
         ActionMenu();
         actionMenu.transform.position = actionMenuSpawn.position;
         GetEnemies();
-        map.DehighlightTiles();
+        map.HighlightTiles();
         cursor.SetState(new ActionMenuState(cursor));
         cursor.controls.MapScene.Disable();
         cursor.controls.UI.Enable();

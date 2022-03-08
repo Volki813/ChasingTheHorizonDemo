@@ -19,8 +19,8 @@ public class WeaponSelection : MonoBehaviour
     }
     private void OnEnable()
     {
-        Invoke("GetUnitWeapons", 0.26f);
-        Invoke("FillSlots", 0.27f);
+        Invoke("GetUnitWeapons", 0.17f);
+        Invoke("FillSlots", 0.18f);
         StartCoroutine(HighlightButton());
     }
     private void OnDisable()

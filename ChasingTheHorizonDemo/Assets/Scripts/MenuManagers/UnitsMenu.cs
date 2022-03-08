@@ -20,7 +20,7 @@ public class UnitsMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("SetSlots", 0.26f);
+        Invoke("SetSlots", 0.17f);
     }
     private void OnDisable()
     {

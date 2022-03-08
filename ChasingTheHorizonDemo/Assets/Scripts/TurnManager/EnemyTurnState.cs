@@ -19,8 +19,11 @@ public class EnemyTurnState : TurnState
         }
 
         turnManager.enemyTurnGraphic.SetActive(true);
+        turnManager.screenDim.SetActive(true);
+        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
         turnManager.UpdateTiles();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
         AIManager.instance.enemyOrder.Clear();
         AIManager.instance.SetEnemyOrder();
         turnManager.RefreshEnemies();

@@ -57,8 +57,11 @@ public class PlayerTurnState : TurnState
         }
 
         //Setup for Ally Turn
+        turnManager.screenDim.SetActive(true);
+        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
         turnManager.allyTurnGraphic.SetActive(true);
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1f);
+        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
         turnManager.UpdateTiles();
         EnableCursor();
         turnManager.cursor.enemyTurn = false;

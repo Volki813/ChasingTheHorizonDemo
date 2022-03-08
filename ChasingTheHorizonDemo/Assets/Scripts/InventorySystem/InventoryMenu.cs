@@ -52,9 +52,9 @@ namespace InventorySystem
 
         private void OnEnable()
         {
-            Invoke("FillSlots", 0.2f);
-            Invoke("ResetEquippedWeapon", 0.2f);
-            Invoke("HighlightButton", 0.3f);
+            Invoke("FillSlots", 0.1f);
+            Invoke("ResetEquippedWeapon", 0.1f);
+            Invoke("HighlightButton", 0.2f);
             StartCoroutine(StartItemPreview());
         }
 
@@ -67,8 +67,8 @@ namespace InventorySystem
 
         public void UseItem(InventorySlot item)
         {
-            //check what kind of item you have
-            if(item != null)
+            //check what kind of item you have                        
+            if(item.item != null)
             {
                 if(item.item.type == ItemType.Weapon)
                 {
@@ -76,7 +76,7 @@ namespace InventorySystem
                     map.selectedUnit.equippedWeapon = (Weapon)item.item;
                     Invoke("ResetEquippedWeapon", 0.05f);
                 }
-                else if (item.item.type == ItemType.Consumable)
+                else if(item.item.type == ItemType.Consumable)
                 {
                     Consumable consumable = (Consumable)item.item;
                     if (map.selectedUnit.currentHealth == map.selectedUnit.unit.statistics.health)

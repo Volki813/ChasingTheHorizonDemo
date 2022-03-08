@@ -13,7 +13,6 @@ public class CombatManager : MonoBehaviour
     public static CombatManager instance { get; private set; }
 
     //VARIABLES 
-    private float originalCameraSize = 7.080622f;
     private Vector3 originalCameraPosition = new Vector3(10.5f, 10.5f, -10);
     private bool dialoguePlayed = false;
 
@@ -22,7 +21,7 @@ public class CombatManager : MonoBehaviour
     CursorController cursor;
     private Camera mainCamera = null;
     private Animator cameraAnimator = null;
-    [SerializeField] private Canvas canvas;
+    [SerializeField] private Canvas canvas = null;
     [SerializeField] private GameObject screenDim = null;
     [SerializeField] private GameObject combatReadout = null;
     [SerializeField] private Slider attackerHealth = null;
@@ -263,8 +262,6 @@ public class CombatManager : MonoBehaviour
         Vector3 zoomPoint = new Vector3(centerPoint.x, centerPoint.y, -10);
 
         StartCoroutine(MoveCamera(zoomPoint));
-        //mainCamera.transform.position = zoomPoint;
-        //cameraAnimator.SetTrigger("ZoomIn");
     }
     private IEnumerator MoveCamera(Vector3 targetPosition)
     {

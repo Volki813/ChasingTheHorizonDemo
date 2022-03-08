@@ -27,7 +27,7 @@ public class LeahEvent : Event
     {
         loseManager.gameObject.SetActive(false);
 
-        Vector3 targetPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, -10);
+        Vector3 targetPosition = new Vector3(leahObject.transform.localPosition.x, leahObject.transform.localPosition.y, -10);
         if(targetPosition.x > cursor.cameraRight){
             targetPosition.x = cursor.cameraRight;
         }
@@ -58,11 +58,11 @@ public class LeahEvent : Event
         }
         yield return new WaitUntil(() => mainCamera.transform.position == targetPosition);
 
-        StartCoroutine(MoveUnit(new Vector2(5.5f, -2.5f)));
-        yield return new WaitUntil(() => (Vector2)leahObject.transform.position == new Vector2(5.5f, -2.5f));
+        StartCoroutine(MoveUnit(new Vector2(15f, 7f)));
+        yield return new WaitUntil(() => (Vector2)leahObject.transform.localPosition == new Vector2(15f, 7f));
 
-        cursor.transform.position = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);
-        cursor.currentPosition = new Vector3(leahObject.transform.position.x, leahObject.transform.position.y, 0);
+        cursor.transform.localPosition = new Vector3(leahObject.transform.localPosition.x, leahObject.transform.localPosition.y, 0);
+        cursor.currentPosition = new Vector3(leahObject.transform.localPosition.x, leahObject.transform.localPosition.y, 0);
 
         MapDialogueManager.instance.WriteSingle(leahDialogue);
         yield return new WaitForSeconds(1f);
@@ -72,14 +72,14 @@ public class LeahEvent : Event
     }
     private IEnumerator MoveUnit(Vector2 targetPosition)
     {
-        while(leahObject.transform.position.x != targetPosition.x)
+        while(leahObject.transform.localPosition.x != targetPosition.x)
         {
-            if(leahObject.transform.position.x > targetPosition.x)
+            if(leahObject.transform.localPosition.x > targetPosition.x)
             {
                 leahObject.GetComponent<Animator>().SetBool("Selected", true);
                 leahObject.GetComponent<Animator>().SetBool("Left", true);
             }
-            leahObject.transform.position = Vector2.MoveTowards(leahObject.transform.position, new Vector2(targetPosition.x, leahObject.transform.position.y), 2f * Time.deltaTime);
+            leahObject.transform.localPosition = Vector2.MoveTowards(leahObject.transform.localPosition, new Vector2(targetPosition.x, leahObject.transform.localPosition.y), 2f * Time.deltaTime);
             yield return null;
         }
         leahObject.GetComponent<Animator>().SetBool("Selected", false);

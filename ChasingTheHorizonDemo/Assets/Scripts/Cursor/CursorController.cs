@@ -23,7 +23,7 @@ public class CursorController : MonoBehaviour
     //REFERENCES
     private TileMap map;
     public CursorControls controls;
-    [SerializeField] private GameObject menu = null;    
+    [SerializeField] private GameObject menu = null;
     [SerializeField] private Camera mapCamera = null;
     [Header("Map Frame Points")] //These variables define at which point your cursor needs to be for the camera to move in the respective direction
     [SerializeField] private Transform frameTop = null;
@@ -234,13 +234,39 @@ public class CursorController : MonoBehaviour
                 if(map.selectedUnit.hasMoved == false)
                 {
                     map.selectedUnit.originalPosition = map.selectedUnit.transform.localPosition;
-                    map.GeneratePathTo(n.x, n.y);
+                    map.GeneratePathTo(n.x, n.y, map.selectedUnit);
                     map.selectedUnit.FollowPath();
                     break;
                 }
             }
         }
     }
+    public void AttackMove()
+    {
+        Vector3 currentEnemy = new Vector3(0, 0);
+        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        {
+            if(transform.localPosition == unit.transform.localPosition)
+            {
+                if(Vector2.Distance(map.selectedUnit.transform.localPosition, unit.transform.localPosition) <= map.selectedUnit.unit.statistics.movement + map.selectedUnit.equippedWeapon.range)
+                {
+                    currentEnemy = unit.transform.localPosition;
+                }
+            }
+        }
+
+        foreach (Node n in map.walkableTiles)
+        {
+            if(Vector2.Distance(new Vector2(n.x, n.y), currentEnemy) == map.selectedUnit.equippedWeapon.range)
+            {
+                map.selectedUnit.originalPosition = map.selectedUnit.transform.localPosition;
+                map.GeneratePathTo(n.x, n.y, map.selectedUnit);
+                map.selectedUnit.FollowPath();
+                break;
+            }
+        }
+    }
+
     public void UndoMove()
     {
         foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
@@ -293,6 +319,7 @@ public class CursorController : MonoBehaviour
     }
     public void AttackTarget()
     {
+        map.DehighlightTiles();
         CombatManager.instance.EngageAttack(map.selectedUnit, map.selectedUnit.target);
         map.selectedUnit.target.GetComponent<SpriteRenderer>().color = Color.white;
         map.selectedUnit = null;
@@ -307,6 +334,7 @@ public class CursorController : MonoBehaviour
             if(transform.localPosition == new Vector3(n.x, n.y) && map.IsOccupied(n.x, n.y) == false)
             {
                 menu.SetActive(true);
+                SoundManager.instance.PlayFX(0);
                 SetState(new MenuState(this));
                 controls.MapScene.Disable();
                 controls.UI.Enable();
@@ -319,22 +347,26 @@ public class CursorController : MonoBehaviour
         {
             menu.transform.GetChild(0).gameObject.SetActive(false);
             menu.transform.GetChild(1).gameObject.SetActive(false);
+            SoundManager.instance.PlayFX(1);
             return;
         }
         else if(menu.transform.GetChild(0).gameObject.activeSelf == true)
         {
             menu.transform.GetChild(0).gameObject.SetActive(false);
+            SoundManager.instance.PlayFX(1);
             return;
         }
         else if(menu.transform.GetChild(1).gameObject.activeSelf == true)
         {
             menu.transform.GetChild(1).gameObject.SetActive(false);
             menu.GetComponent<MenuManager>().Highlight();
+            SoundManager.instance.PlayFX(1);
             return;
         }        
         else
         {
             menu.SetActive(false);
+            SoundManager.instance.PlayFX(1);
             SetState(new MapState(this));
             controls.UI.Disable();
             controls.MapScene.Enable();

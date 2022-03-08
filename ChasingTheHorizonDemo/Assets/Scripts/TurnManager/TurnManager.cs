@@ -19,6 +19,7 @@ public class TurnManager : MonoBehaviour
     public CursorController cursor;
     public Camera mainCamera;
     public Text turnNumberText;
+    public GameObject screenDim = null;
     public GameObject allyTurnGraphic = null;
     public GameObject enemyTurnGraphic = null;
 
