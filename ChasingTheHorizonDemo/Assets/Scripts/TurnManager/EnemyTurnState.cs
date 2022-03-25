@@ -11,6 +11,7 @@ public class EnemyTurnState : TurnState
     {
         DisableCursor();
         turnManager.allyTurnGraphic.SetActive(false);
+        turnManager.map.selectedUnit = null;
         
         //Checks for Events
         if(EventManager.instance.EnemyEventCheck()){
@@ -22,7 +23,7 @@ public class EnemyTurnState : TurnState
         turnManager.screenDim.SetActive(true);
         turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
         turnManager.UpdateTiles();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.85f);
         turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
         AIManager.instance.enemyOrder.Clear();
         AIManager.instance.SetEnemyOrder();

@@ -50,7 +50,7 @@ public class ActionMenuManager : MonoBehaviour
             cursor.controls.MapScene.Enable();
             cursor.SetState(new AttackState(cursor));
             map.DehighlightTiles();
-            map.attackableTiles = map.GenerateRange((int)map.selectedUnit.transform.localPosition.x, (int)map.selectedUnit.transform.localPosition.y, map.selectedUnit.equippedWeapon.range, map.selectedUnit);
+            map.attackableTiles = map.GenerateRange((int)map.selectedUnit.transform.localPosition.x, (int)map.selectedUnit.transform.localPosition.y, map.selectedUnit.equippedWeapon.range, map.selectedUnit, false);            
             map.HighlightTiles();
         }
     }
@@ -69,6 +69,7 @@ public class ActionMenuManager : MonoBehaviour
     {
         map.selectedUnit.Rest();
         map.selectedUnit = null;
+        map.DehighlightTiles();
         gameObject.SetActive(false);
         cursor.controls.UI.Disable();
         cursor.controls.MapScene.Enable();
@@ -78,6 +79,10 @@ public class ActionMenuManager : MonoBehaviour
     public void CloseInventory()
     {
         inventoryMenu.SetActive(false);
+        StartCoroutine(HighlightButton());
+    }
+    public void Highlight()
+    {
         StartCoroutine(HighlightButton());
     }
     private IEnumerator HighlightButton()

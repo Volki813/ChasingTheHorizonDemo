@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class LoseManager : MonoBehaviour
 {
+    public static LoseManager instance { get; private set; }
+
     [SerializeField] private GameObject combatReadout = null;
     [SerializeField] private GameObject restartButton = null;
     [SerializeField] private GameObject fadeOut = null;
@@ -15,15 +18,18 @@ public class LoseManager : MonoBehaviour
     [Header("Check this box if you want the player to lose when a specific ally unit dies")]
     public bool specificAlly = false;
     [Header("Drop the specific allies who's deaths will trigger a loss")]
-    public UnitLoader[] specificAllies = null;
-    private int amountOfAllies = 0;
+    public List<UnitLoader> specificAllies = new List<UnitLoader>();
     private bool gameOver = false;
     private CursorController cursor = null;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
         cursor = FindObjectOfType<CursorController>();
-        amountOfAllies = specificAllies.Length;
     }
     private void Update()
     {
@@ -33,21 +39,7 @@ public class LoseManager : MonoBehaviour
                     StartCoroutine(GameOver());
                     gameOver = true;
                 }
-            }
-            if(anyAlly){
-                foreach(UnitLoader unit in TurnManager.instance.allyUnits){
-                    if(unit.currentHealth <= 0 && !combatReadout.activeSelf){
-                        StartCoroutine(GameOver());
-                        gameOver = true;
-                    }
-                }
-            }
-            if(specificAlly){
-                if(specificAllies.Length < amountOfAllies && !combatReadout.activeSelf){
-                    StartCoroutine(GameOver());
-                    gameOver = true;
-                }
-            }
+            }            
         }
     }
 
@@ -65,13 +57,18 @@ public class LoseManager : MonoBehaviour
         Application.Quit();
     }
 
+
+    public void StartGameOver()
+    {
+        StartCoroutine(GameOver());
+    }
     private IEnumerator GameOver()
     {
         cursor.controls.MapScene.Disable();
         cursor.controls.UI.Disable();
         GameObject.Find("SystemsManager").SetActive(false);
         fadeOut.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.3f);
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
         EventSystem.current.SetSelectedGameObject(restartButton.gameObject);

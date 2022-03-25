@@ -178,6 +178,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -478,6 +480,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -626,6 +630,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 8300000, guid: a932ef6e20d27c941947e697efe6d50c, type: 3}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -712,7 +718,9 @@ MonoBehaviour:
   textColor: {r: 0, g: 0, b: 0, a: 1}
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
-  sound: {fileID: 0}
+  sound: {fileID: 8300000, guid: f02603be304624442ba796d1f02ff0a0, type: 3}
+  music: {fileID: 8300000, guid: 4fc843f70dfe5da44bc385f3a28a2ac5, type: 3}
+  triggerMusic: 1
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -900,6 +908,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -1111,6 +1121,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -1302,6 +1314,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -1558,6 +1572,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -1663,6 +1679,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -1847,6 +1865,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -1952,6 +1972,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -2117,6 +2139,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -2222,6 +2246,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -2326,6 +2352,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -2436,6 +2464,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -2540,6 +2570,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -2873,6 +2905,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -2977,6 +3011,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -3397,6 +3433,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
   imageHolder: {fileID: 290321133}
   namePlate1: {fileID: 158624871}
@@ -3580,6 +3618,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -3684,6 +3724,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -3788,6 +3830,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 1924796248}
   namePlate1: {fileID: 158624871}
@@ -3852,7 +3896,7 @@ PrefabInstance:
     - target: {fileID: 5937181126353281785, guid: fcc9935f8dc299846bff92dd6953a476,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.705
+      value: -4.605
       objectReference: {fileID: 0}
     - target: {fileID: 5937181126353281785, guid: fcc9935f8dc299846bff92dd6953a476,
         type: 3}
@@ -3904,6 +3948,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueCursorBot
       objectReference: {fileID: 0}
+    - target: {fileID: 5937181126353281786, guid: fcc9935f8dc299846bff92dd6953a476,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc9935f8dc299846bff92dd6953a476, type: 3}
 --- !u!1001 &7349337394077650726
@@ -3921,7 +3970,7 @@ PrefabInstance:
     - target: {fileID: 7349337394505628032, guid: 86093f657f820f84ca2d27d6190ff534,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.55
+      value: 3.65
       objectReference: {fileID: 0}
     - target: {fileID: 7349337394505628032, guid: 86093f657f820f84ca2d27d6190ff534,
         type: 3}
@@ -3972,6 +4021,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DialogueCursorTop
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349337394505628037, guid: 86093f657f820f84ca2d27d6190ff534,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86093f657f820f84ca2d27d6190ff534, type: 3}

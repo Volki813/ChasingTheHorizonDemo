@@ -30,7 +30,6 @@ public class TileMap : MonoBehaviour
         GeneratePathfindingGraph();
         GenerateMapFromFile();
         GenerateMapVisuals();
-
     }
     
     private void InitializeMapData()
@@ -72,6 +71,11 @@ public class TileMap : MonoBehaviour
                 if(y < mapSizeY - 1)
                     graph[x, y].neighbors.Add(graph[x, y + 1]); //Adds neighbor above
             }
+        }
+
+        foreach(Node n in graph)
+        {
+            n.SetNeighbors();
         }
     }
     private void GenerateMapVisuals()
@@ -136,7 +140,7 @@ public class TileMap : MonoBehaviour
         // since we don't know any better right now.
         foreach (Node n in graph)
         {
-            if (n != source)
+            if(n != source)
             {
                 distance[n] = Mathf.Infinity;
                 previous[n] = null;
@@ -158,8 +162,17 @@ public class TileMap : MonoBehaviour
 
             foreach(Node possibleClosest in unvisitedNodes)
             {
-                if(closestNode == null || distance[possibleClosest] < distance[closestNode])
-                    closestNode = possibleClosest;
+                if(unit.unit.allyUnit)
+                {
+                    if(closestNode == null || distance[possibleClosest] < distance[closestNode] && !IsOccupiedByEnemy(possibleClosest.x, possibleClosest.y))
+                        closestNode = possibleClosest;
+                }
+                else
+                {
+                    if(closestNode == null || distance[possibleClosest] < distance[closestNode])
+                        closestNode = possibleClosest;
+                }
+
             }
 
             if(closestNode == target)
@@ -174,7 +187,7 @@ public class TileMap : MonoBehaviour
             foreach(Node n in closestNode.neighbors)
             {
                 float temp = distance[closestNode] + CostToEnterTile(n.x, n.y);
-                if (temp < distance[n])
+                if(temp < distance[n])
                 {
                     distance[n] = temp;
                     previous[n] = closestNode;
@@ -186,7 +199,7 @@ public class TileMap : MonoBehaviour
         {
             //no route between target and source
             return;
-        }
+        }        
 
         List<Node> currentPath = new List<Node>();
         Node current = target;
@@ -196,14 +209,115 @@ public class TileMap : MonoBehaviour
         {
             currentPath.Add(current);
             current = previous[current];
-        }        
+        }
+
+        int totalCost = 0;
+        foreach (Node n in currentPath)
+        {
+            totalCost += (int)CostToEnterTile(n.x, n.y);
+        }
+        if(totalCost > unit.unit.statistics.movement + 1)
+        {
+            print("you can't move here");
+        }
 
         // Reverse path from target to source to make it a path from source to target
-        currentPath.Reverse();        
+        currentPath.Reverse();
 
         unit.currentPath = currentPath;
     }
-    public List<Node> GenerateRange(int x, int y, int size, UnitLoader unit)
+    public int GenerateCostBetween(int sourceX, int sourceY, int targetX, int targetY)
+    {
+        Dictionary<Node, float> distance = new Dictionary<Node, float>();
+        Dictionary<Node, Node> previous = new Dictionary<Node, Node>();
+
+        // List of nodes we haven't checked yet
+        List<Node> unvisitedNodes = new List<Node>();
+
+        Node source = graph[sourceX, sourceY];
+        Node target = graph[targetX, targetY];
+
+        distance[source] = 0;
+        previous[source] = null;
+
+        // Initialize everything to have infinie distance
+        // since we don't know any better right now.
+        foreach (Node n in graph)
+        {
+            if (n != source)
+            {
+                distance[n] = Mathf.Infinity;
+                previous[n] = null;
+            }
+            unvisitedNodes.Add(n);
+        }
+
+        // This makes sure we don't throw an error if you try to move to the tile you're current standing on
+        if(source == target)
+        {
+            return 0;
+        }
+
+        // The main loop
+        while (unvisitedNodes.Count > 0)
+        {
+            // The unvisited node with the smallest distance.
+            Node closestNode = null;
+
+            foreach (Node possibleClosest in unvisitedNodes)
+            {
+                if (closestNode == null || distance[possibleClosest] < distance[closestNode] && !IsOccupiedByEnemy(possibleClosest.x, possibleClosest.y))
+                    closestNode = possibleClosest;
+            }
+
+            if (closestNode == target)
+            {
+                // Target found!
+                break;
+            }
+
+            // Now we have visited it, remove it
+            unvisitedNodes.Remove(closestNode);
+
+            foreach (Node n in closestNode.neighbors)
+            {
+                float temp = distance[closestNode] + CostToEnterTile(n.x, n.y);
+                if (temp < distance[n])
+                {
+                    distance[n] = temp;
+                    previous[n] = closestNode;
+                }
+            }
+        }
+
+        if (previous[target] == null)
+        {
+            //no route between target and source
+            return 99;
+        }
+
+        List<Node> currentPath = new List<Node>();
+        Node current = target;
+
+        // Step back through to find route from the target
+        while (current != null)
+        {
+            currentPath.Add(current);
+            current = previous[current];
+        }
+
+        // Reverse path from target to source to make it a path from source to target
+        currentPath.Reverse();
+
+        int totalCost = 0;
+        foreach(Node n in currentPath)
+        {
+            totalCost += (int)CostToEnterTile(n.x, n.y);
+        }
+        return totalCost;
+    }
+
+    public List<Node> GenerateRange(int x, int y, int size, UnitLoader unit, bool pathing)
     {
         // Final list that gets returned
         List<Node> finalList = new List<Node>();
@@ -218,10 +332,20 @@ public class TileMap : MonoBehaviour
 
         foreach(Node n in graph[x, y].neighbors)
         {
-            if(CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement)
+            if(!pathing)
             {
-                workingList.Add(n);
+                if(CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement && !workingList.Contains(n))
+                {
+                    workingList.Add(n);
+                }
             }
+            else
+            {
+                if(CostToEnterTile(n.x, n.y) + n.DistanceTo(ReturnNodeAt(x, y)) <= unit.unit.statistics.movement + 1 && !IsOccupiedByEnemy(n.x, n.y) && !workingList.Contains(n))
+                {
+                    workingList.Add(n);
+                }
+            }            
         }
 
         for(int i = 1; i <= size;)
@@ -232,14 +356,27 @@ public class TileMap : MonoBehaviour
             // Copy working list over to temp list
             foreach(Node n in workingList)
             {
-                tempList.Add(n);
+                if(!tempList.Contains(n))
+                    tempList.Add(n);
             }
 
             // Copy working list over to final list
             foreach(Node n in workingList)
             {
-                if(CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement)
-                    finalList.Add(n);
+                if(!pathing)
+                {
+                    if(CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement && !finalList.Contains(n))
+                    {
+                        finalList.Add(n);
+                    }
+                }
+                else
+                {
+                    if(CostToEnterTile(n.x, n.y) + n.DistanceTo(ReturnNodeAt(x, y)) <= unit.unit.statistics.movement + 1 && !IsOccupiedByEnemy(n.x, n.y) && !finalList.Contains(n))
+                    {
+                        finalList.Add(n);
+                    }
+                }
             }
 
             // Now that there are 2 copies of working list, clear it as it needs to be filled with some new nodes
@@ -250,8 +387,20 @@ public class TileMap : MonoBehaviour
             {
                 foreach(Node e in n.neighbors)
                 {
-                    if(CostToEnterTile(e.x, e.y) < unit.unit.statistics.movement)
-                        workingList.Add(e);
+                    if(!pathing)
+                    {
+                        if(CostToEnterTile(e.x, e.y) < unit.unit.statistics.movement && !workingList.Contains(n))
+                        {
+                            workingList.Add(e);
+                        }
+                    }
+                    else
+                    {
+                        if(CostToEnterTile(e.x, e.y) + n.DistanceTo(ReturnNodeAt(x, y)) <= unit.unit.statistics.movement + 1 && !IsOccupiedByEnemy(e.x, e.y) && !workingList.Contains(n))
+                        {
+                            workingList.Add(e);
+                        }
+                    }
                 }
             }
 
@@ -260,12 +409,179 @@ public class TileMap : MonoBehaviour
             if(i == size)
             {
                 foreach(Node n in workingList)
-                    finalList.Add(n);
+                    if(!finalList.Contains(n))
+                        finalList.Add(n);
             }
         }        
         return finalList;
     }
+    public List<Node> GenerateWalkableRange(int x, int y, int size, UnitLoader unit)
+    {
+        // Final list that gets returned
+        List<Node> finalList = new List<Node>();
+
+        // Temporary list of nodes that still need to be searched
+        List<Node> workingList = new List<Node>();
+
+        List<Node> tempList = new List<Node>();
+
+        // Add starting position to temp list
+        finalList.Add(graph[x, y]);
+
+        foreach (Node n in graph[x, y].neighbors)
+        {
+            if(CostToEnterTile(n.x, n.y) + n.DistanceTo(ReturnNodeAt(x, y)) <= unit.unit.statistics.movement + 1 && !IsOccupiedByEnemy(n.x, n.y) && !workingList.Contains(n))
+            {
+                workingList.Add(n);
+            }
+        }
+
+        for (int i = 1; i <= size;)
+        {
+            // Clear the temp list
+            tempList.Clear();
+
+            // Copy working list over to temp list
+            foreach (Node n in workingList)
+            {
+                if (!tempList.Contains(n))
+                    tempList.Add(n);
+            }
+
+            // Copy working list over to final list
+            foreach (Node n in workingList)
+            {
+                if(CostToEnterTile(n.x, n.y) + n.DistanceTo(ReturnNodeAt(x, y)) <= unit.unit.statistics.movement + 1 && !IsOccupiedByEnemy(n.x, n.y) && !finalList.Contains(n))
+                {
+                    finalList.Add(n);
+                }
+            }
+
+            // Now that there are 2 copies of working list, clear it as it needs to be filled with some new nodes
+            workingList.Clear();
+
+            // For every node in the temp list, add all it's neighbors to the working list
+            foreach (Node n in tempList)
+            {
+                foreach (Node e in n.neighbors)
+                {
+                    if(CostToEnterTile(e.x, e.y) + n.DistanceTo(ReturnNodeAt(x, y)) <= unit.unit.statistics.movement + 1 && !IsOccupiedByEnemy(e.x, e.y) && !workingList.Contains(n))
+                    {
+                        workingList.Add(e);
+                    }
+                }
+            }
+
+            i++;
+
+            if (i == size)
+            {
+                foreach (Node n in workingList)
+                    if (!finalList.Contains(n))
+                        finalList.Add(n);
+            }
+        }
+
+        foreach(Node n in finalList.ToList<Node>())
+        {
+            if(GenerateCostBetween(n.x, n.y, (int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y) > unit.unit.statistics.movement + 1)
+            {
+                finalList.Remove(n);
+            }
+        }
+
+        return finalList;
+    }
+    public List<Node> GenerateAttackableRange(int x, int y, int size, UnitLoader unit)
+    {
+        // Final list that gets returned
+        List<Node> finalList = new List<Node>();
+
+        // Temporary list of nodes that still need to be searched
+        List<Node> workingList = new List<Node>();
+
+        List<Node> tempList = new List<Node>();
+
+        // Add starting position to temp list
+        finalList.Add(graph[x, y]);
+
+        foreach(Node n in graph[x, y].neighbors)
+        {
+            if(CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement && !workingList.Contains(n))
+            {
+                workingList.Add(n);
+            }
+        }
+
+        for (int i = 1; i <= size;)
+        {
+            // Clear the temp list
+            tempList.Clear();
+
+            // Copy working list over to temp list
+            foreach (Node n in workingList)
+            {
+                if (!tempList.Contains(n))
+                    tempList.Add(n);
+            }
+
+            // Copy working list over to final list
+            foreach (Node n in workingList)
+            {
+                if(CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement && !finalList.Contains(n))
+                {
+                    finalList.Add(n);
+                }
+            }
+
+            // Now that there are 2 copies of working list, clear it as it needs to be filled with some new nodes
+            workingList.Clear();
+
+            // For every node in the temp list, add all it's neighbors to the working list
+            foreach (Node n in tempList)
+            {
+                foreach (Node e in n.neighbors)
+                {
+                    if(CostToEnterTile(e.x, e.y) < unit.unit.statistics.movement && !workingList.Contains(n))
+                    {
+                        workingList.Add(e);
+                    }
+                }
+            }
+
+            i++;
+
+            if (i == size)
+            {
+                foreach (Node n in workingList)
+                    if (!finalList.Contains(n))
+                        finalList.Add(n);
+            }
+        }
+        
+        foreach(Node n in finalList.ToList<Node>())
+        {
+            Node node = ClosestWalkableNode(n.x, n.y);            
+            if(n.DistanceTo(ReturnNodeAt(node.x, node.y)) > selectedUnit.equippedWeapon.range)
+            {
+                finalList.Remove(n);
+            }
+        }
+
+        return finalList;
+    }
     
+    public void CleanAttackableTiles()
+    {
+        foreach(Node n in attackableTiles.ToList<Node>())
+        {
+            if(walkableTiles.Contains(n) && !IsOccupiedByEnemy(n.x, n.y))
+            {
+                attackableTiles.Remove(n);
+            }
+        }
+    }    
+
     private float CostToEnterTile(int x, int y)
     {
         TileType tt = tileTypes[tiles[x,y]];
@@ -280,14 +596,14 @@ public class TileMap : MonoBehaviour
         }
         foreach(UnitLoader u in TurnManager.instance.allyUnits)
         {
-            if(x == (int)(u.transform.localPosition.x) && y == (int)(u.transform.localPosition.y) && u != selectedUnit)
+            if(u != selectedUnit && u.transform.localPosition == new Vector3(x, y))
             {
                 return false;
             }
         }
-        foreach (UnitLoader u in TurnManager.instance.enemyUnits)
+        foreach(UnitLoader u in TurnManager.instance.enemyUnits)
         {
-            if (x == (int)(u.transform.localPosition.x) && y == (int)(u.transform.localPosition.y) && u != selectedUnit)
+            if(u.transform.localPosition == new Vector3(x, y))
             {
                 return false;
             }
@@ -305,6 +621,20 @@ public class TileMap : MonoBehaviour
         }
         return false;
     }
+    public bool IsOccupiedByEnemy(int x, int y)
+    {
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
+        {
+            if(!unit.unit.allyUnit)
+            {
+                if(unit.transform.localPosition == new Vector3(x, y))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public TileType ReturnTileAt(int x, int y)
     {
         return tileTypes[tiles[x, y]];
@@ -312,6 +642,20 @@ public class TileMap : MonoBehaviour
     public Node ReturnNodeAt(int x, int y)
     {
         return graph[x, y];
+    }
+    public Node ClosestWalkableNode(int x, int y)
+    {
+        Node closestNode = null;
+        int closestSoFar = 100;
+        foreach (Node n in walkableTiles)
+        {
+            if(n.DistanceTo(ReturnNodeAt(x, y)) < closestSoFar)
+            {
+                closestSoFar = n.DistanceTo(ReturnNodeAt(x, y));
+                closestNode = n;
+            }
+        }
+        return closestNode;
     }
 
     public void HighlightTiles()
@@ -327,7 +671,10 @@ public class TileMap : MonoBehaviour
         {
             foreach(Node n in walkableTiles)
             {
-                n.blueHighlight.SetActive(true);
+                if(!IsOccupiedByEnemy(n.x, n.y))
+                {
+                    n.blueHighlight.SetActive(true);
+                }                
             }
         }
     }

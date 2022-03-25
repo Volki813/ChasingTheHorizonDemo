@@ -28,6 +28,8 @@ public class MapDialogueManager : MonoBehaviour
     [SerializeField] private Text namePlate2 = null;
     [SerializeField] private Image portrait2 = null;
 
+    private MapDialogue lastDialogue = null;
+
     private void Awake()
     {
         instance = this;
@@ -53,6 +55,7 @@ public class MapDialogueManager : MonoBehaviour
             namePlate1.text = dialogue.unit.unitName;
             portrait1.gameObject.SetActive(true);
             portrait1.sprite = dialogue.unit.portrait;
+            portrait1.GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
         }
         else{
             namePlate2.text = "";
@@ -77,7 +80,14 @@ public class MapDialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
             }
         }
+        if (dialogue.textBox1)
+            dialogueCursorTop.SetActive(true);
+        else
+            dialogueCursorBot.SetActive(true);
+
         dialogue.finished = true;
+        lastDialogue = null;
+        lastDialogue = dialogue;
         busy = false;
         yield return null;
     }
@@ -107,6 +117,7 @@ public class MapDialogueManager : MonoBehaviour
             namePlate1.text = dialogue.unit.unitName;
             portrait1.gameObject.SetActive(true);
             portrait1.sprite = dialogue.unit.portrait;
+            portrait1.GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
         }
         else{
             namePlate2.text = dialogue.unit.unitName;
@@ -128,11 +139,13 @@ public class MapDialogueManager : MonoBehaviour
         }
 
         if(dialogue.textBox1)
-            dialogueCursorTop.SetActive(true);
+           dialogueCursorTop.SetActive(true);
         else
-            dialogueCursorBot.SetActive(true);
+           dialogueCursorBot.SetActive(true);
 
         dialogue.finished = true;
+        lastDialogue = null;
+        lastDialogue = dialogue;
         busy = false;
     }
 
@@ -145,7 +158,10 @@ public class MapDialogueManager : MonoBehaviour
         dialogueFinished = false;
         multipleLines = true;
         busy = true;
-        for(int i = 0; i < allDialogue.Length; i++)
+        screenDim.SetActive(true);
+        screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < allDialogue.Length; i++)
         {
             buttonPressed = false;
             StartCoroutine(WriteDialogue(allDialogue[i]));
@@ -160,7 +176,7 @@ public class MapDialogueManager : MonoBehaviour
         namePlate2.text = "";
         portrait2.sprite = null;
         portrait2.gameObject.SetActive(false);
-        screenDim.SetActive(false);
+        screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
         dialogueFinished = true;
         yield return null;
     }
@@ -179,8 +195,21 @@ public class MapDialogueManager : MonoBehaviour
     }
     public void NextDialogue()
     {
-        if(!busy){
+        if(!busy && multipleLines){
             buttonPressed = true;
+            dialogueCursorTop.SetActive(false);
+            dialogueCursorBot.SetActive(false);
+        }
+
+        else if(!busy && !multipleLines && lastDialogue && lastDialogue.scriptDialogue)
+        {
+            textBox1.text = "";
+            namePlate1.text = "";
+            portrait1.sprite = null;
+            portrait1.gameObject.SetActive(false);
+            screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
+            dialogueCursorBot.SetActive(false);
+            dialogueCursorTop.SetActive(false);
         }
     }    
 }

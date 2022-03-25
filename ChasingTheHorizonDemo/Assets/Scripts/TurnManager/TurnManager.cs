@@ -28,6 +28,8 @@ public class TurnManager : MonoBehaviour
 
     public TurnState currentState = null;
 
+    public TileMap map;
+
     private void Awake()
     {
         instance = this;
@@ -41,6 +43,7 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
+        map = FindObjectOfType<TileMap>();
         cursor = FindObjectOfType<CursorController>();
         mainCamera = FindObjectOfType<Camera>();
         Invoke("DisableCursor", 0.1f);
@@ -62,7 +65,7 @@ public class TurnManager : MonoBehaviour
         }
         if(currentState.stateType == TurnState.StateType.Player) {
             SetState(new EnemyTurnState(this));
-            Invoke("StartAi", 2f);
+            Invoke("StartAi", 1.2f);
         }
 
         //Switches To Player Turn        

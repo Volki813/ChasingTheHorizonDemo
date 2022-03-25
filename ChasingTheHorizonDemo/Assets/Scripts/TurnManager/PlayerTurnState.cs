@@ -60,7 +60,7 @@ public class PlayerTurnState : TurnState
         turnManager.screenDim.SetActive(true);
         turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
         turnManager.allyTurnGraphic.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.85f);
         turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
         turnManager.UpdateTiles();
         EnableCursor();

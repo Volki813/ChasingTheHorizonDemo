@@ -26,6 +26,6 @@ MonoBehaviour:
     proficiency: 0
     motivation: 0
     agility: 0
-    movement: 3
+    movement: 4
   level: 1
   exp: 0

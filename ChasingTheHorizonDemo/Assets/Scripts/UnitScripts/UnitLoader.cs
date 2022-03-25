@@ -95,8 +95,11 @@ public class UnitLoader : MonoBehaviour
         }
         hasMoved = true;
         rested = true;
+        currentPath = null;
         enemiesInRange.Clear();
-        GetComponent<SpriteRenderer>().color = Color.grey;         
+        target = null;
+        GetComponent<SpriteRenderer>().color = Color.grey;
+        map.DehighlightTiles();
     }
     public void Stand()
     {
@@ -112,8 +115,9 @@ public class UnitLoader : MonoBehaviour
     {
         map.DehighlightTiles();
 
-        map.walkableTiles = map.GenerateRange((int)transform.localPosition.x, (int)transform.localPosition.y, unit.statistics.movement, this);
-        map.attackableTiles = map.GenerateRange((int)transform.localPosition.x, (int)transform.localPosition.y, (unit.statistics.movement + equippedWeapon.range), this);
+        map.walkableTiles = map.GenerateWalkableRange((int)transform.localPosition.x, (int)transform.localPosition.y, unit.statistics.movement, this);
+        map.attackableTiles = map.GenerateAttackableRange((int)transform.localPosition.x, (int)transform.localPosition.y, (unit.statistics.movement + equippedWeapon.range), this);        
+        map.CleanAttackableTiles();
 
         map.HighlightTiles();
     }
@@ -152,8 +156,8 @@ public class UnitLoader : MonoBehaviour
 
     private IEnumerator NodeMovement()
     {
-        cursor.controls.Disable();
-        if(currentPath != null)
+        cursor.controls.Disable(); 
+        if (currentPath != null)
         {
             Vector3 finalNode = new Vector3(currentPath[currentPath.Count - 1].x, currentPath[currentPath.Count - 1].y);
             while (transform.localPosition != finalNode)
@@ -170,9 +174,12 @@ public class UnitLoader : MonoBehaviour
                 else if (nextNode.x == transform.localPosition.x && nextNode.y < transform.localPosition.y)
                     animator.SetBool("Down", true);
 
+                SoundManager.instance.PlayFX(10);
+                yield return new WaitForSeconds(0.01f);
+
                 while(transform.localPosition != nextNode)
                 {
-                    transform.localPosition = Vector2.MoveTowards(transform.localPosition, nextNode, 3f * Time.deltaTime);
+                    transform.localPosition = Vector2.MoveTowards(transform.localPosition, nextNode, 3f * Time.deltaTime);                    
                     yield return null;
                 }
 
@@ -183,7 +190,6 @@ public class UnitLoader : MonoBehaviour
         hasMoved = true;
         map.DehighlightTiles();
         ActionMenu();
-        actionMenu.transform.position = actionMenuSpawn.position;
         GetEnemies();
         map.HighlightTiles();
         cursor.SetState(new ActionMenuState(cursor));
@@ -201,26 +207,47 @@ public class UnitLoader : MonoBehaviour
         StartCoroutine(NodeMovement());
     }
 
-    public void DelayedDeath()
-    {        
-        Invoke("Death", 0.1f);
-    }
-    private void Death()
-    {        
-        if (currentHealth <= 0){
-            if(unit.allyUnit){
-                TurnManager.instance.allyUnits.Remove(this);                
-                Destroy(gameObject);
+    public void Death()
+    {
+        if(currentHealth <= 0 && gameObject != null)
+        {
+            if(unit.allyUnit)
+            {
+                TurnManager.instance.allyUnits.Remove(this);
+                animator.SetTrigger("Death");
             }
-            else{
+            else
+            {
                 TurnManager.instance.enemyUnits.Remove(this);
+                animator.SetTrigger("Death");
+            }
+        }
+    }
+
+    private void Destruct()
+    {
+        if(unit.allyUnit)
+        {
+            if (LoseManager.instance.specificAlly && LoseManager.instance.specificAllies.Contains(this))
+            {
+                LoseManager.instance.StartGameOver();
                 Destroy(gameObject);
             }
+            else if (LoseManager.instance.anyAlly)
+            {
+                LoseManager.instance.StartGameOver();
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
     public void ActionMenu()
     {
-        if(actionMenu.activeSelf == true)
+        actionMenu.transform.position = actionMenuSpawn.position;
+        if (actionMenu.activeSelf == true)
         {
             actionMenu.SetActive(false);            
         }
@@ -228,7 +255,7 @@ public class UnitLoader : MonoBehaviour
         {
             actionMenu.SetActive(true);
         }
-    }
+    }    
 
     private void OnDestroy()
     {
@@ -239,6 +266,5 @@ public class UnitLoader : MonoBehaviour
                 }
             }
         }
-        TurnManager.instance.RefreshTiles();
     }
 }

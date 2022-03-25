@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System.Collections;
-using UnityEditor;
 
 //Manages the Start Screen
 //Need to create an options menu
@@ -62,6 +61,7 @@ public class StartManager : MonoBehaviour
     {
         Application.Quit();
     }
+
     public void ControlButton()
     {
         controlNotice.SetActive(false);

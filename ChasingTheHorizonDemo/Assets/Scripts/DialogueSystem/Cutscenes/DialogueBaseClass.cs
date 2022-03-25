@@ -15,12 +15,6 @@ namespace DialogueSystem
             textHolder.color = textColor;
             textHolder.font = textFont;
 
-            if(sound != null)
-            {
-                SoundManager.instance.PlaySound(sound);
-                yield return new WaitForSeconds(sound.length);
-            }
-
             for (int i=0; i<input.Length; i++)
             {
                 textHolder.text += input[i];
@@ -29,6 +23,15 @@ namespace DialogueSystem
             }            
 
             finished = true;
+        }
+
+        protected IEnumerator PlaySoundEffect(AudioClip soundEffect)
+        {
+            if(soundEffect != null)
+            {
+                SoundManager.instance.PlaySound(soundEffect);
+                yield return new WaitForSeconds(soundEffect.length);
+            }
         }
     }
 }

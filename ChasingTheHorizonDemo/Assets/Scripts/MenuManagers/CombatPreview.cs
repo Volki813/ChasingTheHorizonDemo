@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 //This was used to test highlighting buttons without selecting them
 //All the Combat Preview data will be moved here in the future, instead of it being handled in the ActionMenuManager
@@ -57,7 +55,12 @@ public class CombatPreview : MonoBehaviour
 
         defenderPortrait.sprite = map.selectedUnit.target.unit.portrait;
         defenderHP.text = map.selectedUnit.target.currentHealth.ToString();
-        defenderDamage.text = CombatManager.instance.Hit(map.selectedUnit.target, map.selectedUnit).ToString();
+
+        if(Vector2.Distance(map.selectedUnit.transform.localPosition, map.selectedUnit.target.transform.localPosition) > map.selectedUnit.target.equippedWeapon.range)
+            defenderDamage.text = "0";
+        else
+            defenderDamage.text = CombatManager.instance.Hit(map.selectedUnit.target, map.selectedUnit).ToString();
+
         defenderHit.text = (map.selectedUnit.target.CombatStatistics().hit - map.selectedUnit.CombatStatistics().avoid).ToString();
         defenderCrit.text = map.selectedUnit.target.CombatStatistics().crit.ToString();
     }

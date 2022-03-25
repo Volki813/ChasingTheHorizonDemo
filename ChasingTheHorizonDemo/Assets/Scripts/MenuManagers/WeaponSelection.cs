@@ -42,7 +42,9 @@ public class WeaponSelection : MonoBehaviour
     }
     private void FillSlots()
     {
-        for(int i = 0; i < unitWeapons.Count; i++){
+        SoundManager.instance.PlayFX(11);
+
+        for (int i = 0; i < unitWeapons.Count; i++){
             slots[i].gameObject.SetActive(true);
         }
         for(int i = 0; i < unitWeapons.Count; i++){
@@ -79,6 +81,7 @@ public class WeaponSelection : MonoBehaviour
             cursor.AttackTarget();
         }
         else{
+            SoundManager.instance.PlayFX(8);
             map.selectedUnit.equippedWeapon = null;
             map.selectedUnit.equippedWeapon = (Weapon)item.item;
             ResetEquippedWeapon();

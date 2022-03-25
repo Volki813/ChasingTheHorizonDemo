@@ -40,6 +40,7 @@ namespace InventorySystem
         private void Start()
         {
             SetSlots();
+            SoundManager.instance.PlayFX(11);
         }
 
         private void Update()
@@ -74,6 +75,7 @@ namespace InventorySystem
                 {
                     map.selectedUnit.equippedWeapon = null;
                     map.selectedUnit.equippedWeapon = (Weapon)item.item;
+                    SoundManager.instance.PlayFX(8);
                     Invoke("ResetEquippedWeapon", 0.05f);
                 }
                 else if(item.item.type == ItemType.Consumable)
@@ -83,13 +85,15 @@ namespace InventorySystem
                     {
                         return;
                     }
-                    else if (map.selectedUnit.currentHealth + consumable.healValue > map.selectedUnit.unit.statistics.health)
+                    else if(map.selectedUnit.currentHealth + consumable.healValue > map.selectedUnit.unit.statistics.health)
                     {
                         map.selectedUnit.currentHealth += map.selectedUnit.unit.statistics.health - map.selectedUnit.currentHealth;
+                        SoundManager.instance.PlayFX(9);
                     }
                     else
                     {
                         map.selectedUnit.currentHealth += consumable.healValue;
+                        SoundManager.instance.PlayFX(9);
                     }
                     map.selectedUnit.inventory.inventory.Remove(consumable);
                     ClearSlots();

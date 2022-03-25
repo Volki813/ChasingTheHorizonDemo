@@ -15,7 +15,10 @@ public class EventManager : MonoBehaviour
 
     private void Start()
     {
-        currentEvent = events[0];
+        if(events.Count > 0)
+        {
+            currentEvent = events[0];
+        }
     }
 
     public void ActivateEvent()
@@ -24,15 +27,23 @@ public class EventManager : MonoBehaviour
     }
     public bool PlayerEventCheck()
     {
-        if(currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.playerTurn){
-            return true;
+        if(currentEvent != null)
+        {
+            if(currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.playerTurn)
+            {
+                return true;
+            }
         }
         return false;
     }
     public bool EnemyEventCheck()
     {
-        if(currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.enemyTurn){
-            return true;
+        if(currentEvent != null)
+        {
+            if (currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.enemyTurn)
+            {
+                return true;
+            }
         }
         return false;
     }

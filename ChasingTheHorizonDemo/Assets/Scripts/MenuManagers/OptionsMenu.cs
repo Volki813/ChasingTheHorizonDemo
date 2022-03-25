@@ -25,6 +25,7 @@ public class OptionsMenu : MonoBehaviour
     }
     private void OnEnable()
     {
+        SoundManager.instance.PlayFX(11);
         StartCoroutine(HighlightSlider());
     }
     private void Update()

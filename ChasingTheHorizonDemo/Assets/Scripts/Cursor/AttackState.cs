@@ -15,6 +15,6 @@ public class AttackState : CursorState
 
     public override void Cancel()
     {
-        cursorController.UndoMove();
+        cursorController.UndoAttack();
     }
 }

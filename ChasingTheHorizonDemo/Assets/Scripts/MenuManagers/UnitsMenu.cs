@@ -20,6 +20,7 @@ public class UnitsMenu : MonoBehaviour
 
     private void OnEnable()
     {
+        SoundManager.instance.PlayFX(11);
         Invoke("SetSlots", 0.17f);
     }
     private void OnDisable()

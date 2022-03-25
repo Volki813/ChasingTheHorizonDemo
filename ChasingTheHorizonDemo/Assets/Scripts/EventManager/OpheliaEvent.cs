@@ -26,7 +26,8 @@ public class OpheliaEvent : Event
         if(TurnManager.instance.enemyUnits.Count <= 0 && eventPlayed == false)
         {
             StartCoroutine(Event());
-        }        
+            TurnManager.instance.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator Event()
@@ -36,15 +37,15 @@ public class OpheliaEvent : Event
         //Disable player controls + disable cursor
         cursor.controls.MapScene.Disable();
         cursor.controls.UI.Disable();
-        cursor.GetComponent<SpriteRenderer>().sprite = null;
+        cursor.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 0);
         yield return new WaitUntil(() => !screenDim.activeSelf);
         yield return new WaitForSeconds(1f);
         //Move Ophelia on screen
         opheliaObject.SetActive(true);
         StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(2f, 10f)));
-        yield return new WaitForSeconds(2f);
+        yield return new WaitUntil(() => opheliaObject.transform.localPosition == new Vector3(2, 10));
         MapDialogueManager.instance.ClearDialogue();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
         //Send dialogue to dialogue manager
         MapDialogueManager.instance.WriteMultiple(opheliaDialogue);
         yield return new WaitUntil(() => !screenDim.activeSelf);

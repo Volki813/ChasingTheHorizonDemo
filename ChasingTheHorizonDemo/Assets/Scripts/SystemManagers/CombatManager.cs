@@ -71,10 +71,8 @@ public class CombatManager : MonoBehaviour
         }
         yield return new WaitUntil(() => !screenDim.activeSelf);
 
-        ActionCamera(attacker, defender);
-        yield return new WaitUntil(() => mainCamera.orthographicSize == 4);
-        attackerHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(attacker.gameObject);
-        defenderHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(defender.gameObject);
+        attackerHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(attacker.gameObject, defender.gameObject);
+        defenderHealth.GetComponent<RectTransform>().anchoredPosition = WorldToCanvasSpace(defender.gameObject, attacker.gameObject);
 
         combatReadout.SetActive(true);
         yield return new WaitForSeconds(0.5f);
@@ -85,7 +83,6 @@ public class CombatManager : MonoBehaviour
         if(attacker.equippedWeapon.animation)
         {
             PlayEffect(attacker, defender);
-            yield return new WaitForSeconds(attacker.equippedWeapon.animationLength.length);
         }
 
         InitiatorAttack(attacker, defender);
@@ -93,9 +90,9 @@ public class CombatManager : MonoBehaviour
 
         if(CheckForDeaths(attacker, defender) == "Attacker")
         {
-            attacker.DelayedDeath();
+            attacker.Death();
+            yield return new WaitForSeconds(0.3f);
             combatReadout.SetActive(false);
-            ResetCamera();
             if(attacker.unit.allyUnit)
             {
                 cursor.controls.UI.Disable();
@@ -114,10 +111,10 @@ public class CombatManager : MonoBehaviour
             }
             yield return new WaitUntil(() => !screenDim.activeSelf);
 
-            defender.DelayedDeath();
+            defender.Death();
+            yield return new WaitForSeconds(0.2f);
             combatReadout.SetActive(false);
             attacker.Rest();
-            ResetCamera();
             if(attacker.unit.allyUnit)
             {
                 cursor.controls.UI.Disable();
@@ -145,10 +142,10 @@ public class CombatManager : MonoBehaviour
 
             if(CheckForDeaths(attacker, defender) == "Attacker")
             {
-                attacker.DelayedDeath();
+                attacker.Death();
+                yield return new WaitForSeconds(0.2f);
                 combatReadout.SetActive(false);
-                ResetCamera();
-                if (attacker.unit.allyUnit)
+                if(attacker.unit.allyUnit)
                 {
                     cursor.controls.UI.Disable();
                     cursor.controls.MapScene.Enable();
@@ -166,10 +163,10 @@ public class CombatManager : MonoBehaviour
                 }
                 yield return new WaitUntil(() => !screenDim.activeSelf);
 
-                defender.DelayedDeath();
+                defender.Death();
+                yield return new WaitForSeconds(0.2f);
                 combatReadout.SetActive(false);
                 attacker.Rest();
-                ResetCamera();
                 if(attacker.unit.allyUnit)
                 {
                     cursor.controls.UI.Disable();
@@ -197,9 +194,9 @@ public class CombatManager : MonoBehaviour
                     cursor.SetState(new MapState(cursor));
                     yield return null;
                 }
+                yield return new WaitForSeconds(0.3f);
                 combatReadout.SetActive(false);
                 attacker.Rest();
-                ResetCamera();
                 if(attacker.unit.allyUnit)
                 {
                     cursor.controls.UI.Disable();
@@ -211,10 +208,9 @@ public class CombatManager : MonoBehaviour
             combatReadout.SetActive(false);
             if(CheckForDeaths(attacker, defender) == "Defender" || CheckForDeaths(attacker, defender) == null)
             {
-                defender.DelayedDeath();
+                defender.Death();
                 attacker.Rest();
             }
-            ResetCamera();
             if (attacker.unit.allyUnit)
             {
                 cursor.controls.UI.Disable();
@@ -223,12 +219,12 @@ public class CombatManager : MonoBehaviour
             }
             yield return null;
         }
+        yield return new WaitForSeconds(0.2f);
         combatReadout.SetActive(false);
         if(CheckForDeaths(attacker, defender) == "Defender" || CheckForDeaths(attacker, defender) == null)
         {
             attacker.Rest();
         }
-        ResetCamera();
         if(attacker.unit.allyUnit)
         {
             cursor.controls.UI.Disable();
@@ -255,10 +251,20 @@ public class CombatManager : MonoBehaviour
 
     private void ActionCamera(UnitLoader attacker, UnitLoader defender)
     {
-        var point1 = attacker.transform.position;
-        var point2 = defender.transform.position;
+        var point1 = attacker.transform.localPosition;
+        var point2 = defender.transform.localPosition;       
 
-        var centerPoint = (point1 + point2) / 2;
+        if(point1.x < cursor.cameraLeft)
+        {
+            point1.x = cursor.cameraLeft;
+        }
+        else if(point2.x < cursor.cameraLeft)
+        {
+            point2.x = cursor.cameraLeft;
+        }
+
+        var centerPoint = (point1 + point2) / 2;        
+
         Vector3 zoomPoint = new Vector3(centerPoint.x, centerPoint.y, -10);
 
         StartCoroutine(MoveCamera(zoomPoint));
@@ -273,8 +279,22 @@ public class CombatManager : MonoBehaviour
         cameraAnimator.SetTrigger("ZoomIn");
     }
     private void ResetCamera()
-    {                
-        cameraAnimator.SetTrigger("ZoomOut");  
+    {
+        StartCoroutine(ZoomOutCamera());
+    }
+    private IEnumerator ZoomOutCamera()
+    {
+        Vector3 targetPosition = new Vector3(cursor.cameraLeft, mainCamera.transform.position.y, mainCamera.transform.position.z);
+        cameraAnimator.SetTrigger("ZoomOut");
+        yield return new WaitForSeconds(0.6f);
+        if(mainCamera.transform.position.x < cursor.cameraLeft)
+        {
+            while(mainCamera.transform.position.x != cursor.cameraLeft)
+            {
+                mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, targetPosition, 7f * Time.deltaTime);
+                yield return null;
+            }
+        }
     }
     
     private Vector3 WorldToCanvasSpace(GameObject unit)
@@ -283,8 +303,34 @@ public class CombatManager : MonoBehaviour
         Vector2 uiOffset = new Vector2((float)canvasRect.sizeDelta.x / 2f, (float)canvasRect.sizeDelta.y / 2f);
         Vector2 viewPortPosition = mainCamera.WorldToViewportPoint(unit.transform.position);
         Vector2 proportionalPosition = new Vector2(viewPortPosition.x * canvasRect.sizeDelta.x, viewPortPosition.y * canvasRect.sizeDelta.y);
-        return proportionalPosition - uiOffset - new Vector2(0, 75);
+        return proportionalPosition - uiOffset - new Vector2(0, 50);
     }
+    private Vector3 WorldToCanvasSpace(GameObject attacker, GameObject defender)
+    {
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        Vector2 uiOffset = new Vector2((float)canvasRect.sizeDelta.x / 2f, (float)canvasRect.sizeDelta.y / 2f);
+        Vector2 viewPortPosition = mainCamera.WorldToViewportPoint(attacker.transform.position);
+        Vector2 proportionalPosition = new Vector2(viewPortPosition.x * canvasRect.sizeDelta.x, viewPortPosition.y * canvasRect.sizeDelta.y);
+        
+        if(attacker.transform.position.x > defender.transform.position.x)
+        {
+            return proportionalPosition - uiOffset - new Vector2(-46, 0);
+        }
+        else if(attacker.transform.position.x < defender.transform.position.x)
+        {
+            return proportionalPosition - uiOffset - new Vector2(46, 0);
+        }
+        else if(attacker.transform.position.y < defender.transform.position.y && attacker.transform.position.x == defender.transform.position.x)
+        {
+            return proportionalPosition - uiOffset - new Vector2(46, 0);
+        }
+        else if (attacker.transform.position.y > defender.transform.position.y && attacker.transform.position.x == defender.transform.position.x)
+        {
+            return proportionalPosition - uiOffset - new Vector2(-46, 0);
+        }
+        return new Vector3(0, 0);
+    }
+
     private IEnumerator Shake(float intensity, bool attacker)
     {
         Vector3 originalPosition = new Vector3(0, 0, 0);
@@ -353,11 +399,11 @@ public class CombatManager : MonoBehaviour
             {
                 //Unit Hits
                 SoundManager.instance.PlayFX(3);
-                battleText.SetText("Hit");
+                battleText.SetText("Hit"); 
                 Instantiate(battleText, defender.transform.position, Quaternion.identity);
                 defender.currentHealth = defender.currentHealth - Hit(attacker, defender);
                 StartCoroutine(Shake(Hit(attacker, defender), true));
-                defenderHealth.value = defender.currentHealth;                
+                defenderHealth.value = defender.currentHealth;
             }
         }
         else
@@ -374,10 +420,10 @@ public class CombatManager : MonoBehaviour
         if(CheckDistance(defender, attacker) <= 1 || defender.equippedWeapon.range >= attacker.equippedWeapon.range)
         {
             //Check for a hit
-            if (HitRoll(defender))
+            if(HitRoll(defender))
             {
                 //Checks for a crit
-                if (CritRoll(defender))
+                if(CritRoll(defender))
                 {
                     //Unit Crits
                     SoundManager.instance.PlayFX(4);
@@ -399,7 +445,7 @@ public class CombatManager : MonoBehaviour
                     //Unit Hits
                     SoundManager.instance.PlayFX(3);
                     battleText.SetText("Hit");
-                    Instantiate(battleText, attacker.transform.position, Quaternion.identity);                    
+                    Instantiate(battleText, attacker.transform.position, Quaternion.identity);
                     attacker.currentHealth = attacker.currentHealth - Hit(defender, attacker);
                     StartCoroutine(Shake(Hit(defender, attacker), false));
                     attackerHealth.value = attacker.currentHealth;

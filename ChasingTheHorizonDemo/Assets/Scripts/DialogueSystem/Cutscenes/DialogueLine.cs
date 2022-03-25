@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 //A Dialogue Line, holds all the data for a single Dialogue Line
 //Used in conjuction with the Dialogue Holder
@@ -8,6 +9,7 @@ namespace DialogueSystem
     public class DialogueLine : DialogueBaseClass
     {
         private Text textHolder;
+        private Sprite portraitSprite;
 
         [Header("Text Options")]
         [TextArea(3,10)]
@@ -18,8 +20,12 @@ namespace DialogueSystem
         [Header("Time Parameters")]
         [SerializeField] private float delay = 0;
 
-        [Header("Sound")]
+        [Header("Sound Effect")]
         [SerializeField] private AudioClip sound = null;
+
+        [Header("Music")]
+        [SerializeField] private AudioClip music = null;
+        public bool triggerMusic = false;
 
         [Header("Character")]
         [SerializeField] private Unit character = null;
@@ -30,8 +36,6 @@ namespace DialogueSystem
         [Header("Nameplates")]
         public Text namePlate1;
         public Text namePlate2;
-        
-        private Sprite portraitSprite;
 
         [Header("Textbox")]
         public bool textBox1;
@@ -48,17 +52,57 @@ namespace DialogueSystem
         }
 
         private void Start()
+        {
+            StartCoroutine(StartText());
+        }
+
+        private IEnumerator StartText()
         {            
-            imageHolder.sprite = portraitSprite;
-            if (textBox1)
+            if(sound != null)
             {
-                namePlate1.text = character.unitName;
+                StartCoroutine(PlaySoundEffect(sound));
+                yield return new WaitForSeconds(sound.length);
+
+                imageHolder.sprite = portraitSprite;
+
+                if (textBox1)
+                {
+                    namePlate1.text = character.unitName;
+                    imageHolder.flipX = true;
+                }
+                else
+                {
+                    namePlate2.text = character.unitName;
+                }
+                
+                if (triggerMusic && music != null)
+                {
+                    MusicPlayer.instance.PlayTrack(music);
+                }
+
+                StartCoroutine(WriteText(input, textHolder, textColor, textFont, delay, sound));
             }
             else
             {
-                namePlate2.text = character.unitName;
+                imageHolder.sprite = portraitSprite;
+
+                if (textBox1)
+                {
+                    namePlate1.text = character.unitName;
+                    imageHolder.flipX = true;
+                }
+                else
+                {
+                    namePlate2.text = character.unitName;
+                }
+                
+                if (triggerMusic && music != null)
+                {
+                    MusicPlayer.instance.PlayTrack(music);
+                }
+
+                StartCoroutine(WriteText(input, textHolder, textColor, textFont, delay, sound));
             }
-            StartCoroutine(WriteText(input, textHolder, textColor, textFont, delay, sound));
         }
     }
 }
