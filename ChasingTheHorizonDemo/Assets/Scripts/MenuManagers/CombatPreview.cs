@@ -30,6 +30,7 @@ public class CombatPreview : MonoBehaviour
     private void OnEnable()
     {
         Invoke("FillPreview", 0.17f);
+        SoundManager.instance.PlayFX(11);
     }
     private void OnDisable()
     {

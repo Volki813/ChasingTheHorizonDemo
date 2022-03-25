@@ -226,17 +226,20 @@ public class UnitLoader : MonoBehaviour
 
     private void Destruct()
     {
-        if(unit.allyUnit)
+        if(LoseManager.instance.gameObject.activeSelf)
         {
-            if (LoseManager.instance.specificAlly && LoseManager.instance.specificAllies.Contains(this))
+            if(unit.allyUnit)
             {
-                LoseManager.instance.StartGameOver();
-                Destroy(gameObject);
-            }
-            else if (LoseManager.instance.anyAlly)
-            {
-                LoseManager.instance.StartGameOver();
-                Destroy(gameObject);
+                if(LoseManager.instance.specificAlly && LoseManager.instance.specificAllies.Contains(this))
+                {
+                    LoseManager.instance.StartGameOver();
+                    Destroy(gameObject);
+                }
+                else if(LoseManager.instance.anyAlly)
+                {
+                    LoseManager.instance.StartGameOver();
+                    Destroy(gameObject);
+                }
             }
         }
         else

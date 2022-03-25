@@ -26,20 +26,18 @@ public class OpheliaEvent : Event
         if(TurnManager.instance.enemyUnits.Count <= 0 && eventPlayed == false)
         {
             StartCoroutine(Event());
-            TurnManager.instance.gameObject.SetActive(false);
         }
     }
 
     private IEnumerator Event()
     {
+        cursor.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 0);
+        TurnManager.instance.gameObject.SetActive(false);
         eventPlayed = true;
         loseManager.gameObject.SetActive(false);
-        //Disable player controls + disable cursor
-        cursor.controls.MapScene.Disable();
-        cursor.controls.UI.Disable();
-        cursor.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 0);
         yield return new WaitUntil(() => !screenDim.activeSelf);
         yield return new WaitForSeconds(1f);
+        cursor.controls.Disable();
         //Move Ophelia on screen
         opheliaObject.SetActive(true);
         StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(2f, 10f)));
@@ -58,7 +56,7 @@ public class OpheliaEvent : Event
         //Attack Roland
         CombatManager.instance.EngageAttack(opheliaObject.GetComponent<UnitLoader>(), rolandObject);
         //Ophelia CG appears and the rest of the dialogue is displayed
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         opheliaCG.SetActive(true);
         yield return new WaitForSeconds(1f);
         MapDialogueManager.instance.WriteMultiple(opheliaDialogue2);

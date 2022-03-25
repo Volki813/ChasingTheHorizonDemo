@@ -40,7 +40,6 @@ namespace InventorySystem
         private void Start()
         {
             SetSlots();
-            SoundManager.instance.PlayFX(11);
         }
 
         private void Update()
@@ -57,6 +56,7 @@ namespace InventorySystem
             Invoke("ResetEquippedWeapon", 0.1f);
             Invoke("HighlightButton", 0.2f);
             StartCoroutine(StartItemPreview());
+            SoundManager.instance.PlayFX(11);
         }
 
         private void OnDisable()
