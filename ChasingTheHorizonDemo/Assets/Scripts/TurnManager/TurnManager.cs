@@ -46,13 +46,13 @@ public class TurnManager : MonoBehaviour
         map = FindObjectOfType<TileMap>();
         cursor = FindObjectOfType<CursorController>();
         mainCamera = FindObjectOfType<Camera>();
-        Invoke("DisableCursor", 0.1f);
+        DisableCursor();
         SetState(new TurnBeginState(this));
     }
 
     private void DisableCursor()
     {
-        cursor.controls.Disable();
+        cursor.cursorControls.DeactivateInput();
     }
 
     private void Update()

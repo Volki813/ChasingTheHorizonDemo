@@ -46,8 +46,7 @@ public class ActionMenuManager : MonoBehaviour
             cursor.SetState(new ActionMenuState(cursor));
             GetComponent<RectTransform>().anchoredPosition = new Vector2(-1400, 40);
             EventSystem.current.SetSelectedGameObject(null);
-            cursor.controls.UI.Disable();
-            cursor.controls.MapScene.Enable();
+            cursor.cursorControls.SwitchCurrentActionMap("MapScene");
             cursor.SetState(new AttackState(cursor));
             map.DehighlightTiles();
             map.attackableTiles = map.GenerateRange((int)map.selectedUnit.transform.localPosition.x, (int)map.selectedUnit.transform.localPosition.y, map.selectedUnit.equippedWeapon.range, map.selectedUnit, false);            
@@ -71,8 +70,7 @@ public class ActionMenuManager : MonoBehaviour
         map.selectedUnit = null;
         map.DehighlightTiles();
         gameObject.SetActive(false);
-        cursor.controls.UI.Disable();
-        cursor.controls.MapScene.Enable();
+        cursor.cursorControls.SwitchCurrentActionMap("MapScene");
         cursor.SetState(new MapState(cursor));
     }
 

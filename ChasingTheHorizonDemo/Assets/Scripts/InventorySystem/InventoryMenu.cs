@@ -29,6 +29,8 @@ namespace InventorySystem
         [SerializeField] private Text weaponRange = null;
         [SerializeField] private Text weaponWeight = null;
 
+        [SerializeField] private GameObject healingEffect = null;
+
         private bool previewReady = false;
 
         private void Awake()
@@ -89,11 +91,15 @@ namespace InventorySystem
                     {
                         map.selectedUnit.currentHealth += map.selectedUnit.unit.statistics.health - map.selectedUnit.currentHealth;
                         SoundManager.instance.PlayFX(9);
+                        Vector3 targetPosition = new Vector3(map.selectedUnit.transform.position.x, map.selectedUnit.transform.position.y - 0.3f);
+                        Instantiate(healingEffect, targetPosition, healingEffect.transform.rotation);
                     }
                     else
                     {
                         map.selectedUnit.currentHealth += consumable.healValue;
                         SoundManager.instance.PlayFX(9);
+                        Vector3 targetPosition = new Vector3(map.selectedUnit.transform.position.x, map.selectedUnit.transform.position.y - 0.3f);
+                        Instantiate(healingEffect, targetPosition, healingEffect.transform.rotation);
                     }
                     map.selectedUnit.inventory.inventory.Remove(consumable);
                     ClearSlots();

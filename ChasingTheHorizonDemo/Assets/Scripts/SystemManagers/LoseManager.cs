@@ -64,8 +64,7 @@ public class LoseManager : MonoBehaviour
     }
     private IEnumerator GameOver()
     {
-        cursor.controls.MapScene.Disable();
-        cursor.controls.UI.Disable();
+        cursor.cursorControls.SwitchCurrentActionMap("UI");
         GameObject.Find("SystemsManager").SetActive(false);
         fadeOut.SetActive(true);
         yield return new WaitForSeconds(1.3f);

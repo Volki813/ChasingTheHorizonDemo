@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 //There should only be 1 CursorController script in any given scene
 public class CursorController : MonoBehaviour
 {
+    public PlayerInput cursorControls;
+
     public Sprite highlight = null;
     public Vector2 currentPosition = new Vector3(0, 0);
     public bool enemyTurn = false;
@@ -23,7 +25,6 @@ public class CursorController : MonoBehaviour
 
     //REFERENCES
     private TileMap map;
-    public CursorControls controls;
     [SerializeField] private GameObject menu = null;
     [SerializeField] private Camera mapCamera = null;
     [Header("Map Frame Points")] //These variables define at which point your cursor needs to be for the camera to move in the respective direction
@@ -31,6 +32,8 @@ public class CursorController : MonoBehaviour
     [SerializeField] private Transform frameBottom = null;
     [SerializeField] private Transform frameLeft = null;
     [SerializeField] private Transform frameRight = null;
+
+    private Animator animator = null;
 
     private CursorState currentState;
     public CursorState previousState;
@@ -47,35 +50,31 @@ public class CursorController : MonoBehaviour
         currentState = state;
         currentState.Start();
     }
-    private void Awake()
-    {
-        controls = new CursorControls();
 
-        controls.MapScene.Confirm.performed += ctx => Confirm();
-        controls.MapScene.Cancel.performed += ctx => Cancel();
-        controls.UI.Confirm.performed += ctx => Confirm();
-        controls.UI.Cancel.performed += ctx => Cancel();
-
-        controls.MapScene.Movement.performed += ctx => RequestMove(ctx.ReadValue<Vector2>());        
-        controls.MapScene.Movement.canceled += ctx => ButtonReleased();
-    }
     private void Start()
     {
         map = FindObjectOfType<TileMap>();
+        animator = GetComponent<Animator>();
         currentPosition = transform.localPosition;
         highlight = GetComponent<SpriteRenderer>().sprite;
         enemyTurn = false;
-        controls.MapScene.Enable();
-        SetState(new MapState(this));
-    }
+    }    
 
-    private void RequestMove(Vector2 direction)
+    public void RequestMove(InputAction.CallbackContext ctx)
     {
-        buttonHeldCoroutine = ButtonHeld(direction);
-        StartCoroutine(buttonHeldCoroutine);
-        if(!cursorMoving){
-            movementRequests.Push(direction);
-            StartCoroutine(StartMovement(10f));
+        if(ctx.performed)
+        {
+            buttonHeldCoroutine = ButtonHeld(ctx.ReadValue<Vector2>());
+            StartCoroutine(buttonHeldCoroutine);
+            if(!cursorMoving)
+            {
+                movementRequests.Push(ctx.ReadValue<Vector2>());
+                StartCoroutine(StartMovement(10f));
+            }
+        }
+        if(ctx.canceled)
+        {
+            ButtonReleased();
         }
     }
     private void ButtonReleased()
@@ -163,37 +162,46 @@ public class CursorController : MonoBehaviour
         }
     }   
 
-    private void Confirm()
+    public void Confirm(InputAction.CallbackContext ctx)
     {
-        currentState.Confirm();
+        if(ctx.performed && currentState != null)
+            currentState.Confirm();
     }
-    private void Cancel()
+    public void Cancel(InputAction.CallbackContext ctx)
     {
-        currentState.Cancel();
+        if(ctx.performed && currentState != null)
+            currentState.Cancel();
     }
 
     public void SelectUnit()
     {
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.allyUnits)
         {
             if(transform.localPosition == unit.transform.localPosition && map.selectedUnit == null)
             {
                 if(unit.unit.allyUnit && unit.rested == false)
                 {
+                    animator.SetTrigger("Rotate");
+                    enemyInventory.SetActive(false);
                     SoundManager.instance.PlayFX(0);
                     map.selectedUnit = unit;
                     unit.Selected();
                     SetState(new UnitState(this));
+                    foreach(UnitLoader enemy in TurnManager.instance.enemyUnits)
+                    {
+                        enemy.spriteRenderer.color = Color.white;
+                    }
                 }
             }
         }
     }
     public void DeselectUnit()
     {
-        if (map.selectedUnit != null)
+        if(map.selectedUnit != null)
         {
             if(map.selectedUnit.currentPath == null)
             {
+                animator.SetTrigger("CounterRotate");
                 SoundManager.instance.PlayFX(1);
                 map.selectedUnit.animator.SetBool("Selected", false);
                 map.selectedUnit = null;
@@ -204,23 +212,24 @@ public class CursorController : MonoBehaviour
     }
     public void SelectEnemy()
     {
-        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
-            if(transform.localPosition == unit.transform.localPosition && !unit.unit.allyUnit)
+            if(transform.localPosition == unit.transform.localPosition)
             {
                 SoundManager.instance.PlayFX(0);
+                map.DehighlightTiles();
                 map.walkableTiles = map.GenerateWalkableRange((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y, unit.unit.statistics.movement, unit);
                 map.HighlightTiles();
                 unit.spriteRenderer.color = Color.red;
                 enemyInventory.SetActive(true);
-                enemyInventory.GetComponent<EnemyInventory>().DisplayInventory(unit);                
+                enemyInventory.GetComponent<EnemyInventory>().DisplayInventory(unit);
             }
         }
     }
     public void ResetTiles()
     {
         map.DehighlightTiles();
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
             if(unit.spriteRenderer.color == Color.red)
             {
@@ -248,11 +257,10 @@ public class CursorController : MonoBehaviour
     }
     public void AttackMove()
     {
-        if(transform.localPosition == map.selectedUnit.transform.localPosition)
-            return;
+        if(transform.localPosition == map.selectedUnit.transform.localPosition) { return; }
 
         Vector3 currentEnemy = new Vector3(0, 0);
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
             if(transform.localPosition == unit.transform.localPosition && !unit.unit.allyUnit)
             {
@@ -279,12 +287,9 @@ public class CursorController : MonoBehaviour
     public void UndoMove()
     {
         SoundManager.instance.PlayFX(1);
-        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach (UnitLoader unit in TurnManager.instance.enemyUnits)
         {
-            if (!unit.unit.allyUnit)
-            {
-                unit.spriteRenderer.color = Color.white;
-            }
+            unit.spriteRenderer.color = Color.white;
         }
         map.selectedUnit.enemiesInRange.Clear();
         map.selectedUnit.transform.localPosition = map.selectedUnit.originalPosition;
@@ -295,8 +300,7 @@ public class CursorController : MonoBehaviour
         map.selectedUnit.target = null;
         map.selectedUnit = null;
         SetState(new MapState(this));
-        controls.UI.Disable();
-        controls.MapScene.Enable();
+        cursorControls.SwitchCurrentActionMap("MapScene");
     }
     public void CloseInventory()
     {
@@ -305,7 +309,7 @@ public class CursorController : MonoBehaviour
     public void SelectTarget()
     {
         SoundManager.instance.PlayFX(0);
-        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach (UnitLoader unit in TurnManager.instance.enemyUnits)
         {
             if(transform.localPosition == unit.transform.localPosition && map.selectedUnit.enemiesInRange.Contains(unit) && 
                 Vector2.Distance(map.selectedUnit.transform.localPosition, unit.transform.localPosition) <= map.selectedUnit.equippedWeapon.range)
@@ -313,8 +317,7 @@ public class CursorController : MonoBehaviour
                 map.selectedUnit.target = unit;
                 ActionMenuManager.instance.combatPreview.SetActive(true);
                 ActionMenuManager.instance.weaponSelection.SetActive(true);
-                controls.MapScene.Disable();
-                controls.UI.Enable();
+                cursorControls.SwitchCurrentActionMap("UI");
                 SetState(new CombatPreviewState(this));
             }
         }
@@ -325,8 +328,7 @@ public class CursorController : MonoBehaviour
         map.selectedUnit.target = null;
         ActionMenuManager.instance.combatPreview.SetActive(false);
         ActionMenuManager.instance.weaponSelection.SetActive(false);
-        controls.UI.Disable();
-        controls.MapScene.Enable();
+        cursorControls.SwitchCurrentActionMap("MapScene");
         SetState(new AttackState(this));
     }
     public void AttackTarget()
@@ -343,8 +345,7 @@ public class CursorController : MonoBehaviour
     {
         SoundManager.instance.PlayFX(1);
         map.DehighlightTiles();
-        controls.MapScene.Disable();
-        controls.UI.Enable();
+        cursorControls.SwitchCurrentActionMap("UI");
         SetState(new ActionMenuState(this));
         map.selectedUnit.actionMenu.transform.position = map.selectedUnit.actionMenuSpawn.position;
         ActionMenuManager.instance.Highlight();
@@ -352,15 +353,14 @@ public class CursorController : MonoBehaviour
 
     public void DisplayMenu()
     {
-        foreach (Node n in map.graph)
+        foreach(Node n in map.graph)
         {
             if(transform.localPosition == new Vector3(n.x, n.y) && map.IsOccupied(n.x, n.y) == false)
             {
                 menu.SetActive(true);
                 SoundManager.instance.PlayFX(11);
                 SetState(new MenuState(this));
-                controls.MapScene.Disable();
-                controls.UI.Enable();
+                cursorControls.SwitchCurrentActionMap("UI");
             }
         }
     }
@@ -392,8 +392,7 @@ public class CursorController : MonoBehaviour
             menu.SetActive(false);
             SoundManager.instance.PlayFX(1);
             SetState(new MapState(this));
-            controls.UI.Disable();
-            controls.MapScene.Enable();
+            cursorControls.SwitchCurrentActionMap("MapScene");
         }
     }    
 }

@@ -92,18 +92,26 @@ namespace DialogueSystem
                     break;
                 }
 
+                //Checks if it's an ImageLine, which displays an image on the screen
+                if(transform.GetChild(i).GetComponent<ImageLine>() == true)
+                {
+                    transform.GetChild(i).GetComponent<ImageLine>().DisplayImage();
+                }
+
                 //Checks which Dialogue Box to place the dialogue in 
-                else if (transform.GetChild(i).GetComponent<DialogueLine>().textBox1 == true)
+                else if(transform.GetChild(i).GetComponent<DialogueLine>().textBox1 == true)
                 {
                     transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = box1;
                 }
                 else if(transform.GetChild(i).GetComponent<DialogueLine>().textBox2 == true)
                 {
                     transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition = box2;
+                }                
+
+                if(transform.GetChild(i).GetComponent<DialogueLine>())
+                {
+                    yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().finished);
                 }
-
-
-                yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().finished);
 
                 if(currentLine.GetComponent<DialogueLine>().textBox1)
                 {
@@ -116,6 +124,12 @@ namespace DialogueSystem
 
                 buttonPressed = false;
                 yield return new WaitUntil(() => buttonPressed == true);
+
+                //Hides any images that may be currently active
+                if(transform.GetChild(i).GetComponent<ImageLine>())
+                {
+                    transform.GetChild(i).gameObject.SetActive(false);
+                }
             }
         }
 

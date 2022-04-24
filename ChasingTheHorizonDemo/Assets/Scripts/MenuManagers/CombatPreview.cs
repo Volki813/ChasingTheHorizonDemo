@@ -29,8 +29,8 @@ public class CombatPreview : MonoBehaviour
 
     private void OnEnable()
     {
+        Invoke("MenuBlorp", 0.1f);
         Invoke("FillPreview", 0.17f);
-        SoundManager.instance.PlayFX(11);
     }
     private void OnDisable()
     {
@@ -78,5 +78,10 @@ public class CombatPreview : MonoBehaviour
         defenderDamage.text = null;
         defenderHit.text = null;
         defenderCrit.text = null;
+    }
+
+    private void MenuBlorp()
+    {
+        SoundManager.instance.PlayFX(11);
     }
 }

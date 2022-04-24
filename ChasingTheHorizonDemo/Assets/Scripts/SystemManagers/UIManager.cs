@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
 
     private void AllyUnitUI()
     {
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.allyUnits)
         {
             if(transform.position == unit.transform.position && unit.unit.allyUnit && unit.currentHealth > 0)
             {
@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
     }
     private void EnemyUnitUI()
     {
-        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach (UnitLoader unit in TurnManager.instance.enemyUnits)
         {
             if(transform.position == unit.transform.position && !unit.unit.allyUnit && unit.currentHealth > 0)
             {

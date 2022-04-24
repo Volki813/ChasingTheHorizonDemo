@@ -60,7 +60,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        cursor.controls.Disable();
+        cursor.cursorControls.DeactivateInput();
         cursor.GetComponent<Animator>().SetBool("Invisible", true);
 
         //Check if defender has dialogue for when it's attacked
@@ -83,6 +83,7 @@ public class CombatManager : MonoBehaviour
         if(attacker.equippedWeapon.animation)
         {
             PlayEffect(attacker, defender);
+            yield return new WaitForSeconds(0.3f);
         }
 
         InitiatorAttack(attacker, defender);
@@ -95,8 +96,7 @@ public class CombatManager : MonoBehaviour
             combatReadout.SetActive(false);
             if(attacker.unit.allyUnit)
             {
-                cursor.controls.UI.Disable();
-                cursor.controls.MapScene.Enable();
+                cursor.cursorControls.SwitchCurrentActionMap("MapScene");
                 cursor.SetState(new MapState(cursor));
             }
             yield return null;
@@ -117,8 +117,7 @@ public class CombatManager : MonoBehaviour
             attacker.Rest();
             if(attacker.unit.allyUnit)
             {
-                cursor.controls.UI.Disable();
-                cursor.controls.MapScene.Enable();
+                cursor.cursorControls.SwitchCurrentActionMap("MapScene");
                 cursor.SetState(new MapState(cursor));
             }
             yield return null;
@@ -147,8 +146,7 @@ public class CombatManager : MonoBehaviour
                 combatReadout.SetActive(false);
                 if(attacker.unit.allyUnit)
                 {
-                    cursor.controls.UI.Disable();
-                    cursor.controls.MapScene.Enable();
+                    cursor.cursorControls.SwitchCurrentActionMap("MapScene");
                     cursor.SetState(new MapState(cursor));
                 }
                 yield return null;
@@ -169,8 +167,7 @@ public class CombatManager : MonoBehaviour
                 attacker.Rest();
                 if(attacker.unit.allyUnit)
                 {
-                    cursor.controls.UI.Disable();
-                    cursor.controls.MapScene.Enable();
+                    cursor.cursorControls.SwitchCurrentActionMap("MapScene");
                     cursor.SetState(new MapState(cursor));
                 }
                 yield break;
@@ -199,8 +196,7 @@ public class CombatManager : MonoBehaviour
                 attacker.Rest();
                 if(attacker.unit.allyUnit)
                 {
-                    cursor.controls.UI.Disable();
-                    cursor.controls.MapScene.Enable();
+                    cursor.cursorControls.SwitchCurrentActionMap("MapScene");
                     cursor.SetState(new MapState(cursor));
                 }
                 yield return null;
@@ -213,8 +209,7 @@ public class CombatManager : MonoBehaviour
             }
             if (attacker.unit.allyUnit)
             {
-                cursor.controls.UI.Disable();
-                cursor.controls.MapScene.Enable();
+                cursor.cursorControls.SwitchCurrentActionMap("MapScene");
                 cursor.SetState(new MapState(cursor));
             }
             yield return null;
@@ -227,8 +222,7 @@ public class CombatManager : MonoBehaviour
         }
         if(attacker.unit.allyUnit)
         {
-            cursor.controls.UI.Disable();
-            cursor.controls.MapScene.Enable();
+            cursor.cursorControls.SwitchCurrentActionMap("MapScene");
             cursor.SetState(new MapState(cursor));
         }
 

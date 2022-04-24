@@ -65,11 +65,11 @@ public class UnitLoader : MonoBehaviour
 
     private void EquipWeapon()
     {
-        if (!equippedWeapon)
+        if(!equippedWeapon)
         {
-            foreach (Item item in inventory.inventory)
+            foreach(Item item in inventory.inventory)
             {
-                if (item.type == ItemType.Weapon)
+                if(item.type == ItemType.Weapon)
                 {
                     equippedWeapon = (Weapon)item;
                     return;
@@ -86,26 +86,26 @@ public class UnitLoader : MonoBehaviour
 
     public void Rest()
     {
-        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
-            if(unit.unit.allyUnit == false && unit.GetComponent<SpriteRenderer>().color == Color.red)
+            if(unit.spriteRenderer.color == Color.red)
             {
-                unit.GetComponent<SpriteRenderer>().color = Color.white;
+                unit.spriteRenderer.color = Color.white;
             }
-        }
+        }        
         hasMoved = true;
         rested = true;
         currentPath = null;
         enemiesInRange.Clear();
         target = null;
-        GetComponent<SpriteRenderer>().color = Color.grey;
+        spriteRenderer.color = Color.grey;
         map.DehighlightTiles();
     }
     public void Stand()
     {
         hasMoved = false;
         rested = false;
-        GetComponent<SpriteRenderer>().color = Color.white;
+        spriteRenderer.color = Color.white;
     }
     public void Attack(UnitLoader enemy)
     {
@@ -126,42 +126,45 @@ public class UnitLoader : MonoBehaviour
         Vector2 currentPosition = new Vector2(transform.localPosition.x, transform.localPosition.y);
         Vector2 enemyPosition = new Vector2(0, 0);
 
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
-            if(!unit.unit.allyUnit)
+            enemyPosition = new Vector2(unit.transform.localPosition.x, unit.transform.localPosition.y);
+            if (Vector2.Distance(currentPosition, enemyPosition) <= equippedWeapon.range)
             {
-                enemyPosition = new Vector2(unit.transform.localPosition.x, unit.transform.localPosition.y);
-                if(Vector2.Distance(currentPosition, enemyPosition) <= equippedWeapon.range)
+                unit.AttackableHighlight();
+                if (!enemiesInRange.Contains(unit))
                 {
-                    unit.AttackableHighlight();
-                    if(!enemiesInRange.Contains(unit))
-                    {
-                        enemiesInRange.Add(unit);
-                    }
+                    enemiesInRange.Add(unit);
                 }
             }
         }
     }
     private void AttackableHighlight()
     {        
-        if(GetComponent<SpriteRenderer>().color == Color.red)
+        if(spriteRenderer.color == Color.red)
         {
-            GetComponent<SpriteRenderer>().color = Color.white;
+            spriteRenderer.color = Color.white;
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = Color.red;
+            spriteRenderer.color = Color.red;
         }
     }
 
     private IEnumerator NodeMovement()
     {
-        cursor.controls.Disable(); 
-        if (currentPath != null)
+        cursor.cursorControls.DeactivateInput(); 
+        if(currentPath != null)
         {
             Vector3 finalNode = new Vector3(currentPath[currentPath.Count - 1].x, currentPath[currentPath.Count - 1].y);
             while (transform.localPosition != finalNode)
             {
+                // Turn off all other animations so they don't start overlapping
+                animator.SetBool("Up", false);
+                animator.SetBool("Down", false);
+                animator.SetBool("Left", false);
+                animator.SetBool("Right", false);
+
                 Vector3 nextNode = new Vector3(currentPath[1].x, currentPath[1].y);
 
                 // Setting the proper animations
@@ -186,21 +189,21 @@ public class UnitLoader : MonoBehaviour
                 currentPath.RemoveAt(0);
             }
         }
-        cursor.controls.Enable();
+        cursor.cursorControls.ActivateInput();
         hasMoved = true;
         map.DehighlightTiles();
         ActionMenu();
         GetEnemies();
         map.HighlightTiles();
+        cursor.cursorControls.SwitchCurrentActionMap("UI");
         cursor.SetState(new ActionMenuState(cursor));
-        cursor.controls.MapScene.Disable();
-        cursor.controls.UI.Enable();
 
         animator.SetBool("Up", false);
         animator.SetBool("Down", false);
         animator.SetBool("Selected", false);
         animator.SetBool("Left", false);
         animator.SetBool("Right", false);
+        animator.CrossFade("Idle", 0.3f);
     }
     public void FollowPath()
     {
@@ -224,7 +227,7 @@ public class UnitLoader : MonoBehaviour
         }
     }
 
-    private void Destruct()
+    public void Destruct()
     {
         if(LoseManager.instance.gameObject.activeSelf)
         {
@@ -241,16 +244,16 @@ public class UnitLoader : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
-        }
-        else
-        {
-            Destroy(gameObject);
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
     public void ActionMenu()
     {
         actionMenu.transform.position = actionMenuSpawn.position;
-        if (actionMenu.activeSelf == true)
+        if(actionMenu.activeSelf == true)
         {
             actionMenu.SetActive(false);            
         }
@@ -265,7 +268,9 @@ public class UnitLoader : MonoBehaviour
         if(GameObject.Find("LoseManager")){
             if(GetComponent<BattleDialogue>()){
                 if(GetComponent<BattleDialogue>().deathQuote){
-                    MapDialogueManager.instance.WriteSingle(GetComponent<BattleDialogue>().deathQuote);
+                    if(GameObject.Find("MapDialogueManager")){
+                        MapDialogueManager.instance.WriteSingle(GetComponent<BattleDialogue>().deathQuote);
+                    }
                 }
             }
         }

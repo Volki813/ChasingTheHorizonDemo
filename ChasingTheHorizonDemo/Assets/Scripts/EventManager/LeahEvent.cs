@@ -79,10 +79,11 @@ public class LeahEvent : Event
                 leahObject.GetComponent<Animator>().SetBool("Selected", true);
                 leahObject.GetComponent<Animator>().SetBool("Left", true);
             }
-            leahObject.transform.localPosition = Vector2.MoveTowards(leahObject.transform.localPosition, new Vector2(targetPosition.x, leahObject.transform.localPosition.y), 2f * Time.deltaTime);
+            leahObject.transform.localPosition = Vector2.MoveTowards(leahObject.transform.localPosition, new Vector2(targetPosition.x, leahObject.transform.localPosition.y), 2.5f * Time.deltaTime);
             yield return null;
         }
         leahObject.GetComponent<Animator>().SetBool("Selected", false);
         leahObject.GetComponent<Animator>().SetBool("Left", false);
+        leahObject.GetComponent<Animator>().CrossFade("Idle", 0.3f);
     }
 }

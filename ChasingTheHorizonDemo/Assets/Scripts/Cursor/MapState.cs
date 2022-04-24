@@ -6,7 +6,7 @@
 
     public override void Start()
     {
-        cursorController.controls.UI.Disable();
+        cursorController.cursorControls.SwitchCurrentActionMap("MapScene");
     }
 
     public override void Confirm()

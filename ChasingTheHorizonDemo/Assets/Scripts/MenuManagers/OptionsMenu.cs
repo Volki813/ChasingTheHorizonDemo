@@ -17,10 +17,10 @@ public class OptionsMenu : MonoBehaviour
 
     private void Awake()
     {
-        //musicVolume = FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>();
+        musicVolume = FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>();
         soundFXVolume = FindObjectOfType<SoundManager>().GetComponent<AudioSource>();
 
-        //musicSlider.value = musicVolume.volume;
+        musicSlider.value = musicVolume.volume;
         soundFXSlider.value = soundFXVolume.volume;
     }
     private void OnEnable()
@@ -30,7 +30,7 @@ public class OptionsMenu : MonoBehaviour
     }
     private void Update()
     {
-        //musicVolume.volume = musicSlider.value;
+        musicVolume.volume = musicSlider.value;
         soundFXVolume.volume = soundFXSlider.value;
         OpacityControl(gridSlider.value);
     }

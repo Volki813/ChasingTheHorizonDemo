@@ -12,7 +12,7 @@ public class TileMap : MonoBehaviour
 
     public UnitLoader selectedUnit; 
 
-    public TileType[] tileTypes;
+    public TileType[] tileTypes; 
     public int[,] tiles;
     public Node[,] graph;
 
@@ -507,7 +507,11 @@ public class TileMap : MonoBehaviour
 
         foreach(Node n in graph[x, y].neighbors)
         {
-            if(CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement && !workingList.Contains(n))
+            if (CostToEnterTile(n.x, n.y) < unit.unit.statistics.movement && !workingList.Contains(n))
+            {
+                workingList.Add(n);
+            }
+            else if(CostToEnterTile(n.x, n.y) > unit.unit.statistics.movement && ReturnTileAt(n.x, n.y).isWalkable == false && !workingList.Contains(n))
             {
                 workingList.Add(n);
             }
@@ -532,6 +536,10 @@ public class TileMap : MonoBehaviour
                 {
                     finalList.Add(n);
                 }
+                else if(CostToEnterTile(n.x, n.y) > unit.unit.statistics.movement && ReturnTileAt(n.x, n.y).isWalkable == false && !finalList.Contains(n))
+                {
+                    finalList.Add(n);
+                }
             }
 
             // Now that there are 2 copies of working list, clear it as it needs to be filled with some new nodes
@@ -542,7 +550,11 @@ public class TileMap : MonoBehaviour
             {
                 foreach (Node e in n.neighbors)
                 {
-                    if(CostToEnterTile(e.x, e.y) < unit.unit.statistics.movement && !workingList.Contains(n))
+                    if(CostToEnterTile(e.x, e.y) < unit.unit.statistics.movement && !workingList.Contains(e))
+                    {
+                        workingList.Add(e);
+                    }
+                    else if(CostToEnterTile(e.x, e.y) > unit.unit.statistics.movement && ReturnTileAt(e.x, e.y).isWalkable == false && !workingList.Contains(e))
                     {
                         workingList.Add(e);
                     }
@@ -625,12 +637,9 @@ public class TileMap : MonoBehaviour
     {
         foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
-            if(!unit.unit.allyUnit)
+            if(unit.transform.localPosition == new Vector3(x, y))
             {
-                if(unit.transform.localPosition == new Vector3(x, y))
-                {
-                    return true;
-                }
+                return true;
             }
         }
         return false;

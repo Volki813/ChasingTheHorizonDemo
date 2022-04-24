@@ -42,8 +42,6 @@ public class WeaponSelection : MonoBehaviour
     }
     private void FillSlots()
     {
-        SoundManager.instance.PlayFX(11);
-
         for (int i = 0; i < unitWeapons.Count; i++){
             slots[i].gameObject.SetActive(true);
         }

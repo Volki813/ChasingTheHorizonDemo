@@ -243,66 +243,6 @@ public class AIManager : MonoBehaviour
         return true;
     }
 
-    public void Move(UnitLoader currentEnemy, Vector2 targetPosition)
-    {
-        StartCoroutine(Movement(currentEnemy, targetPosition));
-    }
-    private IEnumerator Movement(UnitLoader currentEnemy, Vector2 targetPosition)
-    {
-        var moveSpeed = 2;
-        if(fastMode){
-            moveSpeed = 8;
-        }
-        else{
-            moveSpeed = 2;
-        }
-
-        while(currentEnemy.transform.position.x != targetPosition.x)
-        {
-            if (currentEnemy.transform.position.x > targetPosition.x)
-            {
-                enemyAnimator.SetBool("Left", true);
-            }
-            else
-            {
-                enemyAnimator.SetBool("Right", true);
-            }
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(targetPosition.x, currentEnemy.transform.position.y), moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        while (currentEnemy.transform.position.y != targetPosition.y)
-        {
-            if (currentEnemy.transform.position.y > targetPosition.y)
-            {
-                enemyAnimator.SetBool("Down", true);
-            }
-            else
-            {
-                enemyAnimator.SetBool("Up", true);
-            }
-            currentEnemy.transform.position = Vector2.MoveTowards(currentEnemy.transform.position, new Vector2(currentEnemy.transform.position.x, targetPosition.y), moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        GetEnemies();
-        if(enemiesInRange.Count == 1)
-        {
-            CombatManager.instance.EngageAttack(currentEnemy, enemiesInRange[0]);
-        }
-        else if (enemiesInRange.Count >= 2)
-        {
-            CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
-        }
-        else
-        {
-            currentEnemy.Rest();
-        }
-        enemyAnimator.SetBool("Up", false);
-        enemyAnimator.SetBool("Down", false);
-        enemyAnimator.SetBool("Left", false);
-        enemyAnimator.SetBool("Right", false);
-
-        TurnManager.instance.UpdateTiles();
-    }
     private void NodeMove(UnitLoader currentEnemy)
     {
         StartCoroutine(NodeMovement(currentEnemy));
@@ -315,11 +255,19 @@ public class AIManager : MonoBehaviour
         else
             moveSpeed = 2;
 
+        yield return new WaitForEndOfFrame();
+
         if(currentEnemy.currentPath != null)
         {
             Vector3 finalNode = new Vector3(currentEnemy.currentPath[currentEnemy.currentPath.Count - 1].x, currentEnemy.currentPath[currentEnemy.currentPath.Count - 1].y);
             while(currentEnemy.transform.localPosition != finalNode)
             {
+                // Turn off all other animations so they don't start overlapping
+                currentEnemy.animator.SetBool("Up", false);
+                currentEnemy.animator.SetBool("Down", false);
+                currentEnemy.animator.SetBool("Left", false);
+                currentEnemy.animator.SetBool("Right", false);
+
                 Vector3 nextNode = new Vector3(currentEnemy.currentPath[1].x, currentEnemy.currentPath[1].y);
 
                 if (nextNode.x > currentEnemy.transform.localPosition.x && nextNode.y == currentEnemy.transform.localPosition.y)
@@ -354,6 +302,7 @@ public class AIManager : MonoBehaviour
             currentEnemy.animator.SetBool("Down", false);
             currentEnemy.animator.SetBool("Left", false);
             currentEnemy.animator.SetBool("Right", false);
+            currentEnemy.animator.CrossFade("Idle", 0.3f);
 
             map.DehighlightTiles();
         }

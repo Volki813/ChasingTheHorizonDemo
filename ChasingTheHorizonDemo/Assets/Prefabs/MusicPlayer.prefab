@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5553701834053811935}
   - component: {fileID: 5553701834053811928}
   - component: {fileID: 431240215}
-  - component: {fileID: 7482361557076092153}
   m_Layer: 0
   m_Name: MusicPlayer
   m_TagString: Untagged
@@ -143,28 +142,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tracks:
   - {fileID: 0}
-  - {fileID: 8300000, guid: 4fc843f70dfe5da44bc385f3a28a2ac5, type: 3}
+  - {fileID: 0}
   - {fileID: 8300000, guid: f3fac7e0090af5b4d930ef2ac5bea6ac, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 8300000, guid: 923a697d926887649b270dbd8c149cb7, type: 3}
   - {fileID: 8300000, guid: 29a460fa6730b4e4891e6091c821026d, type: 3}
---- !u!95 &7482361557076092153
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5553701834053811934}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

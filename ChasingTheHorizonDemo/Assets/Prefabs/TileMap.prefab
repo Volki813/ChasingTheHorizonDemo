@@ -51,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,27 +101,27 @@ MonoBehaviour:
   selectedUnit: {fileID: 0}
   tileTypes:
   - name: Snow
-    tileVisualPrefab: {fileID: 8090302606217555695, guid: c1aa3ec76364a7243bfd956a37666813,
+    tileVisualPrefab: {fileID: 5676886382912807034, guid: 4e303445e06e38b45b21513ab1628e0e,
       type: 3}
     movementCost: 1
     isWalkable: 1
   - name: Road
-    tileVisualPrefab: {fileID: 8090302606217555695, guid: c1aa3ec76364a7243bfd956a37666813,
+    tileVisualPrefab: {fileID: 5676886382912807034, guid: 4e303445e06e38b45b21513ab1628e0e,
       type: 3}
     movementCost: 1
     isWalkable: 1
   - name: Forest
-    tileVisualPrefab: {fileID: 8090302606217555695, guid: c1aa3ec76364a7243bfd956a37666813,
+    tileVisualPrefab: {fileID: 5676886382912807034, guid: 4e303445e06e38b45b21513ab1628e0e,
       type: 3}
     movementCost: 2
     isWalkable: 1
   - name: Mountain
-    tileVisualPrefab: {fileID: 8090302606217555695, guid: c1aa3ec76364a7243bfd956a37666813,
+    tileVisualPrefab: {fileID: 5676886382912807034, guid: 4e303445e06e38b45b21513ab1628e0e,
       type: 3}
     movementCost: 99
     isWalkable: 0
   - name: House
-    tileVisualPrefab: {fileID: 8090302606217555695, guid: c1aa3ec76364a7243bfd956a37666813,
+    tileVisualPrefab: {fileID: 5676886382912807034, guid: 4e303445e06e38b45b21513ab1628e0e,
       type: 3}
     movementCost: 99
     isWalkable: 0

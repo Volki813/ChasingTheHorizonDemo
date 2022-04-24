@@ -632,6 +632,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 337999070}
   namePlate1: {fileID: 3094674552983373047}
@@ -780,6 +782,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 337999070}
   namePlate1: {fileID: 3094674552983373047}
@@ -861,6 +865,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
   imageHolder: {fileID: 1044987375}
   namePlate1: {fileID: 3094674552983373047}
@@ -1075,6 +1081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
@@ -1097,7 +1104,7 @@ MonoBehaviour:
     type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
 --- !u!114 &829558467
 MonoBehaviour:
@@ -1265,6 +1272,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
   imageHolder: {fileID: 1044987375}
   namePlate1: {fileID: 3094674552983373047}
@@ -1532,6 +1541,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueCursorTop
       objectReference: {fileID: 0}
+    - target: {fileID: 7349337394505628037, guid: 86093f657f820f84ca2d27d6190ff534,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86093f657f820f84ca2d27d6190ff534, type: 3}
 --- !u!1 &1412467380 stripped
@@ -1777,12 +1791,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0.6
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1869,7 +1883,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -46.299988, y: -272.1}
+  m_AnchoredPosition: {x: -46.299927, y: -272.09998}
   m_SizeDelta: {x: 192.24622, y: 31.303833}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &3094674552983373047
@@ -1990,6 +2004,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 57.445984, y: 0}
+  m_AnchoredPosition: {x: 57.445923, y: 0}
   m_SizeDelta: {x: 189.5166, y: 29.685059}
   m_Pivot: {x: 0, y: 0}

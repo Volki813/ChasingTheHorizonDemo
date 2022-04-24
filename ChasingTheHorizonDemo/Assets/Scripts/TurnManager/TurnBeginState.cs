@@ -8,6 +8,7 @@ public class TurnBeginState : TurnState
     }
     public override IEnumerator Begin()
     {
+        DisableCursor();
         turnManager.FindAllys();
         turnManager.FindEnemies();
         turnManager.SetState(new PlayerTurnState(turnManager));

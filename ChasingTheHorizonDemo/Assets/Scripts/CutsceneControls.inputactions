@@ -11,7 +11,8 @@
                     "id": "bb6a4c1a-4e50-4e91-aa15-8053342c39cc",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Skip",
@@ -19,31 +20,8 @@
                     "id": "b5c8cbda-ade5-403f-93bb-dc9e2932e546",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
-                },
-                {
-                    "name": "BDialogueNext",
-                    "type": "Button",
-                    "id": "c64f1769-cd71-499b-a886-d4b8c9af9f33",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press"
-                },
-                {
-                    "name": "SDialogueNext",
-                    "type": "Button",
-                    "id": "65b1841e-d5bd-4768-b3af-6522d7315b74",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press"
-                },
-                {
-                    "name": "FastMode",
-                    "type": "Button",
-                    "id": "caa21cf2-f4e8-4610-be6c-1e0cce357313",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -90,32 +68,67 @@
                     "action": "Skip",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Maps",
+            "id": "aae58a19-c0e0-4c81-a88e-90cf7bbd05d7",
+            "actions": [
+                {
+                    "name": "FastMode",
+                    "type": "Button",
+                    "id": "8c43afe6-31ca-491a-8c7e-f14fd9ae95ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
+                    "name": "SDialogueNext",
+                    "type": "Button",
+                    "id": "5105823c-ece9-49e3-b3b2-4bc71eb034ab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BDialogueNext",
+                    "type": "Button",
+                    "id": "ad8839ea-4a9b-4211-96e7-1b2a48de4550",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "238d6ff2-6bcf-4403-986f-9b0485adde38",
-                    "path": "<Keyboard>/c",
+                    "id": "b633586d-4f38-4de3-afaa-33b4d0f1a555",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "BDialogueNext",
+                    "action": "FastMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c4a4f471-2a82-4ef0-90b5-5c3faa1a2d29",
-                    "path": "<Gamepad>/buttonNorth",
+                    "id": "e9db871a-b19b-405e-8891-7e9268e92211",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "BDialogueNext",
+                    "action": "FastMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "cd4e99e6-03c1-46bd-b4d4-953820d978d3",
+                    "id": "26fd3c41-077b-48f8-9c41-8675d93a7e3b",
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
@@ -126,8 +139,8 @@
                 },
                 {
                     "name": "",
-                    "id": "e4a875e7-0392-42aa-97e6-70669d99f4e2",
-                    "path": "<Gamepad>/buttonNorth",
+                    "id": "b8f11a10-ee5f-44b7-81a9-e3f70ad90f8d",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -137,12 +150,23 @@
                 },
                 {
                     "name": "",
-                    "id": "f114dab1-9735-4301-9c3b-5a652f8bed47",
-                    "path": "<Keyboard>/enter",
+                    "id": "954853b2-3a61-4b6b-847f-c0af6a2025b8",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "FastMode",
+                    "action": "BDialogueNext",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "401ea3d7-2173-469c-ae0f-8357b3e5fc3b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "BDialogueNext",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

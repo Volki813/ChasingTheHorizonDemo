@@ -319,11 +319,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: "Hell no. If anyone\u2019s gonna be running it's going to be our royal guests!"
+  input: "Hell no. If anyone\u2019s gonna be running, it's going to be our royal
+    guests!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   imageHolder: {fileID: 905707357}
   namePlate1: {fileID: 3094674554658795834}
@@ -880,6 +883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
@@ -902,7 +906,7 @@ MonoBehaviour:
     type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
 --- !u!114 &1242838748
 MonoBehaviour:
@@ -983,11 +987,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: "Hey, they\u2019ve got Serena and a couple of the others over there!"
+  input: "Hey, they\u2019ve got Serena and a couple of the others restrained over
+    there!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   imageHolder: {fileID: 905707357}
   namePlate1: {fileID: 3094674554658795834}
@@ -1094,6 +1101,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9b7ba59209b8b1149bdf640216601f9a, type: 2}
   imageHolder: {fileID: 1738219305}
   namePlate1: {fileID: 3094674554658795834}
@@ -1198,6 +1207,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   imageHolder: {fileID: 905707357}
   namePlate1: {fileID: 3094674554658795834}
@@ -1295,12 +1306,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0.6
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1409,6 +1420,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
   imageHolder: {fileID: 1738219305}
   namePlate1: {fileID: 3094674554658795834}
@@ -1595,6 +1608,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
   imageHolder: {fileID: 1738219305}
   namePlate1: {fileID: 3094674554658795834}
@@ -1794,6 +1809,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueCursorTop
       objectReference: {fileID: 0}
+    - target: {fileID: 7349337394505628037, guid: 86093f657f820f84ca2d27d6190ff534,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86093f657f820f84ca2d27d6190ff534, type: 3}
 --- !u!1 &1873520768 stripped
@@ -1859,6 +1879,8 @@ MonoBehaviour:
   textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
   delay: 0.01
   sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
   imageHolder: {fileID: 905707357}
   namePlate1: {fileID: 3094674554658795834}
@@ -2228,7 +2250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -44.299988, y: -271.7}
+  m_AnchoredPosition: {x: -44.299927, y: -271.7}
   m_SizeDelta: {x: 193.06787, y: 31.303833}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &7108781035619399182

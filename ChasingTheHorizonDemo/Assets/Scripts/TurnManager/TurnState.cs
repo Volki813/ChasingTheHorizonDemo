@@ -25,18 +25,16 @@ public abstract class TurnState
 
     protected void DisableCursor()
     {
-        turnManager.cursor.controls.Disable();
-        turnManager.cursor.controls.UI.Disable();
-        turnManager.cursor.controls.MapScene.Disable();
+        turnManager.cursor.cursorControls.DeactivateInput();
         turnManager.cursor.GetComponent<Animator>().SetBool("Invisible", true);
     }
 
     protected void EnableCursor()
     {
-        turnManager.cursor.controls.Enable();
-        turnManager.cursor.controls.MapScene.Enable();
-        turnManager.cursor.SetState(new MapState(turnManager.cursor));
         turnManager.cursor.GetComponent<Animator>().SetBool("Invisible", false);
+        turnManager.cursor.cursorControls.ActivateInput();
+        turnManager.cursor.cursorControls.SwitchCurrentActionMap("MapScene");
+        turnManager.cursor.SetState(new MapState(turnManager.cursor));
     }
 
     protected void Test()

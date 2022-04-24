@@ -37,13 +37,16 @@ public class OpheliaEvent : Event
         loseManager.gameObject.SetActive(false);
         yield return new WaitUntil(() => !screenDim.activeSelf);
         yield return new WaitForSeconds(1f);
-        cursor.controls.Disable();
+        cursor.cursorControls.DeactivateInput();
         //Move Ophelia on screen
         opheliaObject.SetActive(true);
         StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(2f, 10f)));
         yield return new WaitUntil(() => opheliaObject.transform.localPosition == new Vector3(2, 10));
+        yield return new WaitUntil(() => !screenDim.activeSelf);
         MapDialogueManager.instance.ClearDialogue();
         yield return new WaitForSeconds(0.4f);
+        //Turn the music off
+        MusicPlayer.instance.PauseTrack();
         //Send dialogue to dialogue manager
         MapDialogueManager.instance.WriteMultiple(opheliaDialogue);
         yield return new WaitUntil(() => !screenDim.activeSelf);
@@ -65,6 +68,8 @@ public class OpheliaEvent : Event
         yield return new WaitForSeconds(1f);
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
+        cursor.cursorControls.ActivateInput();
+        cursor.cursorControls.SwitchCurrentActionMap("UI");
         EventSystem.current.SetSelectedGameObject(restartButton.gameObject);
     }
     private IEnumerator MoveUnit(UnitLoader currentEnemy, Vector2 targetPosition)

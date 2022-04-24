@@ -32,7 +32,7 @@ public class MusicPlayer : MonoBehaviour
             source.clip = tracks[SceneManager.GetActiveScene().buildIndex];
             FadeMusic(true);
         }
-        else if (tracks[SceneManager.GetActiveScene().buildIndex] == null && SceneManager.GetActiveScene().buildIndex > 0)
+        else if(tracks[SceneManager.GetActiveScene().buildIndex] == null && SceneManager.GetActiveScene().buildIndex > 0)
         {
             GetComponent<AudioSource>().clip = null;
         }
@@ -42,6 +42,11 @@ public class MusicPlayer : MonoBehaviour
     {
         StartCoroutine(FadeVolume(track));
     }
+    public void PauseTrack()
+    {
+        source.Pause();
+    }
+
     private IEnumerator FadeVolume(AudioClip track)
     {
         var currentVolume = source.volume;
@@ -52,7 +57,7 @@ public class MusicPlayer : MonoBehaviour
 
         source.volume += 0.05f;
 
-        while (source.volume != currentVolume)
+        while(source.volume != currentVolume)
         {
             source.volume += 0.1f;
             yield return new WaitForSeconds(0.2f);

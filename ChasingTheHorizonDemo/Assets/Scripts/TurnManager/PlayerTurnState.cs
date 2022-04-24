@@ -9,6 +9,8 @@ public class PlayerTurnState : TurnState
     }
     public override IEnumerator Begin()
     {
+        DisableCursor();
+
         //Update Turn
         eventPlayed = false;
         turnManager.turnNumber++;
