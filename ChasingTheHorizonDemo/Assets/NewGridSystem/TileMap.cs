@@ -300,7 +300,7 @@ public class TileMap : MonoBehaviour
         Node current = target;
 
         // Step back through to find route from the target
-        while (current != null)
+        while(current != null)
         {
             currentPath.Add(current);
             current = previous[current];
@@ -428,7 +428,7 @@ public class TileMap : MonoBehaviour
         // Add starting position to temp list
         finalList.Add(graph[x, y]);
 
-        foreach (Node n in graph[x, y].neighbors)
+        foreach(Node n in graph[x, y].neighbors)
         {
             if(CostToEnterTile(n.x, n.y) + n.DistanceTo(ReturnNodeAt(x, y)) <= unit.unit.statistics.movement + 1 && !IsOccupiedByEnemy(n.x, n.y) && !workingList.Contains(n))
             {
@@ -489,9 +489,8 @@ public class TileMap : MonoBehaviour
                 finalList.Remove(n);
             }
         }
-
         return finalList;
-    }
+    } 
     public List<Node> GenerateAttackableRange(int x, int y, int size, UnitLoader unit)
     {
         // Final list that gets returned

@@ -9,4 +9,5 @@ public class BehaviorTag : MonoBehaviour
     public int order;
     public bool blitz;
     public bool defensive;
+    public bool boss;
 }

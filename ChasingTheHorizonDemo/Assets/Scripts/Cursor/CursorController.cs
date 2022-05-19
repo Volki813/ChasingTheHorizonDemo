@@ -7,10 +7,13 @@ public class CursorController : MonoBehaviour
 {
     public PlayerInput cursorControls;
 
+    public TileMap currentMap = null;
+
     public Sprite highlight = null;
     public Vector2 currentPosition = new Vector3(0, 0);
     public bool enemyTurn = false;
     public GameObject enemyInventory = null;
+    public SpriteRenderer spriteRenderer = null;
 
     [Header("Movement Contraints")] //These variables define the limits of the cursors range of movement
     [SerializeField] private float topMost = 0;
@@ -24,7 +27,6 @@ public class CursorController : MonoBehaviour
     public float cameraRight = 0;
 
     //REFERENCES
-    private TileMap map;
     [SerializeField] private GameObject menu = null;
     [SerializeField] private Camera mapCamera = null;
     [Header("Map Frame Points")] //These variables define at which point your cursor needs to be for the camera to move in the respective direction
@@ -33,7 +35,7 @@ public class CursorController : MonoBehaviour
     [SerializeField] private Transform frameLeft = null;
     [SerializeField] private Transform frameRight = null;
 
-    private Animator animator = null;
+    public Animator animator = null;
 
     private CursorState currentState;
     public CursorState previousState;
@@ -53,7 +55,6 @@ public class CursorController : MonoBehaviour
 
     private void Start()
     {
-        map = FindObjectOfType<TileMap>();
         animator = GetComponent<Animator>();
         currentPosition = transform.localPosition;
         highlight = GetComponent<SpriteRenderer>().sprite;
@@ -177,14 +178,14 @@ public class CursorController : MonoBehaviour
     {
         foreach(UnitLoader unit in TurnManager.instance.allyUnits)
         {
-            if(transform.localPosition == unit.transform.localPosition && map.selectedUnit == null)
+            if(transform.localPosition == unit.transform.localPosition && currentMap.selectedUnit == null)
             {
                 if(unit.unit.allyUnit && unit.rested == false)
                 {
                     animator.SetTrigger("Rotate");
                     enemyInventory.SetActive(false);
                     SoundManager.instance.PlayFX(0);
-                    map.selectedUnit = unit;
+                    currentMap.selectedUnit = unit;
                     unit.Selected();
                     SetState(new UnitState(this));
                     foreach(UnitLoader enemy in TurnManager.instance.enemyUnits)
@@ -197,15 +198,15 @@ public class CursorController : MonoBehaviour
     }
     public void DeselectUnit()
     {
-        if(map.selectedUnit != null)
+        if(currentMap.selectedUnit != null)
         {
-            if(map.selectedUnit.currentPath == null)
+            if(currentMap.selectedUnit.currentPath == null)
             {
                 animator.SetTrigger("CounterRotate");
                 SoundManager.instance.PlayFX(1);
-                map.selectedUnit.animator.SetBool("Selected", false);
-                map.selectedUnit = null;
-                map.DehighlightTiles();
+                currentMap.selectedUnit.animator.SetBool("Selected", false);
+                currentMap.selectedUnit = null;
+                currentMap.DehighlightTiles();
                 SetState(new MapState(this));
             }
         }
@@ -217,9 +218,9 @@ public class CursorController : MonoBehaviour
             if(transform.localPosition == unit.transform.localPosition)
             {
                 SoundManager.instance.PlayFX(0);
-                map.DehighlightTiles();
-                map.walkableTiles = map.GenerateWalkableRange((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y, unit.unit.statistics.movement, unit);
-                map.HighlightTiles();
+                currentMap.DehighlightTiles();
+                currentMap.walkableTiles = currentMap.GenerateWalkableRange((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y, unit.unit.statistics.movement, unit);
+                currentMap.HighlightTiles();
                 unit.spriteRenderer.color = Color.red;
                 enemyInventory.SetActive(true);
                 enemyInventory.GetComponent<EnemyInventory>().DisplayInventory(unit);
@@ -228,7 +229,7 @@ public class CursorController : MonoBehaviour
     }
     public void ResetTiles()
     {
-        map.DehighlightTiles();
+        currentMap.DehighlightTiles();
         foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
             if(unit.spriteRenderer.color == Color.red)
@@ -240,16 +241,16 @@ public class CursorController : MonoBehaviour
     }
     public void MoveUnit()
     {
-        foreach(Node n in map.walkableTiles)
+        foreach(Node n in currentMap.walkableTiles)
         {
-            if(new Vector3(currentPosition.x, currentPosition.y) == new Vector3(n.x, n.y) && map.CanTraverse(n.x, n.y))
+            if(new Vector3(currentPosition.x, currentPosition.y) == new Vector3(n.x, n.y) && currentMap.CanTraverse(n.x, n.y))
             {                
-                if(map.selectedUnit.hasMoved == false)
+                if(currentMap.selectedUnit.hasMoved == false)
                 {
                     SoundManager.instance.PlayFX(0);
-                    map.selectedUnit.originalPosition = map.selectedUnit.transform.localPosition;
-                    map.GeneratePathTo(n.x, n.y, map.selectedUnit);
-                    map.selectedUnit.FollowPath();
+                    currentMap.selectedUnit.originalPosition = currentMap.selectedUnit.transform.localPosition;
+                    currentMap.GeneratePathTo(n.x, n.y, currentMap.selectedUnit);
+                    currentMap.selectedUnit.FollowPath();
                     break;
                 }
             }
@@ -257,28 +258,28 @@ public class CursorController : MonoBehaviour
     }
     public void AttackMove()
     {
-        if(transform.localPosition == map.selectedUnit.transform.localPosition) { return; }
+        if(transform.localPosition == currentMap.selectedUnit.transform.localPosition) { return; }
 
         Vector3 currentEnemy = new Vector3(0, 0);
         foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
         {
             if(transform.localPosition == unit.transform.localPosition && !unit.unit.allyUnit)
             {
-                if(Vector2.Distance(map.selectedUnit.transform.localPosition, unit.transform.localPosition) <= map.selectedUnit.unit.statistics.movement + map.selectedUnit.equippedWeapon.range)
+                if(Vector2.Distance(currentMap.selectedUnit.transform.localPosition, unit.transform.localPosition) <= currentMap.selectedUnit.unit.statistics.movement + currentMap.selectedUnit.equippedWeapon.range)
                 {
                     currentEnemy = unit.transform.localPosition;
                 }
             }
         }
 
-        foreach (Node n in map.walkableTiles)
+        foreach (Node n in currentMap.walkableTiles)
         {
-            if(Vector2.Distance(new Vector2(n.x, n.y), currentEnemy) == map.selectedUnit.equippedWeapon.range && map.CanTraverse(n.x, n.y))
+            if(Vector2.Distance(new Vector2(n.x, n.y), currentEnemy) == currentMap.selectedUnit.equippedWeapon.range && currentMap.CanTraverse(n.x, n.y))
             {
                 SoundManager.instance.PlayFX(0);
-                map.selectedUnit.originalPosition = map.selectedUnit.transform.localPosition;
-                map.GeneratePathTo(n.x, n.y, map.selectedUnit);
-                map.selectedUnit.FollowPath();
+                currentMap.selectedUnit.originalPosition = currentMap.selectedUnit.transform.localPosition;
+                currentMap.GeneratePathTo(n.x, n.y, currentMap.selectedUnit);
+                currentMap.selectedUnit.FollowPath();
                 break;
             }
         }
@@ -291,14 +292,14 @@ public class CursorController : MonoBehaviour
         {
             unit.spriteRenderer.color = Color.white;
         }
-        map.selectedUnit.enemiesInRange.Clear();
-        map.selectedUnit.transform.localPosition = map.selectedUnit.originalPosition;
-        map.selectedUnit.hasMoved = false;
-        map.selectedUnit.currentPath = null;
-        map.DehighlightTiles();
-        map.selectedUnit.ActionMenu();
-        map.selectedUnit.target = null;
-        map.selectedUnit = null;
+        currentMap.selectedUnit.enemiesInRange.Clear();
+        currentMap.selectedUnit.transform.localPosition = currentMap.selectedUnit.originalPosition;
+        currentMap.selectedUnit.hasMoved = false;
+        currentMap.selectedUnit.currentPath = null;
+        currentMap.DehighlightTiles();
+        currentMap.selectedUnit.ActionMenu();
+        currentMap.selectedUnit.target = null;
+        currentMap.selectedUnit = null;
         SetState(new MapState(this));
         cursorControls.SwitchCurrentActionMap("MapScene");
     }
@@ -311,10 +312,10 @@ public class CursorController : MonoBehaviour
         SoundManager.instance.PlayFX(0);
         foreach (UnitLoader unit in TurnManager.instance.enemyUnits)
         {
-            if(transform.localPosition == unit.transform.localPosition && map.selectedUnit.enemiesInRange.Contains(unit) && 
-                Vector2.Distance(map.selectedUnit.transform.localPosition, unit.transform.localPosition) <= map.selectedUnit.equippedWeapon.range)
+            if(transform.localPosition == unit.transform.localPosition && currentMap.selectedUnit.enemiesInRange.Contains(unit) && 
+                Vector2.Distance(currentMap.selectedUnit.transform.localPosition, unit.transform.localPosition) <= currentMap.selectedUnit.equippedWeapon.range)
             {
-                map.selectedUnit.target = unit;
+                currentMap.selectedUnit.target = unit;
                 ActionMenuManager.instance.combatPreview.SetActive(true);
                 ActionMenuManager.instance.weaponSelection.SetActive(true);
                 cursorControls.SwitchCurrentActionMap("UI");
@@ -325,7 +326,7 @@ public class CursorController : MonoBehaviour
     public void CancelAttack()
     {
         SoundManager.instance.PlayFX(1);
-        map.selectedUnit.target = null;
+        currentMap.selectedUnit.target = null;
         ActionMenuManager.instance.combatPreview.SetActive(false);
         ActionMenuManager.instance.weaponSelection.SetActive(false);
         cursorControls.SwitchCurrentActionMap("MapScene");
@@ -333,10 +334,10 @@ public class CursorController : MonoBehaviour
     }
     public void AttackTarget()
     {
-        map.DehighlightTiles();
-        CombatManager.instance.EngageAttack(map.selectedUnit, map.selectedUnit.target);
-        map.selectedUnit.target.GetComponent<SpriteRenderer>().color = Color.white;
-        map.selectedUnit = null;
+        currentMap.DehighlightTiles();
+        CombatManager.instance.EngageAttack(currentMap.selectedUnit, currentMap.selectedUnit.target);
+        currentMap.selectedUnit.target.spriteRenderer.color = Color.white;
+        currentMap.selectedUnit = null;
         ActionMenuManager.instance.combatPreview.SetActive(false);
         ActionMenuManager.instance.weaponSelection.SetActive(false);
         ActionMenuManager.instance.gameObject.SetActive(false);
@@ -344,30 +345,34 @@ public class CursorController : MonoBehaviour
     public void UndoAttack()
     {
         SoundManager.instance.PlayFX(1);
-        map.DehighlightTiles();
+        currentMap.DehighlightTiles();
         cursorControls.SwitchCurrentActionMap("UI");
         SetState(new ActionMenuState(this));
-        map.selectedUnit.actionMenu.transform.position = map.selectedUnit.actionMenuSpawn.position;
+        currentMap.selectedUnit.actionMenu.transform.position = currentMap.selectedUnit.actionMenuSpawn.position;
         ActionMenuManager.instance.Highlight();
     }
 
     public void DisplayMenu()
     {
-        foreach(Node n in map.graph)
+        foreach(Node n in currentMap.graph)
         {
-            if(transform.localPosition == new Vector3(n.x, n.y) && map.IsOccupied(n.x, n.y) == false)
+            if(transform.localPosition == new Vector3(n.x, n.y) && currentMap.IsOccupied(n.x, n.y) == false)
             {
                 menu.SetActive(true);
                 SoundManager.instance.PlayFX(11);
                 SetState(new MenuState(this));
                 cursorControls.SwitchCurrentActionMap("UI");
+                break;
             }
         }
     }
     public void CloseMenu()
     {
-
-        if (menu.transform.GetChild(0).gameObject.activeSelf == true && menu.transform.GetChild(1).gameObject.activeSelf == true)
+        if(enemyInventory.activeSelf)
+        {
+            enemyInventory.SetActive(false);
+        }
+        if(menu.transform.GetChild(0).gameObject.activeSelf == true && menu.transform.GetChild(1).gameObject.activeSelf == true)
         {
             menu.transform.GetChild(0).gameObject.SetActive(false);
             menu.transform.GetChild(1).gameObject.SetActive(false);
@@ -393,6 +398,7 @@ public class CursorController : MonoBehaviour
             SoundManager.instance.PlayFX(1);
             SetState(new MapState(this));
             cursorControls.SwitchCurrentActionMap("MapScene");
+            return;
         }
     }    
 }

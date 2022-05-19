@@ -32,6 +32,7 @@ public class OptionsMenu : MonoBehaviour
     {
         musicVolume.volume = musicSlider.value;
         soundFXVolume.volume = soundFXSlider.value;
+        TurnoffGrid();
         OpacityControl(gridSlider.value);
     }
 
@@ -68,6 +69,13 @@ public class OptionsMenu : MonoBehaviour
             case 10:
                 ChangeTiles(255);
                 break;
+        }
+    }
+    private void TurnoffGrid()
+    {
+        foreach(SelectableTile tile in FindObjectsOfType<SelectableTile>())
+        {
+            tile.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 0);
         }
     }
     private void ChangeTiles(float value)

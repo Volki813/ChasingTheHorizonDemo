@@ -176,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "She\u2019s not with you?"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I mean, did you see any smoke?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "No, she left for the mayor's house to figure out what\u2019s going on."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -569,7 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Not at all, Serena came and woke me up.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -706,7 +706,7 @@ MonoBehaviour:
   input: "You\u2019re right\u2026 Alright, let\u2019s get Edgar and Leah and head
     towards the mayor\u2019s house!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "It\u2019s not a fire then?"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1393,7 +1393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Roland? You woke up by yourself?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}

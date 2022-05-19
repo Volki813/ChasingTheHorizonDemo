@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: 'Remember: One clean motion. No hesitation.'
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -287,7 +287,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: 81476306da7a0044a8964234990a822b, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -390,6 +390,112 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &329401799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 329401800}
+  - component: {fileID: 329401803}
+  - component: {fileID: 329401802}
+  - component: {fileID: 329401801}
+  m_Layer: 5
+  m_Name: DialogueLine10 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &329401800
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329401799}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1659443262}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -131.3, y: 438.7}
+  m_SizeDelta: {x: 1535.6815, y: 138.48859}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &329401801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329401799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: though I guess that doesn't make much of a difference in retrospect.
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+  delay: 0.01
+  sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
+  character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
+  imageHolder: {fileID: 290321133}
+  namePlate1: {fileID: 158624871}
+  namePlate2: {fileID: 1155768848}
+  textBox1: 0
+  textBox2: 1
+  lastLine: 0
+--- !u!114 &329401802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329401799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 43
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &329401803
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329401799}
+  m_CullTransparentMesh: 0
 --- !u!1 &345796417
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +562,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 12
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -477,7 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Oh, you know I've hunted more than my fair share this season already!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -510,7 +616,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -518,7 +624,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -592,7 +698,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -600,7 +706,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -627,7 +733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Gah! Damn it all... I'm going after it!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 8300000, guid: a932ef6e20d27c941947e697efe6d50c, type: 3}
   music: {fileID: 0}
@@ -716,7 +822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Oh! Simon! Here they are! Though it doesn't look like they've caught much...
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 8300000, guid: f02603be304624442ba796d1f02ff0a0, type: 3}
   music: {fileID: 8300000, guid: 4fc843f70dfe5da44bc385f3a28a2ac5, type: 3}
@@ -749,7 +855,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -757,7 +863,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -905,7 +1011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Alright... let's try this again. H-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -938,7 +1044,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -946,7 +1052,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -1096,7 +1202,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 13
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1118,7 +1224,7 @@ MonoBehaviour:
   input: And yet, you sit here empty handed. Sounds like larger portions for us tonight,
     wouldn't you say, Simon?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1151,7 +1257,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1159,7 +1265,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -1308,11 +1414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: Your shot? I don't see anything nearby. I know the rabbits blend in quite
-    well with the snow, but I'd like to think I've gotten pretty good at spotting
-    them.
+  input: Your shot? I don't see anything nearby.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1345,15 +1449,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
-    m_FontSize: 37
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -1548,7 +1652,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 21
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1570,7 +1674,7 @@ MonoBehaviour:
   input: I guess we'll just have to wait and see. Now, what say we get back and start
     cooking dinner before it gets dark? Serena's waiting, I'm sure.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1603,7 +1707,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1611,7 +1715,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -1655,7 +1759,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 14
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1677,7 +1781,7 @@ MonoBehaviour:
   input: Hmmm, maybe we should take pity? Roland is pretty handy when the mines are
     running. Edgar though...
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1710,7 +1814,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1718,7 +1822,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -1789,7 +1893,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: 81476306da7a0044a8964234990a822b, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -1809,6 +1913,113 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155768846}
+  m_CullTransparentMesh: 0
+--- !u!1 &1160804546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1160804547}
+  - component: {fileID: 1160804550}
+  - component: {fileID: 1160804549}
+  - component: {fileID: 1160804548}
+  m_Layer: 5
+  m_Name: DialogueLine11 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1160804547
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160804546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1659443262}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -131.3, y: 438.7}
+  m_SizeDelta: {x: 1535.6815, y: 138.48859}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1160804548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160804546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: Not like we're making any money from the mines for the next couple of months
+    with this weather.
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+  delay: 0.01
+  sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
+  character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
+  imageHolder: {fileID: 290321133}
+  namePlate1: {fileID: 158624871}
+  namePlate2: {fileID: 1155768848}
+  textBox1: 0
+  textBox2: 1
+  lastLine: 0
+--- !u!114 &1160804549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160804546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 43
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1160804550
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160804546}
   m_CullTransparentMesh: 0
 --- !u!1 &1314665737
 GameObject:
@@ -1841,7 +2052,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 17
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1863,7 +2074,7 @@ MonoBehaviour:
   input: Oh, speaking of mines, the mail came today, right Simon? Any word about
     that rock we sent off to the Royal Institute last autumn?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1896,7 +2107,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1904,7 +2115,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -1948,7 +2159,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1968,9 +2179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: Hmm, I'm not sure that the tree would make a great dinner even if he had
-    hit it, though I guess that doesn't make much of a difference in retrospect.
+    hit it,
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2003,15 +2214,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
-    m_FontSize: 38
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2116,7 +2327,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2137,7 +2348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Well Simon, that would be because he was aiming for the tree!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2170,7 +2381,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2178,7 +2389,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2222,7 +2433,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 18
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2241,10 +2452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: Still none. Though I can't blame them. I'm sure "hayseed up in Taldur Mountains"
-    sending them a rock isn't very high on the priority list, given the war and all.
+  input: 'Still none. Though I can''t blame them. '
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2277,15 +2487,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
-    m_FontSize: 37
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2297,6 +2507,113 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423296182}
+  m_CullTransparentMesh: 0
+--- !u!1 &1448928957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1448928958}
+  - component: {fileID: 1448928961}
+  - component: {fileID: 1448928960}
+  - component: {fileID: 1448928959}
+  m_Layer: 5
+  m_Name: DialogueLine20 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1448928958
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448928957}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1659443262}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -131.3, y: 438.7}
+  m_SizeDelta: {x: 1535.6815, y: 138.48859}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1448928959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448928957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: I'm sure someone who knew what they were doing could make something good
+    out of it.
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+  delay: 0.01
+  sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
+  character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
+  imageHolder: {fileID: 1924796248}
+  namePlate1: {fileID: 158624871}
+  namePlate2: {fileID: 1155768848}
+  textBox1: 1
+  textBox2: 0
+  lastLine: 0
+--- !u!114 &1448928960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448928957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 43
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1448928961
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448928957}
   m_CullTransparentMesh: 0
 --- !u!1 &1522049376
 GameObject:
@@ -2350,7 +2667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: The rabbit? It'll be long gone by now, Roland.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2383,7 +2700,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2391,7 +2708,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2441,7 +2758,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2462,7 +2779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Edgar!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2495,7 +2812,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2503,7 +2820,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2568,7 +2885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Here, let's try this again. Try to hit that knot in the tree over there...
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2601,7 +2918,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -2609,7 +2926,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2621,6 +2938,113 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623046861}
+  m_CullTransparentMesh: 0
+--- !u!1 &1626963221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1626963222}
+  - component: {fileID: 1626963225}
+  - component: {fileID: 1626963224}
+  - component: {fileID: 1626963223}
+  m_Layer: 5
+  m_Name: DialogueLine7 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1626963222
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626963221}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1659443262}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -131.3, y: 438.7}
+  m_SizeDelta: {x: 1535.6815, y: 138.48859}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1626963223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626963221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: I know the rabbits blend in quite well with the snow, but I'd like to think
+    I've gotten pretty good at spotting them.
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+  delay: 0.01
+  sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
+  character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
+  imageHolder: {fileID: 290321133}
+  namePlate1: {fileID: 158624871}
+  namePlate2: {fileID: 1155768848}
+  textBox1: 0
+  textBox2: 1
+  lastLine: 0
+--- !u!114 &1626963224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626963221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 43
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1626963225
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626963221}
   m_CullTransparentMesh: 0
 --- !u!1 &1659443261
 GameObject:
@@ -2659,10 +3083,13 @@ RectTransform:
   - {fileID: 446825853}
   - {fileID: 2061506990}
   - {fileID: 918879845}
+  - {fileID: 1626963222}
   - {fileID: 1391762971}
   - {fileID: 1615069649}
   - {fileID: 1382457325}
+  - {fileID: 329401800}
   - {fileID: 2002802225}
+  - {fileID: 1160804547}
   - {fileID: 364212970}
   - {fileID: 849465499}
   - {fileID: 1090711301}
@@ -2670,8 +3097,10 @@ RectTransform:
   - {fileID: 2136392265}
   - {fileID: 1314665738}
   - {fileID: 1423296183}
+  - {fileID: 1779664977}
   - {fileID: 2098307563}
   - {fileID: 1671692767}
+  - {fileID: 1448928958}
   - {fileID: 1081975191}
   - {fileID: 2043408192}
   m_Father: {fileID: 765832070}
@@ -2758,16 +3187,16 @@ MonoBehaviour:
     m_ActionName: Cutscenes/Skip[/Keyboard/enter]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: c64f1769-cd71-499b-a886-d4b8c9af9f33
-    m_ActionName: Cutscenes/BDialogueNext[/Keyboard/c]
+    m_ActionId: 8c43afe6-31ca-491a-8c7e-f14fd9ae95ef
+    m_ActionName: Maps/FastMode[/Keyboard/enter]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 65b1841e-d5bd-4768-b3af-6522d7315b74
-    m_ActionName: Cutscenes/SDialogueNext[/Keyboard/z]
+    m_ActionId: 5105823c-ece9-49e3-b3b2-4bc71eb034ab
+    m_ActionName: Maps/SDialogueNext[/Keyboard/z]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: caa21cf2-f4e8-4610-be6c-1e0cce357313
-    m_ActionName: Cutscenes/FastMode[/Keyboard/enter]
+    m_ActionId: ad8839ea-4a9b-4211-96e7-1b2a48de4550
+    m_ActionName: Maps/BDialogueNext[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Cutscenes
@@ -2880,7 +3309,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 20
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2900,10 +3329,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: Yeah. That stuff was backbreaking to mine, even though it was just that
-    little piece. I'm sure someone who knew what they were doing could make something
-    good out of it.
+    little piece.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2936,15 +3364,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
-    m_FontSize: 37
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2956,6 +3384,113 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671692766}
+  m_CullTransparentMesh: 0
+--- !u!1 &1779664976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1779664977}
+  - component: {fileID: 1779664980}
+  - component: {fileID: 1779664979}
+  - component: {fileID: 1779664978}
+  m_Layer: 5
+  m_Name: DialogueLine18 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1779664977
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779664976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1659443262}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -131.3, y: 438.7}
+  m_SizeDelta: {x: 1535.6815, y: 138.48859}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1779664978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779664976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: I'm sure "hayseed up in Taldur Mountains" sending them a rock isn't very
+    high on the priority list, given the war and all.
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+  delay: 0.01
+  sound: {fileID: 0}
+  music: {fileID: 0}
+  triggerMusic: 0
+  character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
+  imageHolder: {fileID: 290321133}
+  namePlate1: {fileID: 158624871}
+  namePlate2: {fileID: 1155768848}
+  textBox1: 0
+  textBox2: 1
+  lastLine: 0
+--- !u!114 &1779664979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779664976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 43
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1779664980
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779664976}
   m_CullTransparentMesh: 0
 --- !u!1 &1871025218
 GameObject:
@@ -2988,7 +3523,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 15
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3009,7 +3544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Wait, wh-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3042,7 +3577,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3050,7 +3585,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -3408,7 +3943,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3427,11 +3962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: Come on you guys, we can't really be slacking in the winter time! Not like
-    we're making any money from the mines for the next couple of months with this
-    weather.
+  input: Come on you guys, we can't really be slacking in the winter time!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3464,15 +3997,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
-    m_FontSize: 37
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -3517,7 +4050,7 @@ RectTransform:
   m_Children:
   - {fileID: 1944414732}
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 22
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3616,7 +4149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Ah! Leah, you threw off my-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3649,7 +4182,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3657,7 +4190,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -3701,7 +4234,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 19
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3722,7 +4255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I mean, with how that thing glows, there's no way it could be just a rock.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3755,7 +4288,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3763,7 +4296,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -3807,7 +4340,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1659443262}
-  m_RootOrder: 16
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3828,7 +4361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Hahaha, the tables have turned!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3861,7 +4394,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+    m_Font: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3869,7 +4402,7 @@ MonoBehaviour:
     m_MaxSize: 43
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1

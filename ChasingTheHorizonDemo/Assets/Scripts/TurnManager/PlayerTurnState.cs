@@ -20,12 +20,13 @@ public class PlayerTurnState : TurnState
         
         //Checks For Events
         if(EventManager.instance.PlayerEventCheck()){
-            eventPlayed = true;
             EventManager.instance.ActivateEvent();
             yield return new WaitForSeconds(2f);
             yield return new WaitUntil(() => EventManager.instance.currentEvent.finished);
+            EventManager.instance.ReloadEvent();
+            eventPlayed = true;
         }
-        yield return new WaitUntil(() => MapDialogueManager.instance.screenDim.activeSelf == false);
+        yield return new WaitUntil(() => MapDialogueManager.instance.screenDim.gameObject.activeSelf == false);
 
         //Resets Camera Position if an event did not occur        
         if(!eventPlayed)
@@ -59,12 +60,12 @@ public class PlayerTurnState : TurnState
         }
 
         //Setup for Ally Turn
-        turnManager.screenDim.SetActive(true);
-        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
+        turnManager.cursor.CloseMenu();
+        turnManager.screenDim.gameObject.SetActive(true);
+        turnManager.screenDim.animator.SetTrigger("FadeIn");
         turnManager.allyTurnGraphic.SetActive(true);
         yield return new WaitForSeconds(0.85f);
-        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
-        turnManager.UpdateTiles();
+        turnManager.screenDim.animator.SetTrigger("FadeOut");
         EnableCursor();
         turnManager.cursor.enemyTurn = false;
         turnManager.allyTurn = true;

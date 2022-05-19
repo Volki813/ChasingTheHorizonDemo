@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class AttackState : CursorState
+﻿public class AttackState : CursorState
 {
     public AttackState(CursorController cursor):base(cursor)
     {

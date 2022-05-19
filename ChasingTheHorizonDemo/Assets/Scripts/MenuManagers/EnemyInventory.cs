@@ -5,14 +5,8 @@ using InventorySystem;
 
 public class EnemyInventory : MonoBehaviour
 {
-    private CursorController cursor = null;
-    [SerializeField]
-    private List<InventorySlot> items = new List<InventorySlot>();
-
-    private void Awake()
-    {
-        cursor = FindObjectOfType<CursorController>();        
-    }
+    [SerializeField] private CursorController cursor = null;
+    [SerializeField] private List<InventorySlot> items = new List<InventorySlot>();
 
     public void DisplayInventory(UnitLoader unit)
     {

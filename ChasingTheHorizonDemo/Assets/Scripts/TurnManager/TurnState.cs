@@ -15,7 +15,6 @@ public abstract class TurnState
 
     public virtual void Start()
     {
-
     }
 
     public virtual IEnumerator Begin()
@@ -26,12 +25,12 @@ public abstract class TurnState
     protected void DisableCursor()
     {
         turnManager.cursor.cursorControls.DeactivateInput();
-        turnManager.cursor.GetComponent<Animator>().SetBool("Invisible", true);
+        turnManager.cursor.animator.SetBool("Invisible", true);
     }
 
     protected void EnableCursor()
     {
-        turnManager.cursor.GetComponent<Animator>().SetBool("Invisible", false);
+        turnManager.cursor.animator.SetBool("Invisible", false);
         turnManager.cursor.cursorControls.ActivateInput();
         turnManager.cursor.cursorControls.SwitchCurrentActionMap("MapScene");
         turnManager.cursor.SetState(new MapState(turnManager.cursor));

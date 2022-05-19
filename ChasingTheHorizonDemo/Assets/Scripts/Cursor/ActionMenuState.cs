@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ActionMenuState : CursorState
+﻿public class ActionMenuState : CursorState
 {
     public ActionMenuState(CursorController cursor):base(cursor)
     {

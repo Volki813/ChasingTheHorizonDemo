@@ -19,9 +19,9 @@ public class TurnManager : MonoBehaviour
     public CursorController cursor;
     public Camera mainCamera;
     public Text turnNumberText;
-    public GameObject screenDim = null;
+    public ScreenDim screenDim = null;
     public GameObject allyTurnGraphic = null;
-    public GameObject enemyTurnGraphic = null;
+    public GameObject enemyTurnGraphic = null; 
 
     public List<UnitLoader> allyUnits = new List<UnitLoader>();
     public List<UnitLoader> enemyUnits = new List<UnitLoader>();
@@ -87,13 +87,6 @@ public class TurnManager : MonoBehaviour
         SetState(new PlayerTurnState(this));
     }
 
-    public void UpdateTiles()
-    {
-        foreach(TileLoader tile in FindObjectsOfType<TileLoader>())
-        {
-            tile.UpdateOccupationStatus();
-        }
-    }
     public void FindAllys()
     {
         foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>())
@@ -128,11 +121,12 @@ public class TurnManager : MonoBehaviour
             unit.Stand();
         }
     }
-    public void RefreshTiles()
+
+    public void RefreshAllySprites()
     {
-        foreach (TileLoader tile in FindObjectsOfType<TileLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.allyUnits)
         {
-            tile.UpdateOccupationStatus();
+            unit.spriteRenderer.color = new Color32(255, 255, 255, 255);
         }
     }
 }

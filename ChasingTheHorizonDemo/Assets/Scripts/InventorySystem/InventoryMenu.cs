@@ -13,8 +13,9 @@ namespace InventorySystem
 {
     public class InventoryMenu : MonoBehaviour
     {
-        private TileMap map;
+        [SerializeField] private TileMap map = null;
         [SerializeField] private CursorController cursor = null;
+
         [SerializeField] private List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
         [Header("Item Preview")]
@@ -32,12 +33,6 @@ namespace InventorySystem
         [SerializeField] private GameObject healingEffect = null;
 
         private bool previewReady = false;
-
-        private void Awake()
-        {
-            cursor = FindObjectOfType<CursorController>();
-            map = FindObjectOfType<TileMap>();
-        }
 
         private void Start()
         {
@@ -93,6 +88,7 @@ namespace InventorySystem
                         SoundManager.instance.PlayFX(9);
                         Vector3 targetPosition = new Vector3(map.selectedUnit.transform.position.x, map.selectedUnit.transform.position.y - 0.3f);
                         Instantiate(healingEffect, targetPosition, healingEffect.transform.rotation);
+                        map.selectedUnit.Rest();
                     }
                     else
                     {
@@ -100,6 +96,7 @@ namespace InventorySystem
                         SoundManager.instance.PlayFX(9);
                         Vector3 targetPosition = new Vector3(map.selectedUnit.transform.position.x, map.selectedUnit.transform.position.y - 0.3f);
                         Instantiate(healingEffect, targetPosition, healingEffect.transform.rotation);
+                        map.selectedUnit.Rest();
                     }
                     map.selectedUnit.inventory.inventory.Remove(consumable);
                     ClearSlots();

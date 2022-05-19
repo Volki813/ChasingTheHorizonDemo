@@ -338,7 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "He got promoted? That\u2019s great news!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Edgar.... you make a party out of anything.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -713,10 +713,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fec9e3db272744f8f00e08efe37e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: I better go now too. I promised my folks I'd help pick the apples, and I'm
-    already late.
+  input: I better go now too. I promised my folks I'd help pick the berries, and
+    I'm already late.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -823,7 +823,7 @@ MonoBehaviour:
   input: "Well, it\u2019s certainly delicious! I can\u2019t say I\u2019ve ever tasted
     this spice before; what is it?"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "That\u2019s what I\u2019m saying. The soup is great, Serena."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1110,7 +1110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Yeah. Bright eyed, bushy tailed and whatever. Goodnight.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1217,7 +1217,7 @@ MonoBehaviour:
   input: "Dad sent it to us. Apparently it\u2019s a popular spice in the occupation
     zone. He says it\u2019s called schoff."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "He\u2019s right, this spice even makes Serena\u2019s soup taste good!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Is your father doing better enough to be working like that?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1535,7 +1535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Thanks, Simon.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1717,7 +1717,7 @@ MonoBehaviour:
   input: ' I only received it this afternoon. And I figured it could wait until after
     we ate before-'
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1937,7 +1937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I quite literally did no-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2118,7 +2118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Are you saying my cooking is normally bad?!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2224,7 +2224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Goodnight, Serena. Thank you again for dinner.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2331,7 +2331,7 @@ MonoBehaviour:
   input: Um.... yeah, uh, maybe. I'll try and bring one of my herb mixes though if
     I come over; I think I know just the one that can help your dad.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2437,7 +2437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "That\u2019s why I thought to make this soup to celebrate!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2543,7 +2543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "No, I\u2019m just saying the schoff makes it good."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2679,7 +2679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Come on, Leah, where is it? What does it say?\r"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2785,7 +2785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I don't deserve you guys! Thank you again for everything.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2891,7 +2891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Dad sent it? You didn\u2019t tell me he had sent anything recently."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -2997,7 +2997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Laughters the best medicine, and I'll be there, so-
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3103,7 +3103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "The soup is good, right? That\u2019s all that matters."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3209,7 +3209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Calm down Edgar. Here, I'll read it.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3315,7 +3315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Well thank you, I\u2019m glad. Oh, Simon, are you done?"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3423,7 +3423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0.22352943, g: 0.27058825, b: 0.28627452, a: 1}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &1415643695
@@ -3439,7 +3439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.83921576, g: 0.8000001, b: 0.70980394, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3508,7 +3508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!1 &1465265778
 GameObject:
@@ -3840,7 +3840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Anyway, of course, see ya bright and early! We can work on your aim a little.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -3947,7 +3947,7 @@ MonoBehaviour:
   input: Mm... the coughing's been getting worse, if anything.  Good thing I'm old
     enough to mostly do it myself.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -4172,7 +4172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Mmm, this soup is delicious! Did you do something different this time Serena?\r"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -4256,7 +4256,7 @@ MonoBehaviour:
   input: Hm... maybe dad could find some medicine; I'm sure the army would have some. 
     I'll make sure to ask him about it when I write.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -4363,7 +4363,7 @@ MonoBehaviour:
   input: "I did! It\u2019s been a while since we all ate together so I figured I\u2019d
     try something new, to celebrate!\r"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -4469,7 +4469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Then you\u2019re implying it wasn\u2019t good before!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -4576,7 +4576,7 @@ MonoBehaviour:
   input: Not a bad skill to have! Let's do it! Serena, you should bring your folks
     along too; the more the merrier.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -4848,7 +4848,7 @@ MonoBehaviour:
   input: Well! This got glum real quick. How about we all crash your place tomorrow
     and help pick whatever's left?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -4954,7 +4954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: I better go, too.
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -5060,7 +5060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "Yeah. The soup was great. I\u2019m gonna go ahead and write dad back."
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -5403,7 +5403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Did everyone hear that first sentence or did I just imagine it?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}

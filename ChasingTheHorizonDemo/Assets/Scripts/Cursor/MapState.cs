@@ -20,5 +20,6 @@
     {
         cursorController.DeselectUnit();
         cursorController.ResetTiles();
+        cursorController.CloseMenu();
     }
 }

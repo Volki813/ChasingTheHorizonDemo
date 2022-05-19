@@ -25,14 +25,37 @@ public class EventManager : MonoBehaviour
     {
         currentEvent.StartEvent();
     }
+
+    public void ReloadEvent()
+    {
+        currentEvent = null;
+        events.RemoveAt(0);
+        if(events.Count > 0)
+        {
+            currentEvent = events[0];
+        }
+    }
+
     public bool PlayerEventCheck()
     {
         if(currentEvent != null)
         {
-            if(currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.playerTurn)
+            string difficulty = PlayerPrefs.GetString("Difficulty", "Normal");
+            if(difficulty == "Normal")
             {
-                return true;
+                if(currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.playerTurn && !currentEvent.hardModeOnly)
+                {
+                    return true;
+                }
             }
+            else if(difficulty == "Hard")
+            {
+                if(currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.playerTurn)
+                {
+                    return true;
+                }
+            }
+            
         }
         return false;
     }
@@ -40,9 +63,20 @@ public class EventManager : MonoBehaviour
     {
         if(currentEvent != null)
         {
-            if (currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.enemyTurn)
+            string difficulty = PlayerPrefs.GetString("Difficulty", "Normal");
+            if (difficulty == "Normal")
             {
-                return true;
+                if(currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.enemyTurn && !currentEvent.hardModeOnly)
+                {
+                    return true;
+                }
+            }
+            else if (difficulty == "Hard")
+            {
+                if (currentEvent.turn == TurnManager.instance.turnNumber && currentEvent.enemyTurn && currentEvent.hardModeOnly)
+                {
+                    return true;
+                }
             }
         }
         return false;

@@ -629,7 +629,7 @@ MonoBehaviour:
   input: I'm betting a fire, quick -- go get Roland! You know he sleeps like a damn
     bear!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -779,7 +779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: Simon! Simon! Wake up!
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -862,7 +862,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: ...The alarm bell? What is it?
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: "I\u2019m on it!"
   textColor: {r: 0, g: 0, b: 0, a: 1}
-  textFont: {fileID: 12800000, guid: feefddce4f4f85741a0c92fa54438220, type: 3}
+  textFont: {fileID: 12800000, guid: d8238b886bd392f43bf7b0f7b0907ddb, type: 3}
   delay: 0.01
   sound: {fileID: 0}
   music: {fileID: 0}

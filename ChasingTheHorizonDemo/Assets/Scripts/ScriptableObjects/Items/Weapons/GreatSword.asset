@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: A really big sword.
   type: 1
   might: 6
-  hit: 95
+  hit: 90
   crit: 15
   range: 1
   weight: 3

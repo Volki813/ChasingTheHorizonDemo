@@ -18,14 +18,8 @@ public class CombatPreview : MonoBehaviour
     public Text defenderHit = null;
     public Text defenderCrit = null;
 
-    CursorController cursor;
-    private TileMap map;
-
-    private void Awake()
-    {
-        cursor = FindObjectOfType<CursorController>();
-        map = FindObjectOfType<TileMap>();
-    }
+    [SerializeField] private CursorController cursor;
+    [SerializeField] private TileMap map;
 
     private void OnEnable()
     {

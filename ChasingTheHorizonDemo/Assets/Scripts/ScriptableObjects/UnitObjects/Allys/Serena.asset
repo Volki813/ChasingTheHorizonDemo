@@ -16,6 +16,7 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 608ae880e2096dc45b14a8942fbd42c3, type: 3}
   unitName: Serena
   allyUnit: 1
+  diagonal: 0
   statistics:
     health: 20
     strength: 5

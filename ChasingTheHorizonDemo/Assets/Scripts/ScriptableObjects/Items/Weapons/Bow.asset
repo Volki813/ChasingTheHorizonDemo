@@ -16,8 +16,8 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 9f70a856997cf01488c485042098547a, type: 3}
   itemDescription: Used for long range murder and sports?
   type: 1
-  might: 10
-  hit: 95
+  might: 5
+  hit: 85
   crit: 15
   range: 2
   weight: 1

@@ -8,7 +8,7 @@ public class MusicPlayer : MonoBehaviour
     public static MusicPlayer instance { get; private set; }
 
     [SerializeField] private AudioClip[] tracks = null;
-    private AudioSource source = null;
+    public AudioSource source = null;
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (tracks[SceneManager.GetActiveScene().buildIndex]) {
+        if(tracks[SceneManager.GetActiveScene().buildIndex]) {
             source.clip = tracks[SceneManager.GetActiveScene().buildIndex];
             FadeMusic(true);
         }
@@ -40,7 +40,7 @@ public class MusicPlayer : MonoBehaviour
 
     public void PlayTrack(AudioClip track)
     {
-        StartCoroutine(FadeVolume(track));
+        StartCoroutine(FadeVolume(track));        
     }
     public void PauseTrack()
     {
@@ -62,7 +62,8 @@ public class MusicPlayer : MonoBehaviour
             source.volume += 0.1f;
             yield return new WaitForSeconds(0.2f);
         }
-        yield return null;
+        StopCoroutine(FadeVolume(null));
+        yield break;
     }
 
     public void FadeMusic(bool fadeIn)
@@ -85,6 +86,7 @@ public class MusicPlayer : MonoBehaviour
                 source.volume += 0.1f;
                 yield return new WaitForSeconds(0.2f);
             }
+            yield break;
         }
         else
         {
@@ -93,6 +95,7 @@ public class MusicPlayer : MonoBehaviour
                 source.volume -= 0.1f;
                 yield return new WaitForSeconds(0.2f);
             }
+            yield break;
         }
     }
 

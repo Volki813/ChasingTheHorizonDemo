@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: ac8bf90838ab7b5479b4f1c29997be30
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -7388550260622016951
+    second: genericBuprightatk_0
+  - first:
+      213: -9115828426009258074
+    second: genericBuprightatk_1
+  - first:
+      213: -5476266909135164383
+    second: genericBuprightatk_2
+  - first:
+      213: 5552723342021896262
+    second: genericBuprightatk_3
+  - first:
+      213: 6109828402095954528
+    second: genericBuprightatk_4
+  - first:
+      213: 669757556106741304
+    second: genericBuprightatk_5
+  - first:
+      213: 6637946932717625578
+    second: genericBuprightatk_6
+  - first:
+      213: -5622821023627636745
+    second: genericBuprightatk_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -46,7 +70,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 50
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,7 +147,133 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: genericBuprightatk_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 203
+        width: 37
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94e31862fa8967990800000000000000
+      internalID: -7388550260622016951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: genericBuprightatk_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 202
+        width: 39
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a75f4228521e7180800000000000000
+      internalID: -9115828426009258074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: genericBuprightatk_2
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 102
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12ca5c9b2446004b0800000000000000
+      internalID: -5476266909135164383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: genericBuprightatk_3
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 103
+        width: 42
+        height: 47
+      alignment: 9
+      pivot: {x: 0.43943316, y: 0.4278347}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6482c31c57c3f0d40800000000000000
+      internalID: 5552723342021896262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: genericBuprightatk_6
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 2
+        width: 67
+        height: 78
+      alignment: 9
+      pivot: {x: 0.24688424, y: 0.27895635}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae02782e099be1c50800000000000000
+      internalID: 6637946932717625578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: genericBuprightatk_7
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 2
+        width: 85
+        height: 96
+      alignment: 9
+      pivot: {x: 0.18077634, y: 0.22029835}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ff831be11ab7f1b0800000000000000
+      internalID: -5622821023627636745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

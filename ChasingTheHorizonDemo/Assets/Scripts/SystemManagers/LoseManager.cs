@@ -8,6 +8,7 @@ public class LoseManager : MonoBehaviour
 {
     public static LoseManager instance { get; private set; }
 
+    [SerializeField] private GameObject systemManager = null;
     [SerializeField] private GameObject combatReadout = null;
     [SerializeField] private GameObject restartButton = null;
     [SerializeField] private GameObject fadeOut = null;
@@ -50,6 +51,7 @@ public class LoseManager : MonoBehaviour
     }
     public void TitleScreen()
     {
+        MusicPlayer.instance.PauseTrack();
         SceneManager.LoadScene("StartScreen");
     }
     public void GiveUp()
@@ -65,7 +67,7 @@ public class LoseManager : MonoBehaviour
     private IEnumerator GameOver()
     {
         cursor.cursorControls.SwitchCurrentActionMap("UI");
-        GameObject.Find("SystemsManager").SetActive(false);
+        systemManager.SetActive(false);
         fadeOut.SetActive(true);
         yield return new WaitForSeconds(1.3f);
         EventSystem.current.SetSelectedGameObject(null);

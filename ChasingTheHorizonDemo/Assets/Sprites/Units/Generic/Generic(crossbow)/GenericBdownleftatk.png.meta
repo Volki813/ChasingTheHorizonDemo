@@ -1,7 +1,37 @@
 fileFormatVersion: 2
 guid: d819d50d16ca3f340a635a8d720750cf
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -4870208229092930076
+    second: GenericBdownleftatk_0
+  - first:
+      213: 1534178124492198872
+    second: GenericBdownleftatk_1
+  - first:
+      213: -7756454092912386053
+    second: GenericBdownleftatk_2
+  - first:
+      213: -1949325027303127422
+    second: GenericBdownleftatk_3
+  - first:
+      213: -4607910631685034561
+    second: GenericBdownleftatk_4
+  - first:
+      213: -5979769974133418902
+    second: GenericBdownleftatk_5
+  - first:
+      213: -3129956658921952949
+    second: GenericBdownleftatk_6
+  - first:
+      213: 6435702191551540980
+    second: GenericBdownleftatk_7
+  - first:
+      213: 7631186217068421774
+    second: GenericBdownleftatk_8
+  - first:
+      213: 1167851712953556860
+    second: GenericBdownleftatk_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -123,7 +153,133 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: GenericBdownleftatk_0
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 500
+        width: 67
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ed4bba4b6b896cb0800000000000000
+      internalID: -4870208229092930076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBdownleftatk_1
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 500
+        width: 76
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d3588430ee7a4510800000000000000
+      internalID: 1534178124492198872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBdownleftatk_2
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 307
+        width: 74
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bff1553191a8b5490800000000000000
+      internalID: -7756454092912386053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBdownleftatk_3
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 307
+        width: 97
+        height: 86
+      alignment: 9
+      pivot: {x: 0.5784969, y: 0.49999964}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28681d3373b92f4e0800000000000000
+      internalID: -1949325027303127422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBdownleftatk_4
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 50
+        width: 150
+        height: 140
+      alignment: 9
+      pivot: {x: 0.78200793, y: 0.74172103}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbdeaa9b1b96d00c0800000000000000
+      internalID: -4607910631685034561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBdownleftatk_5
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 20
+        width: 176
+        height: 177
+      alignment: 9
+      pivot: {x: 0.7691895, y: 0.75810885}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a641b3504e6930da0800000000000000
+      internalID: -5979769974133418902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

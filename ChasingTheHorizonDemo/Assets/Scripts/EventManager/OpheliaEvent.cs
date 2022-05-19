@@ -4,60 +4,71 @@ using UnityEngine.EventSystems;
 
 public class OpheliaEvent : Event
 {
-    [SerializeField] private GameObject opheliaObject = null;
-    [SerializeField] private GameObject screenDim = null;
+    [Header("Unique References")]
+    [SerializeField] private UnitLoader opheliaObject = null;
     [SerializeField] private GameObject opheliaCG = null;
     [SerializeField] private UnitLoader rolandObject = null;
     [SerializeField] private MapDialogue[] opheliaDialogue = null;
     [SerializeField] private MapDialogue[] opheliaDialogue2 = null;
     [SerializeField] private GameObject thanksForPlaying = null;
     [SerializeField] private GameObject restartButton = null;
-    private CursorController cursor;
-    private LoseManager loseManager;
+    [SerializeField] private AudioClip enterOphelia = null;
+    [SerializeField] private UnitLoader royBoss = null;
     private bool eventPlayed = false;
+    private string difficulty = string.Empty;
 
     private void Start()
     {
-        cursor = FindObjectOfType<CursorController>();
-        loseManager = FindObjectOfType<LoseManager>();
+        difficulty = PlayerPrefs.GetString("Difficulty", "Normal");
     }
+
     private void Update()
     {
-        if(TurnManager.instance.enemyUnits.Count <= 0 && eventPlayed == false)
+        if(difficulty == "Normal")
         {
-            StartCoroutine(Event());
+            if (TurnManager.instance.enemyUnits.Count <= 0 && eventPlayed == false)
+            {
+                StartCoroutine(Event());
+            }
+        }
+        else if(difficulty == "Hard")
+        {
+            if(!TurnManager.instance.enemyUnits.Contains(royBoss) && eventPlayed == false)
+            {
+                StartCoroutine(Event());
+            }
         }
     }
 
     private IEnumerator Event()
     {
-        cursor.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 0);
+        MusicPlayer.instance.source.clip = enterOphelia;
+        MusicPlayer.instance.FadeMusic(true);
+        cursor.spriteRenderer.color = new Color32(255, 255, 255, 0);
         TurnManager.instance.gameObject.SetActive(false);
         eventPlayed = true;
         loseManager.gameObject.SetActive(false);
-        yield return new WaitUntil(() => !screenDim.activeSelf);
+        yield return new WaitUntil(() => !screenDim.gameObject.activeSelf);
         yield return new WaitForSeconds(1f);
         cursor.cursorControls.DeactivateInput();
         //Move Ophelia on screen
-        opheliaObject.SetActive(true);
-        StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(2f, 10f)));
+        opheliaObject.gameObject.SetActive(true);
+        StartCoroutine(MoveUnit(opheliaObject, new Vector2(2f, 10f)));
         yield return new WaitUntil(() => opheliaObject.transform.localPosition == new Vector3(2, 10));
-        yield return new WaitUntil(() => !screenDim.activeSelf);
+        yield return new WaitUntil(() => !screenDim.gameObject.activeSelf);
         MapDialogueManager.instance.ClearDialogue();
         yield return new WaitForSeconds(0.4f);
-        //Turn the music off
-        MusicPlayer.instance.PauseTrack();
         //Send dialogue to dialogue manager
         MapDialogueManager.instance.WriteMultiple(opheliaDialogue);
-        yield return new WaitUntil(() => !screenDim.activeSelf);
+        yield return new WaitUntil(() => !screenDim.gameObject.activeSelf);
         //Ophelia attacks Roland
         yield return new WaitForSeconds(0.5f);
         //Move next to Roland
-        StartCoroutine(MoveUnit(opheliaObject.GetComponent<UnitLoader>(), new Vector2(rolandObject.transform.localPosition.x - 1, rolandObject.transform.localPosition.y)));
+        StartCoroutine(MoveUnit(opheliaObject, new Vector2(rolandObject.transform.localPosition.x - 1, rolandObject.transform.localPosition.y)));
         yield return new WaitUntil(() => (Vector2)opheliaObject.transform.localPosition == new Vector2(rolandObject.transform.localPosition.x - 1, rolandObject.transform.localPosition.y));
         yield return new WaitForSeconds(0.5f);
         //Attack Roland
-        CombatManager.instance.EngageAttack(opheliaObject.GetComponent<UnitLoader>(), rolandObject);
+        CombatManager.instance.EngageAttack(opheliaObject, rolandObject);
         //Ophelia CG appears and the rest of the dialogue is displayed
         yield return new WaitForSeconds(2f);
         opheliaCG.SetActive(true);
@@ -78,11 +89,11 @@ public class OpheliaEvent : Event
         {
             if (currentEnemy.transform.localPosition.x > targetPosition.x)
             {
-                currentEnemy.GetComponent<Animator>().SetBool("Left", true);
+                currentEnemy.animator.SetBool("Left", true);
             }
             else
             {
-                currentEnemy.GetComponent<Animator>().SetBool("Right", true);
+                currentEnemy.animator.SetBool("Right", true);
             }
             currentEnemy.transform.localPosition = Vector2.MoveTowards(currentEnemy.transform.localPosition, new Vector2(targetPosition.x, currentEnemy.transform.localPosition.y), 2f * Time.deltaTime);
             yield return null;
@@ -91,15 +102,15 @@ public class OpheliaEvent : Event
         {
             if (currentEnemy.transform.localPosition.y > targetPosition.y)
             {
-                currentEnemy.GetComponent<Animator>().SetBool("Down", true);
+                currentEnemy.animator.SetBool("Down", true);
             }
             else
             {
-                currentEnemy.GetComponent<Animator>().SetBool("Up", true);
+                currentEnemy.animator.SetBool("Up", true);
             }
             currentEnemy.transform.localPosition = Vector2.MoveTowards(currentEnemy.transform.localPosition, new Vector2(currentEnemy.transform.localPosition.x, targetPosition.y), 2f * Time.deltaTime);
             yield return null;
         }
-        currentEnemy.GetComponent<Animator>().SetBool("Right", false);
+        currentEnemy.animator.SetBool("Right", false);
     }
 }

@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: dfcb5be7886773b4894e092947f619a2
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -2019433139435931503
+    second: GenericBrightatk_0
+  - first:
+      213: -8770917505367102383
+    second: GenericBrightatk_1
+  - first:
+      213: -5753655581937742343
+    second: GenericBrightatk_2
+  - first:
+      213: 6164179098201635333
+    second: GenericBrightatk_3
+  - first:
+      213: -7950828046964003368
+    second: GenericBrightatk_4
+  - first:
+      213: 3052591409795520141
+    second: GenericBrightatk_5
+  - first:
+      213: -6075867814316934978
+    second: GenericBrightatk_6
+  - first:
+      213: 1463378968140096002
+    second: GenericBrightatk_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -123,7 +147,154 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: GenericBrightatk_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 310
+        width: 70
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 198f444524889f3e0800000000000000
+      internalID: -2019433139435931503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBrightatk_1
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 313
+        width: 70
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15ca65acff0774680800000000000000
+      internalID: -8770917505367102383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBrightatk_2
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 213
+        width: 83
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fd48ae7bb8e620b0800000000000000
+      internalID: -5753655581937742343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBrightatk_3
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 213
+        width: 86
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50a32380b309b8550800000000000000
+      internalID: 6164179098201635333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBrightatk_4
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 110
+        width: 107
+        height: 77
+      alignment: 9
+      pivot: {x: 0.3476667, y: 0.5493927}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dd6f7e340cf8a190800000000000000
+      internalID: -7950828046964003368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBrightatk_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 110
+        width: 213
+        height: 77
+      alignment: 9
+      pivot: {x: 0.1811489, y: 0.514112}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d865541c6bbfc5a20800000000000000
+      internalID: 3052591409795520141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBrightatk_7
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 10
+        width: 256
+        height: 83
+      alignment: 9
+      pivot: {x: 0.1519344, y: 0.54582244}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 202a4cf0b67fe4410800000000000000
+      internalID: 1463378968140096002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

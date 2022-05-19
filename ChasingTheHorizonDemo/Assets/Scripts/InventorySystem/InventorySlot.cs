@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
 //Holds the data for items in the currently selected units inventory
 //Used in conjuction with the InventoryMenu script
 

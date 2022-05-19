@@ -1,9 +1,6 @@
 ﻿using System.Collections;
-using DialogueSystem;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-
 //The CombatManager handles all combat between units
 //There should only be 1 CombatManager in a given scene
 //You can initiate combat between two units in any script
@@ -17,10 +14,9 @@ public class CombatManager : MonoBehaviour
     private bool dialoguePlayed = false;
 
     //REFERENCES
-    DialogueHolder dialogueHolder;
-    CursorController cursor;
-    private Camera mainCamera = null;
-    private Animator cameraAnimator = null;
+    [SerializeField] CursorController cursor = null;
+    [SerializeField] private Camera mainCamera = null;
+    [SerializeField] private Animator cameraAnimator = null;
     [SerializeField] private Canvas canvas = null;
     [SerializeField] private GameObject screenDim = null;
     [SerializeField] private GameObject combatReadout = null;
@@ -28,16 +24,11 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Slider defenderHealth = null;
     [SerializeField] private BattleText battleText = null;
 
+    private int lowhealthIndicator = 0;
+
     private void Awake()
     {
         instance = this;
-    }
-    private void Start()
-    {
-        mainCamera = FindObjectOfType<Camera>();
-        cameraAnimator = mainCamera.GetComponent<Animator>();
-        cursor = FindObjectOfType<CursorController>();
-        dialogueHolder = FindObjectOfType<DialogueHolder>();
     }
 
     public void EngageAttack(UnitLoader attacker, UnitLoader defender)
@@ -55,13 +46,13 @@ public class CombatManager : MonoBehaviour
         dialoguePlayed = false;
 
         foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>()){
-            if(unit.GetComponent<SpriteRenderer>().color == Color.red){
-                unit.GetComponent<SpriteRenderer>().color = Color.white;
+            if(unit.spriteRenderer.color == Color.red){
+                unit.spriteRenderer.color = Color.white;
             }
         }
 
         cursor.cursorControls.DeactivateInput();
-        cursor.GetComponent<Animator>().SetBool("Invisible", true);
+        cursor.animator.SetBool("Invisible", true);
 
         //Check if defender has dialogue for when it's attacked
         if(defender.attackedDialogue != null){
@@ -220,25 +211,28 @@ public class CombatManager : MonoBehaviour
         {
             attacker.Rest();
         }
-        if(attacker.unit.allyUnit)
+        if(attacker.unit.allyUnit && !cursor.enemyTurn)
         {
             cursor.cursorControls.SwitchCurrentActionMap("MapScene");
             cursor.SetState(new MapState(cursor));
         }
 
         //This block checks if an Ally Unit is below 50% health, which if true triggers their battle dialogue
-        if(attacker.unit.allyUnit && attacker.currentHealth < (attacker.unit.statistics.health * .5f) && attacker.currentHealth > 0 && !dialoguePlayed){
-            MapDialogueManager.instance.WriteSingle(attacker.GetComponent<BattleDialogue>().under50Quote);
+        if(attacker.unit.allyUnit && attacker.currentHealth < (attacker.unit.statistics.health * .5f) && attacker.currentHealth > 0 && !dialoguePlayed && !attacker.below50Quote){
+            MapDialogueManager.instance.WriteSingle(attacker.battleDialogue.under50Quote);
             dialoguePlayed = true;
+            attacker.below50Quote = true;
         }
-        else if(defender.unit.allyUnit && defender.currentHealth < (defender.unit.statistics.health * .5f) && defender.currentHealth > 0 && !dialoguePlayed){
-            MapDialogueManager.instance.WriteSingle(defender.GetComponent<BattleDialogue>().under50Quote);
+        else if(defender.unit.allyUnit && defender.currentHealth < (defender.unit.statistics.health * .5f) && defender.currentHealth > 0 && !dialoguePlayed && !defender.below50Quote)
+        {
+            MapDialogueManager.instance.WriteSingle(defender.battleDialogue.under50Quote);
             dialoguePlayed = true;
+            defender.below50Quote = true;
         }
 
         if(TurnManager.instance.currentState.stateType == TurnState.StateType.Player)
         {
-            cursor.GetComponent<Animator>().SetBool("Invisible", false);
+            cursor.animator.SetBool("Invisible", false);
         }        
         yield return null;
     }
@@ -385,7 +379,7 @@ public class CombatManager : MonoBehaviour
                 //Display critial quote
                 if (attacker.unit.allyUnit && !defender.defeatedDialogue)
                 {
-                    MapDialogueManager.instance.WriteSingle(attacker.GetComponent<BattleDialogue>().RandomCritQuote());
+                    MapDialogueManager.instance.WriteSingle(attacker.battleDialogue.RandomCritQuote());
                     dialoguePlayed = true;
                 }
             }
@@ -430,7 +424,7 @@ public class CombatManager : MonoBehaviour
                     //Display critial quote
                     if(defender.unit.allyUnit && !attacker.defeatedDialogue)
                     {
-                        MapDialogueManager.instance.WriteSingle(defender.GetComponent<BattleDialogue>().RandomCritQuote());
+                        MapDialogueManager.instance.WriteSingle(defender.battleDialogue.RandomCritQuote());
                         dialoguePlayed = true;
                     }
                 }
@@ -583,12 +577,10 @@ public class CombatManager : MonoBehaviour
         if(defender.currentHealth <= 0)
         {
             AIManager.instance.enemyOrder.Remove(defender);
-            TurnManager.instance.RefreshTiles();
             return "Defender";
         }
         else if(attacker.currentHealth <= 0)
         {
-            TurnManager.instance.RefreshTiles();
             return "Attacker";
         }
         return null;

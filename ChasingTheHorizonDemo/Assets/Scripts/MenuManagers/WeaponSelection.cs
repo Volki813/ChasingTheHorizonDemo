@@ -8,15 +8,10 @@ public class WeaponSelection : MonoBehaviour
 {
     [SerializeField] private CombatPreview combatPreview = null;
     [SerializeField] private InventorySlot[] slots = null;
-    private CursorController cursor = null;
-    private TileMap map;
+    [SerializeField] private CursorController cursor = null;
+    [SerializeField] private TileMap map = null;
     public List<Item> unitWeapons = new List<Item>();
 
-    private void Awake()
-    {
-        cursor = FindObjectOfType<CursorController>();
-        map = FindObjectOfType<TileMap>();
-    }
     private void OnEnable()
     {
         Invoke("GetUnitWeapons", 0.17f);

@@ -21,5 +21,6 @@ MonoBehaviour:
   crit: 100
   range: 1
   weight: 0
-  animation: {fileID: 0}
-  animationLength: {fileID: 0}
+  animation: {fileID: 9095977760381259380, guid: ab8decf6a6279834aabb421303a24d84,
+    type: 3}
+  animationLength: {fileID: 7400000, guid: f44c914a0e0738f429277191892da098, type: 2}

@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: 048caa80f99402941a8fd556c51338aa
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5755342496735214579
+    second: GenericBleftatk_0
+  - first:
+      213: 3126105202693091632
+    second: GenericBleftatk_1
+  - first:
+      213: 461636651978358481
+    second: GenericBleftatk_2
+  - first:
+      213: 553883538451070238
+    second: GenericBleftatk_3
+  - first:
+      213: 8841135554159888877
+    second: GenericBleftatk_4
+  - first:
+      213: 5782008127142161068
+    second: GenericBleftatk_5
+  - first:
+      213: -8866521468943173829
+    second: GenericBleftatk_6
+  - first:
+      213: 7387245131242409037
+    second: GenericBleftatk_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -123,7 +147,154 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: GenericBleftatk_0
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 310
+        width: 70
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fbbc96f1851fdf40800000000000000
+      internalID: 5755342496735214579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBleftatk_1
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 313
+        width: 70
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 031b5097e18226b20800000000000000
+      internalID: 3126105202693091632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBleftatk_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 213
+        width: 83
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1de7870d610186600800000000000000
+      internalID: 461636651978358481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBleftatk_3
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 213
+        width: 86
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1dff44c42acfa700800000000000000
+      internalID: 553883538451070238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBleftatk_4
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 111
+        width: 107
+        height: 76
+      alignment: 9
+      pivot: {x: 0.6317795, y: 0.54452777}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de9c6c4b1f502ba70800000000000000
+      internalID: 8841135554159888877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBleftatk_6
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 110
+        width: 213
+        height: 77
+      alignment: 9
+      pivot: {x: 0.8124596, y: 0.52197486}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b37744a63b9c3f480800000000000000
+      internalID: -8866521468943173829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GenericBleftatk_7
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 10
+        width: 256
+        height: 83
+      alignment: 9
+      pivot: {x: 0.85030675, y: 0.5135909}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4c007cbe44c48660800000000000000
+      internalID: 7387245131242409037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

@@ -1,7 +1,28 @@
 fileFormatVersion: 2
 guid: aba740885335f9f4db33e99c0d41eb9b
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 4012649838409964803
+    second: CGFBupatk_0
+  - first:
+      213: 1266033587147817881
+    second: CGFBupatk_1
+  - first:
+      213: 3485583645015156616
+    second: CGFBupatk_2
+  - first:
+      213: -7097753388788774153
+    second: CGFBupatk_3
+  - first:
+      213: -943635519425175344
+    second: CGFBupatk_4
+  - first:
+      213: -6730219406531385613
+    second: CGFBupatk_5
+  - first:
+      213: -7870075784848128712
+    second: CGFBupatk_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -123,7 +144,154 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: CGFBupatk_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 303
+        width: 66
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30d5472a4cbcfa730800000000000000
+      internalID: 4012649838409964803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CGFBupatk_1
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 307
+        width: 73
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 993c8abf6dad19110800000000000000
+      internalID: 1266033587147817881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CGFBupatk_2
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 307
+        width: 63
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8872a049bd74f5030800000000000000
+      internalID: 3485583645015156616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CGFBupatk_3
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 303
+        width: 66
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa8bedf5e6bf7d90800000000000000
+      internalID: -7097753388788774153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CGFBupatk_4
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 307
+        width: 63
+        height: 96
+      alignment: 9
+      pivot: {x: 0.49479604, y: 0.43511105}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d0a833ae7887e2f0800000000000000
+      internalID: -943635519425175344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CGFBupatk_5
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 7
+        width: 80
+        height: 200
+      alignment: 9
+      pivot: {x: 0.5819655, y: 0.20656367}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f6a145ab157992a0800000000000000
+      internalID: -6730219406531385613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CGFBupatk_6
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 7
+        width: 73
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83549b865cfd7c290800000000000000
+      internalID: -7870075784848128712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

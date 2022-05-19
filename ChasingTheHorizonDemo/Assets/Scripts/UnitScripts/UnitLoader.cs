@@ -11,6 +11,7 @@ public class UnitLoader : MonoBehaviour
     public List<Node> currentPath = new List<Node>();
 
     //VARIABLES
+    [Header("Varibles")]
     public int currentHealth = 0;
     public bool hasMoved = false;
     public bool hasAttacked = false;
@@ -19,12 +20,12 @@ public class UnitLoader : MonoBehaviour
     public Vector2 originalPosition = new Vector2(0, 0);
 
     //REFERENCES
-    private CursorController cursor;
-    public TileMap map;
+    [Header("References")]
+    private CursorController cursor;    
     public Unit unit;
+    public BehaviorTag behaviorTag;
+    public BattleDialogue battleDialogue;
     public UnitLoader target;
-    public SpriteRenderer spriteRenderer = null;
-    public Animator animator = null;
     public Inventory inventory = null;
     public GameObject actionMenu = null;
     public Weapon equippedWeapon = null;
@@ -32,6 +33,11 @@ public class UnitLoader : MonoBehaviour
     public Transform actionMenuSpawn = null;
     public MapDialogue attackedDialogue = null;
     public MapDialogue defeatedDialogue = null;
+    public bool below50Quote = false;
+
+    [HideInInspector] public TileMap map;
+    [HideInInspector] public SpriteRenderer spriteRenderer = null;
+    [HideInInspector] public Animator animator = null;
 
     private void Start()
     {
@@ -236,11 +242,13 @@ public class UnitLoader : MonoBehaviour
                 if(LoseManager.instance.specificAlly && LoseManager.instance.specificAllies.Contains(this))
                 {
                     LoseManager.instance.StartGameOver();
+                    MusicPlayer.instance.PauseTrack();
                     Destroy(gameObject);
                 }
                 else if(LoseManager.instance.anyAlly)
                 {
                     LoseManager.instance.StartGameOver();
+                    MusicPlayer.instance.PauseTrack();
                     Destroy(gameObject);
                 }
             }

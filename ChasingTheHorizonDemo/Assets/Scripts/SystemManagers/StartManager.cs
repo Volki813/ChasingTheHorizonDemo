@@ -9,11 +9,16 @@ using System.Collections;
 //Eventually there will be an option to load a save or start a new game
 public class StartManager : MonoBehaviour
 {
+    [SerializeField] private Animator animator = null;
+
     [SerializeField] private GameObject volumeButton = null;
 
     [SerializeField] private Button startButton = null;
     [SerializeField] private GameObject optionsMenu = null;
     [SerializeField] private GameObject allButtons = null;
+
+    [SerializeField] private GameObject normalMode = null;
+    [SerializeField] private GameObject hardMode = null;
 
     [SerializeField] private Slider musicSlider = null;
     [SerializeField] private Slider sfxSlider = null;
@@ -43,7 +48,9 @@ public class StartManager : MonoBehaviour
     //BUTTONS
     public void Play()
     {
-        SceneManager.LoadScene("Cutscene 1");
+        normalMode.SetActive(true);
+        hardMode.SetActive(true);
+        StartCoroutine(Highlight(normalMode));
     }
     public void Options()
     {
@@ -61,6 +68,18 @@ public class StartManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void NormalMode()
+    {
+        PlayerPrefs.SetString("Difficulty", "Normal");
+        SceneManager.LoadScene("Cutscene 1");
+    }
+
+    public void HardMode()
+    {
+        PlayerPrefs.SetString("Difficulty", "Hard");
+        SceneManager.LoadScene("Cutscene 1");
+    }
+
     private void SetupOptions()
     {
         musicSlider.value = musicVolume.volume;
@@ -69,8 +88,14 @@ public class StartManager : MonoBehaviour
 
     private IEnumerator HighlightButton(GameObject button)
     {
-        allButtons.GetComponent<Animator>().SetTrigger("Enter");
+        animator.SetTrigger("Enter");
 
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForSeconds(0.05f);
+        EventSystem.current.SetSelectedGameObject(button);
+    }
+    private IEnumerator Highlight(GameObject button)
+    {
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForSeconds(0.05f);
         EventSystem.current.SetSelectedGameObject(button);

@@ -17,16 +17,18 @@ public class EnemyTurnState : TurnState
         if(EventManager.instance.EnemyEventCheck()){
             EventManager.instance.ActivateEvent();
             yield return new WaitUntil(() => EventManager.instance.currentEvent.finished);
+            EventManager.instance.ReloadEvent();
         }
 
         turnManager.enemyTurnGraphic.SetActive(true);
-        turnManager.screenDim.SetActive(true);
-        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeIn");
-        turnManager.UpdateTiles();
+        turnManager.screenDim.gameObject.SetActive(true);
+        turnManager.screenDim.animator.SetTrigger("FadeIn");
         yield return new WaitForSeconds(0.85f);
-        turnManager.screenDim.GetComponent<Animator>().SetTrigger("FadeOut");
+        turnManager.screenDim.animator.SetTrigger("FadeOut");
         AIManager.instance.enemyOrder.Clear();
         AIManager.instance.SetEnemyOrder();
         turnManager.RefreshEnemies();
+        turnManager.cursor.CloseMenu();
+        turnManager.RefreshAllySprites();
     }
 }

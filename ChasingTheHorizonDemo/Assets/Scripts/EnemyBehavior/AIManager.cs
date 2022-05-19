@@ -10,13 +10,14 @@ public class AIManager : MonoBehaviour
     public static AIManager instance { get; private set; }
 
     //REFERENCES
-    private Camera mainCamera = null;
-    private CursorController cursor;
-    private TileMap map;
+    [SerializeField] private Camera mainCamera = null;
+    [SerializeField] private CursorController cursor = null;
+    [SerializeField] private TileMap currentMap = null;
+
     private Animator enemyAnimator = null;
     [SerializeField] private UnitLoader currentEnemy = null;
     [SerializeField] private GameObject combatReadout = null;
-    [SerializeField] private GameObject fastModeIndicator = null;
+    [SerializeField] private FastModeIndicator fastModeIndicator = null;
 
     public List<UnitLoader> enemyOrder = new List<UnitLoader>();
     [SerializeField] private List<Node> walkableTiles = new List<Node>();
@@ -33,9 +34,6 @@ public class AIManager : MonoBehaviour
 
     private void Start()
     {
-        mainCamera = FindObjectOfType<Camera>();
-        cursor = FindObjectOfType<CursorController>();
-        map = FindObjectOfType<TileMap>();
         Invoke("SetEnemyOrder", 1f);
     }
 
@@ -51,16 +49,16 @@ public class AIManager : MonoBehaviour
             if(context.started){
                 if (!fastMode){
                     fastMode = true;
-                    if (fastModeIndicator.activeSelf){
-                        fastModeIndicator.GetComponent<Animator>().SetTrigger("Enter");
+                    if (fastModeIndicator.gameObject.activeSelf){
+                        fastModeIndicator.animator.SetTrigger("Enter");
                     }
                     else{
-                        fastModeIndicator.SetActive(true);
+                        fastModeIndicator.gameObject.SetActive(true);
                     }
                 }
                 else{
                     fastMode = false;
-                    fastModeIndicator.GetComponent<Animator>().SetTrigger("Exit");
+                    fastModeIndicator.animator.SetTrigger("Exit");
                 }
             }
         }
@@ -74,12 +72,12 @@ public class AIManager : MonoBehaviour
         for(int i = 0; i < enemies.Count; i++)
         {
             currentEnemy = enemies[i];
-            enemyAnimator = currentEnemy.GetComponent<Animator>();
+            enemyAnimator = currentEnemy.animator;
 
             StartCoroutine(MoveCamera(enemies[i]));
             yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
 
-            if(enemies[i].GetComponent<BehaviorTag>().blitz)
+            if(enemies[i].behaviorTag.blitz)
             {                
                 Blitz(currentEnemy);
                 yield return new WaitUntil(() => currentEnemy.rested || !currentEnemy);
@@ -87,7 +85,20 @@ public class AIManager : MonoBehaviour
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
             }
-            else if(enemies[i].GetComponent<BehaviorTag>().defensive)
+            else if(enemies[i].behaviorTag.boss)
+            {
+                Boss();
+                if(IsLastEnemy() && combatReadout.activeSelf == false){
+                    yield return new WaitForSeconds(0.5f);
+                }
+                else{
+                    yield return new WaitUntil(() => currentEnemy.rested || !currentEnemy);
+                    yield return new WaitForSeconds(0.5f);
+                }
+                walkableTiles.Clear();
+                enemiesInRange.Clear();
+            }
+            else if(enemies[i].behaviorTag.defensive)
             {
                 Defensive();
                 if(IsLastEnemy() && combatReadout.activeSelf == false){
@@ -106,36 +117,39 @@ public class AIManager : MonoBehaviour
         enemyOrder.Clear();
         SetEnemyOrder();
         cursor.enemyTurn = false;
-        if(fastModeIndicator.activeSelf)
-            fastModeIndicator.GetComponent<Animator>().SetTrigger("Exit");
+        if(fastModeIndicator.gameObject.activeSelf)
+            fastModeIndicator.animator.SetTrigger("Exit");
         yield return null;
     }
 
     private void Blitz(UnitLoader currentEnemy)
     {
-        GetEnemies();
+        currentEnemy.currentPath = null;
+        GetEnemiesInAttackRange();
         if(enemiesInRange.Count == 0)
         {
             GetWalkableTiles();
             UnitLoader closestAlly = FindClosestAlly();
             Node closestTile = FindClosestTile(closestAlly);
-            map.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);            
+            currentMap.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);            
             NodeMove(currentEnemy);
+            return;
         }
         else if(enemiesInRange.Count == 1)
         {
             CombatManager.instance.EngageAttack(currentEnemy, enemiesInRange[0]);
+            return;
         }
         else if(enemiesInRange.Count >= 2)
         {
             CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
+            return;
         }
     }
-
-    private void Defensive()
+    private void Boss()
     {
         currentEnemy.currentPath = null;
-        GetEnemies();
+        GetEnemiesInAttackRange();
         if(enemiesInRange.Count == 0)
         {
             currentEnemy.Rest();
@@ -143,13 +157,45 @@ public class AIManager : MonoBehaviour
         else if(enemiesInRange.Count == 1)
         {
             CombatManager.instance.EngageAttack(currentEnemy, enemiesInRange[0]);
+            return;
         }
         else if(enemiesInRange.Count >= 2)
         {
-            UnitLoader weakestUnit = DetermineWeakestUnit();
-            CombatManager.instance.EngageAttack(currentEnemy, weakestUnit);
+            UnitLoader weakestAlly = DetermineWeakestUnit();
+            CombatManager.instance.EngageAttack(currentEnemy, weakestAlly);
+            return;
         }
     }
+    private void Defensive()
+    {
+        currentEnemy.currentPath = null;
+        GetEnemiesInWalkableRange();
+        if(enemiesInRange.Count == 0)
+        {
+            currentEnemy.Rest();
+        }
+        else if(enemiesInRange.Count == 1)
+        {
+            GetWalkableTiles();
+            UnitLoader closestAlly = enemiesInRange[0];
+            Node closestTile = FindClosestTile(closestAlly);
+            currentMap.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);
+            NodeMove(currentEnemy);
+            enemiesInRange.Clear();
+            return;
+        }
+        else if(enemiesInRange.Count >= 2)
+        {
+            GetWalkableTiles();
+            UnitLoader closestAlly = DetermineWeakestUnit();
+            Node closestTile = FindClosestTile(closestAlly);
+            currentMap.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);
+            NodeMove(currentEnemy);
+            enemiesInRange.Clear();
+            return;
+        }
+    }
+
     public void SetEnemyOrder()
     {
         int i = 0;
@@ -158,25 +204,45 @@ public class AIManager : MonoBehaviour
             enemyOrder.Insert(i, TurnManager.instance.enemyUnits[i]);
             i++;
         }
-        enemyOrder.Sort((x, y) => x.GetComponent<BehaviorTag>().order.CompareTo(y.GetComponent<BehaviorTag>().order));
+        enemyOrder.Sort((x, y) => x.behaviorTag.order.CompareTo(y.behaviorTag.order));
     }
     
     private void GetWalkableTiles()
     {
-        map.DehighlightTiles();
-        walkableTiles = map.GenerateWalkableRange((int)(currentEnemy.transform.localPosition.x), (int)(currentEnemy.transform.localPosition.y), currentEnemy.unit.statistics.movement, currentEnemy);
+        currentMap.DehighlightTiles();
+        walkableTiles = currentMap.GenerateWalkableRange((int)(currentEnemy.transform.localPosition.x), (int)(currentEnemy.transform.localPosition.y), currentEnemy.unit.statistics.movement, currentEnemy);
     }
-    private void GetEnemies()
+    private void GetEnemiesInAttackRange()
     {
-        Node currentNode = map.ReturnNodeAt((int)currentEnemy.transform.localPosition.x, (int)currentEnemy.transform.localPosition.y);
+        Node currentNode = currentMap.ReturnNodeAt((int)currentEnemy.transform.localPosition.x, (int)currentEnemy.transform.localPosition.y);
         Node enemyNode = null;
 
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>())
+        foreach(UnitLoader unit in TurnManager.instance.allyUnits)
         {
             if(unit.unit.allyUnit)
             {
-                enemyNode = map.ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
+                enemyNode = currentMap.ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
                 if(currentNode.DistanceTo(enemyNode) <= currentEnemy.equippedWeapon.range)
+                {
+                    if(!enemiesInRange.Contains(unit))
+                    {
+                        enemiesInRange.Add(unit);
+                    }
+                }
+            }
+        }
+    }
+    private void GetEnemiesInWalkableRange()
+    {
+        Node currentNode = currentMap.ReturnNodeAt((int)currentEnemy.transform.localPosition.x, (int)currentEnemy.transform.localPosition.y);
+        Node enemyNode = null;
+
+        foreach (UnitLoader unit in TurnManager.instance.allyUnits)
+        {
+            if(unit.unit.allyUnit)
+            {
+                enemyNode = currentMap.ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
+                if(currentNode.DistanceTo(enemyNode) <= currentEnemy.equippedWeapon.range + currentEnemy.unit.statistics.movement)
                 {
                     if(!enemiesInRange.Contains(unit))
                     {
@@ -205,11 +271,11 @@ public class AIManager : MonoBehaviour
     {
         int closestSoFar = 100;
         UnitLoader closestUnit = null;
-        Node currentNode = map.ReturnNodeAt((int)currentEnemy.transform.localPosition.x, (int)currentEnemy.transform.localPosition.y);
+        Node currentNode = currentMap.ReturnNodeAt((int)currentEnemy.transform.localPosition.x, (int)currentEnemy.transform.localPosition.y);
         Node unitNode = null;
         foreach (UnitLoader unit in TurnManager.instance.allyUnits)
         {
-            unitNode = map.ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
+            unitNode = currentMap.ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
             if((currentNode.DistanceTo(unitNode)) <= closestSoFar)
             {
                 closestSoFar = currentNode.DistanceTo(unitNode);
@@ -221,12 +287,13 @@ public class AIManager : MonoBehaviour
     private Node FindClosestTile(UnitLoader unit)
     {
         int lowestSoFar = 100;
-        Node targetTile = map.ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
+
+        Node targetTile = currentMap.ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
         Node closestTile = null;
         
         foreach(Node tile in walkableTiles)
         {
-            if(tile.DistanceTo(targetTile) < lowestSoFar && map.CanTraverse(tile.x, tile.y))
+            if(tile.DistanceTo(targetTile) < lowestSoFar && currentMap.CanTraverse(tile.x, tile.y))
             {
                 lowestSoFar = tile.DistanceTo(targetTile);
                 closestTile = tile;
@@ -290,8 +357,8 @@ public class AIManager : MonoBehaviour
 
                 currentEnemy.currentPath.RemoveAt(0);
             }
-            GetEnemies();
-            if (enemiesInRange.Count == 1)
+            GetEnemiesInAttackRange();
+            if(enemiesInRange.Count == 1)
                 CombatManager.instance.EngageAttack(currentEnemy, enemiesInRange[0]);
             else if (enemiesInRange.Count >= 2)
                 CombatManager.instance.EngageAttack(currentEnemy, DetermineWeakestUnit());
@@ -304,7 +371,7 @@ public class AIManager : MonoBehaviour
             currentEnemy.animator.SetBool("Right", false);
             currentEnemy.animator.CrossFade("Idle", 0.3f);
 
-            map.DehighlightTiles();
+            currentMap.DehighlightTiles();
         }
     }
 
