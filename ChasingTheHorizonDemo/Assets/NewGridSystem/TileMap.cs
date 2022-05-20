@@ -312,7 +312,7 @@ public class TileMap : MonoBehaviour
         int totalCost = 0;
         foreach(Node n in currentPath)
         {
-            totalCost += (int)CostToEnterTile(n.x, n.y);
+            if (n != currentPath[0]) totalCost += (int)CostToEnterTile(n.x, n.y);
         }
         return totalCost;
     }
