@@ -20216,7 +20216,6 @@ GameObject:
   - component: {fileID: 1012960263}
   - component: {fileID: 1012960265}
   - component: {fileID: 1012960264}
-  - component: {fileID: 1012960266}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -20240,8 +20239,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.9, y: -1528}
-  m_SizeDelta: {x: 1304.3962, y: 2432.6072}
+  m_AnchoredPosition: {x: 3.9, y: -4.3}
+  m_SizeDelta: {x: 1304.3962, y: 705.3103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012960264
 MonoBehaviour:
@@ -20273,7 +20272,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Director\r:\nForte\r\n\r\nAssistant Director:\r\nWoomie\r\n\r\nLead Writers:\r\nForte\r\nSusam\r\n\r\nAssistant
@@ -20291,25 +20290,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012960262}
   m_CullTransparentMesh: 0
---- !u!95 &1012960266
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012960262}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0a2d789d8b53dc84984f0ad4b30900eb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1018380382
 GameObject:
   m_ObjectHideFlags: 0
@@ -30652,7 +30632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1445138292
 RectTransform:
   m_ObjectHideFlags: 0
