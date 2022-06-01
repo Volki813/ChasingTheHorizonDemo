@@ -67,7 +67,7 @@ public class TurnManager : MonoBehaviour
             SetState(new EnemyTurnState(this));
             Invoke("StartAi", 1.2f);
         }
-
+        /*
         //Switches To Player Turn        
         foreach(UnitLoader unit in enemyUnits) {
             if (unit.rested == false) return;
@@ -75,6 +75,7 @@ public class TurnManager : MonoBehaviour
         if(cursor.enemyTurn == false) {
             SetState(new PlayerTurnState(this));
         }
+        */
     }
 
     private void StartAi()

@@ -74,12 +74,16 @@ public class AIManager : MonoBehaviour
             currentEnemy = enemies[i];
             enemyAnimator = currentEnemy.animator;
 
-            StartCoroutine(MoveCamera(enemies[i]));
-            yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
+            //StartCoroutine(MoveCamera(enemies[i]));
+            //yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
 
             if(enemies[i].behaviorTag.blitz)
-            {                
+            {               
+                StartCoroutine(MoveCamera(enemies[i]));
+                yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
+
                 Blitz(currentEnemy);
+
                 yield return new WaitUntil(() => currentEnemy.rested || !currentEnemy);
                 yield return new WaitForSeconds(0.5f);
                 walkableTiles.Clear();
@@ -87,7 +91,18 @@ public class AIManager : MonoBehaviour
             }
             else if(enemies[i].behaviorTag.boss)
             {
+                GetEnemiesInAttackRange();
+
+                if(enemiesInRange.Count == 0) continue;
+            
+                walkableTiles.Clear();
+                enemiesInRange.Clear();
+
+                StartCoroutine(MoveCamera(enemies[i]));
+                yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
+
                 Boss();
+
                 if(IsLastEnemy() && combatReadout.activeSelf == false){
                     yield return new WaitForSeconds(0.5f);
                 }
@@ -95,11 +110,22 @@ public class AIManager : MonoBehaviour
                     yield return new WaitUntil(() => currentEnemy.rested || !currentEnemy);
                     yield return new WaitForSeconds(0.5f);
                 }
+                
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
             }
             else if(enemies[i].behaviorTag.defensive)
             {
+                GetEnemiesInWalkableRange();
+
+                if(enemiesInRange.Count == 0) continue;
+                
+                walkableTiles.Clear();
+                enemiesInRange.Clear();
+
+                StartCoroutine(MoveCamera(enemies[i]));
+                yield return new WaitUntil(() => mainCamera.transform.position == cameraTarget);
+
                 Defensive();
                 if(IsLastEnemy() && combatReadout.activeSelf == false){
                     yield return new WaitForSeconds(0.5f);
@@ -108,6 +134,7 @@ public class AIManager : MonoBehaviour
                     yield return new WaitUntil(() => currentEnemy.rested || !currentEnemy);
                     yield return new WaitForSeconds(0.5f);
                 }
+            
                 walkableTiles.Clear();
                 enemiesInRange.Clear();
             }
@@ -120,6 +147,7 @@ public class AIManager : MonoBehaviour
         if(fastModeIndicator.gameObject.activeSelf)
             fastModeIndicator.animator.SetTrigger("Exit");
         yield return null;
+        TurnManager.instance.SetState(new PlayerTurnState(TurnManager.instance));
     }
 
     private void Blitz(UnitLoader currentEnemy)
