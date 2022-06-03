@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Crossbow
   m_EditorClassIdentifier: 
   itemName: Crossbow
-  itemIcon: {fileID: 21300000, guid: 9f70a856997cf01488c485042098547a, type: 3}
-  itemDescription: It's a crossbow used by the military
+  itemIcon: {fileID: 21300000, guid: 805e1abdc0e1e2b4bb96ea9d1e9e7870, type: 3}
+  itemDescription: It's a crossbow used by the military.
   type: 1
   might: 4
   hit: 80

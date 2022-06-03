@@ -376,26 +376,22 @@ public class CursorController : MonoBehaviour
         {
             menu.transform.GetChild(0).gameObject.SetActive(false);
             menu.transform.GetChild(1).gameObject.SetActive(false);
-            SoundManager.instance.PlayFX(1);
             return;
         }
         else if(menu.transform.GetChild(0).gameObject.activeSelf == true)
         {
             menu.transform.GetChild(0).gameObject.SetActive(false);
-            SoundManager.instance.PlayFX(1);
             return;
         }
         else if(menu.transform.GetChild(1).gameObject.activeSelf == true)
         {
             menu.transform.GetChild(1).gameObject.SetActive(false);
             menu.GetComponent<MenuManager>().Highlight();
-            SoundManager.instance.PlayFX(1);
             return;
         }        
         else
         {
             menu.SetActive(false);
-            SoundManager.instance.PlayFX(1);
             SetState(new MapState(this));
             cursorControls.SwitchCurrentActionMap("MapScene");
             return;

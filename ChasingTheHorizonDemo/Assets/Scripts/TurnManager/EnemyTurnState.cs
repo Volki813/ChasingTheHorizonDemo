@@ -10,6 +10,7 @@ public class EnemyTurnState : TurnState
     public override IEnumerator Begin()
     {
         DisableCursor();
+        turnManager.cursor.CloseMenu();
         turnManager.allyTurnGraphic.SetActive(false);
         turnManager.map.selectedUnit = null;
         
@@ -20,6 +21,7 @@ public class EnemyTurnState : TurnState
             EventManager.instance.ReloadEvent();
         }
 
+        DisableCursor();
         turnManager.enemyTurnGraphic.SetActive(true);
         turnManager.screenDim.gameObject.SetActive(true);
         turnManager.screenDim.animator.SetTrigger("FadeIn");
@@ -30,5 +32,6 @@ public class EnemyTurnState : TurnState
         turnManager.RefreshEnemies();
         turnManager.cursor.CloseMenu();
         turnManager.RefreshAllySprites();
+        DisableCursor();
     }
 }

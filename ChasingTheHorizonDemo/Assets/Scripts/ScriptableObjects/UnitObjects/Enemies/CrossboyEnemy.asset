@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CrossboyEnemy
   m_EditorClassIdentifier: 
   sprite: {fileID: 6550054666348705437, guid: 00d929f1d6e2ff04cbd4023bbb3952b7, type: 3}
-  portrait: {fileID: 21300000, guid: fa721595fa475e044bf4e177b9c43e5a, type: 3}
+  portrait: {fileID: 21300000, guid: 09bfecd971c8050489267764000d60b8, type: 3}
   unitName: Soldier
   allyUnit: 0
   diagonal: 1

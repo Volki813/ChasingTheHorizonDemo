@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Potion
   m_EditorClassIdentifier: 
   itemName: Potion
-  itemIcon: {fileID: 21300000, guid: 2d58f48d8591ce441b956b1a67f17297, type: 3}
-  itemDescription: It tastes like liquid muscles! Heals 10 health.
+  itemIcon: {fileID: 21300000, guid: 915273f8b0e0e1848910209e02b95d23, type: 3}
+  itemDescription: Heals 10 health.
   type: 0
   healValue: 10

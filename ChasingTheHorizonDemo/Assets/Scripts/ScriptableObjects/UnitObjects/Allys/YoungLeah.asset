@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: YoungLeah
   m_EditorClassIdentifier: 
   sprite: {fileID: -485754724218236908, guid: 87d7111368a51484c928818d4a923dfc, type: 3}
-  portrait: {fileID: 21300000, guid: 9033e65722d483b47b0a3aadb758eb55, type: 3}
+  portrait: {fileID: 21300000, guid: 3503a274a7db6214ca37965845d2c69d, type: 3}
   unitName: Leah
   allyUnit: 1
   diagonal: 0

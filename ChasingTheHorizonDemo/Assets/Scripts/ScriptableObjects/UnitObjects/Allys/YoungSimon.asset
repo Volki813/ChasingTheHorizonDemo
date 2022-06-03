@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: YoungSimon
   m_EditorClassIdentifier: 
   sprite: {fileID: 6281134397095185206, guid: 1f3411609eac34f48aa480707d5359c4, type: 3}
-  portrait: {fileID: 21300000, guid: 36cc393e9a7a4ff42a31ea2276986925, type: 3}
+  portrait: {fileID: 21300000, guid: c042f133acc540347a6b4687beab2862, type: 3}
   unitName: Simon
   allyUnit: 1
   diagonal: 0

@@ -631,6 +631,34 @@ public partial class @CursorControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Disabled"",
+            ""id"": ""b0165dd2-ec75-4712-af5a-9dd1d1c330b3"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""d7049ed5-b41d-468c-b63b-080e1364f980"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2806a4ba-8944-4c44-b8c5-96a0b7be4f76"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -679,6 +707,9 @@ public partial class @CursorControls : IInputActionCollection2, IDisposable
         m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
         m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
+        // Disabled
+        m_Disabled = asset.FindActionMap("Disabled", throwIfNotFound: true);
+        m_Disabled_Newaction = m_Disabled.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -832,6 +863,39 @@ public partial class @CursorControls : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Disabled
+    private readonly InputActionMap m_Disabled;
+    private IDisabledActions m_DisabledActionsCallbackInterface;
+    private readonly InputAction m_Disabled_Newaction;
+    public struct DisabledActions
+    {
+        private @CursorControls m_Wrapper;
+        public DisabledActions(@CursorControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Disabled_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Disabled; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DisabledActions set) { return set.Get(); }
+        public void SetCallbacks(IDisabledActions instance)
+        {
+            if (m_Wrapper.m_DisabledActionsCallbackInterface != null)
+            {
+                @Newaction.started -= m_Wrapper.m_DisabledActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_DisabledActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_DisabledActionsCallbackInterface.OnNewaction;
+            }
+            m_Wrapper.m_DisabledActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+            }
+        }
+    }
+    public DisabledActions @Disabled => new DisabledActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -870,5 +934,9 @@ public partial class @CursorControls : IInputActionCollection2, IDisposable
         void OnConfirm(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
+    }
+    public interface IDisabledActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

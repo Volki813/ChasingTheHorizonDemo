@@ -71,6 +71,8 @@ public class AIManager : MonoBehaviour
         //Iterates through each enemy in the enemy list
         for(int i = 0; i < enemies.Count; i++)
         {
+            cursor.cursorControls.DeactivateInput();
+            yield return new WaitForEndOfFrame();
             currentEnemy = enemies[i];
             enemyAnimator = currentEnemy.animator;
 
@@ -207,20 +209,42 @@ public class AIManager : MonoBehaviour
             GetWalkableTiles();
             UnitLoader closestAlly = enemiesInRange[0];
             Node closestTile = FindClosestTile(closestAlly);
-            currentMap.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);
-            NodeMove(currentEnemy);
-            enemiesInRange.Clear();
-            return;
+
+            Node currentTile = currentMap.ReturnNodeAt((int)currentEnemy.transform.localPosition.x, (int)currentEnemy.transform.localPosition.y);
+
+            if (closestTile != null && closestTile.DistanceTo(currentTile) <= currentEnemy.unit.statistics.movement + currentEnemy.equippedWeapon.range)
+            {
+                currentMap.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);
+                NodeMove(currentEnemy);
+                enemiesInRange.Clear();
+                return;
+            }
+            else
+            {
+                enemiesInRange.Clear();
+                currentEnemy.Rest();
+            }
         }
         else if(enemiesInRange.Count >= 2)
         {
             GetWalkableTiles();
             UnitLoader closestAlly = DetermineWeakestUnit();
             Node closestTile = FindClosestTile(closestAlly);
-            currentMap.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);
-            NodeMove(currentEnemy);
-            enemiesInRange.Clear();
-            return;
+            
+            Node currentTile = currentMap.ReturnNodeAt((int)currentEnemy.transform.localPosition.x, (int)currentEnemy.transform.localPosition.y);
+
+            if(closestTile != null && closestTile.DistanceTo(currentTile) <= currentEnemy.unit.statistics.movement + currentEnemy.equippedWeapon.range)
+            {
+                currentMap.GeneratePathTo(closestTile.x, closestTile.y, currentEnemy);
+                NodeMove(currentEnemy);
+                enemiesInRange.Clear();
+                return;
+            }
+            else
+            {
+                enemiesInRange.Clear();
+                currentEnemy.Rest();
+            }
         }
     }
 
@@ -407,7 +431,7 @@ public class AIManager : MonoBehaviour
     {
         var moveSpeed = 5;
         if (fastMode){
-            moveSpeed = 10;
+            moveSpeed = 9;
         }
         else{
             moveSpeed = 5;

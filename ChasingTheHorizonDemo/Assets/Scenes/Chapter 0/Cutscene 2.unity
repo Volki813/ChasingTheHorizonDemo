@@ -344,11 +344,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &75700933
 MonoBehaviour:
@@ -607,7 +607,7 @@ Transform:
   m_GameObject: {fileID: 115828571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -956.1, y: 46.1, z: 0}
-  m_LocalScale: {x: 37, y: 37, z: 1}
+  m_LocalScale: {x: 12, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 74566844}
   m_RootOrder: 0
@@ -722,11 +722,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &231311601
 MonoBehaviour:
@@ -829,11 +829,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &265622996
 MonoBehaviour:
@@ -1435,11 +1435,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &661073367
 MonoBehaviour:
@@ -1541,11 +1541,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &669068586
 MonoBehaviour:
@@ -2124,11 +2124,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &1139566465
 MonoBehaviour:
@@ -2230,11 +2230,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 1
 --- !u!114 &1159315981
 MonoBehaviour:
@@ -2337,11 +2337,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &1161400208
 MonoBehaviour:
@@ -2443,11 +2443,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &1202557833
 MonoBehaviour:
@@ -2685,11 +2685,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &1311759404
 MonoBehaviour:
@@ -2897,11 +2897,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &1371766078
 MonoBehaviour:
@@ -3003,11 +3003,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &1373644376
 MonoBehaviour:
@@ -3321,11 +3321,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &1412334379
 MonoBehaviour:
@@ -3953,11 +3953,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &1625092252
 MonoBehaviour:
@@ -4262,11 +4262,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &1686993015
 MonoBehaviour:
@@ -4369,11 +4369,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &1714840954
 MonoBehaviour:
@@ -4854,11 +4854,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 9d670ac7311fe314c83381b72f570d0e, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &1883019537
 MonoBehaviour:
@@ -4960,11 +4960,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 71c0cc5b6bf34664b9318c8e7e28f383, type: 2}
-  imageHolder: {fileID: 2127356729}
+  imageHolder: {fileID: 115828573}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 1
-  textBox2: 0
+  textBox1: 0
+  textBox2: 1
   lastLine: 0
 --- !u!114 &1923811833
 MonoBehaviour:
@@ -5066,11 +5066,11 @@ MonoBehaviour:
   music: {fileID: 0}
   triggerMusic: 0
   character: {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
-  imageHolder: {fileID: 115828573}
+  imageHolder: {fileID: 2127356729}
   namePlate1: {fileID: 3094674553874879654}
   namePlate2: {fileID: 7108781036850832005}
-  textBox1: 0
-  textBox2: 1
+  textBox1: 1
+  textBox2: 0
   lastLine: 0
 --- !u!114 &1959349173
 MonoBehaviour:
@@ -5295,7 +5295,7 @@ Transform:
   m_GameObject: {fileID: 2127356727}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 942.2, y: -43.7, z: 0}
-  m_LocalScale: {x: 37, y: 37, z: 1}
+  m_LocalScale: {x: 12, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 1506620948}
   m_RootOrder: 0

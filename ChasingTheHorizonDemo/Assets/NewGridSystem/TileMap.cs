@@ -103,6 +103,11 @@ public class TileMap : MonoBehaviour
                 graph[x, y].blueHighlight.SetActive(false);
             }
         }
+
+        foreach(SelectableTile tile in FindObjectsOfType<SelectableTile>())
+        {
+            tile.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 0);
+        }
     }
     private void GenerateMapFromFile()
     {        
@@ -214,11 +219,7 @@ public class TileMap : MonoBehaviour
         int totalCost = 0;
         foreach (Node n in currentPath)
         {
-            totalCost += (int)CostToEnterTile(n.x, n.y);
-        }
-        if(totalCost > unit.unit.statistics.movement + 1)
-        {
-            print("you can't move here");
+            if(n != currentPath[0]) totalCost += (int)CostToEnterTile(n.x, n.y);
         }
 
         // Reverse path from target to source to make it a path from source to target
@@ -482,9 +483,10 @@ public class TileMap : MonoBehaviour
             }
         }
 
+        Node sourceNode = ReturnNodeAt((int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y);
         foreach(Node n in finalList.ToList<Node>())
         {
-            if(GenerateCostBetween(n.x, n.y, (int)unit.transform.localPosition.x, (int)unit.transform.localPosition.y) > unit.unit.statistics.movement + 1)
+            if(GenerateCostBetween(sourceNode.x, sourceNode.y, n.x, n.y) > unit.unit.statistics.movement)
             {
                 finalList.Remove(n);
             }
@@ -634,7 +636,7 @@ public class TileMap : MonoBehaviour
     }
     public bool IsOccupiedByEnemy(int x, int y)
     {
-        foreach(UnitLoader unit in TurnManager.instance.enemyUnits)
+        foreach (UnitLoader unit in TurnManager.instance.enemyUnits)
         {
             if(unit.transform.localPosition == new Vector3(x, y))
             {

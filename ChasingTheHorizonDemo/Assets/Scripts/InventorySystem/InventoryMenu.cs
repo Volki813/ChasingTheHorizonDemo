@@ -88,7 +88,14 @@ namespace InventorySystem
                         SoundManager.instance.PlayFX(9);
                         Vector3 targetPosition = new Vector3(map.selectedUnit.transform.position.x, map.selectedUnit.transform.position.y - 0.3f);
                         Instantiate(healingEffect, targetPosition, healingEffect.transform.rotation);
+
                         map.selectedUnit.Rest();
+                        cursor.CloseInventory();
+                        ActionMenuManager.instance.gameObject.SetActive(false);
+                        map.selectedUnit.inventory.inventory.Remove(consumable);
+                        map.selectedUnit = null;
+                        cursor.cursorControls.SwitchCurrentActionMap("MapScene");
+                        cursor.SetState(new MapState(cursor));
                     }
                     else
                     {
@@ -96,11 +103,15 @@ namespace InventorySystem
                         SoundManager.instance.PlayFX(9);
                         Vector3 targetPosition = new Vector3(map.selectedUnit.transform.position.x, map.selectedUnit.transform.position.y - 0.3f);
                         Instantiate(healingEffect, targetPosition, healingEffect.transform.rotation);
+                        
                         map.selectedUnit.Rest();
+                        cursor.CloseInventory();
+                        ActionMenuManager.instance.gameObject.SetActive(false);
+                        map.selectedUnit.inventory.inventory.Remove(consumable);
+                        map.selectedUnit = null;
+                        cursor.cursorControls.SwitchCurrentActionMap("MapScene");
+                        cursor.SetState(new MapState(cursor));
                     }
-                    map.selectedUnit.inventory.inventory.Remove(consumable);
-                    ClearSlots();
-                    Invoke("FillSlots", 0.05f);
                 }
             }
         }

@@ -24,6 +24,7 @@ public abstract class TurnState
 
     protected void DisableCursor()
     {
+        turnManager.cursor.cursorControls.SwitchCurrentActionMap("UI");
         turnManager.cursor.cursorControls.DeactivateInput();
         turnManager.cursor.animator.SetBool("Invisible", true);
     }

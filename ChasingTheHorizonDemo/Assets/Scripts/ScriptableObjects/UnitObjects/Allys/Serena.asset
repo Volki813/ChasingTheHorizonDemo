@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serena
   m_EditorClassIdentifier: 
   sprite: {fileID: 7636723911727702491, guid: d50b5c136dfb6dc4291f4b3ccfb6fd0c, type: 3}
-  portrait: {fileID: 21300000, guid: 608ae880e2096dc45b14a8942fbd42c3, type: 3}
+  portrait: {fileID: 21300000, guid: 137abaea02854f44cb7dbcae5e6e72ab, type: 3}
   unitName: Serena
   allyUnit: 1
   diagonal: 0

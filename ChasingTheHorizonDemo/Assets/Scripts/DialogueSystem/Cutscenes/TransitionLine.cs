@@ -12,8 +12,7 @@ namespace DialogueSystem
 
         public void ChangeScene()
         {
-            MusicPlayer.instance.FadeMusic(false);
-            Invoke("DelayedChangeScene", 1.5f);
+            Invoke("DelayedChangeScene", 3f);
         }
 
         private void DelayedChangeScene()

@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button primaryButton = null;
     [SerializeField] private GameObject unitsMenu = null;
     [SerializeField] private GameObject optionsMenu = null;
+    [SerializeField] private CursorController cursor = null;
 
     private void OnEnable()
     {
@@ -45,7 +46,8 @@ public class MenuManager : MonoBehaviour
 
     public void EndTurn()
     {
-        foreach(UnitLoader unit in FindObjectsOfType<UnitLoader>()) {
+        cursor.cursorControls.currentActionMap.Disable();
+        foreach (UnitLoader unit in FindObjectsOfType<UnitLoader>()) {
             if(unit.unit.allyUnit == true) {
                 unit.Rest();
             }

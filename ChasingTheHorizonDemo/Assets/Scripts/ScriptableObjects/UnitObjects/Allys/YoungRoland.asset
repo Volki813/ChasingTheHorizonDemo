@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: YoungRoland
   m_EditorClassIdentifier: 
   sprite: {fileID: 1571425482800299960, guid: 473b4e37db731984eb6168bafd93fc2b, type: 3}
-  portrait: {fileID: 21300000, guid: 68461da7a93584b4386e74206e740b9e, type: 3}
+  portrait: {fileID: 21300000, guid: e7524d432e18d0046b4a59492d6e6a49, type: 3}
   unitName: Roland
   allyUnit: 1
   diagonal: 0

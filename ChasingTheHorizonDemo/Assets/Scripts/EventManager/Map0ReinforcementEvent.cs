@@ -10,7 +10,7 @@ public class Map0ReinforcementEvent : Event
     public override void StartEvent()
     {
         reinforcements.SetActive(true);
-        for (int i = 0; i < reinforcementUnits.Length; i++)
+        for(int i = 0; i < reinforcementUnits.Length; i++)
         {
             TurnManager.instance.enemyUnits.Add(reinforcementUnits[i]);
         }

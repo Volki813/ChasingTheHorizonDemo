@@ -42,6 +42,7 @@ public class OpheliaEvent : Event
 
     private IEnumerator Event()
     {
+        cursor.cursorControls.DeactivateInput();
         MusicPlayer.instance.source.clip = enterOphelia;
         MusicPlayer.instance.FadeMusic(true);
         cursor.spriteRenderer.color = new Color32(255, 255, 255, 0);
@@ -50,7 +51,6 @@ public class OpheliaEvent : Event
         loseManager.gameObject.SetActive(false);
         yield return new WaitUntil(() => !screenDim.gameObject.activeSelf);
         yield return new WaitForSeconds(1f);
-        cursor.cursorControls.DeactivateInput();
         //Move Ophelia on screen
         opheliaObject.gameObject.SetActive(true);
         StartCoroutine(MoveUnit(opheliaObject, new Vector2(2f, 10f)));
@@ -80,6 +80,7 @@ public class OpheliaEvent : Event
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
         cursor.cursorControls.ActivateInput();
+        cursor.SetState(new MenuState(cursor));
         cursor.cursorControls.SwitchCurrentActionMap("UI");
         EventSystem.current.SetSelectedGameObject(restartButton.gameObject);
     }

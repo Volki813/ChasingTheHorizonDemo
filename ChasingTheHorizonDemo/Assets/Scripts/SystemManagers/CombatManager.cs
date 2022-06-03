@@ -51,7 +51,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        cursor.cursorControls.DeactivateInput();
+        cursor.cursorControls.currentActionMap.Disable();
         cursor.animator.SetBool("Invisible", true);
 
         //Check if defender has dialogue for when it's attacked

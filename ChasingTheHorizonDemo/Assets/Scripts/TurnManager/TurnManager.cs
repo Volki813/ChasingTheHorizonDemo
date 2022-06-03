@@ -64,6 +64,7 @@ public class TurnManager : MonoBehaviour
             if (unit.rested == false) return;
         }
         if(currentState.stateType == TurnState.StateType.Player) {
+            cursor.cursorControls.currentActionMap.Disable();
             SetState(new EnemyTurnState(this));
             Invoke("StartAi", 1.2f);
         }
