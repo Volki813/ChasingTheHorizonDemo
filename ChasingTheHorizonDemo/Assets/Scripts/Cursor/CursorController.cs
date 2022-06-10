@@ -97,7 +97,7 @@ public class CursorController : MonoBehaviour
     }
     private IEnumerator StartMovement(float moveSpeed)
     {
-        SoundManager.instance.PlayFX(2);
+        //SoundManager.instance.PlayFX(2);
 
         Vector2 poppedRequest = (Vector2)movementRequests.Peek();
         currentPosition += (Vector2)movementRequests.Pop();
@@ -110,7 +110,7 @@ public class CursorController : MonoBehaviour
             currentPosition -= poppedRequest;
             yield break;
         }
-
+        SoundManager.instance.PlayFX(2);
         MoveCamera();
 
         while((Vector2)transform.localPosition != currentPosition)
