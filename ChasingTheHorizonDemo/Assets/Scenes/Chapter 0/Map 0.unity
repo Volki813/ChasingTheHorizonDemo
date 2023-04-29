@@ -13230,6 +13230,7 @@ GameObject:
   - component: {fileID: 841415810}
   - component: {fileID: 841415813}
   - component: {fileID: 841415812}
+  - component: {fileID: 841415814}
   m_Layer: 8
   m_Name: YoungRoland
   m_TagString: Untagged
@@ -13376,6 +13377,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a827af4d05981e24fa1b47c4339d9be2, type: 2}
   under50Quote: {fileID: 11400000, guid: b20f2a310884faa4bb9ec1859180770f, type: 2}
   deathQuote: {fileID: 11400000, guid: 846abeaacc92a59469c5f2ff35f73b43, type: 2}
+--- !u!114 &841415814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841415808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa58b68664fa66241a720a2db1fc2469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passives:
+  - {fileID: 11400000, guid: e7dce54bcfc5eb14aba6cdb4340913b1, type: 2}
+  - {fileID: 11400000, guid: a241cb4e676ce0e4f8c9e91613d2eba1, type: 2}
+  - {fileID: 11400000, guid: b82d6d586e9275f4299768a4f725aea9, type: 2}
 --- !u!1 &848744795
 GameObject:
   m_ObjectHideFlags: 0
