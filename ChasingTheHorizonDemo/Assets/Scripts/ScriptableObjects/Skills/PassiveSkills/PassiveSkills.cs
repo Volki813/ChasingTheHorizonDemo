@@ -5,7 +5,7 @@ using UnityEngine;
 public class PassiveSkills : ScriptableObject
 {
     // increase or reduce stats (use negative numbers for reducing stats
-    // leave at 0 if stats should stay unchanged
+    // set values to 0 if unchanged and addtition, 1 if multiplication
     public int healthAmount;
     public int strengthAmount;
     public int magicAmount;
@@ -15,4 +15,6 @@ public class PassiveSkills : ScriptableObject
     public int motivationAmount;
     public int agilityAmount;
     public int schmovementAmount;
+
+    public bool multiply; // uses multiplication if true, addition if not
 }

@@ -16,15 +16,30 @@ public class SkillLoader : MonoBehaviour
         {
             if (unit == null) break;
 
-            unit.unit.statistics.health += passive.healthAmount;
-            unit.unit.statistics.strength += passive.strengthAmount;
-            unit.unit.statistics.magic += passive.magicAmount;
-            unit.unit.statistics.defense += passive.defenseAmount;
-            unit.unit.statistics.resistance += passive.resistanceAmount;
-            unit.unit.statistics.proficiency += passive.proficiencyAmount;
-            unit.unit.statistics.motivation += passive.motivationAmount;
-            unit.unit.statistics.agility += passive.agilityAmount;
-            unit.unit.statistics.movement += passive.schmovementAmount;
+            if (passive.multiply)
+            {
+                unit.unit.statistics.health *= passive.healthAmount;
+                unit.unit.statistics.strength *= passive.strengthAmount;
+                unit.unit.statistics.magic *= passive.magicAmount;
+                unit.unit.statistics.defense *= passive.defenseAmount;
+                unit.unit.statistics.resistance *= passive.resistanceAmount;
+                unit.unit.statistics.proficiency *= passive.proficiencyAmount;
+                unit.unit.statistics.motivation *= passive.motivationAmount;
+                unit.unit.statistics.agility *= passive.agilityAmount;
+                unit.unit.statistics.movement *= passive.schmovementAmount;
+            }
+            else
+            {
+                unit.unit.statistics.health += passive.healthAmount;
+                unit.unit.statistics.strength += passive.strengthAmount;
+                unit.unit.statistics.magic += passive.magicAmount;
+                unit.unit.statistics.defense += passive.defenseAmount;
+                unit.unit.statistics.resistance += passive.resistanceAmount;
+                unit.unit.statistics.proficiency += passive.proficiencyAmount;
+                unit.unit.statistics.motivation += passive.motivationAmount;
+                unit.unit.statistics.agility += passive.agilityAmount;
+                unit.unit.statistics.movement += passive.schmovementAmount;
+            }
         }
     }
 
@@ -38,16 +53,30 @@ public class SkillLoader : MonoBehaviour
         {
             if (unit == null) break;
 
-            unit.unit.statistics.health -= passive.healthAmount;
-            unit.unit.statistics.strength -= passive.strengthAmount;
-            unit.unit.statistics.magic -= passive.magicAmount;
-            unit.unit.statistics.defense -= passive.defenseAmount;
-            unit.unit.statistics.resistance -= passive.resistanceAmount;
-            unit.unit.statistics.proficiency -= passive.proficiencyAmount;
-            unit.unit.statistics.motivation -= passive.motivationAmount;
-            unit.unit.statistics.agility -= passive.agilityAmount;
-            unit.unit.statistics.movement -= passive.schmovementAmount;
-
+            if (passive.multiply)
+            {
+                unit.unit.statistics.health /= passive.healthAmount;
+                unit.unit.statistics.strength /= passive.strengthAmount;
+                unit.unit.statistics.magic /= passive.magicAmount;
+                unit.unit.statistics.defense /= passive.defenseAmount;
+                unit.unit.statistics.resistance /= passive.resistanceAmount;
+                unit.unit.statistics.proficiency /= passive.proficiencyAmount;
+                unit.unit.statistics.motivation /= passive.motivationAmount;
+                unit.unit.statistics.agility /= passive.agilityAmount;
+                unit.unit.statistics.movement /= passive.schmovementAmount;
+            }
+            else
+            {
+                unit.unit.statistics.health -= passive.healthAmount;
+                unit.unit.statistics.strength -= passive.strengthAmount;
+                unit.unit.statistics.magic -= passive.magicAmount;
+                unit.unit.statistics.defense -= passive.defenseAmount;
+                unit.unit.statistics.resistance -= passive.resistanceAmount;
+                unit.unit.statistics.proficiency -= passive.proficiencyAmount;
+                unit.unit.statistics.motivation -= passive.motivationAmount;
+                unit.unit.statistics.agility -= passive.agilityAmount;
+                unit.unit.statistics.movement -= passive.schmovementAmount;
+            }
         }
     }
 }
