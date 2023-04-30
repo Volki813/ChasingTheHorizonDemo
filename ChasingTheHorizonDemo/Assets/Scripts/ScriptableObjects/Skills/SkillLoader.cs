@@ -4,7 +4,7 @@ public class SkillLoader : MonoBehaviour
 {
 
     // place on unit and then drag passives here
-    [SerializeField] private PassiveSkills[] passives;
+    [SerializeField] private PassiveSkill[] passives = null;
 
     private void OnEnable()
     {
@@ -12,7 +12,7 @@ public class SkillLoader : MonoBehaviour
 
         UnitLoader unit = GetComponent<UnitLoader>();
 
-        foreach (PassiveSkills passive in passives)
+        foreach (PassiveSkill passive in passives)
         {
             if (unit == null) break;
 
@@ -49,7 +49,7 @@ public class SkillLoader : MonoBehaviour
 
         UnitLoader unit = GetComponent<UnitLoader>();
 
-        foreach (PassiveSkills passive in passives)
+        foreach (PassiveSkill passive in passives)
         {
             if (unit == null) break;
 

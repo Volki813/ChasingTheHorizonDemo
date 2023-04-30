@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a559f5e03e22a4f9fba2aa6a0f53af, type: 3}
   m_Name: Magic-2
   m_EditorClassIdentifier: 
+  skillName: magic-2
+  skillIcon: {fileID: 0}
+  skillDescription: reduces magic by 2
+  skillType: 2
   healthAmount: 0
   strengthAmount: 0
   magicAmount: -2
@@ -21,3 +25,4 @@ MonoBehaviour:
   motivationAmount: 0
   agilityAmount: 0
   schmovementAmount: 0
+  multiply: 0

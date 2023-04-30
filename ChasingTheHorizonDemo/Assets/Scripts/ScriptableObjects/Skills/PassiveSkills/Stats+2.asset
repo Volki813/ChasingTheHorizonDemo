@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a559f5e03e22a4f9fba2aa6a0f53af, type: 3}
   m_Name: Stats+2
   m_EditorClassIdentifier: 
+  skillName: stats+2
+  skillIcon: {fileID: 0}
+  skillDescription: raises all stats by 2
+  skillType: 2
   healthAmount: 2
   strengthAmount: 2
   magicAmount: 2
@@ -21,3 +25,4 @@ MonoBehaviour:
   motivationAmount: 2
   agilityAmount: 2
   schmovementAmount: 2
+  multiply: 0
