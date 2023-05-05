@@ -13390,9 +13390,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passives:
-  - {fileID: 11400000, guid: e7dce54bcfc5eb14aba6cdb4340913b1, type: 2}
-  - {fileID: 11400000, guid: a241cb4e676ce0e4f8c9e91613d2eba1, type: 2}
+  - {fileID: 11400000, guid: 30508dbb0b501284ba5bde1163ccbf8c, type: 2}
   - {fileID: 11400000, guid: b82d6d586e9275f4299768a4f725aea9, type: 2}
+  - {fileID: 11400000, guid: e7dce54bcfc5eb14aba6cdb4340913b1, type: 2}
 --- !u!1 &848744795
 GameObject:
   m_ObjectHideFlags: 0

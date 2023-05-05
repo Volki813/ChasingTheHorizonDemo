@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28a559f5e03e22a4f9fba2aa6a0f53af, type: 3}
-  m_Name: Health times 2
+  m_Name: Double Health
   m_EditorClassIdentifier: 
-  skillName: Double Health
+  skillName: double health
   skillIcon: {fileID: 0}
   skillDescription: doubles health
   skillType: 2
