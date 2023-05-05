@@ -3,15 +3,15 @@
 [CreateAssetMenu(menuName = "Skills/Passive Skills/Likelihood Passive", fileName = "Likelihood Passive Skill")]
 public class LikelihoodPassive : PassiveSkill
 {
-    [Range(0, 1)][SerializeField] private float likelihoodFactor;
+    [SerializeField] private float likelihoodFactor;
 
     public void IncreaseLikelihoodOfBeingTargeted()
     {
-        
+        // increase value that influences likelihood of being targeted when implented    
     }
 
     public void DecreaseLikelihoodOfBeingTargeted()
     {
-
+        // decrease value that influences likelihood of being targeted when implented  
     }
 }

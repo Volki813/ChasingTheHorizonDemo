@@ -13393,6 +13393,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30508dbb0b501284ba5bde1163ccbf8c, type: 2}
   - {fileID: 11400000, guid: b82d6d586e9275f4299768a4f725aea9, type: 2}
   - {fileID: 11400000, guid: e7dce54bcfc5eb14aba6cdb4340913b1, type: 2}
+  likelihoodPassives: []
+  HPConditionals:
+  - {fileID: 11400000, guid: b197689f028d0a141aa0c79ebb89f07f, type: 2}
 --- !u!1 &848744795
 GameObject:
   m_ObjectHideFlags: 0
