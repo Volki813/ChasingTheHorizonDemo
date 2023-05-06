@@ -16,13 +16,14 @@ MonoBehaviour:
   skillIcon: {fileID: 0}
   skillDescription: doubles health
   skillType: 2
-  healthAmount: 2
-  strengthAmount: 1
-  magicAmount: 1
-  defenseAmount: 1
-  resistanceAmount: 1
-  proficiencyAmount: 1
-  motivationAmount: 1
-  agilityAmount: 1
-  schmovementAmount: 1
+  stats:
+    health: 2
+    strength: 1
+    magic: 1
+    defense: 1
+    resistance: 1
+    proficiency: 1
+    motivation: 1
+    agility: 1
+    movement: 1
   multiply: 1

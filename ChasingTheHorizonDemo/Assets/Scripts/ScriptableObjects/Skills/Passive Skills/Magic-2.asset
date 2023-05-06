@@ -16,13 +16,14 @@ MonoBehaviour:
   skillIcon: {fileID: 0}
   skillDescription: decreases magic by 2
   skillType: 2
-  healthAmount: 0
-  strengthAmount: 0
-  magicAmount: -2
-  defenseAmount: 0
-  resistanceAmount: 0
-  proficiencyAmount: 0
-  motivationAmount: 0
-  agilityAmount: 0
-  schmovementAmount: 0
+  stats:
+    health: 0
+    strength: 0
+    magic: -2
+    defense: 0
+    resistance: 0
+    proficiency: 0
+    motivation: 0
+    agility: 0
+    movement: 0
   multiply: 0

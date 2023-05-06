@@ -16,13 +16,14 @@ MonoBehaviour:
   skillIcon: {fileID: 0}
   skillDescription: raises stats by 2
   skillType: 2
-  healthAmount: 2
-  strengthAmount: 2
-  magicAmount: 2
-  defenseAmount: 2
-  resistanceAmount: 2
-  proficiencyAmount: 2
-  motivationAmount: 2
-  agilityAmount: 2
-  schmovementAmount: 2
+  stats:
+    health: 2
+    strength: 2
+    magic: 2
+    defense: 2
+    resistance: 2
+    proficiency: 2
+    motivation: 2
+    agility: 2
+    movement: 2
   multiply: 0

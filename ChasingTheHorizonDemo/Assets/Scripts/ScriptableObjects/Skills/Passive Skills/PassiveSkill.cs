@@ -8,15 +8,8 @@ public class PassiveSkill : Skill
     [Header("Changed Stats")]
     // increase or reduce stats (use negative numbers for reducing stats if using addition, 0 < number < 1 if multiplication)
     // set values to 0 if unchanged and addtition, 1 if multiplication
-    public int healthAmount;
-    public int strengthAmount;
-    public int magicAmount;
-    public int defenseAmount;
-    public int resistanceAmount;
-    public int proficiencyAmount;
-    public int motivationAmount;
-    public int agilityAmount;
-    public int schmovementAmount;
+
+    public Statistics stats;
 
     [Header("Multiply")]
     public bool multiply; // uses multiplication if true, addition if not
@@ -32,31 +25,8 @@ public class PassiveSkill : Skill
 
         if (unit == null) return;
 
-        if (multiply)
-        {
-            unit.unit.statistics.health *= healthAmount;
-            unit.unit.statistics.strength *= strengthAmount;
-            unit.unit.statistics.magic *= magicAmount;
-            unit.unit.statistics.defense *= defenseAmount;
-            unit.unit.statistics.resistance *= resistanceAmount;
-            unit.unit.statistics.proficiency *= proficiencyAmount;
-            unit.unit.statistics.motivation *= motivationAmount;
-            unit.unit.statistics.agility *= agilityAmount;
-            unit.unit.statistics.movement *= schmovementAmount;
-        }
-        else
-        {
-            unit.unit.statistics.health += healthAmount;
-            unit.unit.statistics.strength += strengthAmount;
-            unit.unit.statistics.magic += magicAmount;
-            unit.unit.statistics.defense += defenseAmount;
-            unit.unit.statistics.resistance += resistanceAmount;
-            unit.unit.statistics.proficiency += proficiencyAmount;
-            unit.unit.statistics.motivation += motivationAmount;
-            unit.unit.statistics.agility += agilityAmount;
-            unit.unit.statistics.movement += schmovementAmount;
-
-        }
+        if (multiply) unit.unit.statistics *= stats;
+        else unit.unit.statistics += stats;
     }
 
     public void UnloadStats()
@@ -64,29 +34,7 @@ public class PassiveSkill : Skill
         // unloads passives
         if (unit == null) return;
 
-        if (multiply)
-        {
-            unit.unit.statistics.health /= healthAmount;
-            unit.unit.statistics.strength /= strengthAmount;
-            unit.unit.statistics.magic /= magicAmount;
-            unit.unit.statistics.defense /= defenseAmount;
-            unit.unit.statistics.resistance /= resistanceAmount;
-            unit.unit.statistics.proficiency /= proficiencyAmount;
-            unit.unit.statistics.motivation /= motivationAmount;
-            unit.unit.statistics.agility /= agilityAmount;
-            unit.unit.statistics.movement /= schmovementAmount;
-        }
-        else
-        {
-            unit.unit.statistics.health -= healthAmount;
-            unit.unit.statistics.strength -= strengthAmount;
-            unit.unit.statistics.magic -= magicAmount;
-            unit.unit.statistics.defense -= defenseAmount;
-            unit.unit.statistics.resistance -= resistanceAmount;
-            unit.unit.statistics.proficiency -= proficiencyAmount;
-            unit.unit.statistics.motivation -= motivationAmount;
-            unit.unit.statistics.agility -= agilityAmount;
-            unit.unit.statistics.movement -= schmovementAmount;
-        }
+        if (multiply) unit.unit.statistics /= stats;
+        else unit.unit.statistics -= stats;
     }
 }
