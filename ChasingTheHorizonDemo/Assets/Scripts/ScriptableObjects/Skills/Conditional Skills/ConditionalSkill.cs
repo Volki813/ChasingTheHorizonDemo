@@ -3,7 +3,6 @@
 public class ConditionalSkill : Skill
 {
     protected UnitLoader unit;
-    protected bool condition = false;
 
     [Header("Change Stats")]
     // increase or reduce stats (use negative numbers for reducing stats if using addition, 0 < number < 1 if multiplication)
@@ -13,32 +12,44 @@ public class ConditionalSkill : Skill
     [Header("Multiply")]
     public bool multiply; // uses multiplication if true, addition if not
 
+    /*
     public void SetUnit(UnitLoader unit)
     {
         this.unit = unit;
     }
+    */
 
-    public void LoadStats()
+    public Statistics GetStats()
     {
         // loads passives
 
-        if (unit == null) return;
+        // if (unit == null) return;
 
-        if (multiply) unit.unit.statistics *= stats;
-        else unit.unit.statistics += stats;
+        // if (multiply) unit.unit.statistics *= stats;
+        // else unit.unit.statistics += stats;
+
+        return stats;
     }
 
+    /*
     public void UnloadStats()
     {
         // unloads passives
+        
         if (unit == null) return;
 
         if (multiply) unit.unit.statistics /= stats;
         else unit.unit.statistics -= stats;
     }
+    */
 
-    public virtual bool CheckCondition() // will be overriden by subclasses (don't use this class, since the condition isn't specified)
+    public virtual bool CheckCondition(UnitLoader unit) // will be overriden by subclasses (don't use this class, since the condition isn't specified)
     {
-        return condition;
+        return false;
+    }
+
+    public virtual bool CheckCondition(UnitLoader unit, float randonNumber)
+    {
+        return false;
     }
 }

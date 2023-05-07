@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e72d988d3ae4014ea6a5584c29482fc, type: 3}
+  m_Name: Nullify Damage
+  m_EditorClassIdentifier: 
+  skillName: 
+  skillIcon: {fileID: 0}
+  skillDescription: 
+  skillType: 1
+  stats:
+    health: 0
+    strength: 0
+    magic: 0
+    defense: 99
+    resistance: 99
+    proficiency: 0
+    motivation: 0
+    agility: 0
+    movement: 0
+  multiply: 0
+  usedStat: 000000010000000000
+  percentage: 1

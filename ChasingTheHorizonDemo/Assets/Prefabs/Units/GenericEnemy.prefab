@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 2932573471089614712}
   - component: {fileID: 2932573471089614714}
   - component: {fileID: 2932573471089614715}
+  - component: {fileID: 4337270037488074985}
   m_Layer: 8
   m_Name: GenericEnemy
   m_TagString: Untagged
@@ -234,13 +235,10 @@ MonoBehaviour:
   rested: 0
   attackable: 0
   originalPosition: {x: 0, y: 0}
-  map: {fileID: 0}
   unit: {fileID: 11400000, guid: c714d829b5a3149418d7569575066032, type: 2}
   behaviorTag: {fileID: 2932573471089614714}
   battleDialogue: {fileID: 0}
   target: {fileID: 0}
-  spriteRenderer: {fileID: 2932573471089614713}
-  animator: {fileID: 2932573471089614715}
   inventory: {fileID: 2932573470475702768}
   actionMenu: {fileID: 0}
   equippedWeapon: {fileID: 0}
@@ -248,6 +246,10 @@ MonoBehaviour:
   actionMenuSpawn: {fileID: 2932573471668334438}
   attackedDialogue: {fileID: 0}
   defeatedDialogue: {fileID: 0}
+  below50Quote: 0
+  map: {fileID: 0}
+  spriteRenderer: {fileID: 2932573471089614713}
+  animator: {fileID: 2932573471089614715}
 --- !u!114 &2932573471089614714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +265,7 @@ MonoBehaviour:
   order: 9
   blitz: 1
   defensive: 0
+  boss: 0
 --- !u!95 &2932573471089614715
 Animator:
   serializedVersion: 3
@@ -282,6 +285,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4337270037488074985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2932573471089614718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa58b68664fa66241a720a2db1fc2469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passives: []
+  likelihoodPassives: []
+  HPConditionals: []
+  onHitConditionals: []
 --- !u!1 &2932573471668334437
 GameObject:
   m_ObjectHideFlags: 0

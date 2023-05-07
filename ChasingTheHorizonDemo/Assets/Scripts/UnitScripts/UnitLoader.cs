@@ -6,6 +6,8 @@ using InventorySystem;
 //UnitLoader script loads all the data and functions each Unit needs
 //Each unit regardless of affiliation requires this script
 //I think everything else in here is fairly self explanatory
+
+[RequireComponent(typeof(SkillLoader))]
 public class UnitLoader : MonoBehaviour
 {
     public List<Node> currentPath = new List<Node>();
@@ -34,6 +36,7 @@ public class UnitLoader : MonoBehaviour
     public MapDialogue attackedDialogue = null;
     public MapDialogue defeatedDialogue = null;
     public bool below50Quote = false;
+    public SkillLoader skills;
 
     [HideInInspector] public TileMap map;
     [HideInInspector] public SpriteRenderer spriteRenderer = null;
@@ -48,6 +51,7 @@ public class UnitLoader : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = unit.sprite;
         EquipWeapon();
+        skills = GetComponent<SkillLoader>();
     }
 
     public BattleStatistics CombatStatistics()

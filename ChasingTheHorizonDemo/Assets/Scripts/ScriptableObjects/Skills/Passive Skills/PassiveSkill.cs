@@ -14,27 +14,34 @@ public class PassiveSkill : Skill
     [Header("Multiply")]
     public bool multiply; // uses multiplication if true, addition if not
 
+    /*
     public void SetUnit(UnitLoader unit)
     {
         this.unit = unit;
     }
+    */
 
-    public void LoadStats()
+    public Statistics GetStats()
     {
         // loads passives
 
-        if (unit == null) return;
+        // if (unit == null) return;
 
-        if (multiply) unit.unit.statistics *= stats;
-        else unit.unit.statistics += stats;
+        // if (multiply) unit.unit.statistics *= stats;
+        // else unit.unit.statistics += stats;
+
+        return stats;
     }
 
+    /*
     public void UnloadStats()
     {
         // unloads passives
+        
         if (unit == null) return;
 
         if (multiply) unit.unit.statistics /= stats;
         else unit.unit.statistics -= stats;
     }
+    */
 }

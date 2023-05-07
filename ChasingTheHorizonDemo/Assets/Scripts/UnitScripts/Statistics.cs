@@ -16,8 +16,8 @@ public struct Statistics
     public int agility;
     public int movement;
 
-     
-    public Statistics (int hp = 0, int str = 0, int mag = 0, int def = 0, int res = 0, int prof = 0, int mot = 0, int agi = 0, int mov = 0)
+
+    public Statistics(int hp = 0, int str = 0, int mag = 0, int def = 0, int res = 0, int prof = 0, int mot = 0, int agi = 0, int mov = 0)
     {
         //Constructor
         //When creating a Stat object instance we can define each stat if we need otherwise they default to 0
@@ -44,7 +44,7 @@ public struct Statistics
 
 
     //addition
-    public static Statistics operator +(Statistics a, Statistics b) 
+    public static Statistics operator +(Statistics a, Statistics b)
         => new Statistics
         (
             (a.health + b.health),
@@ -55,11 +55,11 @@ public struct Statistics
             (a.proficiency + b.proficiency),
             (a.motivation + b.motivation),
             (a.agility + b.agility),
-            (a.movement + b.movement)               
+            (a.movement + b.movement)
         );
-    
+
     //subtraction
-    public static Statistics operator -(Statistics a, Statistics b) 
+    public static Statistics operator -(Statistics a, Statistics b)
         => new Statistics
         (
             (a.health - b.health),
@@ -70,11 +70,11 @@ public struct Statistics
             (a.proficiency - b.proficiency),
             (a.motivation - b.motivation),
             (a.agility - b.agility),
-            (a.movement - b.movement)               
+            (a.movement - b.movement)
         );
 
     //multiplication
-    public static Statistics operator *(Statistics a, Statistics b) 
+    public static Statistics operator *(Statistics a, Statistics b)
         => new Statistics
         (
             (a.health * b.health),
@@ -85,11 +85,11 @@ public struct Statistics
             (a.proficiency * b.proficiency),
             (a.motivation * b.motivation),
             (a.agility * b.agility),
-            (a.movement * b.movement)             
+            (a.movement * b.movement)
         );
 
     //division
-    public static Statistics operator /(Statistics a, Statistics b) 
+    public static Statistics operator /(Statistics a, Statistics b)
         => new Statistics
         (
             (a.health / b.health),
@@ -102,7 +102,6 @@ public struct Statistics
             (a.agility / b.agility),
             (a.movement / b.movement)
         );
-
 }
 
     

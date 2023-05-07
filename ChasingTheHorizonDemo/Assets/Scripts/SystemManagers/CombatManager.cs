@@ -233,7 +233,7 @@ public class CombatManager : MonoBehaviour
         if(TurnManager.instance.currentState.stateType == TurnState.StateType.Player)
         {
             cursor.animator.SetBool("Invisible", false);
-        }        
+        }
         yield return null;
     }
 
@@ -371,7 +371,7 @@ public class CombatManager : MonoBehaviour
                 //Unit Crits                
                 SoundManager.instance.PlayFX(4);
                 battleText.SetText("Crit");                
-                Instantiate(battleText, defender.transform.position, Quaternion.identity);                
+                Instantiate(battleText, defender.transform.position, Quaternion.identity);
                 defender.currentHealth = defender.currentHealth - Critical(attacker, defender);
                 StartCoroutine(Shake(Critical(attacker, defender), true));
                 defenderHealth.value = defender.currentHealth;
@@ -420,9 +420,9 @@ public class CombatManager : MonoBehaviour
                     attacker.currentHealth = attacker.currentHealth - Critical(defender, attacker);
                     StartCoroutine(Shake(Critical(defender, attacker), false));
                     attackerHealth.value = attacker.currentHealth;
-                    
+
                     //Display critial quote
-                    if(defender.unit.allyUnit && !attacker.defeatedDialogue)
+                    if (defender.unit.allyUnit && !attacker.defeatedDialogue)
                     {
                         MapDialogueManager.instance.WriteSingle(defender.battleDialogue.RandomCritQuote());
                         dialoguePlayed = true;
@@ -565,11 +565,15 @@ public class CombatManager : MonoBehaviour
 
     public int Hit(UnitLoader attacker, UnitLoader defender)
     {
-        return attacker.CombatStatistics().attack - defender.CombatStatistics().protection;
+        // defender.skills.SetWasHit(true);
+
+        return Mathf.Max(attacker.CombatStatistics().attack - defender.CombatStatistics().protection, 0);
     }
     private int Critical(UnitLoader attacker, UnitLoader defender)
     {
-        return attacker.CombatStatistics().attack * 2 - defender.CombatStatistics().protection;
+        // defender.skills.SetWasHit(true);
+
+        return Mathf.Max(attacker.CombatStatistics().attack * 2 - defender.CombatStatistics().protection, 0);
     }
 
     private string CheckForDeaths(UnitLoader attacker, UnitLoader defender)
