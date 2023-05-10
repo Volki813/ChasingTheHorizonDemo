@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class SkillLoader : MonoBehaviour
 {
-
     // for conditionals so that they don't apply the effect every frame
     private List<bool> hasActivatedHP = new List<bool>(0);
     private List<bool> hasActivatedOnHit = new List<bool>(0);
 
     // place on unit and then drag passives here
     [SerializeField] private PassiveSkill[] passives = null; // order is important if multiply skills are included: if addition skill is placed before multiply skill, the stat increase will multiply too, otherwise, it won't
-    [SerializeField] private LikelihoodPassive[] likelihoodPassives = null;
+    // [SerializeField] private LikelihoodPassive[] likelihoodPassives = null;
     [SerializeField] private HPConditional[] HPConditionals = null;
     [SerializeField] private OnHitConditional[] onHitConditionals = null;
 
@@ -38,6 +37,7 @@ public class SkillLoader : MonoBehaviour
             }
         }
 
+        /*
         if (likelihoodPassives != null)
         {
             foreach (LikelihoodPassive likelihoodPassive in likelihoodPassives)
@@ -50,9 +50,10 @@ public class SkillLoader : MonoBehaviour
                 {
                     unit.unit.statistics += likelihoodPassive.GetStats();
                 }
-                likelihoodPassive.IncreaseLikelihoodOfBeingTargeted();
+                // increase likelihood
             }
         }
+        */
 
         if (HPConditionals != null)
         {
@@ -62,7 +63,7 @@ public class SkillLoader : MonoBehaviour
             }
         }
 
-        /*
+
         if (onHitConditionals != null)
         {
             foreach (OnHitConditional onHitConditional in onHitConditionals)
@@ -70,14 +71,13 @@ public class SkillLoader : MonoBehaviour
                 hasActivatedOnHit.Add(false);
             }
         }
-        */
     }
 
     private void Update()
     {
         if (HPConditionals != null)
         {
-            for (int i = 0; i < HPConditionals.Length; i++) // didn't want to set the unit every frame
+            for (int i = 0; i < HPConditionals.Length; i++)
             {
                 if (!hasActivatedHP[i] && HPConditionals[i].CheckCondition(unit))
                 {
@@ -106,17 +106,14 @@ public class SkillLoader : MonoBehaviour
             }
         }
 
-        /*
+
         if (onHitConditionals != null)
         {
             if (wasHit)
             {
-                float randomNumber = Random.Range(1, 100);
-                StartCoroutine(OnHitActions(randomNumber));
+                StartCoroutine(TurnOffBonus());
             }
-
         }
-        */
     }
 
     private void OnDisable()
@@ -136,6 +133,7 @@ public class SkillLoader : MonoBehaviour
             }
         }
 
+        /*
         if (likelihoodPassives != null)
         {
             foreach (LikelihoodPassive likelihoodPassive in likelihoodPassives)
@@ -148,9 +146,10 @@ public class SkillLoader : MonoBehaviour
                 {
                     unit.unit.statistics -= likelihoodPassive.GetStats();
                 }
-                likelihoodPassive.DecreaseLikelihoodOfBeingTargeted();
+                // decrease likelihood
             }
         }
+        */
 
         if (HPConditionals != null)
         {
@@ -169,8 +168,6 @@ public class SkillLoader : MonoBehaviour
             }
         }
 
-
-        /*
         if (onHitConditionals != null)
         {
             for (int i = 0; i < onHitConditionals.Length; i++)
@@ -186,30 +183,37 @@ public class SkillLoader : MonoBehaviour
                 hasActivatedOnHit[i] = false;
             }
         }
-        */
     }
 
-    /*
-    private IEnumerator OnHitActions(float randomNumber)
+    public void ApplyOnHitEffect()
     {
-        for (int i = 0; i < onHitConditionals.Length; i++) // didn't want to set the unit every frame
+        if (onHitConditionals == null) return;
+        if (!wasHit)
         {
-            if (!hasActivatedOnHit[i] && onHitConditionals[i].CheckCondition(unit, randomNumber))
+            float randomNumber = Random.Range(1, 100);
+            for (int i = 0; i < onHitConditionals.Length; i++) // didn't want to set the unit every frame
             {
-                if (onHitConditionals[i].multiply)
+                if (!hasActivatedOnHit[i] && onHitConditionals[i].CheckCondition(unit, randomNumber))
                 {
-                    unit.unit.statistics *= onHitConditionals[i].GetStats();
-                    yield return new WaitForSeconds(2);
+                    if (onHitConditionals[i].multiply)
+                    {
+                        unit.unit.statistics *= onHitConditionals[i].GetStats();
+                    }
+                    else
+                    {
+                        unit.unit.statistics += onHitConditionals[i].GetStats();
+                    }
+                    hasActivatedOnHit[i] = true;
                 }
-                else
-                {
-                    unit.unit.statistics += onHitConditionals[i].GetStats();
-                    yield return new WaitForSeconds(2);
-                }
-                hasActivatedOnHit[i] = true;
             }
+            wasHit = true;
         }
-        yield return new WaitForSeconds(2);
+        
+    }
+
+    private IEnumerator TurnOffBonus()
+    {
+        yield return null;
         for (int i = 0; i < onHitConditionals.Length; i++)
         {
             if (hasActivatedOnHit[i])
@@ -227,21 +231,4 @@ public class SkillLoader : MonoBehaviour
         }
         wasHit = false;
     }
-    */
-
-    #region Setters and Getters
-
-    // setters and getters
-    public void SetWasHit(bool wasHit)
-    {
-        Debug.Log("hit");
-        this.wasHit = wasHit;
-    }
-
-    public bool GetWasHit()
-    {
-        return wasHit;
-    }
-
-    #endregion
 }

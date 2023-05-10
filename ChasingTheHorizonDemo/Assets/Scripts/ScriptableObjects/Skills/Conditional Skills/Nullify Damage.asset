@@ -28,4 +28,4 @@ MonoBehaviour:
     movement: 0
   multiply: 0
   usedStat: 000000010000000000
-  percentage: 1
+  divideValue: 1

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 //The CombatManager handles all combat between units
@@ -346,7 +347,7 @@ public class CombatManager : MonoBehaviour
 
         //Shake the healthbar
         while(isShaking && (Time.time - startTime) < 0.2f){
-            healthBar.transform.position = originalPosition + Random.insideUnitSphere * intensity;
+            healthBar.transform.position = originalPosition + UnityEngine.Random.insideUnitSphere * intensity;
             yield return null;
         }
 
@@ -362,8 +363,9 @@ public class CombatManager : MonoBehaviour
 
     private void InitiatorAttack(UnitLoader attacker, UnitLoader defender)
     {
+        defender.skills.ApplyOnHitEffect(); // Activates defender's on hit skills when they are being hit
         //Check for a hit
-        if(HitRoll(attacker))
+        if (HitRoll(attacker))
         {
             //Checks for a crit
             if(CritRoll(attacker))
@@ -403,12 +405,14 @@ public class CombatManager : MonoBehaviour
             return;
         }
     }
+
     private void DefenderAttack(UnitLoader attacker, UnitLoader defender)
     {
         if(CheckDistance(defender, attacker) <= 1 || defender.equippedWeapon.range >= attacker.equippedWeapon.range)
         {
+            attacker.skills.ApplyOnHitEffect(); // Activates defender's on hit skills when they are being hit
             //Check for a hit
-            if(HitRoll(defender))
+            if (HitRoll(defender))
             {
                 //Checks for a crit
                 if(CritRoll(defender))
@@ -544,7 +548,7 @@ public class CombatManager : MonoBehaviour
     
     private bool HitRoll(UnitLoader unit)
     {
-        int roll = Random.Range(0, 99);
+        int roll = UnityEngine.Random.Range(0, 99);
 
         if (roll > unit.CombatStatistics().hit)
             return false;
@@ -554,7 +558,7 @@ public class CombatManager : MonoBehaviour
     }
     private bool CritRoll(UnitLoader unit)
     {
-        int roll = Random.Range(0, 99);
+        int roll = UnityEngine.Random.Range(0, 99);
 
         if (roll > unit.CombatStatistics().crit)
             return false;
@@ -565,14 +569,10 @@ public class CombatManager : MonoBehaviour
 
     public int Hit(UnitLoader attacker, UnitLoader defender)
     {
-        defender.skills.SetWasHit(true);
-
         return Mathf.Max(attacker.CombatStatistics().attack - defender.CombatStatistics().protection, 0);
     }
     private int Critical(UnitLoader attacker, UnitLoader defender)
     {
-        defender.skills.SetWasHit(true);
-
         return Mathf.Max(attacker.CombatStatistics().attack * 2 - defender.CombatStatistics().protection, 0);
     }
 

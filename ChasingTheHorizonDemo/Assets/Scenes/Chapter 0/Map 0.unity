@@ -33337,10 +33337,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4337270037488074985, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
         type: 3}
+      propertyPath: passives.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337270037488074985, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
+        type: 3}
       propertyPath: onHitConditionals.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: fbb4c6b08fd569445aa4c7036c3a26f7,
         type: 2}
+    - target: {fileID: 4337270037488074985, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
+        type: 3}
+      propertyPath: passives.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4790933946463596544, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
         type: 3}
       propertyPath: m_RootOrder

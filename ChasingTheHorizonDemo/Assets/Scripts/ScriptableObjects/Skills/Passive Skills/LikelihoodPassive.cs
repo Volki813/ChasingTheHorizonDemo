@@ -5,13 +5,8 @@ public class LikelihoodPassive : PassiveSkill
 {
     [SerializeField] private float likelihoodFactor;
 
-    public void IncreaseLikelihoodOfBeingTargeted()
+    public float GetLikelihood()
     {
-        // increase value that influences likelihood of being targeted when implented    
-    }
-
-    public void DecreaseLikelihoodOfBeingTargeted()
-    {
-        // decrease value that influences likelihood of being targeted when implented  
+        return likelihoodFactor;
     }
 }
