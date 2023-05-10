@@ -59,7 +59,7 @@ public class CursorController : MonoBehaviour
         currentPosition = transform.localPosition;
         highlight = GetComponent<SpriteRenderer>().sprite;
         enemyTurn = false;
-    }    
+    }
 
     public void RequestMove(InputAction.CallbackContext ctx)
     {

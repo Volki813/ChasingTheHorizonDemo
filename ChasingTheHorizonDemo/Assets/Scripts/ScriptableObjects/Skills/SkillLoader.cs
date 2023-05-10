@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 
@@ -78,35 +79,29 @@ public class SkillLoader : MonoBehaviour
         {
             for (int i = 0; i < HPConditionals.Length; i++) // didn't want to set the unit every frame
             {
-                if (HPConditionals[i].CheckCondition(unit))
+                if (!hasActivatedHP[i] && HPConditionals[i].CheckCondition(unit))
                 {
-                    if (!hasActivatedHP[i])
+                    if (HPConditionals[i].multiply)
                     {
-                        if (HPConditionals[i].multiply)
-                        {
-                            unit.unit.statistics *= HPConditionals[i].GetStats();
-                        }
-                        else
-                        {
-                            unit.unit.statistics += HPConditionals[i].GetStats();
-                        }
-                        hasActivatedHP[i] = true;
+                        unit.unit.statistics *= HPConditionals[i].GetStats();
                     }
+                    else
+                    {
+                        unit.unit.statistics += HPConditionals[i].GetStats();
+                    }
+                    hasActivatedHP[i] = true;
                 }
-                else
+                else if (hasActivatedHP[i] && !HPConditionals[i].CheckCondition(unit))
                 {
-                    if (hasActivatedHP[i])
+                    if (HPConditionals[i].multiply)
                     {
-                        if (HPConditionals[i].multiply)
-                        {
-                            unit.unit.statistics /= HPConditionals[i].GetStats();
-                        }
-                        else
-                        {
-                            unit.unit.statistics -= HPConditionals[i].GetStats();
-                        }
-                        hasActivatedHP[i] = false;
+                        unit.unit.statistics /= HPConditionals[i].GetStats();
                     }
+                    else
+                    {
+                        unit.unit.statistics -= HPConditionals[i].GetStats();
+                    }
+                    hasActivatedHP[i] = false;
                 }
             }
         }
@@ -114,39 +109,12 @@ public class SkillLoader : MonoBehaviour
         /*
         if (onHitConditionals != null)
         {
-            for (int i = 0; i < onHitConditionals.Length; i++) // didn't want to set the unit every frame
+            if (wasHit)
             {
-                if (wasHit && onHitConditionals[i].CheckCondition(unit, Random.Range(1,100)))
-                {
-                    if (!hasActivatedOnHit[i])
-                    {
-                        if (onHitConditionals[i].multiply)
-                        {
-                            unit.unit.statistics *= onHitConditionals[i].GetStats();
-                        }
-                        else
-                        {
-                            unit.unit.statistics += onHitConditionals[i].GetStats();
-                        }
-                        hasActivatedOnHit[i] = true;
-                    }
-                }
-                else
-                {
-                    if (hasActivatedOnHit[i])
-                    {
-                        if (onHitConditionals[i].multiply)
-                        {
-                            unit.unit.statistics /= onHitConditionals[i].GetStats();
-                        }
-                        else
-                        {
-                            unit.unit.statistics -= onHitConditionals[i].GetStats();
-                        }
-                        hasActivatedOnHit[i] = false;
-                    }
-                }
+                float randomNumber = Random.Range(1, 100);
+                StartCoroutine(OnHitActions(randomNumber));
             }
+
         }
         */
     }
@@ -188,42 +156,78 @@ public class SkillLoader : MonoBehaviour
         {
             for (int i = 0; i < HPConditionals.Length; i++)
             {
-                if (hasActivatedHP[i])
+                if (hasActivatedHP[i] && HPConditionals[i].multiply)
                 {
-                    if (HPConditionals[i].multiply)
-                    {
-                        unit.unit.statistics /= HPConditionals[i].GetStats();
-                    }
-                    else
-                    {
-                        unit.unit.statistics -= HPConditionals[i].GetStats();
-                    }
-                    hasActivatedHP[i] = false;
+                    unit.unit.statistics /= HPConditionals[i].GetStats();
                 }
+
+                else if (hasActivatedHP[i] && !HPConditionals[i].multiply)
+                {
+                    unit.unit.statistics -= HPConditionals[i].GetStats();
+                }
+                hasActivatedHP[i] = false;
             }
         }
+
 
         /*
         if (onHitConditionals != null)
         {
             for (int i = 0; i < onHitConditionals.Length; i++)
             {
-                if (hasActivatedOnHit[i])
+                if (hasActivatedOnHit[i] && onHitConditionals[i].multiply)
                 {
-                    if (onHitConditionals[i].multiply)
-                    {
-                        unit.unit.statistics /= onHitConditionals[i].GetStats();
-                    }
-                    else
-                    {
-                        unit.unit.statistics -= onHitConditionals[i].GetStats();
-                    }
-                    hasActivatedOnHit[i] = false;
+                    unit.unit.statistics /= onHitConditionals[i].GetStats();
                 }
+                else if (hasActivatedOnHit[i] && !onHitConditionals[i].multiply)
+                {
+                    unit.unit.statistics -= onHitConditionals[i].GetStats();
+                }
+                hasActivatedOnHit[i] = false;
             }
         }
         */
     }
+
+    /*
+    private IEnumerator OnHitActions(float randomNumber)
+    {
+        for (int i = 0; i < onHitConditionals.Length; i++) // didn't want to set the unit every frame
+        {
+            if (!hasActivatedOnHit[i] && onHitConditionals[i].CheckCondition(unit, randomNumber))
+            {
+                if (onHitConditionals[i].multiply)
+                {
+                    unit.unit.statistics *= onHitConditionals[i].GetStats();
+                    yield return new WaitForSeconds(2);
+                }
+                else
+                {
+                    unit.unit.statistics += onHitConditionals[i].GetStats();
+                    yield return new WaitForSeconds(2);
+                }
+                hasActivatedOnHit[i] = true;
+            }
+        }
+        yield return new WaitForSeconds(2);
+        for (int i = 0; i < onHitConditionals.Length; i++)
+        {
+            if (hasActivatedOnHit[i])
+            {
+                if (onHitConditionals[i].multiply)
+                {
+                    unit.unit.statistics /= onHitConditionals[i].GetStats();
+                }
+                else
+                {
+                    unit.unit.statistics -= onHitConditionals[i].GetStats();
+                }
+                hasActivatedOnHit[i] = false;
+            }
+        }
+        wasHit = false;
+    }
+    */
 
     #region Setters and Getters
 

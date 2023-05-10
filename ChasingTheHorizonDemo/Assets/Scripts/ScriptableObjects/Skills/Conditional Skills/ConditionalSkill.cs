@@ -12,36 +12,10 @@ public class ConditionalSkill : Skill
     [Header("Multiply")]
     public bool multiply; // uses multiplication if true, addition if not
 
-    /*
-    public void SetUnit(UnitLoader unit)
-    {
-        this.unit = unit;
-    }
-    */
-
     public Statistics GetStats()
     {
-        // loads passives
-
-        // if (unit == null) return;
-
-        // if (multiply) unit.unit.statistics *= stats;
-        // else unit.unit.statistics += stats;
-
         return stats;
     }
-
-    /*
-    public void UnloadStats()
-    {
-        // unloads passives
-        
-        if (unit == null) return;
-
-        if (multiply) unit.unit.statistics /= stats;
-        else unit.unit.statistics -= stats;
-    }
-    */
 
     public virtual bool CheckCondition(UnitLoader unit) // will be overriden by subclasses (don't use this class, since the condition isn't specified)
     {

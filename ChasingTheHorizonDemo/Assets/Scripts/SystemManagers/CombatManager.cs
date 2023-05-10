@@ -565,13 +565,13 @@ public class CombatManager : MonoBehaviour
 
     public int Hit(UnitLoader attacker, UnitLoader defender)
     {
-        // defender.skills.SetWasHit(true);
+        defender.skills.SetWasHit(true);
 
         return Mathf.Max(attacker.CombatStatistics().attack - defender.CombatStatistics().protection, 0);
     }
     private int Critical(UnitLoader attacker, UnitLoader defender)
     {
-        // defender.skills.SetWasHit(true);
+        defender.skills.SetWasHit(true);
 
         return Mathf.Max(attacker.CombatStatistics().attack * 2 - defender.CombatStatistics().protection, 0);
     }

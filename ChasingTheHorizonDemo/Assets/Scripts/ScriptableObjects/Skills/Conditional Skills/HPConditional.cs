@@ -12,6 +12,6 @@ public class HPConditional : ConditionalSkill
     {
         int percentageToCheck = (int)((unit.currentHealth * 100) / unit.unit.statistics.health);
         if (greaterThan) return hpPercentage < percentageToCheck;
-        else return hpPercentage > percentageToCheck;
+        else return hpPercentage >= percentageToCheck;
     }
 }

@@ -5083,9 +5083,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4337270037488074985, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
         type: 3}
+      propertyPath: passives.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337270037488074985, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
+        type: 3}
       propertyPath: onHitConditionals.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: fbb4c6b08fd569445aa4c7036c3a26f7,
+        type: 2}
+    - target: {fileID: 4337270037488074985, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
+        type: 3}
+      propertyPath: passives.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e7dce54bcfc5eb14aba6cdb4340913b1,
         type: 2}
     - target: {fileID: 4790933946463596544, guid: 4d1c787d3aa9e3a49804d4bfef563cea,
         type: 3}
@@ -21961,6 +21972,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 42036fd2-c85f-49b7-8c8f-eb80105dddb7
     m_ActionName: UI/Navigate[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d7049ed5-b41d-468c-b63b-080e1364f980
+    m_ActionName: Disabled/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: MapScene
