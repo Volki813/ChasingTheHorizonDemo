@@ -33,8 +33,8 @@ public class ButtonScroller : MonoBehaviour
 
     private void Update()
     {
-        up = cursorControls.actions["Navigate"].ReadValue<Vector2>().y > 0.001;
-        down = cursorControls.actions["Navigate"].ReadValue<Vector2>().y < -0.001;
+        up = cursorControls.actions["Navigate"].ReadValue<Vector2>().y > 0.001 && cursorControls.actions["Navigate"].WasPressedThisFrame();
+        down = cursorControls.actions["Navigate"].ReadValue<Vector2>().y < -0.001 && cursorControls.actions["Navigate"].WasPressedThisFrame();
 
         if (up ^ down) 
         {
