@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 58470943}
   - component: {fileID: 58470942}
   - component: {fileID: 58470945}
+  - component: {fileID: 58470946}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -319,10 +320,10 @@ RectTransform:
   m_Father: {fileID: 1229108111}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -787.78033}
-  m_SizeDelta: {x: 1784.9543, y: 1940.001}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 901.0253, y: -274.7798}
+  m_SizeDelta: {x: 1784.9543, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &58470942
 MonoBehaviour:
@@ -390,7 +391,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58470940}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63899bdd620c42e498fbea33d27cc41d, type: 3}
   m_Name: 
@@ -401,6 +402,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc2898325ea080f4ba5ee8e6d5cfa415, type: 2}
   - {fileID: 11400000, guid: 851570f65e645e94b8c4799514a54584, type: 2}
   - {fileID: 11400000, guid: 59b1220a3b630e24c9b88bbebfffc816, type: 2}
+--- !u!114 &58470946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58470940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &91874881
 GameObject:
   m_ObjectHideFlags: 0
@@ -3829,7 +3844,6 @@ GameObject:
   - component: {fileID: 1229108113}
   - component: {fileID: 1229108112}
   - component: {fileID: 1229108115}
-  - component: {fileID: 1229108116}
   m_Layer: 5
   m_Name: Scroll
   m_TagString: Untagged
@@ -3934,39 +3948,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff33caeecf9efc489fcfa1e2ce9a0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpTime: 1
-  scrollContainer: {fileID: 58470940}
---- !u!114 &1229108116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1229108110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 6e20102dbc20d214393103a22fa0f21d,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  scrollDirection: 0
+  scrollSpeed: 10
+  cancelScrollOnInput: 0
+  cancelScrollKeycodes: 
 --- !u!1 &1274959013
 GameObject:
   m_ObjectHideFlags: 0
