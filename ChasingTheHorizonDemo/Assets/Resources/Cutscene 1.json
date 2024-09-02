@@ -1,0 +1,113 @@
+{
+    "dialogueName": "Cutscene 1",
+  "lines": [
+    {
+      "speaker": "Roland",
+      "text": "Gah! Damn it all... I'm going after it!"
+    },
+    {
+      "speaker": "Edgar",
+      "text": "The rabbit? It'll be long gone by now, Roland."
+    },
+    {
+      "speaker": "Edgar",
+      "text": "Here, let's try this again. Try to hit that knot in the tree over there..."
+    },
+    {
+      "speaker": "Edgar",
+      "text": "Remember: One clean motion. No hesitation."
+    },
+    {
+      "speaker": "Roland",
+      "text": "Alright... let's try this again. H-"
+    },
+    {
+      "speaker": "Leah",
+      "text": "Oh! Simon! Here they are! Though it doesn't look like they've caught much..."
+    },
+    {
+      "speaker": "Roland",
+      "text": "Ah! Leah, you threw off my-"
+    },
+    {
+      "speaker": "Simon",
+      "text": "Your shot? I don't see anything nearby."
+    },
+    {
+      "speaker": "Simon",
+      "text": "I know the rabbits blend in quite well with the snow, but I'd like to think I've gotten pretty good at spotting them."
+    },
+    {
+      "speaker": "Edgar",
+      "text": "Well Simon, that would be because he was aiming for the tree!"
+    },
+    {
+      "speaker": "Roland",
+      "text": "Edgar!"
+    },
+    {
+      "speaker": "Leah",
+      "text": "Hmm, I'm not sure that the tree would make a great dinner even if he had hit it,"
+    },
+    {
+      "speaker": "Leah",
+      "text": "though I guess that doesn't make much of a difference in retrospect."
+    },
+    {
+      "speaker": "Simon",
+      "text": "Come on you guys, we can't really be slacking in the winter time!"
+    },
+    {
+      "speaker": "Simon",
+      "text": "Not like we're making any money from the mines for the next couple of months with this weather."
+    },
+    {
+      "speaker": "Edgar",
+      "text": "Oh, you know I've hunted more than my fair share this season already!"
+    },
+    {
+      "speaker": "Leah",
+      "text": "And yet, you sit here empty handed. Sounds like larger portions for us tonight, wouldn't you say, Simon?"
+    },
+    {
+      "speaker": "Simon",
+      "text": "Hmmm, maybe we should take pity? Roland is pretty handy when the mines are running. Edgar though..."
+    },
+    {
+      "speaker": "Edgar",
+      "text": "Wait, wh-"
+    },
+    {
+      "speaker": "Roland",
+      "text": "Hahaha, the tables have turned!"
+    },
+    {
+      "speaker": "Roland",
+      "text": "Oh, speaking of mines, the mail came today, right Simon? Any word about that rock we sent off to the Royal Institute last autumn?"
+    },
+    {
+      "speaker": "Simon",
+      "text": "Still none. Though I can't blame them."
+    },
+    {
+      "speaker": "Simon",
+      "text": "I'm sure 'hayseed up in Taldur Mountains' sending them a rock isn't very high on the priority list, given the war and all."
+    },
+    {
+      "speaker": "Edgar",
+      "text": "I mean, with how that thing glows, there's no way it could be just a rock."
+    },
+    {
+      "speaker": "Roland",
+      "text": "Yeah. That stuff was backbreaking to mine, even though it was just that little piece."
+    },
+    {
+      "speaker": "Roland",
+      "text": "I'm sure someone who knew what they were doing could make something good out of it."
+    },
+    {
+      "speaker": "Leah",
+      "text": "I guess we'll just have to wait and see. Now, what say we get back and start cooking dinner before it gets dark? Serena's waiting, I'm sure."
+    }
+  ]
+}
