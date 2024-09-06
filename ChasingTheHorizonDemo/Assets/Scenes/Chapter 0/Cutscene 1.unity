@@ -3475,7 +3475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDialogue:
-    dialogueName: Cutscene 1
+    dialogueName: Chapter 0/Cutscene 1
     lines: []
 --- !u!1 &1660634532
 GameObject:
