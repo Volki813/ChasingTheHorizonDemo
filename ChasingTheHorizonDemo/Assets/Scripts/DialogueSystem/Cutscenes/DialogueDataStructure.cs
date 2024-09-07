@@ -8,6 +8,7 @@ public class DialogueLine
 {
     public string speaker;
     public string text;
+    public string spriteName;
 }
 
 [Serializable]

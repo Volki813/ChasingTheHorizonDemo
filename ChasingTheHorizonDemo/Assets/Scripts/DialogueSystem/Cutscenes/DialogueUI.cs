@@ -7,6 +7,7 @@ public class DialogueUI : MonoBehaviour
 {
     public Text speakerText;
     public Text dialogueText;
+    public Image portrait;
 
     private int currentLineIndex = 0;
     private DialogueManager dialogueManager;
@@ -30,14 +31,27 @@ public class DialogueUI : MonoBehaviour
         if(currentLineIndex < dialogueManager.currentDialogue.lines.Length)
         {
             DialogueLine line = dialogueManager.currentDialogue.lines[currentLineIndex];
+
             speakerText.text = line.speaker;
             dialogueText.text = line.text;
+
+            Sprite portraitSprite = Resources.Load<Sprite>(line.spriteName);
+            if(portraitSprite != null)
+            {
+                portrait.sprite = portraitSprite;
+            }
+            else
+            {
+                Debug.LogWarning("Sprite not found: " + line.spriteName);
+            }
+
             currentLineIndex++;
         }
         else
         {
             speakerText.text = "";
             dialogueText.text = "End of dialogue.";
+            portrait.sprite = null;
         }
     }
 }
