@@ -8,8 +8,11 @@ public class DialogueUI : MonoBehaviour
     public Text speakerText;
     public Text dialogueText;
     public Image portrait;
+    public GameObject choicesPanel;
+    public Button[] choiceButtons;
 
     private int currentLineIndex = 0;
+    [SerializeField] private string activeBranchId = null; // name this whatever the branchId of the first line is
     private DialogueManager dialogueManager;
 
     private void Start()
@@ -28,30 +31,75 @@ public class DialogueUI : MonoBehaviour
 
     public void DisplayNextLine()
     {
-        if(currentLineIndex < dialogueManager.currentDialogue.lines.Length)
+        while (currentLineIndex < dialogueManager.currentDialogue.lines.Length)
         {
             DialogueLine line = dialogueManager.currentDialogue.lines[currentLineIndex];
 
-            speakerText.text = line.speaker;
-            dialogueText.text = line.text;
-
-            Sprite portraitSprite = Resources.Load<Sprite>(line.spriteName);
-            if(portraitSprite != null)
+            if (line.branchId == activeBranchId)
             {
-                portrait.sprite = portraitSprite;
+                speakerText.text = line.speaker;
+                dialogueText.text = line.text;
+
+                Sprite portraitSprite = Resources.Load<Sprite>(line.spriteName);
+                if (portraitSprite != null)
+                {
+                    portrait.sprite = portraitSprite;
+                }
+                else
+                {
+                    Debug.LogWarning("Sprite not found: " + line.spriteName);
+                }
+
+                if (line.choices != null && line.choices.Length > 0)
+                {
+                    ShowChoices(line.choices);
+                }
+                else
+                {
+                    currentLineIndex++;
+                    choicesPanel.SetActive(false);
+                }
+                return; // exit loop
+            }
+
+            // skips line if branchId doesn't match
+            currentLineIndex++;
+        }
+        speakerText.text = "";
+        dialogueText.text = "End of dialogue.";
+        portrait.sprite = null;
+        choicesPanel.SetActive(false);
+    }
+
+    private void ShowChoices(DialogueChoice[] choices)
+    {
+        choicesPanel.SetActive(true);
+
+        for (int i = 0; i < choiceButtons.Length; i++)
+        {
+            if (i < choices.Length)
+            {
+                choiceButtons[i].gameObject.SetActive(true);
+                choiceButtons[i].GetComponentInChildren<Text>().text = choices[i].choiceText;
+
+                int nextLineIndex = choices[i].nextLineIndex;
+                string newBranchId = choices[i].branchId;
+                choiceButtons[i].onClick.RemoveAllListeners();
+                choiceButtons[i].onClick.AddListener(() => OnChoiceSelected(nextLineIndex, newBranchId));
             }
             else
             {
-                Debug.LogWarning("Sprite not found: " + line.spriteName);
+                choiceButtons[i].gameObject.SetActive(false);
             }
+        }
+    }
 
-            currentLineIndex++;
-        }
-        else
-        {
-            speakerText.text = "";
-            dialogueText.text = "End of dialogue.";
-            portrait.sprite = null;
-        }
+    private void OnChoiceSelected(int nextLineIndex, string newBranchId)
+    {
+        currentLineIndex = nextLineIndex;
+        activeBranchId = newBranchId;
+
+        choicesPanel.SetActive(false);
+        DisplayNextLine();
     }
 }

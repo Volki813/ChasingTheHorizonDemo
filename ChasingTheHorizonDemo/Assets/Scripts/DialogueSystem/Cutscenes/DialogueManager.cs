@@ -9,7 +9,6 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         LoadDialogue(currentDialogue.dialogueName); // use name of the file (must be placed in Resources folder)
-        DisplayDialogue();
     }
 
     public void LoadDialogue(string fileName) 
@@ -22,14 +21,6 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.LogError("File not found");
-        }
-    }
-
-    public void DisplayDialogue()
-    {
-        foreach(DialogueLine line in currentDialogue.lines)
-        {
-            Debug.Log(line.speaker + ": " + line.text);
         }
     }
 }
