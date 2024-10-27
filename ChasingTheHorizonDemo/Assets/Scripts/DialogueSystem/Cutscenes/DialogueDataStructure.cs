@@ -17,6 +17,7 @@ public class DialogueLine
     public string branchId;
     public string speaker;
     public string text;
+    public string musicName;
     public string soundName;
     public string spriteName;
     public DialogueChoice[] choices;

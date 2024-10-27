@@ -5,13 +5,14 @@
       "branchId": "main",
       "speaker": "Roland",
       "text": "Gah! Damn it all... I'm going after it!",
-      "soundName":  "Sound/SFX/SFX Boomy",
+      "musicName": "Sound/Music/At Home",
       "spriteName": "Portraits/Transparent/roland_young 1"
     },
     {
       "branchId": "main",
       "speaker": "Edgar",
       "text": "The rabbit? It'll be long gone by now, Roland.",
+      "soundName": "Sound/SFX/SFX Boomy",
       "spriteName": "Portraits/Transparent/edgar"
     },
     {
@@ -36,6 +37,7 @@
       "branchId": "normal",
       "speaker": "Edgar",
       "text": "Remember: One clean motion. No hesitation.",
+      "musicName": "Stop",
       "spriteName": "Portraits/Transparent/edgar"
     },
     {
@@ -54,6 +56,7 @@
       "branchId": "normal",
       "speaker": "Roland",
       "text": "Ah! Leah, you threw off my-",
+      "musicName": "Sound/Music/At Home",
       "spriteName": "Portraits/Transparent/roland_young 1"
     },
     {

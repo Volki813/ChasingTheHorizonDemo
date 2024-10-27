@@ -7,6 +7,7 @@ public class DialogueUI : MonoBehaviour
 {
     public Text speakerText;
     public Text dialogueText;
+    public AudioSource music;
     public AudioSource soundEffect;
     public Image portrait;
     public GameObject choicesPanel;
@@ -40,6 +41,17 @@ public class DialogueUI : MonoBehaviour
             {
                 speakerText.text = line.speaker;
                 dialogueText.text = line.text;
+
+                if (line.musicName != null)
+                {
+                    AudioClip musicClip = Resources.Load<AudioClip>(line.musicName);
+                    music.clip = musicClip;
+                    music.Play();
+                }
+                else if (line.musicName == "Stop") // stops music if musicName in the json File is "Stop"
+                {
+                    music.Stop();
+                }
 
                 if (line.soundName != null)
                 {
