@@ -5,6 +5,7 @@
       "branchId": "main",
       "speaker": "Roland",
       "text": "Gah! Damn it all... I'm going after it!",
+      "soundName":  "Sound/SFX/SFX Boomy",
       "spriteName": "Portraits/Transparent/roland_young 1"
     },
     {
@@ -95,6 +96,7 @@
       "branchId": "normal",
       "speaker": "Simon",
       "text": "Come on you guys, we can't really be slacking in the winter time!",
+      "soundName": "Sound/SFX/SFX Boomy",
       "spriteName": "Portraits/Transparent/simon_young 1"
     },
     {
@@ -167,6 +169,7 @@
       "branchId": "normal",
       "speaker": "Roland",
       "text": "I'm sure someone who knew what they were doing could make something good out of it.",
+      "soundName": "Sound/SFX/SFX Boomy",
       "spriteName": "Portraits/Transparent/roland_young 1"
     },
     {
@@ -179,6 +182,7 @@
       "branchId": "volki autism",
       "speaker": "Roland",
       "text": "Hanako indeed",
+      "soundName": "Sound/SFX/SFX Boomy",
       "spriteName": "Portraits/Transparent/roland_young 1"
     }
   ]

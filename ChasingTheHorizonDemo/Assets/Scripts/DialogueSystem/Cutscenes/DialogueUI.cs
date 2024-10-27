@@ -7,6 +7,7 @@ public class DialogueUI : MonoBehaviour
 {
     public Text speakerText;
     public Text dialogueText;
+    public AudioSource soundEffect;
     public Image portrait;
     public GameObject choicesPanel;
     public Button[] choiceButtons;
@@ -39,6 +40,13 @@ public class DialogueUI : MonoBehaviour
             {
                 speakerText.text = line.speaker;
                 dialogueText.text = line.text;
+
+                if (line.soundName != null)
+                {
+                    AudioClip soundClip = Resources.Load<AudioClip>(line.soundName);
+                    soundEffect.clip = soundClip;
+                    soundEffect.Play();
+                }
 
                 Sprite portraitSprite = Resources.Load<Sprite>(line.spriteName);
                 if (portraitSprite != null)
