@@ -4,6 +4,7 @@ using Ink.Runtime;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class DialogueManagerWithInk : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class DialogueManagerWithInk : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices = null;
     private TextMeshProUGUI[] choicesText = null;
+
+    [Header("Ink JSON")]
+    [SerializeField] private TextAsset inkJSON = null;
+
+    private PlayerInput input = null;
 
     private Story currentStory;
 
@@ -28,6 +34,7 @@ public class DialogueManagerWithInk : MonoBehaviour
             Debug.LogWarning("More than one Dialogue Manager in the scene!");
         }
         instance = this;
+        input = GetComponent<PlayerInput>();
     }
 
     private void Start()
@@ -49,7 +56,16 @@ public class DialogueManagerWithInk : MonoBehaviour
     {
         if (!dialogueIsPlaying) return;
 
-        // Continue Story () when next is pressed, too lazy to set up the input system here rn
+        if (input.actions["Next"].WasPressedThisFrame())
+        {
+            ContinueStory();
+        }
+
+        // using skip to start the dialogue for now
+        if (input.actions["Skip"].WasPressedThisFrame()) // this doesn't work for some reason lol
+        {
+            EnterDialogueMode(inkJSON);
+        }
     }
 
     public void EnterDialogueMode(TextAsset inkJSON)
@@ -121,5 +137,10 @@ public class DialogueManagerWithInk : MonoBehaviour
     public void MakeChoice(int choiceIndex) // set choiceIndex like an array, e.g. first choice has index 0, second is 1, etc.
     {
         currentStory.ChooseChoiceIndex(choiceIndex);
+        foreach (GameObject choice in choices)
+        {
+            choice.SetActive(false);
+        }
+        ContinueStory();
     }
 }
