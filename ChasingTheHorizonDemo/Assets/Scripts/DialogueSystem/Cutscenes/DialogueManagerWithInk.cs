@@ -9,8 +9,10 @@ using UnityEngine.InputSystem;
 public class DialogueManagerWithInk : MonoBehaviour
 {
     [Header("Dialogue UI")]
-    [SerializeField] private GameObject dialoguePanel = null;
+    [SerializeField] private GameObject dialogueHolder = null;
     [SerializeField] private TextMeshProUGUI dialogueText = null;
+    [SerializeField] private TextMeshProUGUI speakerText = null;
+    [SerializeField] private Animator portraitAnimator = null;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices = null;
@@ -27,6 +29,9 @@ public class DialogueManagerWithInk : MonoBehaviour
 
     public static DialogueManagerWithInk instance { get; private set; }
 
+    private const string SPEAKER_TAG = "speaker"; // the same as left from the ":" in the ink file
+    private const string PORTRAIT_TAG = "portrait"; // tags can be used for the portraits, speaker, position, etc.
+
     private void Awake()
     {
         if (instance != null)
@@ -40,7 +45,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     private void Start()
     {
         dialogueIsPlaying = false;
-        dialoguePanel.SetActive(false);
+        dialogueHolder.SetActive(false);
 
         // Get choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -72,7 +77,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
-        dialoguePanel.SetActive(true);
+        dialogueHolder.SetActive(true);
 
         ContinueStory();
     }
@@ -82,7 +87,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         dialogueIsPlaying = false;
-        dialoguePanel.SetActive(false);
+        dialogueHolder.SetActive(false);
         dialogueText.text = "End of Dialogue";
     }
 
@@ -94,10 +99,40 @@ public class DialogueManagerWithInk : MonoBehaviour
             dialogueText.text = currentStory.Continue();
             // display choices for current line
             DisplayChoices();
+            // handle tags
+            HandleTags(currentStory.currentTags);
         }
         else
         {
             StartCoroutine(ExitDialogueMode());
+        }
+    }
+
+    private void HandleTags(List<string> currentTags)
+    {
+        foreach (string tag in currentTags)
+        {
+            // tags in ink turn into strings in unity which can be used to create a key/value system
+            string[] splitTag = tag.Split(":"); // can change what symbol we use for splitting the key and the value
+            if (splitTag.Length != 2) // Error if e.g. a tag has more than one ":" in it
+            {
+                Debug.LogError("Tag couldn't be parsed: " + tag);
+            }
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+
+            switch (tagKey)
+            {
+                case SPEAKER_TAG:
+                    speakerText.text = tagValue;
+                    break;
+                case PORTRAIT_TAG:
+                    portraitAnimator.Play(tagValue); // name the tag the same as the animation
+                    break;
+                default:
+                    Debug.LogWarning("Tag came in but is not being handled: " + tag);
+                    break;
+            }
         }
     }
 
