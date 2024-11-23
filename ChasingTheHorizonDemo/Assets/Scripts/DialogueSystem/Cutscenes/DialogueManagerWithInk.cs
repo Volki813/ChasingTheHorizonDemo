@@ -13,6 +13,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText = null;
     [SerializeField] private TextMeshProUGUI speakerText = null;
     [SerializeField] private Animator portraitAnimator = null;
+    [SerializeField] private Animator facingAnimator = null;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices = null;
@@ -31,6 +32,7 @@ public class DialogueManagerWithInk : MonoBehaviour
 
     private const string SPEAKER_TAG = "speaker"; // the same as left from the ":" in the ink file
     private const string PORTRAIT_TAG = "portrait"; // tags can be used for the portraits, speaker, position, etc.
+    private const string FACING_TAG = "facing";
 
     private void Awake()
     {
@@ -78,6 +80,11 @@ public class DialogueManagerWithInk : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialogueHolder.SetActive(true);
+
+        // reset values from the tags
+        speakerText.text = "???";
+        portraitAnimator.Play("default");
+        facingAnimator.Play("face_right");
 
         ContinueStory();
     }
@@ -128,6 +135,9 @@ public class DialogueManagerWithInk : MonoBehaviour
                     break;
                 case PORTRAIT_TAG:
                     portraitAnimator.Play(tagValue); // name the tag the same as the animation
+                    break;
+                case FACING_TAG:
+                    facingAnimator.Play(tagValue);
                     break;
                 default:
                     Debug.LogWarning("Tag came in but is not being handled: " + tag);
