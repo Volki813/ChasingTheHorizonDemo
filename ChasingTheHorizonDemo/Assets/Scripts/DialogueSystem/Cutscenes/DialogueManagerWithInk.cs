@@ -31,6 +31,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     private Story currentStory;
 
     public bool dialogueIsPlaying { get; private set; }
+    private bool nextIsPressed = false;
     private bool canContinueToNextLine = false; // use as a condition for whenever a button is pressed to proceed
     private Coroutine displayLineCoroutine = null; // used to make it so no more than one coroutine display a line at a time 
 
@@ -67,17 +68,17 @@ public class DialogueManagerWithInk : MonoBehaviour
 
     private void Update()
     {
-        if (!dialogueIsPlaying) return;
-
-        if (canContinueToNextLine && currentStory.currentChoices.Count == 0 && input.actions["Next"].WasPressedThisFrame())
+        if (input.actions["Next"].WasPressedThisFrame())
         {
-            ContinueStory();
+            nextIsPressed = true;
         }
 
-        // using skip to start the dialogue for now
-        if (input.actions["Skip"].WasPressedThisFrame()) // this doesn't work for some reason lol
+        if (!dialogueIsPlaying) return;
+
+        if (canContinueToNextLine && currentStory.currentChoices.Count == 0 && nextIsPressed)
         {
-            EnterDialogueMode(inkJSON);
+            nextIsPressed = false;
+            ContinueStory();
         }
     }
 
@@ -139,8 +140,9 @@ public class DialogueManagerWithInk : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             // finish line immediately when next is pressed
-            if (input.actions["Next"].WasPressedThisFrame()) // a little buggy
+            if (nextIsPressed) // a little buggy
             {
+                nextIsPressed = false;
                 dialogueText.text = line;
                 break;
             }
@@ -249,7 +251,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         }
     }
 
-    public void ContinueButtonPress()
+    public void ContinueButtonPress() // for testing purposes, drag to a button
     {
         if (canContinueToNextLine && currentStory.currentChoices.Count == 0)
         {
