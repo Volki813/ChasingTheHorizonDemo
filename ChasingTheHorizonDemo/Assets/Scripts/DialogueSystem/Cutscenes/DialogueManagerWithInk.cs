@@ -8,8 +8,12 @@ using UnityEngine.InputSystem;
 
 public class DialogueManagerWithInk : MonoBehaviour
 {
+    [Header("Parameters")]
+    [SerializeField] private float typingSpeed = 0.02f; // the lower, the faster
+
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialogueHolder = null;
+    [SerializeField] private GameObject continueIcon = null;
     [SerializeField] private TextMeshProUGUI dialogueText = null;
     [SerializeField] private TextMeshProUGUI speakerText = null;
     [SerializeField] private Animator portraitAnimator = null;
@@ -27,6 +31,8 @@ public class DialogueManagerWithInk : MonoBehaviour
     private Story currentStory;
 
     public bool dialogueIsPlaying { get; private set; }
+    private bool canContinueToNextLine = false; // use as a condition for whenever a button is pressed to proceed
+    private Coroutine displayLineCoroutine = null; // used to make it so no more than one coroutine display a line at a time 
 
     public static DialogueManagerWithInk instance { get; private set; }
 
@@ -63,7 +69,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     {
         if (!dialogueIsPlaying) return;
 
-        if (input.actions["Next"].WasPressedThisFrame())
+        if (canContinueToNextLine && currentStory.currentChoices.Count == 0 && input.actions["Next"].WasPressedThisFrame())
         {
             ContinueStory();
         }
@@ -103,15 +109,70 @@ public class DialogueManagerWithInk : MonoBehaviour
         if (currentStory.canContinue)
         {
             // set text for current line
-            dialogueText.text = currentStory.Continue();
-            // display choices for current line
-            DisplayChoices();
+            if (displayLineCoroutine != null)
+            {
+                StopCoroutine(displayLineCoroutine);
+            }
+            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
             // handle tags
             HandleTags(currentStory.currentTags);
         }
         else
         {
             StartCoroutine(ExitDialogueMode());
+        }
+    }
+
+    private IEnumerator DisplayLine(string line)
+    {
+        // empty dialogue text
+        dialogueText.text = "";
+
+        // actions before the line starts
+        continueIcon.SetActive(false);
+        HideChoices();
+
+        canContinueToNextLine = false;
+
+        bool isAddingRichTextTag = false;
+
+        foreach (char letter in line.ToCharArray())
+        {
+            // finish line immediately when next is pressed
+            if (input.actions["Next"].WasPressedThisFrame()) // a little buggy
+            {
+                dialogueText.text = line;
+                break;
+            }
+
+            if (letter == '<' || isAddingRichTextTag)
+            {
+                isAddingRichTextTag = true;
+                dialogueText.text += letter;
+                if (letter == '>')
+                {
+                    isAddingRichTextTag = false;
+                }
+            }
+            else
+            {
+                dialogueText.text += letter;
+                yield return new WaitForSeconds(typingSpeed);
+            }
+        }
+
+        // actions when the line is finished
+        continueIcon.SetActive(true);
+        DisplayChoices();
+
+        canContinueToNextLine = true;
+    }
+
+    private void HideChoices()
+    {
+        foreach (GameObject choice in choices)
+        {
+            choice.SetActive(false);
         }
     }
 
@@ -181,11 +242,18 @@ public class DialogueManagerWithInk : MonoBehaviour
 
     public void MakeChoice(int choiceIndex) // set choiceIndex like an array, e.g. first choice has index 0, second is 1, etc.
     {
-        currentStory.ChooseChoiceIndex(choiceIndex);
-        foreach (GameObject choice in choices)
+        if (canContinueToNextLine)
         {
-            choice.SetActive(false);
+            currentStory.ChooseChoiceIndex(choiceIndex);
+            ContinueStory();
         }
-        ContinueStory();
+    }
+
+    public void ContinueButtonPress()
+    {
+        if (canContinueToNextLine && currentStory.currentChoices.Count == 0)
+        {
+            ContinueStory();
+        }
     }
 }
