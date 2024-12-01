@@ -3432,6 +3432,11 @@ MonoBehaviour:
   - {fileID: 1969445426}
   - {fileID: 686002741}
   - {fileID: 1213479116}
+  playTypingSound: 1
+  dialogueTypingSoundClip: {fileID: 8300000, guid: abd2e9e337c320b4894795ce4c303c06,
+    type: 3}
+  frequencyLevel: 10
+  stopAudioSource: 1
   inkJSON: {fileID: 4900000, guid: 511f8de05e917704f923fdc28dd4acb9, type: 3}
 --- !u!114 &1847623804
 MonoBehaviour:

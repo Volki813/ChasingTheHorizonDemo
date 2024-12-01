@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.EventSystems;
+using UnityEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
@@ -22,6 +24,13 @@ public class DialogueManagerWithInk : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices = null;
     private TextMeshProUGUI[] choicesText = null;
+
+    [Header("Audio")]
+    [SerializeField] private bool playTypingSound = false;
+    [SerializeField] private AudioClip dialogueTypingSoundClip = null;
+    [Range(1, 20)][SerializeField] private int frequencyLevel = 2; // sound to play every [value] step when typing the dialogue
+    [SerializeField] private bool stopAudioSource = false; // typing sound can overlap, so tick this if you don't want it to
+    private AudioSource audioSource;
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON = null;
@@ -49,6 +58,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         }
         instance = this;
         input = GetComponent<PlayerInput>();
+        audioSource = this.gameObject.AddComponent<AudioSource>();
     }
 
     private void Start()
@@ -158,6 +168,7 @@ public class DialogueManagerWithInk : MonoBehaviour
             }
             else
             {
+                if (playTypingSound) PlayDialogueSound(dialogueText.maxVisibleCharacters);
                 dialogueText.maxVisibleCharacters++;
                 yield return new WaitForSeconds(typingSpeed);
             }
@@ -168,6 +179,15 @@ public class DialogueManagerWithInk : MonoBehaviour
         DisplayChoices();
 
         canContinueToNextLine = true;
+    }
+
+    private void PlayDialogueSound(int currentDisplayedCharacterCount)
+    {
+        if (currentDisplayedCharacterCount % frequencyLevel == 0)
+        {
+            if (stopAudioSource) audioSource.Stop();
+            audioSource.PlayOneShot(dialogueTypingSoundClip);
+        }
     }
 
     private void HideChoices()
