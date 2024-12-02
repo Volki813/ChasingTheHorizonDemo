@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.EventSystems;
-using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using UnityEngine.InputSystem;
 public class DialogueManagerWithInk : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField] private float typingSpeed = 0.02f; // the lower, the faster
+    [Tooltip("the lower, the faster")] [SerializeField] private float typingSpeed = 0.02f; // the lower, the faster
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialogueHolder = null;
@@ -26,9 +25,11 @@ public class DialogueManagerWithInk : MonoBehaviour
     private TextMeshProUGUI[] choicesText = null;
 
     [Header("Audio")]
-    [SerializeField] private bool playTypingSound = false;
+    [Tooltip("only play typing sound if this is ticked")] [SerializeField] private bool playTypingSound = false;
     [SerializeField] private AudioClip dialogueTypingSoundClip = null;
+    [Tooltip("sound to play every [value] step when typing the dialogue")]
     [Range(1, 20)][SerializeField] private int frequencyLevel = 2; // sound to play every [value] step when typing the dialogue
+    [Tooltip("typing sound can overlap, so tick this if you don't want it to")]
     [SerializeField] private bool stopAudioSource = false; // typing sound can overlap, so tick this if you don't want it to
     private AudioSource audioSource;
 
