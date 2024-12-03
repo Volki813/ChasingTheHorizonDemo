@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 public class DialogueManagerWithInk : MonoBehaviour
 {
     [Header("Parameters")]
-    [Tooltip("the lower, the faster")] [SerializeField] private float typingSpeed = 0.02f; // the lower, the faster
+    [Tooltip("the lower, the faster")][SerializeField] private float typingSpeed = 0.02f; // the lower, the faster
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialogueHolder = null;
@@ -25,7 +25,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     private TextMeshProUGUI[] choicesText = null;
 
     [Header("Audio")]
-    [Tooltip("only play typing sound if this is ticked")] [SerializeField] private bool playTypingSound = false;
+    [Tooltip("only play typing sound if this is ticked")][SerializeField] private bool playTypingSound = false;
     [SerializeField] private AudioClip dialogueTypingSoundClip = null;
     [Tooltip("sound to play every [value] step when typing the dialogue")]
     [Range(1, 20)][SerializeField] private int frequencyLevel = 2; // sound to play every [value] step when typing the dialogue
@@ -127,7 +127,7 @@ public class DialogueManagerWithInk : MonoBehaviour
             }
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
             // handle tags
-            HandleTags(currentStory.currentTags);
+            HandleTags(currentStory.currentTags, true);
         }
         else
         {
@@ -178,6 +178,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         // actions when the line is finished
         continueIcon.SetActive(true);
         DisplayChoices();
+        HandleTags(currentStory.currentTags, false); // for end tags 
 
         canContinueToNextLine = true;
     }
@@ -199,33 +200,55 @@ public class DialogueManagerWithInk : MonoBehaviour
         }
     }
 
-    private void HandleTags(List<string> currentTags)
+    private void HandleTags(List<string> currentTags, bool startTags)
     {
         foreach (string tag in currentTags)
         {
             // tags in ink turn into strings in unity which can be used to create a key/value system
             string[] splitTag = tag.Split(":"); // can change what symbol we use for splitting the key and the value
-            if (splitTag.Length != 2) // Error if e.g. a tag has more than one ":" in it
+            if (splitTag.Length != 3) // Error if e.g. a tag has more than two ":" in it
             {
                 Debug.LogError("Tag couldn't be parsed: " + tag);
             }
-            string tagKey = splitTag[0].Trim();
-            string tagValue = splitTag[1].Trim();
+            string tagStart = splitTag[0].Trim();
+            string tagKey = splitTag[1].Trim();
+            string tagValue = splitTag[2].Trim();
 
-            switch (tagKey)
+            if (tagStart == "start" && startTags)
             {
-                case SPEAKER_TAG:
-                    speakerText.text = tagValue;
-                    break;
-                case PORTRAIT_TAG:
-                    portraitAnimator.Play(tagValue); // name the tag the same as the animation
-                    break;
-                case FACING_TAG:
-                    facingAnimator.Play(tagValue);
-                    break;
-                default:
-                    Debug.LogWarning("Tag came in but is not being handled: " + tag);
-                    break;
+                switch (tagKey)
+                {
+                    case SPEAKER_TAG:
+                        speakerText.text = tagValue;
+                        break;
+                    case PORTRAIT_TAG:
+                        portraitAnimator.Play(tagValue); // name the tag the same as the animation
+                        break;
+                    case FACING_TAG:
+                        facingAnimator.Play(tagValue);
+                        break;
+                    default:
+                        Debug.LogWarning("Tag came in but is not being handled: " + tag);
+                        break;
+                }
+            }
+            else if (tagStart == "end" && !startTags)
+            {
+                switch (tagKey)
+                {
+                    case SPEAKER_TAG:
+                        speakerText.text = tagValue;
+                        break;
+                    case PORTRAIT_TAG:
+                        portraitAnimator.Play(tagValue); // name the tag the same as the animation
+                        break;
+                    case FACING_TAG:
+                        facingAnimator.Play(tagValue);
+                        break;
+                    default:
+                        Debug.LogWarning("Tag came in but is not being handled: " + tag);
+                        break;
+                }
             }
         }
     }
