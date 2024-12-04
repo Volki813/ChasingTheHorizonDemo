@@ -31,7 +31,9 @@ public class DialogueManagerWithInk : MonoBehaviour
     [Range(1, 20)][SerializeField] private int frequencyLevel = 2; // sound to play every [value] step when typing the dialogue
     [Tooltip("typing sound can overlap, so tick this if you don't want it to")]
     [SerializeField] private bool stopAudioSource = false; // typing sound can overlap, so tick this if you don't want it to
-    private AudioSource audioSource;
+    private AudioSource audioSource; // for typing sound
+    [SerializeField] private AudioSource soundSource = null;
+    [SerializeField] private AudioSource musicSource = null;
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON = null;
@@ -47,9 +49,17 @@ public class DialogueManagerWithInk : MonoBehaviour
 
     public static DialogueManagerWithInk instance { get; private set; }
 
+    [Header("Tags")]
     private const string SPEAKER_TAG = "speaker"; // the same as left from the ":" in the ink file
     private const string PORTRAIT_TAG = "portrait"; // tags can be used for the portraits, speaker, position, etc.
     private const string FACING_TAG = "facing";
+    private const string SOUND_TAG = "sound";
+    private const string MUSIC_TAG = "music"; // name the music and sound in inky the same as the file name in assets
+
+    [Header("Resources paths")]
+    private const string SFX_PATH = "Sound/SFX/";
+    private const string MUSIC_PATH = "Sound/Music/";
+
 
     private void Awake()
     {
@@ -216,40 +226,42 @@ public class DialogueManagerWithInk : MonoBehaviour
 
             if (tagStart == "start" && startTags)
             {
-                switch (tagKey)
-                {
-                    case SPEAKER_TAG:
-                        speakerText.text = tagValue;
-                        break;
-                    case PORTRAIT_TAG:
-                        portraitAnimator.Play(tagValue); // name the tag the same as the animation
-                        break;
-                    case FACING_TAG:
-                        facingAnimator.Play(tagValue);
-                        break;
-                    default:
-                        Debug.LogWarning("Tag came in but is not being handled: " + tag);
-                        break;
-                }
+                ProcessTags(tagKey, tagValue, tag);
             }
             else if (tagStart == "end" && !startTags)
             {
-                switch (tagKey)
-                {
-                    case SPEAKER_TAG:
-                        speakerText.text = tagValue;
-                        break;
-                    case PORTRAIT_TAG:
-                        portraitAnimator.Play(tagValue); // name the tag the same as the animation
-                        break;
-                    case FACING_TAG:
-                        facingAnimator.Play(tagValue);
-                        break;
-                    default:
-                        Debug.LogWarning("Tag came in but is not being handled: " + tag);
-                        break;
-                }
+                ProcessTags(tagKey, tagValue, tag);
             }
+        }
+    }
+
+    private void ProcessTags(string tagKey, string tagValue, string tag)
+    {
+        switch (tagKey)
+        {
+            case SPEAKER_TAG:
+                speakerText.text = tagValue;
+                break;
+            case PORTRAIT_TAG:
+                portraitAnimator.Play(tagValue); // name the tag the same as the animation
+                break;
+            case FACING_TAG:
+                facingAnimator.Play(tagValue);
+                break;
+            case SOUND_TAG:
+                AudioClip soundClip = Resources.Load<AudioClip>(SFX_PATH + tagValue);
+                soundSource.clip = soundClip;
+                soundSource.Play();
+                break;
+            case MUSIC_TAG:
+                AudioClip musicClip = Resources.Load<AudioClip>(MUSIC_PATH + tagValue);
+                musicSource.clip = musicClip;
+                musicSource.Play();
+                if (tagValue == "stop") musicSource.Stop(); // stop music if music tag is "stop"
+                break;
+            default:
+                Debug.LogWarning("Tag came in but is not being handled: " + tag);
+                break;
         }
     }
 
