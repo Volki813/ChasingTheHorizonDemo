@@ -1,7 +1,7 @@
 -> main
 
 === main ===
-Should Alan Forte hop on Atelier Ayesha? #start:speaker:Roland #start:portrait:roland_smiling #start:facing:face_right #end:portrait:roland_angry #end:sound:SFX Boomy #start:music:At Home
+Should Alan Forte hop on Atelier Ayesha? #start:speaker:Roland #start:portrait:roland_smiling #start:facing:face_right #end:portrait:roland_angry #end:sound:SFX Boomy #start:music:At Home #end:speaker_font_size:20
     + [hell yeah]
         -> ayesha
     + [nah]
@@ -27,8 +27,8 @@ HELL YEAH #start:speaker:Simon #start:portrait:simon_smiling
 -> END
 
 === gogeta ===
-<color=\#0000ffff>In no conceivable manner is it okay to suggest or engage</color> in any sexual conduct with a minor. #start:portrait:roland_tense #start:music:stop
-It takes 25 years for the human mind to fully mature.
+<color=\#0000ffff>In no conceivable manner is it okay to suggest or engage</color> in any sexual conduct with a minor. #start:portrait:roland_tense #start:music:stop #start:dialogue_font_size:50 #start:speaker_font_size:-1
+It takes 25 years for the human mind to fully mature. #start:dialogue_font_size:-1
 The age of consent in most countries is built around an average period in which the growing mind is capable of handling sexual realtionships, ranging anywhere from 16 to 18 years old on average.
 Any younger than this, and the minor is exposing themselves to various physical, psychological, emotional and neurochemical damages that could severely impact their ability to mature as a respectable adult.
 No matter how low the age of consent is in your country or how low you think the age of consent should be, a sexual relationship where one partner is far older than the other is incredibly one-sided.

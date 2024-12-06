@@ -11,6 +11,8 @@ public class DialogueManagerWithInk : MonoBehaviour
 {
     [Header("Parameters")]
     [Tooltip("the lower, the faster")][SerializeField] private float typingSpeed = 0.02f; // the lower, the faster
+    [SerializeField] private float defaultDialogueFontSize = 36;
+    [SerializeField] private float defaultSpeakerFontSize = 54;
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialogueHolder = null;
@@ -55,6 +57,8 @@ public class DialogueManagerWithInk : MonoBehaviour
     private const string FACING_TAG = "facing";
     private const string SOUND_TAG = "sound";
     private const string MUSIC_TAG = "music"; // name the music and sound in inky the same as the file name in assets
+    private const string DIALOGUE_FONT_SIZE_TAG = "dialogue_font_size"; // set to -1 if default size
+    private const string SPEAKER_FONT_SIZE_TAG = "speaker_font_size"; // set to -1 if default size
 
     [Header("Resources paths")]
     private const string SFX_PATH = "Sound/SFX/";
@@ -85,6 +89,10 @@ public class DialogueManagerWithInk : MonoBehaviour
             choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
         }
+
+        // set default fons sizes
+        dialogueText.fontSize = defaultDialogueFontSize;
+        speakerText.fontSize = defaultSpeakerFontSize;
     }
 
     private void Update()
@@ -258,6 +266,40 @@ public class DialogueManagerWithInk : MonoBehaviour
                 musicSource.clip = musicClip;
                 musicSource.Play();
                 if (tagValue == "stop") musicSource.Stop(); // stop music if music tag is "stop"
+                break;
+            case DIALOGUE_FONT_SIZE_TAG:
+                if (float.TryParse(tagValue, out float dialogue_font_size))
+                {
+                    if (dialogue_font_size == -1)
+                    {
+                        dialogueText.fontSize = defaultDialogueFontSize;
+                    }
+                    else
+                    {
+                        dialogueText.fontSize = dialogue_font_size;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("float not parsed correctly");
+                }
+                break;
+            case SPEAKER_FONT_SIZE_TAG:
+                if (float.TryParse(tagValue, out float speaker_font_size))
+                {
+                    if (speaker_font_size == -1)
+                    {
+                        speakerText.fontSize = defaultSpeakerFontSize;
+                    }
+                    else
+                    {
+                        speakerText.fontSize = speaker_font_size;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("float not parsed correctly");
+                }
                 break;
             default:
                 Debug.LogWarning("Tag came in but is not being handled: " + tag);
