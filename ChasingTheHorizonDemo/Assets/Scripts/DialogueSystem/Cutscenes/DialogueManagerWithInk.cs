@@ -40,9 +40,12 @@ public class DialogueManagerWithInk : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON = null;
 
+    [SerializeField] private ActorManager actorManager = null;
+
     private PlayerInput input = null;
 
     private Story currentStory;
+    private Actor currentActor = null;
 
     public bool dialogueIsPlaying { get; private set; }
     private bool nextIsPressed = false;
@@ -52,6 +55,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     public static DialogueManagerWithInk instance { get; private set; }
 
     [Header("Tags")]
+    private const string ACTOR_TAG = "actor"; // actor = the character who's currently being handled
     private const string SPEAKER_TAG = "speaker"; // the same as left from the ":" in the ink file
     private const string PORTRAIT_TAG = "portrait"; // tags can be used for the portraits, speaker, position, etc.
     private const string FACING_TAG = "facing";
@@ -63,6 +67,7 @@ public class DialogueManagerWithInk : MonoBehaviour
     [Header("Resources paths")]
     private const string SFX_PATH = "Sound/SFX/";
     private const string MUSIC_PATH = "Sound/Music/";
+    private const string PORTRAIT_PATH = "Portraits/";
 
 
     private void Awake()
@@ -74,6 +79,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         instance = this;
         input = GetComponent<PlayerInput>();
         audioSource = this.gameObject.AddComponent<AudioSource>();
+        actorManager = GetComponent<ActorManager>();
     }
 
     private void Start()
@@ -247,11 +253,14 @@ public class DialogueManagerWithInk : MonoBehaviour
     {
         switch (tagKey)
         {
+            case ACTOR_TAG:
+                currentActor = actorManager.GetActorByName(tagValue);
+                break;
             case SPEAKER_TAG:
                 speakerText.text = tagValue;
                 break;
             case PORTRAIT_TAG:
-                portraitAnimator.Play(tagValue); // name the tag the same as the animation
+                SetPortrait(tagValue, currentActor); // name the tag the same as the portrait
                 break;
             case FACING_TAG:
                 facingAnimator.Play(tagValue);
@@ -305,6 +314,12 @@ public class DialogueManagerWithInk : MonoBehaviour
                 Debug.LogWarning("Tag came in but is not being handled: " + tag);
                 break;
         }
+    }
+
+    private void SetPortrait(string tagValue, Actor actor)
+    {
+        actor.portrait.sprite = Resources.Load<Sprite>(PORTRAIT_PATH + actor.name + "/" + tagValue);
+        Debug.Log(actor.portrait.sprite.name);
     }
 
     private void DisplayChoices()

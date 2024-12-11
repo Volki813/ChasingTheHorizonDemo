@@ -1,7 +1,7 @@
 -> main
 
 === main ===
-Should Alan Forte hop on Atelier Ayesha? #start:speaker:Roland #start:portrait:roland_smiling #start:facing:face_right #end:portrait:roland_angry #end:sound:SFX Boomy #start:music:At Home #end:speaker_font_size:20
+Should Alan Forte hop on Atelier Ayesha? #start:actor:roland #start:speaker:Roland #start:portrait:roland_smiling #start:facing:face_right #end:portrait:roland_angry #end:sound:SFX Boomy #start:music:At Home #end:speaker_font_size:20
     + [hell yeah]
         -> ayesha
     + [nah]
@@ -23,7 +23,7 @@ You chose {pokemon}! #start:facing:face_right
 -> END
 
 === ayesha ===
-HELL YEAH #start:speaker:Simon #start:portrait:simon_smiling
+HELL YEAH #start:actor:simon #start:speaker:Simon #start:portrait:simon_smiling
 -> END
 
 === gogeta ===
