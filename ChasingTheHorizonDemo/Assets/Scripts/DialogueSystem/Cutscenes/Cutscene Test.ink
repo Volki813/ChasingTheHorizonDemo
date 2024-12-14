@@ -1,7 +1,7 @@
 -> main
 
 === main ===
-Should Alan Forte hop on Atelier Ayesha? #start:actor:roland #start:speaker:Roland #start:portrait:roland_smiling #start:facing:face_right #end:portrait:roland_angry #end:sound:SFX Boomy #start:music:At Home #end:speaker_font_size:20
+Should Alan Forte hop on Atelier Ayesha? #start:actor:roland #start:portrait:roland_smiling #start:facing:face_right #end:portrait:roland_angry #end:sound:SFX Boomy #start:music:At Home #end:speaker_font_size:20
     + [hell yeah]
         -> ayesha
     + [nah]
@@ -10,7 +10,7 @@ Should Alan Forte hop on Atelier Ayesha? #start:actor:roland #start:speaker:Rola
         -> gogeta
 
 === poke ===
-Which Pokemon do you choose? #start:portrait:roland_neutral #start:facing:face_left
+Which Pokemon do you choose? #start:portrait:roland_neutral #start:facing:left
     + [Charmander]
         -> chosen("Charmander")
     + [Bulbasaur]
@@ -19,11 +19,11 @@ Which Pokemon do you choose? #start:portrait:roland_neutral #start:facing:face_l
         -> chosen("Squirt")
 
 === chosen(pokemon) ===
-You chose {pokemon}! #start:facing:face_right
+You chose {pokemon}! #start:facing:right
 -> END
 
 === ayesha ===
-HELL YEAH #start:actor:simon #start:speaker:Simon #start:portrait:simon_smiling
+HELL YEAH #start:actor:simon #start:portrait:simon_smiling #start:facing:left
 -> END
 
 === gogeta ===

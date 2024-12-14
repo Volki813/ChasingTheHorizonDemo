@@ -19,8 +19,6 @@ public class DialogueManagerWithInk : MonoBehaviour
     [SerializeField] private GameObject continueIcon = null;
     [SerializeField] private TextMeshProUGUI dialogueText = null;
     [SerializeField] private TextMeshProUGUI speakerText = null;
-    [SerializeField] private Animator portraitAnimator = null;
-    [SerializeField] private Animator facingAnimator = null;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices = null;
@@ -56,7 +54,7 @@ public class DialogueManagerWithInk : MonoBehaviour
 
     [Header("Tags")]
     private const string ACTOR_TAG = "actor"; // actor = the character who's currently being handled
-    private const string SPEAKER_TAG = "speaker"; // the same as left from the ":" in the ink file
+    // the same as left from the ":" in the ink file
     private const string PORTRAIT_TAG = "portrait"; // tags can be used for the portraits, speaker, position, etc.
     private const string FACING_TAG = "facing";
     private const string SOUND_TAG = "sound";
@@ -124,9 +122,12 @@ public class DialogueManagerWithInk : MonoBehaviour
         dialogueHolder.SetActive(true);
 
         // reset values from the tags
+        currentActor = null;
         speakerText.text = "???";
-        portraitAnimator.Play("default");
-        facingAnimator.Play("face_right");
+        foreach (Actor actor in actorManager.actors) // reset portrait for each actor
+        {
+            actor.portrait.sprite = null;
+        }
 
         ContinueStory();
     }
@@ -255,15 +256,13 @@ public class DialogueManagerWithInk : MonoBehaviour
         {
             case ACTOR_TAG:
                 currentActor = actorManager.GetActorByName(tagValue);
-                break;
-            case SPEAKER_TAG:
-                speakerText.text = tagValue;
+                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1));
                 break;
             case PORTRAIT_TAG:
                 SetPortrait(tagValue, currentActor); // name the tag the same as the portrait
                 break;
             case FACING_TAG:
-                facingAnimator.Play(tagValue);
+                SetFacingDirection(tagValue, currentActor);
                 break;
             case SOUND_TAG:
                 AudioClip soundClip = Resources.Load<AudioClip>(SFX_PATH + tagValue);
@@ -279,14 +278,8 @@ public class DialogueManagerWithInk : MonoBehaviour
             case DIALOGUE_FONT_SIZE_TAG:
                 if (float.TryParse(tagValue, out float dialogue_font_size))
                 {
-                    if (dialogue_font_size == -1)
-                    {
-                        dialogueText.fontSize = defaultDialogueFontSize;
-                    }
-                    else
-                    {
-                        dialogueText.fontSize = dialogue_font_size;
-                    }
+                    if (dialogue_font_size == -1) dialogueText.fontSize = defaultDialogueFontSize;
+                    else dialogueText.fontSize = dialogue_font_size;
                 }
                 else
                 {
@@ -296,14 +289,8 @@ public class DialogueManagerWithInk : MonoBehaviour
             case SPEAKER_FONT_SIZE_TAG:
                 if (float.TryParse(tagValue, out float speaker_font_size))
                 {
-                    if (speaker_font_size == -1)
-                    {
-                        speakerText.fontSize = defaultSpeakerFontSize;
-                    }
-                    else
-                    {
-                        speakerText.fontSize = speaker_font_size;
-                    }
+                    if (speaker_font_size == -1) speakerText.fontSize = defaultSpeakerFontSize;
+                    else speakerText.fontSize = speaker_font_size;
                 }
                 else
                 {
@@ -319,7 +306,20 @@ public class DialogueManagerWithInk : MonoBehaviour
     private void SetPortrait(string tagValue, Actor actor)
     {
         actor.portrait.sprite = Resources.Load<Sprite>(PORTRAIT_PATH + actor.name + "/" + tagValue);
-        Debug.Log(actor.portrait.sprite.name);
+    }
+
+    private void SetFacingDirection(string tagValue, Actor actor)
+    {
+        switch (tagValue) // tagvalue is either "left" or "right"
+        {
+            case "left":
+                actor.position.localScale = new Vector3(-1,1,1);
+                break;
+            case "right":
+                actor.position.localScale = Vector3.one;
+                break;
+        }
+        
     }
 
     private void DisplayChoices()
