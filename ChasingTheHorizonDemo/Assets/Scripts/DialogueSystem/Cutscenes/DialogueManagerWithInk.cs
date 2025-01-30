@@ -136,6 +136,12 @@ public class DialogueManagerWithInk : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
+        foreach (Actor actor in actorManager.actors) // destroy each actor
+        {
+            Destroy(actor.position.gameObject);
+        }
+        actorManager.actors.Clear();
+
         dialogueIsPlaying = false;
         dialogueHolder.SetActive(false);
         dialogueText.text = "End of Dialogue";
@@ -306,17 +312,22 @@ public class DialogueManagerWithInk : MonoBehaviour
     private void SetPortrait(string tagValue, Actor actor)
     {
         actor.portrait.sprite = Resources.Load<Sprite>(PORTRAIT_PATH + actor.name + "/" + tagValue);
+        actor.portrait.SetNativeSize();
+        actor.portrait.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     private void SetFacingDirection(string tagValue, Actor actor)
     {
+        Vector3 scale = actor.position.localScale;
         switch (tagValue) // tagvalue is either "left" or "right"
-        {
+        {    
             case "left":
-                actor.position.localScale = new Vector3(-1,1,1);
+                if(Math.Sign(actor.position.localScale.x) > 0) 
+                    actor.position.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
                 break;
             case "right":
-                actor.position.localScale = Vector3.one;
+                if (Math.Sign(actor.position.localScale.x) < 0) // negative sign of localscale.x means they're facing left
+                    actor.position.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
                 break;
         }
         
