@@ -7,4 +7,5 @@ public class Actor
     public string name;
     public Image portrait;
     public Transform position;
+    public Animator animator;
 }

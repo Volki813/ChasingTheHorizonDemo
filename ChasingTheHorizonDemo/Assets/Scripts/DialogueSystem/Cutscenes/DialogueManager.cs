@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
-public class DialogueManagerWithInk : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
     [Header("Parameters")]
     [Tooltip("the lower, the faster")][SerializeField] private float typingSpeed = 0.02f; // the lower, the faster
@@ -50,21 +50,11 @@ public class DialogueManagerWithInk : MonoBehaviour
     private bool canContinueToNextLine = false; // use as a condition for whenever a button is pressed to proceed
     private Coroutine displayLineCoroutine = null; // used to make it so no more than one coroutine display a line at a time 
 
-    public static DialogueManagerWithInk instance { get; private set; }
+    public static DialogueManager instance { get; private set; }
 
     [Header("Queues")]
     private Queue<Action> startLineFunctions = new Queue<Action>(); // Functions called at the beginning of a line
     private Queue<Action> endLineFunctions = new Queue<Action>(); // Functions called at the end of a line
-
-    [Header("Tags")]
-    private const string ACTOR_TAG = "actor"; // actor = the character who's currently being handled
-    // the same as left from the ":" in the ink file
-    private const string PORTRAIT_TAG = "portrait"; // tags can be used for the portraits, speaker, position, etc.
-    private const string FACING_TAG = "facing";
-    private const string SOUND_TAG = "sound";
-    private const string MUSIC_TAG = "music"; // name the music and sound in inky the same as the file name in assets
-    private const string DIALOGUE_FONT_SIZE_TAG = "dialogue_font_size"; // set to -1 if default size
-    private const string SPEAKER_FONT_SIZE_TAG = "speaker_font_size"; // set to -1 if default size
 
     [Header("Resources paths")]
     private const string SFX_PATH = "Sound/SFX/";
@@ -133,7 +123,7 @@ public class DialogueManagerWithInk : MonoBehaviour
             actor.portrait.sprite = null;
         }
 
-        BindExternalFunctions(currentStory);
+        BindExternalFunctions();
 
         ContinueStory();
     }
@@ -142,17 +132,20 @@ public class DialogueManagerWithInk : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
+        UnbindExternalFunctions();
+
         foreach (Actor actor in actorManager.actors) // destroy each actor
         {
             Destroy(actor.position.gameObject);
         }
         actorManager.actors.Clear();
 
+        speakerText.fontSize = defaultSpeakerFontSize;
+        dialogueText.fontSize = defaultDialogueFontSize;
+
         dialogueIsPlaying = false;
         dialogueHolder.SetActive(false);
         dialogueText.text = "End of Dialogue";
-
-        UnbindExternalFunctions(currentStory);
     }
 
     public void ContinueStory()
@@ -165,8 +158,6 @@ public class DialogueManagerWithInk : MonoBehaviour
                 StopCoroutine(displayLineCoroutine);
             }
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
-            // handle tags
-            HandleTags(currentStory.currentTags, true);
         }
         else
         {
@@ -184,7 +175,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         continueIcon.SetActive(false);
         HideChoices();
 
-        while(startLineFunctions.Count > 0)
+        while (startLineFunctions.Count > 0) // invokes all queued eternal functions with timing "start"
         {
             Action action = startLineFunctions.Dequeue();
             action?.Invoke();
@@ -197,7 +188,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             // finish line immediately when next is pressed
-            if (nextIsPressed) // a little buggy
+            if (nextIsPressed)
             {
                 nextIsPressed = false;
                 dialogueText.maxVisibleCharacters = line.Length;
@@ -223,9 +214,8 @@ public class DialogueManagerWithInk : MonoBehaviour
         // actions when the line is finished
         continueIcon.SetActive(true);
         DisplayChoices();
-        HandleTags(currentStory.currentTags, false); // for end tags 
 
-        while(endLineFunctions.Count > 0) // ivokes all queued functions with timing "end"
+        while (endLineFunctions.Count > 0) // ivokes all queued external functions with timing "end"
         {
             Action action = endLineFunctions.Dequeue();
             action?.Invoke();
@@ -234,99 +224,116 @@ public class DialogueManagerWithInk : MonoBehaviour
         canContinueToNextLine = true;
     }
 
-    private void PlayDialogueSound(int currentDisplayedCharacterCount)
+    private void BindExternalFunctions()
     {
-        if (currentDisplayedCharacterCount % frequencyLevel == 0)
+        currentStory.BindExternalFunction("CurrentSpeaker", (string timing, string actorName) =>
         {
-            if (stopAudioSource) audioSource.Stop();
-            audioSource.PlayOneShot(dialogueTypingSoundClip);
-        }
-    }
-
-    private void HideChoices()
-    {
-        foreach (GameObject choice in choices)
-        {
-            choice.SetActive(false);
-        }
-    }
-
-    private void HandleTags(List<string> currentTags, bool startTags)
-    {
-        foreach (string tag in currentTags)
-        {
-            // tags in ink turn into strings in unity which can be used to create a key/value system
-            string[] splitTag = tag.Split(":"); // can change what symbol we use for splitting the key and the value
-            if (splitTag.Length != 3) // Error if e.g. a tag has more than two ":" in it
+            Action action = () =>
             {
-                Debug.LogError("Tag couldn't be parsed: " + tag);
-            }
-            string tagStart = splitTag[0].Trim();
-            string tagKey = splitTag[1].Trim();
-            string tagValue = splitTag[2].Trim();
-
-            if (tagStart == "start" && startTags)
-            {
-                ProcessTags(tagKey, tagValue, tag);
-            }
-            else if (tagStart == "end" && !startTags)
-            {
-                ProcessTags(tagKey, tagValue, tag);
-            }
-        }
-    }
-
-    private void ProcessTags(string tagKey, string tagValue, string tag)
-    {
-        switch (tagKey)
-        {
-            case ACTOR_TAG:
-                currentActor = actorManager.GetActorByName(tagValue);
+                currentActor = actorManager.GetActorByName(actorName);
                 speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); // substring(1) basically removes the first letter of a string, so this way the first letter doesn't have to be written in uppercase but will still show up as such
-                break;
-            case PORTRAIT_TAG:
-                SetPortrait(tagValue, currentActor); // name the tag the same as the portrait
-                break;
-            case FACING_TAG:
-                SetFacingDirection(tagValue, currentActor);
-                break;
-            case SOUND_TAG:
-                AudioClip soundClip = Resources.Load<AudioClip>(SFX_PATH + tagValue);
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+
+        currentStory.BindExternalFunction("SetPortrait", (string timing, string actorName, string portrait) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = actorManager.GetActorByName(actorName);
+                SetPortrait(portrait, actor);
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+
+        currentStory.BindExternalFunction("SetFacingDirection", (string timing, string actorName, string direction, bool withBounce) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = actorManager.GetActorByName(actorName);
+                SetFacingDirection(direction, actor);
+                if (withBounce) actor.animator.Play("BounceUpwards");
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+
+        currentStory.BindExternalFunction("PlaySound", (string timing, string soundName) =>
+        {
+            Action action = () =>
+            {
+                AudioClip soundClip = Resources.Load<AudioClip>(SFX_PATH + soundName);
                 soundSource.clip = soundClip;
                 soundSource.Play();
-                break;
-            case MUSIC_TAG:
-                AudioClip musicClip = Resources.Load<AudioClip>(MUSIC_PATH + tagValue);
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+
+        currentStory.BindExternalFunction("PlayMusic", (string timing, string musicName) =>
+        {
+            Action action = () =>
+            {
+                AudioClip musicClip = Resources.Load<AudioClip>(MUSIC_PATH + musicName);
                 musicSource.clip = musicClip;
                 musicSource.Play();
-                if (tagValue == "stop") musicSource.Stop(); // stop music if music tag is "stop"
-                break;
-            case DIALOGUE_FONT_SIZE_TAG:
-                if (float.TryParse(tagValue, out float dialogue_font_size))
+                if (musicName == "stop") musicSource.Stop(); // stop music if musicName is "stop"
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+
+        currentStory.BindExternalFunction("EditFontSize", (string timing, float fontSize, string speakerOrDialogue) =>
+        {
+            Action action = () =>
+            {
+                switch (speakerOrDialogue)
                 {
-                    if (dialogue_font_size == -1) dialogueText.fontSize = defaultDialogueFontSize;
-                    else dialogueText.fontSize = dialogue_font_size;
+                    case "speaker":
+                        if (fontSize < 0) speakerText.fontSize = defaultSpeakerFontSize;
+                        else speakerText.fontSize = fontSize;
+                        break;
+                    case "dialogue":
+                        if (fontSize < 0) dialogueText.fontSize = defaultDialogueFontSize;
+                        else dialogueText.fontSize = fontSize;
+                        break;
+                    default:
+                        Debug.LogError("speakerOrDialogue has to be either 'speaker' or 'dialogue'");
+                        break;
                 }
-                else
-                {
-                    Debug.LogWarning("float not parsed correctly");
-                }
-                break;
-            case SPEAKER_FONT_SIZE_TAG:
-                if (float.TryParse(tagValue, out float speaker_font_size))
-                {
-                    if (speaker_font_size == -1) speakerText.fontSize = defaultSpeakerFontSize;
-                    else speakerText.fontSize = speaker_font_size;
-                }
-                else
-                {
-                    Debug.LogWarning("float not parsed correctly");
-                }
-                break;
-            default:
-                Debug.LogWarning("Tag came in but is not being handled: " + tag);
-                break;
-        }
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+    }
+
+    private void UnbindExternalFunctions()
+    {
+        currentStory.UnbindExternalFunction("CurrentSpeaker");
+
+        currentStory.UnbindExternalFunction("SetPortrait");
+
+        currentStory.UnbindExternalFunction("SetFacingDirection");
+
+        currentStory.UnbindExternalFunction("PlaySound");
+
+        currentStory.UnbindExternalFunction("PlayMusic");
+
+        currentStory.UnbindExternalFunction("EditFontSize");
     }
 
     private void SetPortrait(string portraitName, Actor actor)
@@ -351,6 +358,23 @@ public class DialogueManagerWithInk : MonoBehaviour
                 break;
         }
 
+    }
+
+    private void PlayDialogueSound(int currentDisplayedCharacterCount)
+    {
+        if (currentDisplayedCharacterCount % frequencyLevel == 0)
+        {
+            if (stopAudioSource) audioSource.Stop();
+            audioSource.PlayOneShot(dialogueTypingSoundClip);
+        }
+    }
+
+    private void HideChoices()
+    {
+        foreach (GameObject choice in choices)
+        {
+            choice.SetActive(false);
+        }
     }
 
     private void DisplayChoices()
@@ -401,52 +425,5 @@ public class DialogueManagerWithInk : MonoBehaviour
         {
             ContinueStory();
         }
-    }
-
-    private void BindExternalFunctions(Story currentStory)
-    {
-        currentStory.BindExternalFunction("CurrentSpeaker", (string timing, string actorName) =>
-        {
-            Action action = () =>
-            {
-                currentActor = actorManager.GetActorByName(actorName);
-                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); // substring(1) basically removes the first letter of a string, so this way the first letter doesn't have to be written in uppercase but will still show up as such
-            };
-
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
-        });
-
-        currentStory.BindExternalFunction("SetPortrait", (string timing, string actorName, string portrait) =>
-        {
-            Action action = () =>
-            {
-                Actor actor = actorManager.GetActorByName(actorName);
-                SetPortrait(portrait, actor);
-            };
-
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
-        });
-
-        currentStory.BindExternalFunction("SetFacingDirection", (string timing, string actorName, string direction) =>
-        {
-            Action action = () =>
-            {
-                Actor actor = actorManager.GetActorByName(actorName);
-                SetFacingDirection(direction, actor);
-            };
-
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
-        });
-    }
-
-    private void UnbindExternalFunctions(Story currentStory)
-    {
-
     }
 }
