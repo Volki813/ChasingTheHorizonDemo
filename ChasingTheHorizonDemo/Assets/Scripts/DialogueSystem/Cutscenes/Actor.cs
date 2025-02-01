@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class Actor
+public class Actor : MonoBehaviour
 {
-    public string name;
     public Image portrait;
-    public Transform position;
     public Animator animator;
+
+    public void CreateActor(string name, Image portrait, Animator animator, RuntimeAnimatorController animatorController)
+    {
+        this.name = name;
+        this.portrait = portrait;
+        this.animator = animator;
+        animator.runtimeAnimatorController = animatorController;
+    }
 }

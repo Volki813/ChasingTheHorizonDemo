@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialogueHolder = null;
+    [SerializeField] private GameObject positionHolder = null;
     [SerializeField] private GameObject continueIcon = null;
     [SerializeField] private TextMeshProUGUI dialogueText = null;
     [SerializeField] private TextMeshProUGUI speakerText = null;
@@ -38,10 +39,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON = null;
 
-    [SerializeField] private ActorManager actorManager = null;
-
     private PlayerInput input = null;
-
     private Story currentStory;
     private Actor currentActor = null;
 
@@ -71,7 +69,6 @@ public class DialogueManager : MonoBehaviour
         instance = this;
         input = GetComponent<PlayerInput>();
         audioSource = this.gameObject.AddComponent<AudioSource>();
-        actorManager = GetComponent<ActorManager>();
     }
 
     private void Start()
@@ -118,7 +115,7 @@ public class DialogueManager : MonoBehaviour
         // reset values from the tags
         currentActor = null;
         speakerText.text = "???";
-        foreach (Actor actor in actorManager.actors) // reset portrait for each actor
+        foreach (Actor actor in ActorManager.instance.actors.Values) // reset portrait for each actor
         {
             actor.portrait.sprite = null;
         }
@@ -134,11 +131,11 @@ public class DialogueManager : MonoBehaviour
 
         UnbindExternalFunctions();
 
-        foreach (Actor actor in actorManager.actors) // destroy each actor
+        foreach (Actor actor in ActorManager.instance.actors.Values) // destroy each actor
         {
-            Destroy(actor.position.gameObject);
+            Destroy(actor.gameObject);
         }
-        actorManager.actors.Clear();
+        ActorManager.instance.actors.Clear();
 
         speakerText.fontSize = defaultSpeakerFontSize;
         dialogueText.fontSize = defaultDialogueFontSize;
@@ -230,40 +227,34 @@ public class DialogueManager : MonoBehaviour
         {
             Action action = () =>
             {
-                currentActor = actorManager.GetActorByName(actorName);
+                currentActor = ActorManager.instance.GetActorByName(actorName);
                 speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); // substring(1) basically removes the first letter of a string, so this way the first letter doesn't have to be written in uppercase but will still show up as such
             };
 
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
+            CheckTiming(timing, action);
         });
 
         currentStory.BindExternalFunction("SetPortrait", (string timing, string actorName, string portrait) =>
         {
             Action action = () =>
             {
-                Actor actor = actorManager.GetActorByName(actorName);
+                Actor actor = ActorManager.instance.GetActorByName(actorName);
                 SetPortrait(portrait, actor);
             };
 
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
+            CheckTiming(timing, action);
         });
 
         currentStory.BindExternalFunction("SetFacingDirection", (string timing, string actorName, string direction, bool withBounce) =>
         {
             Action action = () =>
             {
-                Actor actor = actorManager.GetActorByName(actorName);
+                Actor actor = ActorManager.instance.GetActorByName(actorName);
                 SetFacingDirection(direction, actor);
-                if (withBounce) actor.animator.Play("BounceUpwards");
+                if (withBounce) actor.animator.SetTrigger("Bounce");
             };
 
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
+            CheckTiming(timing, action);
         });
 
         currentStory.BindExternalFunction("PlaySound", (string timing, string soundName) =>
@@ -275,9 +266,7 @@ public class DialogueManager : MonoBehaviour
                 soundSource.Play();
             };
 
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
+            CheckTiming(timing, action);
         });
 
         currentStory.BindExternalFunction("PlayMusic", (string timing, string musicName) =>
@@ -290,9 +279,7 @@ public class DialogueManager : MonoBehaviour
                 if (musicName == "stop") musicSource.Stop(); // stop music if musicName is "stop"
             };
 
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
+            CheckTiming(timing, action);
         });
 
         currentStory.BindExternalFunction("EditFontSize", (string timing, float fontSize, string speakerOrDialogue) =>
@@ -315,9 +302,24 @@ public class DialogueManager : MonoBehaviour
                 }
             };
 
-            if (timing == "start") startLineFunctions.Enqueue(action);
-            else if (timing == "end") endLineFunctions.Enqueue(action);
-            else Debug.LogError("timing has to be either 'start' or 'end'");
+            CheckTiming(timing, action);
+        });
+
+        currentStory.BindExternalFunction("PlaceActor", (string timing, string actorName, string position) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = ActorManager.instance.GetActorByName(actorName);
+                GameObject positionToPlaceIn = positionHolder.transform.Find(position).gameObject;
+                if (positionToPlaceIn != null)
+                {
+                    actor.transform.parent.position = positionToPlaceIn.transform.position;
+                }
+                else Debug.LogError("position has to be 'far left', 'near left', 'center left', 'center right', " +
+                    "'near right' or 'far right");
+            };
+
+            CheckTiming(timing, action);
         });
     }
 
@@ -336,6 +338,13 @@ public class DialogueManager : MonoBehaviour
         currentStory.UnbindExternalFunction("EditFontSize");
     }
 
+    private void CheckTiming(string timing, Action action)
+    {
+        if (timing == "start") startLineFunctions.Enqueue(action);
+        else if (timing == "end") endLineFunctions.Enqueue(action);
+        else Debug.LogError("timing has to be either 'start' or 'end'");
+    }
+
     private void SetPortrait(string portraitName, Actor actor)
     {
         actor.portrait.sprite = Resources.Load<Sprite>(PORTRAIT_PATH + actor.name + "/" + portraitName);
@@ -345,19 +354,18 @@ public class DialogueManager : MonoBehaviour
 
     private void SetFacingDirection(string direction, Actor actor)
     {
-        Vector3 scale = actor.position.localScale;
+        Vector3 scale = actor.portrait.transform.localScale;
         switch (direction) // direction is either "left" or "right"
         {
             case "left":
-                if (Math.Sign(actor.position.localScale.x) > 0)
-                    actor.position.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
+                if (Math.Sign(actor.portrait.transform.localScale.x) > 0)
+                    actor.portrait.transform.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
                 break;
             case "right":
-                if (Math.Sign(actor.position.localScale.x) < 0) // negative sign of localscale.x means they're facing left
-                    actor.position.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
+                if (Math.Sign(actor.portrait.transform.localScale.x) < 0) // negative sign of localscale.x means they're facing left
+                    actor.portrait.transform.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
                 break;
         }
-
     }
 
     private void PlayDialogueSound(int currentDisplayedCharacterCount)

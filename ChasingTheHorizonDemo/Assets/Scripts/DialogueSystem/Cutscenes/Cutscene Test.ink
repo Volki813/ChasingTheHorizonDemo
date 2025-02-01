@@ -4,12 +4,16 @@ EXTERNAL SetFacingDirection(timing, actorName, direction, withBounce)
 EXTERNAL PlaySound(timing, soundName)
 EXTERNAL PlayMusic(timing, musicName)
 EXTERNAL EditFontSize(timing, fontSize, speakerOrDialogue)
+EXTERNAL PlaceActor(timng, actorName, position)
+EXTERNAL MoveActor(timing, actorname, destination)
+EXTERNAL RemoveActor(timing, actorName)
 
 -> main
 
 === main ===
 ~ CurrentSpeaker("start", "roland")
 ~ SetPortrait("start", "roland", "roland_smiling")
+~ PlaceActor("start", "roland", "far left")
 ~ SetFacingDirection("start", "roland", "right", false)
 ~ PlaySound("end", "SFX Boomy")
 ~ PlayMusic("start", "At Home")
