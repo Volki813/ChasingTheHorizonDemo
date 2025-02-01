@@ -52,6 +52,10 @@ public class DialogueManagerWithInk : MonoBehaviour
 
     public static DialogueManagerWithInk instance { get; private set; }
 
+    [Header("Queues")]
+    private Queue<Action> startLineFunctions = new Queue<Action>(); // Functions called at the beginning of a line
+    private Queue<Action> endLineFunctions = new Queue<Action>(); // Functions called at the end of a line
+
     [Header("Tags")]
     private const string ACTOR_TAG = "actor"; // actor = the character who's currently being handled
     // the same as left from the ":" in the ink file
@@ -129,6 +133,8 @@ public class DialogueManagerWithInk : MonoBehaviour
             actor.portrait.sprite = null;
         }
 
+        BindExternalFunctions(currentStory);
+
         ContinueStory();
     }
 
@@ -145,6 +151,8 @@ public class DialogueManagerWithInk : MonoBehaviour
         dialogueIsPlaying = false;
         dialogueHolder.SetActive(false);
         dialogueText.text = "End of Dialogue";
+
+        UnbindExternalFunctions(currentStory);
     }
 
     public void ContinueStory()
@@ -175,6 +183,12 @@ public class DialogueManagerWithInk : MonoBehaviour
         // actions before the line starts
         continueIcon.SetActive(false);
         HideChoices();
+
+        while(startLineFunctions.Count > 0)
+        {
+            Action action = startLineFunctions.Dequeue();
+            action?.Invoke();
+        }
 
         canContinueToNextLine = false;
 
@@ -210,6 +224,12 @@ public class DialogueManagerWithInk : MonoBehaviour
         continueIcon.SetActive(true);
         DisplayChoices();
         HandleTags(currentStory.currentTags, false); // for end tags 
+
+        while(endLineFunctions.Count > 0) // ivokes all queued functions with timing "end"
+        {
+            Action action = endLineFunctions.Dequeue();
+            action?.Invoke();
+        }
 
         canContinueToNextLine = true;
     }
@@ -262,7 +282,7 @@ public class DialogueManagerWithInk : MonoBehaviour
         {
             case ACTOR_TAG:
                 currentActor = actorManager.GetActorByName(tagValue);
-                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1));
+                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); // substring(1) basically removes the first letter of a string, so this way the first letter doesn't have to be written in uppercase but will still show up as such
                 break;
             case PORTRAIT_TAG:
                 SetPortrait(tagValue, currentActor); // name the tag the same as the portrait
@@ -309,20 +329,20 @@ public class DialogueManagerWithInk : MonoBehaviour
         }
     }
 
-    private void SetPortrait(string tagValue, Actor actor)
+    private void SetPortrait(string portraitName, Actor actor)
     {
-        actor.portrait.sprite = Resources.Load<Sprite>(PORTRAIT_PATH + actor.name + "/" + tagValue);
+        actor.portrait.sprite = Resources.Load<Sprite>(PORTRAIT_PATH + actor.name + "/" + portraitName);
         actor.portrait.SetNativeSize();
         actor.portrait.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
-    private void SetFacingDirection(string tagValue, Actor actor)
+    private void SetFacingDirection(string direction, Actor actor)
     {
         Vector3 scale = actor.position.localScale;
-        switch (tagValue) // tagvalue is either "left" or "right"
-        {    
+        switch (direction) // direction is either "left" or "right"
+        {
             case "left":
-                if(Math.Sign(actor.position.localScale.x) > 0) 
+                if (Math.Sign(actor.position.localScale.x) > 0)
                     actor.position.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
                 break;
             case "right":
@@ -330,7 +350,7 @@ public class DialogueManagerWithInk : MonoBehaviour
                     actor.position.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
                 break;
         }
-        
+
     }
 
     private void DisplayChoices()
@@ -381,5 +401,52 @@ public class DialogueManagerWithInk : MonoBehaviour
         {
             ContinueStory();
         }
+    }
+
+    private void BindExternalFunctions(Story currentStory)
+    {
+        currentStory.BindExternalFunction("CurrentSpeaker", (string timing, string actorName) =>
+        {
+            Action action = () =>
+            {
+                currentActor = actorManager.GetActorByName(actorName);
+                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); // substring(1) basically removes the first letter of a string, so this way the first letter doesn't have to be written in uppercase but will still show up as such
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+
+        currentStory.BindExternalFunction("SetPortrait", (string timing, string actorName, string portrait) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = actorManager.GetActorByName(actorName);
+                SetPortrait(portrait, actor);
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+
+        currentStory.BindExternalFunction("SetFacingDirection", (string timing, string actorName, string direction) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = actorManager.GetActorByName(actorName);
+                SetFacingDirection(direction, actor);
+            };
+
+            if (timing == "start") startLineFunctions.Enqueue(action);
+            else if (timing == "end") endLineFunctions.Enqueue(action);
+            else Debug.LogError("timing has to be either 'start' or 'end'");
+        });
+    }
+
+    private void UnbindExternalFunctions(Story currentStory)
+    {
+
     }
 }

@@ -1,16 +1,28 @@
+EXTERNAL CurrentSpeaker(timing, actorName)
+EXTERNAL SetPortrait(timing, actorName, portrait)
+EXTERNAL SetFacingDirection(timing, actorName, direction)
+EXTERNAL PlaySound(timing, sound)
+EXTERNAL PlayMusic(timing, music)
+EXTERNAL StopMusic(timing)
+EXTERNAL EditFontSize(timing, size)
+
 -> main
 
 === main ===
 Should Alan Forte hop on Atelier Ayesha? #start:actor:roland #start:portrait:roland_smiling #start:facing:face_right #end:portrait:roland_angry #end:sound:SFX Boomy #start:music:At Home #end:speaker_font_size:20
     + [hell yeah]
         -> ayesha
-    + [nah]
-        -> poke
+    + [external functions]
+        -> external
     + [gogeta]
         -> gogeta
 
-=== poke ===
-Which Pokemon do you choose? #start:portrait:roland_neutral #start:facing:left
+=== external ===
+~ CurrentSpeaker("start", "roland")
+~ SetPortrait("start", "roland", "roland_neutral")
+~ SetFacingDirection("start", "roland", "left")
+~ SetFacingDirection("end", "roland", "right")
+Which Pokemon do you choose? 
     + [Charmander]
         -> chosen("Charmander")
     + [Bulbasaur]
