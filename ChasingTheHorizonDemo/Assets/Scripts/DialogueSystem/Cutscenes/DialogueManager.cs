@@ -334,7 +334,7 @@ public class DialogueManager : MonoBehaviour
 
                 if (destinationPos != null)
                 {
-                    StartCoroutine(MoveTo(actor, destinationPos, 0.5f)); // stops early if timeToComplete too small for some reason
+                    StartCoroutine(MoveTo(actor, destinationPos, 2f));
                 }
                 else Debug.LogError("position has to be 'far left', 'near left', 'center left', 'center right', " +
                         "'near right' or 'far right");
@@ -355,18 +355,18 @@ public class DialogueManager : MonoBehaviour
         });
     }
 
+    // Issue: if line finished typing you can advance dialogue before moving is finished (but they will continue to move until destination is reached)
     private IEnumerator MoveTo(Actor actor, Vector3 destinationPos, float timeToComplete)
     {
         Vector3 startPos = actor.transform.parent.position;
         float timeElapsed = 0f;
         while (timeElapsed <= timeToComplete)
         {
-            //if (nextIsPressed)
-            //{
-            //    nextIsPressed = false;
-            //    actor.transform.parent.position = destinationPos;
-            //    break;
-            //}
+            if (nextIsPressed) // immediately puts actor to target position
+            {
+                actor.transform.parent.position = destinationPos;
+                break;
+            }
             actor.transform.parent.position = 
                 Vector3.Lerp(startPos, destinationPos, timeElapsed / timeToComplete);
             

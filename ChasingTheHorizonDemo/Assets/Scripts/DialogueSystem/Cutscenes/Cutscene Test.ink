@@ -12,6 +12,8 @@ EXTERNAL RemoveActor(timing, actorName)
 // endUpFacingRight: face right after moving if true
 // timeToComplete
 
+// scaleX, scaleY and scaleZ parameters for setPortrait
+
 -> main
 
 === main ===
