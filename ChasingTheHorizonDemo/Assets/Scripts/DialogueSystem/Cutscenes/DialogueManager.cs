@@ -310,6 +310,8 @@ public class DialogueManager : MonoBehaviour
             Action action = () =>
             {
                 Actor actor = ActorManager.instance.GetActorByName(actorName);
+                actor.gameObject.SetActive(true);
+
                 GameObject positionToPlaceIn = positionHolder.transform.Find(position).gameObject;
                 if (positionToPlaceIn != null)
                 {
@@ -321,6 +323,56 @@ public class DialogueManager : MonoBehaviour
 
             CheckTiming(timing, action);
         });
+
+        currentStory.BindExternalFunction("MoveActor", (string timing, string actorName, string destination,
+            bool faceDestination) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = ActorManager.instance.GetActorByName(actorName);
+                Vector3 destinationPos = positionHolder.transform.Find(destination).gameObject.transform.position;
+
+                if (destinationPos != null)
+                {
+                    StartCoroutine(MoveTo(actor, destinationPos, 0.5f)); // stops early if timeToComplete too small for some reason
+                }
+                else Debug.LogError("position has to be 'far left', 'near left', 'center left', 'center right', " +
+                        "'near right' or 'far right");
+            };
+
+            CheckTiming(timing, action);
+        });
+
+        currentStory.BindExternalFunction("RemoveActor", (string timing, string actorName) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = ActorManager.instance.GetActorByName(actorName);
+                actor.gameObject.SetActive(false);
+            };
+
+            CheckTiming(timing, action);
+        });
+    }
+
+    private IEnumerator MoveTo(Actor actor, Vector3 destinationPos, float timeToComplete)
+    {
+        Vector3 startPos = actor.transform.parent.position;
+        float timeElapsed = 0f;
+        while (timeElapsed <= timeToComplete)
+        {
+            //if (nextIsPressed)
+            //{
+            //    nextIsPressed = false;
+            //    actor.transform.parent.position = destinationPos;
+            //    break;
+            //}
+            actor.transform.parent.position = 
+                Vector3.Lerp(startPos, destinationPos, timeElapsed / timeToComplete);
+            
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 
     private void UnbindExternalFunctions()
@@ -336,6 +388,12 @@ public class DialogueManager : MonoBehaviour
         currentStory.UnbindExternalFunction("PlayMusic");
 
         currentStory.UnbindExternalFunction("EditFontSize");
+
+        currentStory.UnbindExternalFunction("PlaceActor");
+
+        currentStory.UnbindExternalFunction("MoveActor");
+
+        currentStory.UnbindExternalFunction("RemoveActor");
     }
 
     private void CheckTiming(string timing, Action action)

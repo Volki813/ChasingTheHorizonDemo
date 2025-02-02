@@ -5,8 +5,12 @@ EXTERNAL PlaySound(timing, soundName)
 EXTERNAL PlayMusic(timing, musicName)
 EXTERNAL EditFontSize(timing, fontSize, speakerOrDialogue)
 EXTERNAL PlaceActor(timng, actorName, position)
-EXTERNAL MoveActor(timing, actorname, destination)
+EXTERNAL MoveActor(timing, actorname, destination, faceDestination)
 EXTERNAL RemoveActor(timing, actorName)
+
+// add parameters to move actor: 
+// endUpFacingRight: face right after moving if true
+// timeToComplete
 
 -> main
 
@@ -31,24 +35,39 @@ Should Alan Forte hop on Atelier Ayesha?
 ~ SetPortrait("start", "roland", "roland_neutral")
 ~ SetFacingDirection("start", "roland", "left", false)
 ~ SetFacingDirection("end", "roland", "right", true)
-Which Pokemon do you choose? 
-    + [Charmander]
-        -> chosen("Charmander")
-    + [Bulbasaur]
-        -> chosen("Bulba")
-    + [Squirtle]
-        -> chosen("Squirt")
+Test external functions? 
+    + [Yeah]
+        -> chosen("Yeahh")
+    + [Yup]
+        -> chosen("Yupp")
+    + [True]
+        -> chosen("Truee")
 
-=== chosen(pokemon) ===
-~ SetFacingDirection("start", "roland", "right", true)
-You chose {pokemon}!
+=== chosen(choice) ===
+~ RemoveActor("start", "roland")
+You chose {choice}!
+~ SetPortrait("start", "roland", "roland_angry")
+~ PlaceActor("end", "roland", "near left")
+VIDEO GAMES!!!
+~ MoveActor("start", "roland", "far right", true)
+VIDEO GAMES!!!
 -> END
 
 === ayesha ===
 ~ CurrentSpeaker("start", "simon")
 ~ SetPortrait("start", "simon", "simon_smiling")
+~ PlaceActor("start", "roland", "near left")
+~ PlaceActor("start", "simon", "near right")
 ~ SetFacingDirection("start", "simon", "left", true)
+~ EditFontSize("start", -1, "speaker")
 HELL YEAH
+~ MoveActor("start", "roland", "far right", true)
+~ MoveActor("start", "simon", "far left", true)
+Based and true
+~ CurrentSpeaker("start", "roland")
+~ SetFacingDirection("start", "roland", "left", true)
+~ SetFacingDirection("start", "simon", "right", true)
+Based and true indeed
 -> END
 
 === gogeta ===
