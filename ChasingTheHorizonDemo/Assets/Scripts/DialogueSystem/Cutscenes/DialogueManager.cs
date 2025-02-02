@@ -212,7 +212,7 @@ public class DialogueManager : MonoBehaviour
 
         // if you press next when the line finished typing while the characters are still moving,
         // they would keep moving while the next line is typing. This is to prevent this from happening
-        yield return new WaitUntil(() => characterIsMoving == false); 
+        yield return new WaitUntil(() => characterIsMoving == false);
 
         // actions when the line is finished
         continueIcon.SetActive(true);
@@ -339,11 +339,21 @@ public class DialogueManager : MonoBehaviour
             Action action = () =>
             {
                 Actor actor = ActorManager.instance.GetActorByName(actorName);
-                Vector3 destinationPos = positionHolder.transform.Find(destination).gameObject.transform.position;
+                Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
 
                 if (destinationPos != null)
                 {
-                    StartCoroutine(MoveTo(actor, destinationPos, 2f));
+                    if (faceDestination)
+                    {
+                        Vector3 pathToDesination = destinationPos.position - actor.transform.parent.position;
+                        float angleToDestination = Mathf.DeltaAngle(destinationPos.localRotation.eulerAngles.z,
+                            Mathf.Atan2(pathToDesination.y, pathToDesination.x) * Mathf.Rad2Deg - 90);
+                        // angleToDestination is negative if destination is to the right, otherwise positive
+
+                        if (Mathf.Sign(angleToDestination) < 0) SetFacingDirection("right", actor);
+                        else if (Mathf.Sign(angleToDestination) > 0) SetFacingDirection("left", actor);
+                    }
+                    StartCoroutine(MoveTo(actor, destinationPos.position, 2f));
                 }
                 else Debug.LogError("destination has to be 'far left', 'near left', 'center left', 'center right', " +
                         "'near right' or 'far right");

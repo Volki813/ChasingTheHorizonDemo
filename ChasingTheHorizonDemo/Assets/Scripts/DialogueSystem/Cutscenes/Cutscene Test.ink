@@ -67,6 +67,9 @@ HELL YEAH
 ~ MoveActor("end", "simon", "far left", true)
 Based and true
 ~ CurrentSpeaker("start", "roland")
+~ MoveActor("start", "roland", "center right", true)
+~ MoveActor("start", "simon", "near left", false)
+Very true
 ~ SetFacingDirection("start", "roland", "left", true)
 ~ SetFacingDirection("start", "simon", "right", true)
 Based and true indeed
