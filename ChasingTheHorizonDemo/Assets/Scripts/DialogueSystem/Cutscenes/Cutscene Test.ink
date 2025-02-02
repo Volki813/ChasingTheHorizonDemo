@@ -64,7 +64,7 @@ VIDEO GAMES!!!
 ~ EditFontSize("start", -1, "speaker")
 HELL YEAH
 ~ MoveActor("start", "roland", "far right", true)
-~ MoveActor("start", "simon", "far left", true)
+~ MoveActor("end", "simon", "far left", true)
 Based and true
 ~ CurrentSpeaker("start", "roland")
 ~ SetFacingDirection("start", "roland", "left", true)

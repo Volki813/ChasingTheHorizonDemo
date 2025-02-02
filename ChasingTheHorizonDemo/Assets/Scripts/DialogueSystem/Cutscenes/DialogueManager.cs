@@ -48,6 +48,8 @@ public class DialogueManager : MonoBehaviour
     private bool canContinueToNextLine = false; // use as a condition for whenever a button is pressed to proceed
     private Coroutine displayLineCoroutine = null; // used to make it so no more than one coroutine display a line at a time 
 
+    private bool characterIsMoving = false;
+
     public static DialogueManager instance { get; private set; }
 
     [Header("Queues")]
@@ -208,6 +210,10 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
+        // if you press next when the line finished typing while the characters are still moving,
+        // they would keep moving while the next line is typing. This is to prevent this from happening
+        yield return new WaitUntil(() => characterIsMoving == false); 
+
         // actions when the line is finished
         continueIcon.SetActive(true);
         DisplayChoices();
@@ -217,6 +223,9 @@ public class DialogueManager : MonoBehaviour
             Action action = endLineFunctions.Dequeue();
             action?.Invoke();
         }
+
+        // the same could happen at the end of a line
+        yield return new WaitUntil(() => characterIsMoving == false);
 
         canContinueToNextLine = true;
     }
@@ -336,7 +345,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     StartCoroutine(MoveTo(actor, destinationPos, 2f));
                 }
-                else Debug.LogError("position has to be 'far left', 'near left', 'center left', 'center right', " +
+                else Debug.LogError("destination has to be 'far left', 'near left', 'center left', 'center right', " +
                         "'near right' or 'far right");
             };
 
@@ -353,26 +362,6 @@ public class DialogueManager : MonoBehaviour
 
             CheckTiming(timing, action);
         });
-    }
-
-    // Issue: if line finished typing you can advance dialogue before moving is finished (but they will continue to move until destination is reached)
-    private IEnumerator MoveTo(Actor actor, Vector3 destinationPos, float timeToComplete)
-    {
-        Vector3 startPos = actor.transform.parent.position;
-        float timeElapsed = 0f;
-        while (timeElapsed <= timeToComplete)
-        {
-            if (nextIsPressed) // immediately puts actor to target position
-            {
-                actor.transform.parent.position = destinationPos;
-                break;
-            }
-            actor.transform.parent.position = 
-                Vector3.Lerp(startPos, destinationPos, timeElapsed / timeToComplete);
-            
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
     }
 
     private void UnbindExternalFunctions()
@@ -394,6 +383,28 @@ public class DialogueManager : MonoBehaviour
         currentStory.UnbindExternalFunction("MoveActor");
 
         currentStory.UnbindExternalFunction("RemoveActor");
+    }
+
+    private IEnumerator MoveTo(Actor actor, Vector3 destinationPos, float timeToComplete)
+    {
+        characterIsMoving = true;
+        Vector3 startPos = actor.transform.parent.position;
+        float timeElapsed = 0f;
+        while (timeElapsed <= timeToComplete)
+        {
+            if (nextIsPressed) // immediately puts actor to target position
+            {
+                actor.transform.parent.position = destinationPos;
+                break;
+            }
+            actor.transform.parent.position =
+                Vector3.Lerp(startPos, destinationPos, timeElapsed / timeToComplete);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        actor.transform.parent.position = destinationPos;
+        characterIsMoving = false;
     }
 
     private void CheckTiming(string timing, Action action)
