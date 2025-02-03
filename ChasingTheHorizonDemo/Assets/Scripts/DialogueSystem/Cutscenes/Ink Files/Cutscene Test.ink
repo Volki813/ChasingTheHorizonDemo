@@ -9,6 +9,8 @@ EXTERNAL MoveActor(timing, actorname, destination, timeToComplete)
 EXTERNAL FaceDestination(timing, actorName, destination)
 EXTERNAL RemoveActor(timing, actorName)
 
+VAR rolandDead = true
+
 -> main
 
 === main ===
@@ -44,9 +46,23 @@ Test external functions?
 ~ RemoveActor("start", "roland")
 You chose {choice}!
 
-~ SetPortrait("start", "roland", "roland_angry")
-~ PlaceActor("end", "roland", "near left")
-VIDEO GAMES!!!
+~ PlaceActor("start", "roland", "center left")
+Hey!
+
+{rolandDead: This is written if Roland is dead|This is written if Roland is alive}
+{- rolandDead: 
+~ MoveActor("start", "roland", "far left", 1.0)
+    this is executed if Roland is dead
+}
+
+~ rolandDead = false
+Roland's death status has now been set to {rolandDead}
+{rolandDead: This is written if Roland is dead|This is written if Roland is alive}
+{- rolandDead: 
+~ MoveActor("start", "roland", "far left", 1.0)
+    this is executed if Roland is dead
+}
+
 
 ~ MoveActor("start", "roland", "far right", 1.0)
 VIDEO GAMES!!!

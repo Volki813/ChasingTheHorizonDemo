@@ -44,7 +44,7 @@ public class DialogueManager : MonoBehaviour
     private Actor currentActor = null;
 
     public bool dialogueIsPlaying { get; private set; }
-    public bool nextIsPressed = false;
+    public bool nextIsPressed { get; private set; }
     private bool canContinueToNextLine = false; // use as a condition for whenever a button is pressed to proceed
     private Coroutine displayLineCoroutine = null; // used to make it so no more than one coroutine display a line at a time 
 
@@ -212,6 +212,9 @@ public class DialogueManager : MonoBehaviour
         // they would keep moving while the next line is typing. This is to prevent this from happening
         yield return new WaitWhile(() => ActorManager.instance.AreActorsMoving());
 
+        // to prevent the next line from typing immediately if characters are moving and line is finished typing
+        nextIsPressed = false;
+
         // actions when the line is finished
         while (endLineFunctions.Count > 0) // ivokes all queued external functions with timing "end"
         {
@@ -221,6 +224,9 @@ public class DialogueManager : MonoBehaviour
 
         // the same could happen at the end of a line
         yield return new WaitWhile(() => ActorManager.instance.AreActorsMoving());
+
+        // to prevent the next line from typing immediately if characters are moving and line is finished typing
+        nextIsPressed = false;
 
         continueIcon.SetActive(true);
         DisplayChoices();
@@ -481,6 +487,9 @@ public class DialogueManager : MonoBehaviour
         if (canContinueToNextLine)
         {
             currentStory.ChooseChoiceIndex(choiceIndex);
+
+            // to prevent text from being skipped immediately if next is pressed while choice screen is active
+            nextIsPressed = false;
             ContinueStory();
         }
     }

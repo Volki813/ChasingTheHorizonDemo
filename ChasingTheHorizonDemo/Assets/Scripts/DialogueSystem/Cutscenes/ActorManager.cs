@@ -50,8 +50,6 @@ public class ActorManager : MonoBehaviour
                 actorsAreMoving = actor.isMoving;
             }
         }
-        // to prevent the next line from typing immediately if characters are moving and line is finished typing
-        DialogueManager.instance.nextIsPressed = false;  
         return actorsAreMoving;
     }
 }
