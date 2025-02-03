@@ -1,15 +1,7 @@
-EXTERNAL CurrentSpeaker(timing, actorName)
-EXTERNAL SetPortrait(timing, actorName, portrait)
-EXTERNAL SetFacingDirection(timing, actorName, direction, withBounce)
-EXTERNAL PlaySound(timing, soundName)
-EXTERNAL PlayMusic(timing, musicName)
-EXTERNAL EditFontSize(timing, fontSize, speakerOrDialogue)
-EXTERNAL PlaceActor(timng, actorName, position)
-EXTERNAL MoveActor(timing, actorname, destination, timeToComplete)
-EXTERNAL FaceDestination(timing, actorName, destination)
-EXTERNAL RemoveActor(timing, actorName)
-
-VAR rolandDead = true
+INCLUDE External Functions.ink
+INCLUDE Actor Variables.ink
+// includes for storing External Functions and Variables so they can
+// be used across all dialogues
 
 -> main
 
