@@ -5,14 +5,9 @@ EXTERNAL PlaySound(timing, soundName)
 EXTERNAL PlayMusic(timing, musicName)
 EXTERNAL EditFontSize(timing, fontSize, speakerOrDialogue)
 EXTERNAL PlaceActor(timng, actorName, position)
-EXTERNAL MoveActor(timing, actorname, destination, faceDestination)
+EXTERNAL MoveActor(timing, actorname, destination, timeToComplete)
+EXTERNAL FaceDestination(timing, actorName, destination)
 EXTERNAL RemoveActor(timing, actorName)
-
-// add parameters to move actor: 
-// endUpFacingRight: face right after moving if true
-// timeToComplete
-
-// scaleX, scaleY and scaleZ parameters for setPortrait
 
 -> main
 
@@ -48,10 +43,12 @@ Test external functions?
 === chosen(choice) ===
 ~ RemoveActor("start", "roland")
 You chose {choice}!
+
 ~ SetPortrait("start", "roland", "roland_angry")
 ~ PlaceActor("end", "roland", "near left")
 VIDEO GAMES!!!
-~ MoveActor("start", "roland", "far right", true)
+
+~ MoveActor("start", "roland", "far right", 1.0)
 VIDEO GAMES!!!
 -> END
 
@@ -63,13 +60,17 @@ VIDEO GAMES!!!
 ~ SetFacingDirection("start", "simon", "left", true)
 ~ EditFontSize("start", -1, "speaker")
 HELL YEAH
-~ MoveActor("start", "roland", "far right", true)
-~ MoveActor("end", "simon", "far left", true)
+
+~ MoveActor("start", "roland", "far right", 1.0)
+~ MoveActor("end", "simon", "far left", 2.0)
 Based and true
+
 ~ CurrentSpeaker("start", "roland")
-~ MoveActor("start", "roland", "center right", true)
-~ MoveActor("start", "simon", "near left", false)
+~ FaceDestination("start", "simon", "near left")
+~ MoveActor("start", "simon", "near left", 1.0)
+~ MoveActor("start", "roland", "center right", 3.0)
 Very true
+
 ~ SetFacingDirection("start", "roland", "left", true)
 ~ SetFacingDirection("start", "simon", "right", true)
 Based and true indeed
@@ -82,6 +83,7 @@ Based and true indeed
 ~ EditFontSize("start", -1, "speaker")
 ~ EditFontSize("start", 50, "dialogue")
 <color=\#0000ffff>In no conceivable manner is it okay to suggest or engage</color> in any sexual conduct with a minor.
+
 ~ EditFontSize("start", -1, "dialogue")
 It takes 25 years for the human mind to fully mature.
 The age of consent in most countries is built around an average period in which the growing mind is capable of handling sexual realtionships, ranging anywhere from 16 to 18 years old on average.
@@ -91,6 +93,7 @@ Sexual relationships are best handled when you and your partner are well-informe
 Children do not possess the wisdom, in-depth education, or emotional, psychological, neurochemical and <b>PHYSICAL</b> maturity to responsibly handle <b>OR</b> consent to sexual relationships.
 They do <b>not</b> know better,
 They are <b>naive</b> and <b>vulnerable</b>,
+
 ~ SetPortrait("start", "roland", "roland_angry")
 <b><color=\#ff0000ff>AND THEY ARE NOT TO BE HARMED!</color></b>
 -> END

@@ -338,7 +338,7 @@ public class DialogueManager : MonoBehaviour
         });
 
         currentStory.BindExternalFunction("MoveActor", (string timing, string actorName, string destination,
-            bool faceDestination) =>
+            float timeToComplete) =>
         {
             Action action = () =>
             {
@@ -347,17 +347,35 @@ public class DialogueManager : MonoBehaviour
                     Actor actor = ActorManager.instance.GetActorByName(actorName);
                     Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
 
-                    if (faceDestination)
-                    {
-                        Vector3 pathToDesination = destinationPos.position - actor.transform.parent.position;
-                        float angleToDestination = Mathf.DeltaAngle(destinationPos.localRotation.eulerAngles.z,
-                            Mathf.Atan2(pathToDesination.y, pathToDesination.x) * Mathf.Rad2Deg - 90);
-                        // angleToDestination is negative if destination is to the right, otherwise positive
+                    
+                    StartCoroutine(MoveTo(actor, destinationPos.position, timeToComplete));
 
-                        if (Mathf.Sign(angleToDestination) < 0) SetFacingDirection("right", actor);
-                        else if (Mathf.Sign(angleToDestination) > 0) SetFacingDirection("left", actor);
-                    }
-                    StartCoroutine(MoveTo(actor, destinationPos.position, 2f));
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("destination has to be 'far left', 'near left', 'center left', 'center right', " +
+                                            "'near right' or 'far right");
+                }
+            };
+            CheckTiming(timing, action);
+        });
+
+        currentStory.BindExternalFunction("FaceDestination", (string timing, string actorName, string destination) =>
+        {
+            Action action = () =>
+            {
+                try
+                {
+                    Actor actor = ActorManager.instance.GetActorByName(actorName);
+                    Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
+
+                    Vector3 pathToDesination = destinationPos.position - actor.transform.parent.position;
+                    float angleToDestination = Mathf.DeltaAngle(destinationPos.localRotation.eulerAngles.z,
+                        Mathf.Atan2(pathToDesination.y, pathToDesination.x) * Mathf.Rad2Deg - 90);
+                    // angleToDestination is negative if destination is to the right, otherwise positive
+
+                    if (Mathf.Sign(angleToDestination) < 0) SetFacingDirection("right", actor);
+                    else if (Mathf.Sign(angleToDestination) > 0) SetFacingDirection("left", actor);
                 }
                 catch (Exception e)
                 {
@@ -399,10 +417,15 @@ public class DialogueManager : MonoBehaviour
 
         currentStory.UnbindExternalFunction("MoveActor");
 
+        currentStory.UnbindExternalFunction("FaceDestination");
+
         currentStory.UnbindExternalFunction("RemoveActor");
     }
 
-    private IEnumerator MoveTo(Actor actor, Vector3 destinationPos, float timeToComplete)
+    // characters continue to move when the following conditions are met:
+    // if two characters have different times to complete and the earlier one arrives, the story can continue to the next line
+    // while the other keeps moving
+    private IEnumerator MoveTo(Actor actor, Vector3 destinationPos, float timeToComplete) 
     {
         characterIsMoving = true;
         Vector3 startPos = actor.transform.parent.position;
