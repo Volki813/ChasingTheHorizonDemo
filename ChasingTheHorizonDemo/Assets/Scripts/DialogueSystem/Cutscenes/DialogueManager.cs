@@ -318,16 +318,20 @@ public class DialogueManager : MonoBehaviour
         {
             Action action = () =>
             {
-                Actor actor = ActorManager.instance.GetActorByName(actorName);
-                actor.gameObject.SetActive(true);
-
-                GameObject positionToPlaceIn = positionHolder.transform.Find(position).gameObject;
-                if (positionToPlaceIn != null)
+                try
                 {
+                    Actor actor = ActorManager.instance.GetActorByName(actorName);
+                    actor.gameObject.SetActive(true);
+
+                    GameObject positionToPlaceIn = positionHolder.transform.Find(position).gameObject;
+
                     actor.transform.parent.position = positionToPlaceIn.transform.position;
                 }
-                else Debug.LogError("position has to be 'far left', 'near left', 'center left', 'center right', " +
+                catch (Exception e)
+                {
+                    Debug.LogError("position has to be 'far left', 'near left', 'center left', 'center right', " +
                     "'near right' or 'far right");
+                }
             };
 
             CheckTiming(timing, action);
@@ -338,11 +342,11 @@ public class DialogueManager : MonoBehaviour
         {
             Action action = () =>
             {
-                Actor actor = ActorManager.instance.GetActorByName(actorName);
-                Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
-
-                if (destinationPos != null)
+                try
                 {
+                    Actor actor = ActorManager.instance.GetActorByName(actorName);
+                    Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
+
                     if (faceDestination)
                     {
                         Vector3 pathToDesination = destinationPos.position - actor.transform.parent.position;
@@ -355,8 +359,11 @@ public class DialogueManager : MonoBehaviour
                     }
                     StartCoroutine(MoveTo(actor, destinationPos.position, 2f));
                 }
-                else Debug.LogError("destination has to be 'far left', 'near left', 'center left', 'center right', " +
-                        "'near right' or 'far right");
+                catch (Exception e)
+                {
+                    Debug.LogError("destination has to be 'far left', 'near left', 'center left', 'center right', " +
+                                            "'near right' or 'far right");
+                }
             };
 
             CheckTiming(timing, action);
