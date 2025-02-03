@@ -63,7 +63,7 @@ HELL YEAH
 
 ~ MoveActor("start", "roland", "far right", 1.0)
 ~ MoveActor("end", "simon", "far left", 2.0)
-Based and true
+Based and trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 ~ CurrentSpeaker("start", "roland")
 ~ FaceDestination("start", "simon", "near left")

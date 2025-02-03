@@ -44,11 +44,9 @@ public class DialogueManager : MonoBehaviour
     private Actor currentActor = null;
 
     public bool dialogueIsPlaying { get; private set; }
-    private bool nextIsPressed = false;
+    public bool nextIsPressed = false;
     private bool canContinueToNextLine = false; // use as a condition for whenever a button is pressed to proceed
     private Coroutine displayLineCoroutine = null; // used to make it so no more than one coroutine display a line at a time 
-
-    private bool characterIsMoving = false;
 
     public static DialogueManager instance { get; private set; }
 
@@ -117,7 +115,7 @@ public class DialogueManager : MonoBehaviour
         // reset values from the tags
         currentActor = null;
         speakerText.text = "???";
-        foreach (Actor actor in ActorManager.instance.actors.Values) // reset portrait for each actor
+        foreach (Actor actor in ActorManager.instance.actorsDictionary.Values) // reset portrait for each actor
         {
             actor.portrait.sprite = null;
         }
@@ -133,11 +131,11 @@ public class DialogueManager : MonoBehaviour
 
         UnbindExternalFunctions();
 
-        foreach (Actor actor in ActorManager.instance.actors.Values) // destroy each actor
+        foreach (Actor actor in ActorManager.instance.actorsDictionary.Values) // destroy each actor
         {
             Destroy(actor.gameObject);
         }
-        ActorManager.instance.actors.Clear();
+        ActorManager.instance.actorsDictionary.Clear();
 
         speakerText.fontSize = defaultSpeakerFontSize;
         dialogueText.fontSize = defaultDialogueFontSize;
@@ -212,12 +210,9 @@ public class DialogueManager : MonoBehaviour
 
         // if you press next when the line finished typing while the characters are still moving,
         // they would keep moving while the next line is typing. This is to prevent this from happening
-        yield return new WaitUntil(() => characterIsMoving == false);
+        yield return new WaitWhile(() => ActorManager.instance.AreActorsMoving());
 
         // actions when the line is finished
-        continueIcon.SetActive(true);
-        DisplayChoices();
-
         while (endLineFunctions.Count > 0) // ivokes all queued external functions with timing "end"
         {
             Action action = endLineFunctions.Dequeue();
@@ -225,8 +220,11 @@ public class DialogueManager : MonoBehaviour
         }
 
         // the same could happen at the end of a line
-        yield return new WaitUntil(() => characterIsMoving == false);
+        yield return new WaitWhile(() => ActorManager.instance.AreActorsMoving());
 
+        continueIcon.SetActive(true);
+        DisplayChoices();
+        
         canContinueToNextLine = true;
     }
 
@@ -248,7 +246,7 @@ public class DialogueManager : MonoBehaviour
             Action action = () =>
             {
                 Actor actor = ActorManager.instance.GetActorByName(actorName);
-                SetPortrait(portrait, actor);
+                actor.SetPortrait(PORTRAIT_PATH, portrait, actor);
             };
 
             CheckTiming(timing, action);
@@ -259,7 +257,7 @@ public class DialogueManager : MonoBehaviour
             Action action = () =>
             {
                 Actor actor = ActorManager.instance.GetActorByName(actorName);
-                SetFacingDirection(direction, actor);
+                actor.SetFacingDirection(direction);
                 if (withBounce) actor.animator.SetTrigger("Bounce");
             };
 
@@ -347,9 +345,7 @@ public class DialogueManager : MonoBehaviour
                     Actor actor = ActorManager.instance.GetActorByName(actorName);
                     Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
 
-                    
-                    StartCoroutine(MoveTo(actor, destinationPos.position, timeToComplete));
-
+                    StartCoroutine(actor.MoveTo(destinationPos.position, timeToComplete));
                 }
                 catch (Exception e)
                 {
@@ -357,6 +353,7 @@ public class DialogueManager : MonoBehaviour
                                             "'near right' or 'far right");
                 }
             };
+
             CheckTiming(timing, action);
         });
 
@@ -374,8 +371,8 @@ public class DialogueManager : MonoBehaviour
                         Mathf.Atan2(pathToDesination.y, pathToDesination.x) * Mathf.Rad2Deg - 90);
                     // angleToDestination is negative if destination is to the right, otherwise positive
 
-                    if (Mathf.Sign(angleToDestination) < 0) SetFacingDirection("right", actor);
-                    else if (Mathf.Sign(angleToDestination) > 0) SetFacingDirection("left", actor);
+                    if (Mathf.Sign(angleToDestination) < 0) actor.SetFacingDirection("right");
+                    else if (Mathf.Sign(angleToDestination) > 0) actor.SetFacingDirection("left");
                 }
                 catch (Exception e)
                 {
@@ -422,59 +419,11 @@ public class DialogueManager : MonoBehaviour
         currentStory.UnbindExternalFunction("RemoveActor");
     }
 
-    // characters continue to move when the following conditions are met:
-    // if two characters have different times to complete and the earlier one arrives, the story can continue to the next line
-    // while the other keeps moving
-    private IEnumerator MoveTo(Actor actor, Vector3 destinationPos, float timeToComplete) 
-    {
-        characterIsMoving = true;
-        Vector3 startPos = actor.transform.parent.position;
-        float timeElapsed = 0f;
-        while (timeElapsed <= timeToComplete)
-        {
-            if (nextIsPressed) // immediately puts actor to target position
-            {
-                actor.transform.parent.position = destinationPos;
-                break;
-            }
-            actor.transform.parent.position =
-                Vector3.Lerp(startPos, destinationPos, timeElapsed / timeToComplete);
-
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        actor.transform.parent.position = destinationPos;
-        characterIsMoving = false;
-    }
-
     private void CheckTiming(string timing, Action action)
     {
         if (timing == "start") startLineFunctions.Enqueue(action);
         else if (timing == "end") endLineFunctions.Enqueue(action);
         else Debug.LogError("timing has to be either 'start' or 'end'");
-    }
-
-    private void SetPortrait(string portraitName, Actor actor)
-    {
-        actor.portrait.sprite = Resources.Load<Sprite>(PORTRAIT_PATH + actor.name + "/" + portraitName);
-        actor.portrait.SetNativeSize();
-        actor.portrait.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-    }
-
-    private void SetFacingDirection(string direction, Actor actor)
-    {
-        Vector3 scale = actor.portrait.transform.localScale;
-        switch (direction) // direction is either "left" or "right"
-        {
-            case "left":
-                if (Math.Sign(actor.portrait.transform.localScale.x) > 0)
-                    actor.portrait.transform.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
-                break;
-            case "right":
-                if (Math.Sign(actor.portrait.transform.localScale.x) < 0) // negative sign of localscale.x means they're facing left
-                    actor.portrait.transform.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
-                break;
-        }
     }
 
     private void PlayDialogueSound(int currentDisplayedCharacterCount)
