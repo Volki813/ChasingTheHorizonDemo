@@ -8,6 +8,7 @@ public class Actor : MonoBehaviour
     public Image portrait { get; private set; }
     public Animator animator { get; private set; }
     public bool isMoving { get; private set; }
+    public string position { get; private set; }
 
     public void CreateActor(string name, Image portrait, Animator animator, RuntimeAnimatorController animatorController)
     {
@@ -62,5 +63,10 @@ public class Actor : MonoBehaviour
         actor.portrait.sprite = Resources.Load<Sprite>(portraitPath + actor.name + "/" + portraitName);
         actor.portrait.SetNativeSize();
         actor.portrait.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+    }
+
+    public void SetPosition(string position)
+    {
+        this.position = position;
     }
 }

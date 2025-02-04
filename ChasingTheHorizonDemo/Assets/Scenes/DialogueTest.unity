@@ -2644,6 +2644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorHolder: {fileID: 618569552}
   animatorController: {fileID: 9100000, guid: 4c7fec73a49cc444eade737c4308c346, type: 2}
+  samePositionActorDistance: 50
 --- !u!1 &1882350443
 GameObject:
   m_ObjectHideFlags: 0

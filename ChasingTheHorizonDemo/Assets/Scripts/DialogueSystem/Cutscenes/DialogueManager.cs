@@ -230,7 +230,7 @@ public class DialogueManager : MonoBehaviour
 
         continueIcon.SetActive(true);
         DisplayChoices();
-        
+
         canContinueToNextLine = true;
     }
 
@@ -326,10 +326,9 @@ public class DialogueManager : MonoBehaviour
                 {
                     Actor actor = ActorManager.instance.GetActorByName(actorName);
                     actor.gameObject.SetActive(true);
-
                     GameObject positionToPlaceIn = positionHolder.transform.Find(position).gameObject;
 
-                    actor.transform.parent.position = positionToPlaceIn.transform.position;
+                    StartCoroutine(ActorManager.instance.PlaceActorAtPosition(actor, position, positionToPlaceIn.transform.position));
                 }
                 catch (Exception e)
                 {
@@ -401,6 +400,31 @@ public class DialogueManager : MonoBehaviour
             CheckTiming(timing, action);
         });
     }
+
+    //private IEnumerator PlaceActor(GameObject positionToPlaceIn, Actor actor, int positionInList)
+    //{
+    //    ActorManager.instance.RemoveActorFromPreviousPositionList(actor);
+
+    //    yield return null;
+
+    //    actor.SetPosition(positionToPlaceIn.name);
+    //    ActorManager.instance.AddActorToPositionList(actor);
+
+    //    List<Actor> actorList = ActorManager.instance.GetActorsAtPosition(positionToPlaceIn.name);
+
+    //    foreach (Actor actorInList in actorList)
+    //    {
+    //        if (actorList.Contains(actorInList))
+    //        {
+    //            positionInList = actorList.IndexOf(actorInList);
+    //        }
+    //    }
+
+    //    Vector3 pos = positionToPlaceIn.transform.position;
+
+    //    Vector3 newPos = new Vector3(pos.x + (50 * positionInList), pos.y, pos.z);
+    //    actor.transform.parent.position = newPos;
+    //}
 
     private void UnbindExternalFunctions()
     {

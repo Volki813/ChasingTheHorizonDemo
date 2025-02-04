@@ -7,8 +7,8 @@ INCLUDE Actor Variables.ink
 
 === main ===
 ~ CurrentSpeaker("start", "roland")
-~ SetPortrait("start", "roland", "roland_smiling")
 ~ PlaceActor("start", "roland", "far left")
+~ SetPortrait("start", "roland", "roland_smiling")
 ~ SetFacingDirection("start", "roland", "right", false)
 ~ PlaySound("end", "SFX Boomy")
 ~ PlayMusic("start", "At Home")
@@ -38,7 +38,14 @@ Test external functions?
 ~ RemoveActor("start", "roland")
 You chose {choice}!
 
-~ PlaceActor("start", "roland", "center left")
+
+~ PlaceActor("start", "simon", "far left")
+~ PlaceActor("start", "roland", "far left")
+~ SetPortrait("start", "simon", "simon_smiling")
+Hey!
+
+~ PlaceActor("start", "roland", "far left")
+~ PlaceActor("start", "simon", "far left")
 Hey!
 
 {rolandDead: This is written if Roland is dead|This is written if Roland is alive}
