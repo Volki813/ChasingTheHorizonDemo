@@ -31,14 +31,16 @@ public class ActorManager : MonoBehaviour
             GameObject actorObject = new GameObject(characterName);
 
             Actor actor = actorObject.AddComponent<Actor>();
-            actor.CreateActor(characterName, actorObject.AddComponent<Image>(),
-                actorObject.AddComponent<Animator>(), animatorController);
+            Image image = actorObject.AddComponent<Image>();
+            Animator animator = actorObject.AddComponent<Animator>();
+
+            actor.CreateActor(characterName, image, animator, animatorController);
 
             actorsDictionary[characterName] = actor;
 
             actorPositionObject.transform.SetParent(actorHolder.transform, false);
             actorObject.transform.SetParent(actorPositionObject.transform, false);
-
+            
             return actor;
         }
     }
@@ -55,7 +57,6 @@ public class ActorManager : MonoBehaviour
 
         actor.gameObject.SetActive(true);
 
-        // actor.SetPosition(position);
         AddActorToPositionList(actor, position);
 
         List<Actor> actorList = GetActorsAtPosition(position);
@@ -119,7 +120,6 @@ public class ActorManager : MonoBehaviour
     private void AddActorToPositionList(Actor actor, string position)
     {
         actor.SetPosition(position);
-        // if (actor.position == null) return; // return if actor has no position yet
 
         if (!actorsPosition.ContainsKey(actor.position)) // initialize new lists for key that don't exist yet
         {

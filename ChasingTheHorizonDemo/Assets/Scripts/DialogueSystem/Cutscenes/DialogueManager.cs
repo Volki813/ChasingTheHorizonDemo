@@ -133,6 +133,7 @@ public class DialogueManager : MonoBehaviour
 
         foreach (Actor actor in ActorManager.instance.actorsDictionary.Values) // destroy each actor
         {
+            Destroy(actor.transform.parent.gameObject);
             Destroy(actor.gameObject);
         }
         ActorManager.instance.actorsDictionary.Clear();

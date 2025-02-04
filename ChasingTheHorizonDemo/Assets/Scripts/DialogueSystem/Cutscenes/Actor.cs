@@ -9,7 +9,7 @@ public class Actor : MonoBehaviour
     public Animator animator { get; private set; }
     public bool isMoving { get; private set; }
     public string position { get; private set; }
-
+    
     public void CreateActor(string name, Image portrait, Animator animator, RuntimeAnimatorController animatorController)
     {
         this.name = name;
