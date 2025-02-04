@@ -48,6 +48,14 @@ Hey!
 ~ PlaceActor("start", "simon", "far left")
 Hey!
 
+~ PlaceActor("start", "simon", "far right")
+~ PlaceActor("start", "roland", "far right")
+Hey!
+
+~ PlaceActor("start", "roland", "far right")
+~ PlaceActor("start", "simon", "far right")
+Hey!
+
 {rolandDead: This is written if Roland is dead|This is written if Roland is alive}
 {- rolandDead: 
 ~ MoveActor("start", "roland", "far left", 1.0)

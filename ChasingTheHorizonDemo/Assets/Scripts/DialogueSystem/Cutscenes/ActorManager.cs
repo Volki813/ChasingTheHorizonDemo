@@ -69,7 +69,15 @@ public class ActorManager : MonoBehaviour
             }
         }
 
-        Vector3 newPos = new Vector3(destination.x + (samePositionActorDistance * positionInList), destination.y, destination.z);
+        // arranges the images so the first one in the list has the highest priority
+        actor.transform.parent.SetSiblingIndex(actorList.Count - 1 - positionInList);
+
+        Vector3 newPos = new Vector3(); // place additional actors to the left if left, otherwise to the right
+        if(position == "far left" || position == "near left" || position == "center left")
+            newPos = new Vector3(destination.x - (samePositionActorDistance * positionInList), destination.y, destination.z);
+        else if (position == "far right" || position == "near right" || position == "center right")
+            newPos = new Vector3(destination.x + (samePositionActorDistance * positionInList), destination.y, destination.z);
+        // there's probably a smarter way to do this but I'm tired boss
 
         actor.transform.parent.position = newPos;
     }
@@ -90,8 +98,6 @@ public class ActorManager : MonoBehaviour
     private List<Actor> GetActorsAtPosition(string position)
     {
         List<Actor> actorsList = new List<Actor>();
-
-        print(position);
 
         if (!actorsPosition.ContainsKey(position))
         {
