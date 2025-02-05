@@ -79,6 +79,10 @@ Hey!
 Hey!
 
 ~ MoveActor("start", "roland", "near left", 2.0)
+~ MoveActor("start", "simon", "center left", 2.0)
+Hey!
+
+~ MoveActor("end", "simon", "near left", 2.0)
 Hey!
 
 {rolandDead: This is written if Roland is dead|This is written if Roland is alive}

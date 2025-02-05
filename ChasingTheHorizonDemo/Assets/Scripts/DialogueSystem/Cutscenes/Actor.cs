@@ -69,8 +69,4 @@ public class Actor : MonoBehaviour
     {
         this.position = position;
     }
-    public void SetIsMoving(bool isMoving)
-    {
-        this.isMoving = isMoving;
-    }
 }

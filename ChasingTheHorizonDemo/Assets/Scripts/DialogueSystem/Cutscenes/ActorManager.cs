@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -122,17 +123,11 @@ public class ActorManager : MonoBehaviour
         return positionInList;
     }
 
-    public bool AreActorsMoving()
+    public bool AreActorsNotMoving()
     {
-        bool actorsAreMoving = false;
-        foreach (Actor actor in actorsDictionary.Values)
-        {
-            if (actor.isMoving)
-            {
-                actorsAreMoving = true;
-            }
-        }
-        return actorsAreMoving;
+        // checks if isMoving is false for all actors
+        bool actorsAreNotMoving = actorsDictionary.Values.All(actor => !actor.isMoving);
+        return actorsAreNotMoving;
     }
 
     private List<Actor> GetActorsAtPosition(string position)

@@ -211,7 +211,7 @@ public class DialogueManager : MonoBehaviour
 
         // if you press next when the line finished typing while the characters are still moving,
         // they would keep moving while the next line is typing if next is pressed. This is to prevent this from happening
-        yield return new WaitWhile(() => ActorManager.instance.AreActorsMoving());
+        yield return new WaitUntil(() => ActorManager.instance.AreActorsNotMoving());
 
         // to prevent the next line from typing immediately if characters are moving and line is finished typing
         nextIsPressed = false;
@@ -223,8 +223,10 @@ public class DialogueManager : MonoBehaviour
             action?.Invoke();
         }
 
+        yield return null;
+
         // the same could happen at the end of a line
-        yield return new WaitWhile(() => ActorManager.instance.AreActorsMoving());
+        yield return new WaitUntil(() => ActorManager.instance.AreActorsNotMoving());
 
         // to prevent the next line from typing immediately if characters are moving and line is finished typing
         nextIsPressed = false;
@@ -353,7 +355,6 @@ public class DialogueManager : MonoBehaviour
 
                     StartCoroutine(ActorManager.instance.MoveActorToPosition(actor, destination, destinationPos.position, 
                         timeToComplete));
-                    // StartCoroutine(actor.MoveTo(destinationPos.position, timeToComplete));
                 }
                 catch (Exception e)
                 {
@@ -403,31 +404,6 @@ public class DialogueManager : MonoBehaviour
             CheckTiming(timing, action);
         });
     }
-
-    //private IEnumerator PlaceActor(GameObject positionToPlaceIn, Actor actor, int positionInList)
-    //{
-    //    ActorManager.instance.RemoveActorFromPreviousPositionList(actor);
-
-    //    yield return null;
-
-    //    actor.SetPosition(positionToPlaceIn.name);
-    //    ActorManager.instance.AddActorToPositionList(actor);
-
-    //    List<Actor> actorList = ActorManager.instance.GetActorsAtPosition(positionToPlaceIn.name);
-
-    //    foreach (Actor actorInList in actorList)
-    //    {
-    //        if (actorList.Contains(actorInList))
-    //        {
-    //            positionInList = actorList.IndexOf(actorInList);
-    //        }
-    //    }
-
-    //    Vector3 pos = positionToPlaceIn.transform.position;
-
-    //    Vector3 newPos = new Vector3(pos.x + (50 * positionInList), pos.y, pos.z);
-    //    actor.transform.parent.position = newPos;
-    //}
 
     private void UnbindExternalFunctions()
     {
