@@ -56,6 +56,31 @@ Hey!
 ~ PlaceActor("start", "simon", "far right")
 Hey!
 
+~ MoveActor("start", "simon", "far left", 2.0)
+~ MoveActor("start", "roland", "far left", 1.0)
+Hey!
+
+~ MoveActor("start", "roland", "far left", 1.0)
+~ MoveActor("start", "simon", "far left", 2.0)
+Hey!
+
+~ MoveActor("start", "simon", "far right", 3.0)
+~ MoveActor("start", "roland", "far right", 4.0)
+Hey!
+
+~ MoveActor("start", "roland", "far right", 1.0)
+~ MoveActor("start", "simon", "far right", 4.0)
+Hey!
+
+~ PlaceActor("start", "roland", "center left")
+Hey!
+
+~ MoveActor("start", "simon", "center left", 2.0)
+Hey!
+
+~ MoveActor("start", "roland", "near left", 2.0)
+Hey!
+
 {rolandDead: This is written if Roland is dead|This is written if Roland is alive}
 {- rolandDead: 
 ~ MoveActor("start", "roland", "far left", 1.0)

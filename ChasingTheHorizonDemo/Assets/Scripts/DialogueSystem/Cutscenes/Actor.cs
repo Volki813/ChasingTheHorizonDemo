@@ -20,7 +20,7 @@ public class Actor : MonoBehaviour
 
     public IEnumerator MoveTo(Vector3 destinationPos, float timeToComplete)
     {
-        isMoving = true; 
+        isMoving = true;
 
         Vector3 startPos = transform.parent.position;
         float timeElapsed = 0f;
@@ -68,5 +68,9 @@ public class Actor : MonoBehaviour
     public void SetPosition(string position)
     {
         this.position = position;
+    }
+    public void SetIsMoving(bool isMoving)
+    {
+        this.isMoving = isMoving;
     }
 }

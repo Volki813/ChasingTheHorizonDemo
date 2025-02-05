@@ -40,15 +40,13 @@ public class ActorManager : MonoBehaviour
 
             actorPositionObject.transform.SetParent(actorHolder.transform, false);
             actorObject.transform.SetParent(actorPositionObject.transform, false);
-            
+
             return actor;
         }
     }
 
     public IEnumerator PlaceActorAtPosition(Actor actor, string position, Vector3 destination)
     {
-        int positionInList = 0;
-
         RemoveActorFromPreviousPositionList(actor);
 
         actor.gameObject.SetActive(false); // to prevent the one split second where the portrait spawns in the middle from being seen
@@ -61,25 +59,67 @@ public class ActorManager : MonoBehaviour
 
         List<Actor> actorList = GetActorsAtPosition(position);
 
-        foreach (Actor actorInList in actorList)
-        {
-            if (actorList.Contains(actorInList))
-            {
-                positionInList = actorList.IndexOf(actorInList);
-            }
-        }
+        int positionInList = GetPositionInList(actorList, actor);
 
         // arranges the images so the first one in the list has the highest priority
         actor.transform.parent.SetSiblingIndex(actorList.Count - 1 - positionInList);
 
-        Vector3 newPos = new Vector3(); // place additional actors to the left if left, otherwise to the right
-        if(position == "far left" || position == "near left" || position == "center left")
+        // place additional actors to the left if left, otherwise to the right
+        Vector3 newPos = CalculateNewPos(position, positionInList, destination);
+
+        actor.transform.parent.position = newPos;
+    }
+
+    public IEnumerator MoveActorToPosition(Actor actor, string position, Vector3 destination, float timeToComplete)
+    {
+        RemoveActorFromPreviousPositionList(actor);
+
+        actor.gameObject.SetActive(false); // to prevent the one split second where the portrait spawns in the middle from being seen
+
+        yield return null; // wait a frame because otherwise all actors will be placed on the same index 
+
+        actor.gameObject.SetActive(true);
+
+        AddActorToPositionList(actor, position);
+
+        List<Actor> actorList = GetActorsAtPosition(position);
+
+        int positionInList = GetPositionInList(actorList, actor);
+
+        // arranges the images so the first one in the list has the highest priority
+        actor.transform.parent.SetSiblingIndex(actorList.Count - 1 - positionInList);
+
+        // place additional actors to the left if left, otherwise to the right
+        Vector3 newPos = CalculateNewPos(position, positionInList, destination);
+
+        StartCoroutine(actor.MoveTo(newPos, timeToComplete));
+    }
+
+    private Vector3 CalculateNewPos(string position, int positionInList, Vector3 destination)
+    {
+        Vector3 newPos = new Vector3();
+
+        if (position == "far left" || position == "near left" || position == "center left")
             newPos = new Vector3(destination.x - (samePositionActorDistance * positionInList), destination.y, destination.z);
         else if (position == "far right" || position == "near right" || position == "center right")
             newPos = new Vector3(destination.x + (samePositionActorDistance * positionInList), destination.y, destination.z);
         // there's probably a smarter way to do this but I'm tired boss
 
-        actor.transform.parent.position = newPos;
+        return newPos;
+    }
+
+    private int GetPositionInList(List<Actor> actorList, Actor actor)
+    {
+        int positionInList = 0;
+
+        foreach (Actor actorInList in actorList)
+        {
+            if (actorInList == actor)
+            {
+                positionInList = actorList.IndexOf(actor);
+            }
+        }
+        return positionInList;
     }
 
     public bool AreActorsMoving()
@@ -89,7 +129,7 @@ public class ActorManager : MonoBehaviour
         {
             if (actor.isMoving)
             {
-                actorsAreMoving = actor.isMoving;
+                actorsAreMoving = true;
             }
         }
         return actorsAreMoving;
@@ -131,7 +171,7 @@ public class ActorManager : MonoBehaviour
         {
             actorsPosition[actor.position] = new List<Actor>();
         }
-        
+
         actorsPosition[actor.position].Add(actor);
     }
 }

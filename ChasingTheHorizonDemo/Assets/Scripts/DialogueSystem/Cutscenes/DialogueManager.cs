@@ -210,7 +210,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         // if you press next when the line finished typing while the characters are still moving,
-        // they would keep moving while the next line is typing. This is to prevent this from happening
+        // they would keep moving while the next line is typing if next is pressed. This is to prevent this from happening
         yield return new WaitWhile(() => ActorManager.instance.AreActorsMoving());
 
         // to prevent the next line from typing immediately if characters are moving and line is finished typing
@@ -351,7 +351,9 @@ public class DialogueManager : MonoBehaviour
                     Actor actor = ActorManager.instance.GetActorByName(actorName);
                     Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
 
-                    StartCoroutine(actor.MoveTo(destinationPos.position, timeToComplete));
+                    StartCoroutine(ActorManager.instance.MoveActorToPosition(actor, destination, destinationPos.position, 
+                        timeToComplete));
+                    // StartCoroutine(actor.MoveTo(destinationPos.position, timeToComplete));
                 }
                 catch (Exception e)
                 {
