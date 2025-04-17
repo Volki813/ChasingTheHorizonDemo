@@ -3,28 +3,26 @@ using UnityEngine.InputSystem;
 
 public class TestTweens : MonoBehaviour
 {
-    float sec = 0;
+    public EaseType easeType = EaseType.Linear;
+
+    private Vector3 startPos;
+    private Vector3 startScale;
+
+    private void Start()
+    {
+        startScale = transform.localScale;
+        startPos = transform.position;
+    }
 
     private void Update()
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            TweenManager.TweenScale(gameObject, new Vector3(2,2,2), new Vector3(1,1,1), 1)
-                .SetEase(EaseType.ElasticEaseOut)
-                .SetPingPong(3)
-                .SetOnPercentComplete(0.5f, On50Percent)
-                .SetOnUpdate(Count);
+            TweenManager.TweenScale(gameObject, startScale, startScale * 2, 2).SetEase(easeType).SetPingPong(-1);
+
+            TweenManager.TweenPosition(gameObject, startPos, new Vector3(5, 0, 0), 1)
+                .SetEase(easeType)
+                .SetPingPong(-1);
         }
-    }
-
-    public void On50Percent()
-    {
-        print("hi");
-    }
-
-    public void Count()
-    {
-        sec += Time.deltaTime;
-        print(sec);
     }
 }

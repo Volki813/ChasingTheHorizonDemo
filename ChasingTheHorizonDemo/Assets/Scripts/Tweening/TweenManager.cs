@@ -74,12 +74,45 @@ public class TweenManager : MonoBehaviour
     #region Helper Methods
 
     /// <summary>
-    /// Interpolates <paramref name="startAlpha"/> of a sprite to <paramref name="endAlpha"/>.
+    /// Moves a <paramref name="gameObject"/> from <paramref name="startPosition"/> to <paramref name="endPosition"/> in <paramref name="duration"/> seconds.
     /// </summary>
-    /// <param name="gameObject"> The game object that contains the sprite. </param>
-    /// <param name="startAlpha"> The alpha value at which the tween starts. </param>
-    /// <param name="endAlpha"> The alpha value at which the tween ends. </param>
-    /// <param name="duration"> Duration in seconds. </param>
+    /// <param name="gameObject"></param>
+    /// <param name="startPosition"></param>
+    /// <param name="endPosition"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
+    public static Tween<Vector3> TweenPosition(GameObject gameObject, Vector3 startPosition, Vector3 endPosition, float duration)
+    {
+        Transform transform = gameObject.transform.GetComponent<Transform>();
+        string identifier = $"{transform.GetInstanceID()}_Position";
+
+        Tween<Vector3> tween = new Tween<Vector3>(gameObject, identifier, startPosition, endPosition, duration, value =>
+        {
+            transform.position = value;
+        });
+
+        return tween;
+    }
+
+    public static Tween<Vector3> TweenPosition(Transform transform, Vector3 startPosition, Vector3 endPosition, float duration)
+    {
+        string identifier = $"{transform.GetInstanceID()}_Position";
+
+        Tween<Vector3> tween = new Tween<Vector3>(transform, identifier, startPosition, endPosition, duration, value =>
+        {
+            transform.position = value;
+        });
+
+        return tween;
+    }
+
+    /// <summary>
+    /// Interpolates <paramref name="startAlpha"/> of a sprite to <paramref name="endAlpha"/> in <paramref name="duration"/> seconds.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <param name="startAlpha"></param>
+    /// <param name="endAlpha"></param>
+    /// <param name="duration"></param>
     /// <returns></returns>
     public static Tween<float> TweenSpriteAlpha(GameObject gameObject, float startAlpha, float endAlpha, float duration)
     {
@@ -96,8 +129,22 @@ public class TweenManager : MonoBehaviour
         return tween;
     }
 
+    public static Tween<float> TweenSpriteAlpha(SpriteRenderer spriteRenderer, float startAlpha, float endAlpha, float duration)
+    {
+        string identifier = $"{spriteRenderer.GetInstanceID()}_Alpha";
+
+        Tween<float> tween = new Tween<float>(spriteRenderer, identifier, startAlpha, endAlpha, duration, value =>
+        {
+            Color color = spriteRenderer.color;
+            color.a = value;
+            spriteRenderer.color = color;
+        });
+
+        return tween;
+    }
+
     /// <summary>
-    /// Interpolates <paramref name="startScale"/> of <paramref name="gameObject"/> to <paramref name="endScale"/>.
+    /// Scales a <paramref name="gameObject"/> from <paramref name="startScale"/> to <paramref name="endScale"/> in <paramref name="duration"/> seconds.
     /// </summary>
     /// <param name="gameObject"></param>
     /// <param name="startScale"></param>
@@ -110,6 +157,18 @@ public class TweenManager : MonoBehaviour
         string identifier = $"{transform.GetInstanceID()}_Scale";
 
         Tween<Vector3> tween = new Tween<Vector3>(gameObject, identifier, startScale, endScale, duration, value =>
+        {
+            transform.localScale = value;
+        });
+
+        return tween;
+    }
+
+    public static Tween<Vector3> TweenScale(Transform transform, Vector3 startScale, Vector3 endScale, float duration)
+    {
+        string identifier = $"{transform.GetInstanceID()}_Scale";
+
+        Tween<Vector3> tween = new Tween<Vector3>(transform, identifier, startScale, endScale, duration, value =>
         {
             transform.localScale = value;
         });

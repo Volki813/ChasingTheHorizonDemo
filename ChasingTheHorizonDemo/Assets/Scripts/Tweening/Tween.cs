@@ -192,7 +192,7 @@ public class Tween<T> : ITween
     }
 
     /// <summary>
-    /// Sets the ease type of the tween. Can be chained.
+    /// Sets the ease type of the tween.
     /// </summary>
     /// <param name="easeType"></param>
     /// <returns></returns>
