@@ -8,6 +8,17 @@ public class Tween<T> : ITween
     private float duration;
     private Action<T> onTweenUpdate;
     private float elapsedTime;
+    private float delayElapsedTime = 0f;
+    private int loopsCompleted = 0;
+    private bool reverse = false;
+    private bool pingPong = false;
+    private int loopCount = 1;
+    private float percentThreshold = -1f;
+
+    private Action onUpdate;
+    private Action onPercentCompleted;
+
+    private EaseType easeType = EaseType.Linear; // defaults ease type to linear
 
     public Tween(object target, string identifier, T startValue, T endValue, float duration, Action<T> onTweenUpdate)
     {
@@ -39,24 +50,61 @@ public class Tween<T> : ITween
 
     public void Update()
     {
-        if (IsComplete) return;
-
-        elapsedTime += Time.deltaTime;
-        float t = elapsedTime / duration;
-        T currentValue;
-
-        currentValue = Interpolate(startValue, endValue, t);
-        onTweenUpdate?.Invoke(currentValue);
-
-        if (elapsedTime >= duration)
+        if (!IsPaused)
         {
-            IsComplete = true;
+            if (IgnoreTimeScale) delayElapsedTime += Time.unscaledDeltaTime;
+            else delayElapsedTime += Time.deltaTime;
+
+            if (delayElapsedTime >= DelayTime)
+            {
+                if (IsComplete) return;
+
+                if (IsTargetDestroyed())
+                {
+                    FullKill();
+                    return;
+                }
+
+                if (IgnoreTimeScale) elapsedTime += Time.unscaledDeltaTime;
+                else elapsedTime += Time.deltaTime;
+
+                float t = elapsedTime / duration;
+                float easedT = Ease(easeType, t);
+
+                T currentValue;
+
+                if (reverse) currentValue = Interpolate(endValue, startValue, easedT);
+                else currentValue = Interpolate(startValue, endValue, easedT);
+
+                onUpdate?.Invoke();
+                onTweenUpdate?.Invoke(currentValue);
+
+                if (percentThreshold >= 0f && t >= percentThreshold)
+                {
+                    onPercentCompleted?.Invoke();
+                    percentThreshold = -1f; // so that it doesn't call every frame
+                }
+
+                if (elapsedTime >= duration)
+                {
+                    loopsCompleted++;
+                    elapsedTime = 0;
+
+                    if (pingPong) reverse = !reverse;
+
+                    // loopCount defaults to 1 so this will be called even if you don't set ping pongs.
+                    if (loopCount > 0 && loopsCompleted >= loopCount)
+                    {
+                        OnCompleteKill();
+                    }
+                }
+            }
         }
     }
 
     /// <summary>
-    /// Lerps the start value to the end value within a sepcific duration. 
-    /// Will throw and exception if the given type hasn't been implemented.
+    /// Lerps <paramref name="start"/> to <paramref name="end"/> within <paramref name="t"/> seconds. 
+    /// Will throw an exception if the given type hasn't been implemented.
     /// </summary>
     /// <param name="start"></param>
     /// <param name="end"></param>
@@ -82,29 +130,148 @@ public class Tween<T> : ITween
         throw new NotImplementedException($"Interpolation for type {typeof(T)} not implemented.");
     }
 
+    /// <summary>
+    /// Checks if a target is destroyed.
+    /// </summary>
+    /// <returns></returns>
     public bool IsTargetDestroyed()
     {
+        if(Target is MonoBehaviour monoB && monoB == null)
+        {
+            return true;
+        }
+
+        if(Target is GameObject gameObj && gameObj == null)
+        {
+            return true;
+        }
+        
+        if(Target is Delegate del && del == null)
+        {
+            return true;
+        }
+
         return false;
     }
 
+    /// <summary>
+    /// Kills the tween when completed.
+    /// </summary>
     public void OnCompleteKill()
     {
-
+        IsComplete = true;
+        onUpdate = null;
+        onTweenUpdate = null;
+        onPercentCompleted = null;
     }
 
+    /// <summary>
+    /// Kills the tween of an object that was destroyed before the tween finishes.
+    /// </summary>
     public void FullKill()
     {
-
+        OnCompleteKill();
+        WasKilled = true;
+        onComplete = null;
     }
 
+    /// <summary>
+    /// Pauses the tween.
+    /// </summary>
     public void Pause()
     {
-
+        IsPaused = true;
     }
 
+    /// <summary>
+    /// Unpauses the tween.
+    /// </summary>
     public void Resume()
     {
+        IsPaused = false;
+    }
 
+    /// <summary>
+    /// Sets the ease type of the tween. Can be chained.
+    /// </summary>
+    /// <param name="easeType"></param>
+    /// <returns></returns>
+    public Tween<T> SetEase(EaseType easeType)
+    {
+        this.easeType = easeType;
+        return this;
+    }
+
+    /// <summary>
+    /// Replays the tween reversed after it is completed <paramref name="loopCount"/> amount of times.
+    /// Set <paramref name="loopCount"/> to -1 for infinite loops.
+    /// </summary>
+    /// <param name="loopCount"></param>
+    /// <returns></returns>
+    public Tween<T> SetPingPong(int loopCount = 1)
+    {
+        this.loopCount = loopCount;
+        pingPong = true;
+        return this;
+    }
+
+    /// <summary>
+    /// Set a function to call while the tween is playing.
+    /// </summary>
+    /// <param name="onUpdate"></param>
+    /// <returns></returns>
+    public Tween<T> SetOnUpdate(Action onUpdate)
+    {
+        this.onUpdate = onUpdate;
+        return this;
+    }
+
+    /// <summary>
+    /// Set a function to call when when the tween is completed.
+    /// </summary>
+    /// <param name="onComplete"></param>
+    /// <returns></returns>
+    public Tween<T> SetOnComplete(Action onComplete)
+    {
+        this.onComplete = onComplete;
+        return this;
+    }
+
+    /// <summary>
+    /// Set a function to call at a specific time. Use values from 0 to 1 for <paramref name="percentCompleted"/>.
+    /// E.g. set <paramref name="percentCompleted"/> to 0.5 if the function should be called halfway through. 
+    /// Or to 0.7 if it should be called at 70% completion.
+    /// </summary>
+    /// <param name="percentCompleted"></param>
+    /// <param name="onPercentCompleted"></param>
+    /// <returns></returns>
+    public Tween<T> SetOnPercentComplete(float percentCompleted, Action onPercentCompleted)
+    {
+        percentThreshold = Mathf.Clamp01(percentCompleted);
+        this.onPercentCompleted = onPercentCompleted;
+        return this;
+    }
+
+    /// <summary>
+    /// Ignores the time scale if set to true.
+    /// </summary>
+    /// <param name="ignoreTimeScale"></param>
+    /// <returns></returns>
+    public Tween<T> SetIgnoreTimeScale(bool ignoreTimeScale = false)
+    {
+        IgnoreTimeScale = ignoreTimeScale;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the amount of time to delay the tween action by <paramref name="delayTime"/> seconds.
+    /// </summary>
+    /// <param name="delayTime"></param>
+    /// <returns></returns>
+    public Tween<T> SetStartDelay(float delayTime)
+    {
+        DelayTime = delayTime;
+        return this;
     }
 
     #region Ease Calculations
@@ -324,6 +491,55 @@ public class Tween<T> : ITween
     }
 
     #endregion
+
+    public static float Ease(EaseType easeType, float t)
+    {
+        switch (easeType)
+        {
+            case EaseType.Linear: return Linear(t);
+            case EaseType.ExpoEaseIn: return ExpoEaseIn(t);
+            case EaseType.ExpoEaseOut: return ExpoEaseOut(t);
+            case EaseType.ExpoEaseInOut: return ExpoEaseInOut(t);
+            case EaseType.ExpoEaseOutIn: return ExpoEaseOutIn(t);
+            case EaseType.CircEaseIn: return CircEaseIn(t);
+            case EaseType.CircEaseOut: return CircEaseOut(t);
+            case EaseType.CircEaseInOut: return CircEaseInOut(t);
+            case EaseType.CircEaseOutIn: return CircEaseOutIn(t);
+            case EaseType.QuadEaseIn: return QuadEaseIn(t);
+            case EaseType.QuadEaseOut: return QuadEaseOut(t);
+            case EaseType.QuadEaseInOut: return QuadEaseInOut(t);
+            case EaseType.QuadEaseOutIn: return QuadEaseOutIn(t);
+            case EaseType.SineEaseIn: return SineEaseIn(t);
+            case EaseType.SineEaseOut: return SineEaseOut(t);
+            case EaseType.SineEaseInOut: return SineEaseInOut(t);
+            case EaseType.SineEaseOutIn: return SineEaseOutIn(t);
+            case EaseType.CubicEaseIn: return CubicEaseIn(t);
+            case EaseType.CubicEaseOut: return CubicEaseOut(t);
+            case EaseType.CubicEaseInOut: return CubicEaseInOut(t);
+            case EaseType.CubicEaseOutIn: return CubicEaseOutIn(t);
+            case EaseType.QuartEaseIn: return QuartEaseIn(t);
+            case EaseType.QuartEaseOut: return QuartEaseOut(t);
+            case EaseType.QuartEaseInOut: return QuartEaseInOut(t);
+            case EaseType.QuartEaseOutIn: return QuartEaseOutIn(t);
+            case EaseType.QuintEaseIn: return QuintEaseIn(t);
+            case EaseType.QuintEaseOut: return QuintEaseOut(t);
+            case EaseType.QuintEaseInOut: return QuintEaseInOut(t);
+            case EaseType.QuintEaseOutIn: return QuintEaseOutIn(t);
+            case EaseType.ElasticEaseIn: return ElasticEaseIn(t);
+            case EaseType.ElasticEaseOut: return ElasticEaseOut(t);
+            case EaseType.ElasticEaseInOut: return ElasticEaseInOut(t);
+            case EaseType.ElasticEaseOutIn: return ElasticEaseOutIn(t);
+            case EaseType.BounceEaseIn: return BounceEaseIn(t);
+            case EaseType.BounceEaseOut: return BounceEaseOut(t);
+            case EaseType.BounceEaseInOut: return BounceEaseInOut(t);
+            case EaseType.BounceEaseOutIn: return BounceEaseOutIn(t);
+            case EaseType.BackEaseIn: return BackEaseIn(t);
+            case EaseType.BackEaseOut: return BackEaseOut(t);
+            case EaseType.BackEaseInOut: return BackEaseInOut(t);
+            case EaseType.BackEaseOutIn: return BackEaseOutIn(t);
+            default: return 0f;
+        }
+    }
 }
 
 #region Ease Types
