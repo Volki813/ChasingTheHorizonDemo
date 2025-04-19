@@ -8,6 +8,8 @@ public class TestTweens : MonoBehaviour
     private Vector3 startPos;
     private Vector3 startScale;
 
+    private Tween<Vector3> tween1, tween2;
+
     private void Start()
     {
         startScale = transform.localScale;
@@ -18,11 +20,15 @@ public class TestTweens : MonoBehaviour
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            TweenManager.TweenScale(gameObject, startScale, startScale * 2, 2).SetEase(easeType).SetPingPong(-1);
+            tween1 = TweenManager.TweenScale(gameObject, startScale, startScale * 2, 2).SetEase(easeType).SetPingPong(-1);
 
-            TweenManager.TweenPosition(gameObject, startPos, new Vector3(5, 0, 0), 1)
+            tween2 = TweenManager.TweenPosition(gameObject, startPos, new Vector3(5, 0, 0), 1)
                 .SetEase(easeType)
-                .SetPingPong(-1);
+                .SetPingPong(7);
+        }
+        if (Keyboard.current.xKey.wasPressedThisFrame)
+        {
+            tween2.CompleteTween();
         }
     }
 }

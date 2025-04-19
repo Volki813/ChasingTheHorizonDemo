@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialogueHolder = null;
     [SerializeField] private GameObject continueIcon = null;
+    private Tween<float> continueIconTween = null;
     [SerializeField] private TextMeshProUGUI dialogueText = null;
     [SerializeField] private TextMeshProUGUI speakerText = null;
     [SerializeField] private SerializableDictionary<string, Vector3> positions = null;
@@ -88,6 +89,10 @@ public class DialogueManager : MonoBehaviour
         // set default font sizes
         dialogueText.fontSize = defaultDialogueFontSize;
         speakerText.fontSize = defaultSpeakerFontSize;
+
+        continueIconTween = 
+            TweenManager.TweenAnchoredPositionY(continueIcon, 10, -10, 0.2f).SetPingPong(-1);
+        continueIconTween.Pause();
     }
 
     private void Update()
@@ -175,6 +180,7 @@ public class DialogueManager : MonoBehaviour
 
         // actions before the line starts
         continueIcon.SetActive(false);
+        continueIconTween.Pause();
         HideChoices();
 
         while (startLineFunctions.Count > 0) // invokes all queued eternal functions with timing "start"
@@ -236,6 +242,7 @@ public class DialogueManager : MonoBehaviour
         nextIsPressed = false;
 
         continueIcon.SetActive(true);
+        continueIconTween.Resume();
         DisplayChoices();
 
         canContinueToNextLine = true;
@@ -251,7 +258,8 @@ public class DialogueManager : MonoBehaviour
                 
                 // substring(1) basically removes the first letter of a string,
                 // so this way the first letter doesn't have to be written in uppercase but will still show up as such
-                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); 
+                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), 
+                    currentActor.name.Substring(1)); 
             };
 
             CheckTiming(timing, action);

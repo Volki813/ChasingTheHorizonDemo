@@ -57,7 +57,11 @@ public class TweenManager : MonoBehaviour
     public void AddTween<T>(ITween tween)
     {
         // Kill the previous tween if another tween that accesses the same identifier is added. 
-        if (activeTweens.ContainsKey(tween.Identifier)) activeTweens[tween.Identifier].OnCompleteKill();
+        if (activeTweens.ContainsKey(tween.Identifier))
+        {
+            activeTweens[tween.Identifier].onComplete?.Invoke();
+            activeTweens[tween.Identifier].OnCompleteKill();
+        }
 
         activeTweens[tween.Identifier] = tween;
     }
@@ -134,6 +138,72 @@ public class TweenManager : MonoBehaviour
         Tween<Vector3> tween = new Tween<Vector3>(rectTransform, identifier, startPosition, endPosition, duration, value =>
         {
             rectTransform.anchoredPosition = value;
+        });
+
+        return tween;
+    }
+
+    /// <summary>
+    /// Moves a UI <paramref name="gameObject"/>'s y value from <paramref name="startPosition"/> to <paramref name="endPosition"/> in <paramref name="duration"/> seconds.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <param name="startPosition"></param>
+    /// <param name="endPosition"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
+    public static Tween<float> TweenAnchoredPositionY(GameObject gameObject, float startPosition, float endPosition, float duration)
+    {
+        RectTransform rectTransform = gameObject.transform.GetComponent<RectTransform>();
+        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_Y";
+
+        Tween<float> tween = new Tween<float>(gameObject, identifier, startPosition, endPosition, duration, value =>
+        {
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, value);
+        });
+
+        return tween;
+    }
+
+    public static Tween<float> TweenAnchoredPositionY(RectTransform rectTransform, float startPosition, float endPosition, float duration)
+    {
+        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_Y";
+
+        Tween<float> tween = new Tween<float>(rectTransform, identifier, startPosition, endPosition, duration, value =>
+        {
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, value);
+        });
+
+        return tween;
+    }
+
+    /// <summary>
+    /// Moves a UI <paramref name="gameObject"/>'s x value from <paramref name="startPosition"/> to <paramref name="endPosition"/> in <paramref name="duration"/> seconds.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <param name="startPosition"></param>
+    /// <param name="endPosition"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
+    public static Tween<float> TweenAnchoredPositionX(GameObject gameObject, float startPosition, float endPosition, float duration)
+    {
+        RectTransform rectTransform = gameObject.transform.GetComponent<RectTransform>();
+        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_X";
+
+        Tween<float> tween = new Tween<float>(gameObject, identifier, startPosition, endPosition, duration, value =>
+        {
+            rectTransform.anchoredPosition = new Vector2(value, rectTransform.anchoredPosition.y);
+        });
+
+        return tween;
+    }
+
+    public static Tween<float> TweenAnchoredPositionX(RectTransform rectTransform, float startPosition, float endPosition, float duration)
+    {
+        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_X";
+
+        Tween<float> tween = new Tween<float>(rectTransform, identifier, startPosition, endPosition, duration, value =>
+        {
+            rectTransform.anchoredPosition = new Vector2(value, rectTransform.anchoredPosition.y);
         });
 
         return tween;

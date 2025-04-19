@@ -5,6 +5,7 @@ public class Tween<T> : ITween
 {
     private T startValue;
     private T endValue;
+    private T currentValue;
     private float duration;
     private Action<T> onTweenUpdate;
     private float elapsedTime;
@@ -14,6 +15,7 @@ public class Tween<T> : ITween
     private bool pingPong = false;
     private int loopCount = 1;
     private float percentThreshold = -1f;
+    private bool forceComplete = false;
 
     private Action onUpdate;
     private Action onPercentCompleted;
@@ -71,10 +73,18 @@ public class Tween<T> : ITween
                 float t = elapsedTime / duration;
                 float easedT = Ease(easeType, t);
 
-                T currentValue;
-
                 if (reverse) currentValue = Interpolate(endValue, startValue, easedT);
                 else currentValue = Interpolate(startValue, endValue, easedT);
+
+                if (forceComplete)
+                {
+                    if (loopCount % 2 == 0) currentValue = startValue;
+                    else currentValue = endValue;
+                    if (loopCount < 0) currentValue = reverse ? startValue : endValue;
+                    elapsedTime = duration;
+                    loopsCompleted = loopCount - 1;
+                    loopCount = 1;
+                }
 
                 onUpdate?.Invoke();
                 onTweenUpdate?.Invoke(currentValue);
@@ -136,17 +146,17 @@ public class Tween<T> : ITween
     /// <returns></returns>
     public bool IsTargetDestroyed()
     {
-        if(Target is MonoBehaviour monoB && monoB == null)
+        if (Target is MonoBehaviour monoB && monoB == null)
         {
             return true;
         }
 
-        if(Target is GameObject gameObj && gameObj == null)
+        if (Target is GameObject gameObj && gameObj == null)
         {
             return true;
         }
-        
-        if(Target is Delegate del && del == null)
+
+        if (Target is Delegate del && del == null)
         {
             return true;
         }
@@ -271,6 +281,16 @@ public class Tween<T> : ITween
     public Tween<T> SetStartDelay(float delayTime)
     {
         DelayTime = delayTime;
+        return this;
+    }
+
+    /// <summary>
+    /// Completes the tween.
+    /// </summary>
+    /// <returns></returns>
+    public Tween<T> CompleteTween()
+    {
+        forceComplete = true;
         return this;
     }
 

@@ -9,6 +9,7 @@ public class Actor : MonoBehaviour
     public bool isMoving { get; private set; }
     public string positionString { get; private set; }
     public RectTransform positionTransform { get; private set; }
+    private Tween<Vector3> moveTween = null;
     
     public void CreateActor(string name, Image portrait, RectTransform positionTransform)
     {
@@ -17,28 +18,19 @@ public class Actor : MonoBehaviour
         this.positionTransform = positionTransform;
     }
 
-    public IEnumerator MoveTo(Vector3 destinationPos, float timeToComplete)
+    public void MoveTo(Vector3 destinationPos, float timeToComplete)
     {
         isMoving = true;
 
         Vector3 startPos = positionTransform.anchoredPosition;
-        float timeElapsed = 0f;
-        while (timeElapsed <= timeToComplete)
-        {
-            if (DialogueManager.instance.nextIsPressed) // immediately puts actor to target position
-            {
-                positionTransform.anchoredPosition = destinationPos;
-                break;
-            }
-            positionTransform.anchoredPosition =
-                Vector3.Lerp(startPos, destinationPos, timeElapsed / timeToComplete);
+        moveTween = TweenManager.TweenAnchoredPosition(positionTransform, startPos, 
+            destinationPos, timeToComplete).SetOnComplete(() => isMoving = false)
+            .SetOnUpdate(CheckIfNextIsPressed);
+    }
 
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        positionTransform.anchoredPosition = destinationPos;
-
-        isMoving = false;
+    public void CheckIfNextIsPressed()
+    {
+        if(DialogueManager.instance.nextIsPressed) moveTween.CompleteTween();
     }
 
     public void SetFacingDirection(string direction)
@@ -71,7 +63,7 @@ public class Actor : MonoBehaviour
 
     public IEnumerator Bounce()
     {
-        yield return null;
+        yield return new WaitWhile(() => positionString == null);
         Vector3 startPos = positionTransform.anchoredPosition;
         Vector3 endPos = new Vector3(startPos.x, startPos.y + 30, startPos.z);
         TweenManager.TweenAnchoredPosition(positionTransform, startPos,

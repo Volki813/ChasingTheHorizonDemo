@@ -92,7 +92,7 @@ public class ActorManager : MonoBehaviour
         // place additional actors to the left if left, otherwise to the right
         Vector3 newPos = CalculateNewPos(positionString, positionInList, destination);
 
-        StartCoroutine(actor.MoveTo(newPos, timeToComplete));
+        actor.MoveTo(newPos, timeToComplete);
     }
 
     private Vector3 CalculateNewPos(string positionString, int positionInList, Vector3 destination)
