@@ -6,38 +6,37 @@ using UnityEngine.UI;
 public class Actor : MonoBehaviour
 {
     public Image portrait { get; private set; }
-    public Animator animator { get; private set; }
     public bool isMoving { get; private set; }
-    public string position { get; private set; }
+    public string positionString { get; private set; }
+    public RectTransform positionTransform { get; private set; }
     
-    public void CreateActor(string name, Image portrait, Animator animator, RuntimeAnimatorController animatorController)
+    public void CreateActor(string name, Image portrait, RectTransform positionTransform)
     {
         this.name = name;
         this.portrait = portrait;
-        this.animator = animator;
-        animator.runtimeAnimatorController = animatorController;
+        this.positionTransform = positionTransform;
     }
 
     public IEnumerator MoveTo(Vector3 destinationPos, float timeToComplete)
     {
         isMoving = true;
 
-        Vector3 startPos = transform.parent.position;
+        Vector3 startPos = positionTransform.anchoredPosition;
         float timeElapsed = 0f;
         while (timeElapsed <= timeToComplete)
         {
             if (DialogueManager.instance.nextIsPressed) // immediately puts actor to target position
             {
-                transform.parent.position = destinationPos;
+                positionTransform.anchoredPosition = destinationPos;
                 break;
             }
-            transform.parent.position =
+            positionTransform.anchoredPosition =
                 Vector3.Lerp(startPos, destinationPos, timeElapsed / timeToComplete);
 
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        transform.parent.position = destinationPos;
+        positionTransform.anchoredPosition = destinationPos;
 
         isMoving = false;
     }
@@ -58,15 +57,24 @@ public class Actor : MonoBehaviour
         }
     }
 
-    public void SetPortrait(string portraitPath, string portraitName, Actor actor)
+    public void SetPortrait(string portraitPath, string portraitName)
     {
-        actor.portrait.sprite = Resources.Load<Sprite>(portraitPath + actor.name + "/" + portraitName);
-        actor.portrait.SetNativeSize();
-        actor.portrait.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        portrait.sprite = Resources.Load<Sprite>(portraitPath + name + "/" + portraitName);
+        portrait.SetNativeSize();
+        portrait.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
-    public void SetPosition(string position)
+    public void SetPositionString(string positionString)
     {
-        this.position = position;
+        this.positionString = positionString;
+    }
+
+    public IEnumerator Bounce()
+    {
+        yield return null;
+        Vector3 startPos = positionTransform.anchoredPosition;
+        Vector3 endPos = new Vector3(startPos.x, startPos.y + 30, startPos.z);
+        TweenManager.TweenAnchoredPosition(positionTransform, startPos,
+            endPos, 0.1f).SetPingPong(2).SetEase(EaseType.ExpoEaseOut);
     }
 }

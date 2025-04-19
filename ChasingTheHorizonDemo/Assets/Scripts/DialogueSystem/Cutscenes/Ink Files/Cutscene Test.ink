@@ -118,7 +118,6 @@ HELL YEAH
 Based and trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 ~ CurrentSpeaker("start", "roland")
-~ FaceDestination("start", "simon", "near left")
 ~ MoveActor("start", "simon", "near left", 1.0)
 ~ MoveActor("start", "roland", "center right", 3.0)
 Very true

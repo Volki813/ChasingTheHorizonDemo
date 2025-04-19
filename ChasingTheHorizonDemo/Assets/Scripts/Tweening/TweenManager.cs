@@ -107,6 +107,39 @@ public class TweenManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Moves a UI <paramref name="gameObject"/> from <paramref name="startPosition"/> to <paramref name="endPosition"/> in <paramref name="duration"/> seconds.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <param name="startPosition"></param>
+    /// <param name="endPosition"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
+    public static Tween<Vector3> TweenAnchoredPosition(GameObject gameObject, Vector3 startPosition, Vector3 endPosition, float duration)
+    {
+        RectTransform rectTransform = gameObject.transform.GetComponent<RectTransform>();
+        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position";
+
+        Tween<Vector3> tween = new Tween<Vector3>(gameObject, identifier, startPosition, endPosition, duration, value =>
+        {
+            rectTransform.anchoredPosition = value;
+        });
+
+        return tween;
+    }
+
+    public static Tween<Vector3> TweenAnchoredPosition(RectTransform rectTransform, Vector3 startPosition, Vector3 endPosition, float duration)
+    {
+        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position";
+
+        Tween<Vector3> tween = new Tween<Vector3>(rectTransform, identifier, startPosition, endPosition, duration, value =>
+        {
+            rectTransform.anchoredPosition = value;
+        });
+
+        return tween;
+    }
+
+    /// <summary>
     /// Interpolates <paramref name="startAlpha"/> of a sprite to <paramref name="endAlpha"/> in <paramref name="duration"/> seconds.
     /// </summary>
     /// <param name="gameObject"></param>

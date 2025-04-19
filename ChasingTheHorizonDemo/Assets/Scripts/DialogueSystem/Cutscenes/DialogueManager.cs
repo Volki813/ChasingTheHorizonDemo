@@ -16,10 +16,10 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialogueHolder = null;
-    [SerializeField] private GameObject positionHolder = null;
     [SerializeField] private GameObject continueIcon = null;
     [SerializeField] private TextMeshProUGUI dialogueText = null;
     [SerializeField] private TextMeshProUGUI speakerText = null;
+    [SerializeField] private SerializableDictionary<string, Vector3> positions = null;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices = null;
@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour
             index++;
         }
 
-        // set default fons sizes
+        // set default font sizes
         dialogueText.fontSize = defaultDialogueFontSize;
         speakerText.fontSize = defaultSpeakerFontSize;
     }
@@ -106,6 +106,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Call this to start a cutscene with the passed in JSON file.
+    /// </summary>
+    /// <param name="inkJSON"></param>
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
@@ -244,7 +248,10 @@ public class DialogueManager : MonoBehaviour
             Action action = () =>
             {
                 currentActor = ActorManager.instance.GetActorByName(actorName);
-                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); // substring(1) basically removes the first letter of a string, so this way the first letter doesn't have to be written in uppercase but will still show up as such
+                
+                // substring(1) basically removes the first letter of a string,
+                // so this way the first letter doesn't have to be written in uppercase but will still show up as such
+                speakerText.text = String.Concat(currentActor.name[0].ToString().ToUpper(), currentActor.name.Substring(1)); 
             };
 
             CheckTiming(timing, action);
@@ -255,7 +262,7 @@ public class DialogueManager : MonoBehaviour
             Action action = () =>
             {
                 Actor actor = ActorManager.instance.GetActorByName(actorName);
-                actor.SetPortrait(PORTRAIT_PATH, portrait, actor);
+                actor.SetPortrait(PORTRAIT_PATH, portrait);
             };
 
             CheckTiming(timing, action);
@@ -267,7 +274,11 @@ public class DialogueManager : MonoBehaviour
             {
                 Actor actor = ActorManager.instance.GetActorByName(actorName);
                 actor.SetFacingDirection(direction);
-                if (withBounce) actor.animator.SetTrigger("Bounce");
+
+                if (withBounce)
+                {
+                    StartCoroutine(actor.Bounce());
+                }
             };
 
             CheckTiming(timing, action);
@@ -329,9 +340,9 @@ public class DialogueManager : MonoBehaviour
                 {
                     Actor actor = ActorManager.instance.GetActorByName(actorName);
                     actor.gameObject.SetActive(true);
-                    GameObject positionToPlaceIn = positionHolder.transform.Find(position).gameObject;
+                    Vector3 positionToPlaceIn = positions[position];
 
-                    StartCoroutine(ActorManager.instance.PlaceActorAtPosition(actor, position, positionToPlaceIn.transform.position));
+                    StartCoroutine(ActorManager.instance.PlaceActorAtPosition(actor, position, positionToPlaceIn));
                 }
                 catch (Exception e)
                 {
@@ -351,37 +362,9 @@ public class DialogueManager : MonoBehaviour
                 try
                 {
                     Actor actor = ActorManager.instance.GetActorByName(actorName);
-                    Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
+                    Vector3 destinationPos = positions[destination];
 
-                    StartCoroutine(ActorManager.instance.MoveActorToPosition(actor, destination, destinationPos.position, 
-                        timeToComplete));
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("destination has to be 'far left', 'near left', 'center left', 'center right', " +
-                                            "'near right' or 'far right");
-                }
-            };
-
-            CheckTiming(timing, action);
-        });
-
-        currentStory.BindExternalFunction("FaceDestination", (string timing, string actorName, string destination) =>
-        {
-            Action action = () =>
-            {
-                try
-                {
-                    Actor actor = ActorManager.instance.GetActorByName(actorName);
-                    Transform destinationPos = positionHolder.transform.Find(destination).gameObject.transform;
-
-                    Vector3 pathToDesination = destinationPos.position - actor.transform.parent.position;
-                    float angleToDestination = Mathf.DeltaAngle(destinationPos.localRotation.eulerAngles.z,
-                        Mathf.Atan2(pathToDesination.y, pathToDesination.x) * Mathf.Rad2Deg - 90);
-                    // angleToDestination is negative if destination is to the right, otherwise positive
-
-                    if (Mathf.Sign(angleToDestination) < 0) actor.SetFacingDirection("right");
-                    else if (Mathf.Sign(angleToDestination) > 0) actor.SetFacingDirection("left");
+                    StartCoroutine(ActorManager.instance.MoveActorToPosition(actor, destination, destinationPos, timeToComplete));
                 }
                 catch (Exception e)
                 {
@@ -422,8 +405,6 @@ public class DialogueManager : MonoBehaviour
         currentStory.UnbindExternalFunction("PlaceActor");
 
         currentStory.UnbindExternalFunction("MoveActor");
-
-        currentStory.UnbindExternalFunction("FaceDestination");
 
         currentStory.UnbindExternalFunction("RemoveActor");
     }

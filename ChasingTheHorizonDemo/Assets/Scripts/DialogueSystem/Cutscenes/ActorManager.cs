@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +12,6 @@ public class ActorManager : MonoBehaviour
     public Dictionary<string, List<Actor>> actorsPosition = new Dictionary<string, List<Actor>>(); // list of actors because one pos can hold more actors
 
     [SerializeField] private GameObject actorHolder = null;
-    [SerializeField] private AnimatorController animatorController = null;
     [SerializeField] private int samePositionActorDistance = 50;
 
     public void Awake()
@@ -33,9 +32,9 @@ public class ActorManager : MonoBehaviour
 
             Actor actor = actorObject.AddComponent<Actor>();
             Image image = actorObject.AddComponent<Image>();
-            Animator animator = actorObject.AddComponent<Animator>();
+            RectTransform rectTransform = actorPositionObject.AddComponent<RectTransform>();
 
-            actor.CreateActor(characterName, image, animator, animatorController);
+            actor.CreateActor(characterName, image, rectTransform);
 
             actorsDictionary[characterName] = actor;
 
@@ -46,7 +45,7 @@ public class ActorManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlaceActorAtPosition(Actor actor, string position, Vector3 destination)
+    public IEnumerator PlaceActorAtPosition(Actor actor, string positionString, Vector3 destination)
     {
         RemoveActorFromPreviousPositionList(actor);
 
@@ -56,22 +55,22 @@ public class ActorManager : MonoBehaviour
 
         actor.gameObject.SetActive(true);
 
-        AddActorToPositionList(actor, position);
+        AddActorToPositionList(actor, positionString);
 
-        List<Actor> actorList = GetActorsAtPosition(position);
+        List<Actor> actorList = GetActorsAtPosition(positionString);
 
         int positionInList = GetPositionInList(actorList, actor);
 
         // arranges the images so the first one in the list has the highest priority
-        actor.transform.parent.SetSiblingIndex(actorList.Count - 1 - positionInList);
+        actor.positionTransform.SetSiblingIndex(actorList.Count - 1 - positionInList);
 
         // place additional actors to the left if left, otherwise to the right
-        Vector3 newPos = CalculateNewPos(position, positionInList, destination);
+        Vector3 newPos = CalculateNewPos(positionString, positionInList, destination);
 
-        actor.transform.parent.position = newPos;
+        actor.positionTransform.anchoredPosition = newPos;
     }
 
-    public IEnumerator MoveActorToPosition(Actor actor, string position, Vector3 destination, float timeToComplete)
+    public IEnumerator MoveActorToPosition(Actor actor, string positionString, Vector3 destination, float timeToComplete)
     {
         RemoveActorFromPreviousPositionList(actor);
 
@@ -81,9 +80,9 @@ public class ActorManager : MonoBehaviour
 
         actor.gameObject.SetActive(true);
 
-        AddActorToPositionList(actor, position);
+        AddActorToPositionList(actor, positionString);
 
-        List<Actor> actorList = GetActorsAtPosition(position);
+        List<Actor> actorList = GetActorsAtPosition(positionString);
 
         int positionInList = GetPositionInList(actorList, actor);
 
@@ -91,18 +90,18 @@ public class ActorManager : MonoBehaviour
         actor.transform.parent.SetSiblingIndex(actorList.Count - 1 - positionInList);
 
         // place additional actors to the left if left, otherwise to the right
-        Vector3 newPos = CalculateNewPos(position, positionInList, destination);
+        Vector3 newPos = CalculateNewPos(positionString, positionInList, destination);
 
         StartCoroutine(actor.MoveTo(newPos, timeToComplete));
     }
 
-    private Vector3 CalculateNewPos(string position, int positionInList, Vector3 destination)
+    private Vector3 CalculateNewPos(string positionString, int positionInList, Vector3 destination)
     {
         Vector3 newPos = new Vector3();
 
-        if (position == "far left" || position == "near left" || position == "center left")
+        if (positionString == "far left" || positionString == "near left" || positionString == "center left")
             newPos = new Vector3(destination.x - (samePositionActorDistance * positionInList), destination.y, destination.z);
-        else if (position == "far right" || position == "near right" || position == "center right")
+        else if (positionString == "far right" || positionString == "near right" || positionString == "center right")
             newPos = new Vector3(destination.x + (samePositionActorDistance * positionInList), destination.y, destination.z);
         // there's probably a smarter way to do this but I'm tired boss
 
@@ -130,15 +129,15 @@ public class ActorManager : MonoBehaviour
         return actorsAreNotMoving;
     }
 
-    private List<Actor> GetActorsAtPosition(string position)
+    private List<Actor> GetActorsAtPosition(string positionString)
     {
         List<Actor> actorsList = new List<Actor>();
 
-        if (!actorsPosition.ContainsKey(position))
+        if (!actorsPosition.ContainsKey(positionString))
         {
-            actorsPosition[position] = actorsList;
+            actorsPosition[positionString] = actorsList;
         }
-        if (actorsPosition.TryGetValue(position, out List<Actor> actors))
+        if (actorsPosition.TryGetValue(positionString, out List<Actor> actors))
         {
             actorsList = actors;
         }
@@ -148,25 +147,25 @@ public class ActorManager : MonoBehaviour
 
     private void RemoveActorFromPreviousPositionList(Actor actor)
     {
-        if (actor.position == null) return; // return if actor has no position yet
+        if (actor.positionString == null) return; // return if actor has no position yet
 
-        if (!actorsPosition.ContainsKey(actor.position)) // initialize new lists for key that don't exist yet
+        if (!actorsPosition.ContainsKey(actor.positionString)) // initialize new lists for key that don't exist yet
         {
-            actorsPosition[actor.position] = new List<Actor>();
+            actorsPosition[actor.positionString] = new List<Actor>();
         }
 
-        actorsPosition[actor.position].Remove(actor);
+        actorsPosition[actor.positionString].Remove(actor);
     }
 
-    private void AddActorToPositionList(Actor actor, string position)
+    private void AddActorToPositionList(Actor actor, string positionString)
     {
-        actor.SetPosition(position);
+        actor.SetPositionString(positionString);
 
-        if (!actorsPosition.ContainsKey(actor.position)) // initialize new lists for key that don't exist yet
+        if (!actorsPosition.ContainsKey(actor.positionString)) // initialize new lists for key that don't exist yet
         {
-            actorsPosition[actor.position] = new List<Actor>();
+            actorsPosition[actor.positionString] = new List<Actor>();
         }
 
-        actorsPosition[actor.position].Add(actor);
+        actorsPosition[actor.positionString].Add(actor);
     }
 }
