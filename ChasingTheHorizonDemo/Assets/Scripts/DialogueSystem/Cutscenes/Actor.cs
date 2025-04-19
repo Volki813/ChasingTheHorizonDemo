@@ -69,4 +69,10 @@ public class Actor : MonoBehaviour
         TweenManager.TweenAnchoredPosition(positionTransform, startPos,
             endPos, 0.1f).SetPingPong(2).SetEase(EaseType.ExpoEaseOut);
     }
+
+    public void FadeAway(float timeToComplete)
+    {
+        TweenManager.TweenImageAlpha(portrait, 1, 0, timeToComplete)
+            .SetEase(EaseType.BounceEaseIn);
+    }
 }

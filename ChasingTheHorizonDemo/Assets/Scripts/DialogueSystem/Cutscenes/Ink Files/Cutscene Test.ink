@@ -26,8 +26,8 @@ Should Alan Forte hop on Atelier Ayesha?
 ~ SetPortrait("start", "roland", "roland_neutral")
 ~ SetFacingDirection("start", "roland", "left", false)
 ~ MoveActor("start", "roland", "near left", 0.5)
-~ MoveActor("end", "roland", "center left", 1.0)
 ~ SetFacingDirection("end", "roland", "right", true)
+~ FadeActor("end", "roland", 3)
 Test external functions? 
     + [Yeah]
         -> chosen("Yeahh")

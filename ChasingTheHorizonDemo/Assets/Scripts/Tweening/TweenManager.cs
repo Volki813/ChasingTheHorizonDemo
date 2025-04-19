@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class TweenManager : MonoBehaviour
 {
@@ -121,7 +122,7 @@ public class TweenManager : MonoBehaviour
     public static Tween<Vector3> TweenAnchoredPosition(GameObject gameObject, Vector3 startPosition, Vector3 endPosition, float duration)
     {
         RectTransform rectTransform = gameObject.transform.GetComponent<RectTransform>();
-        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position";
+        string identifier = $"{rectTransform.GetInstanceID()}_Position";
 
         Tween<Vector3> tween = new Tween<Vector3>(gameObject, identifier, startPosition, endPosition, duration, value =>
         {
@@ -133,7 +134,7 @@ public class TweenManager : MonoBehaviour
 
     public static Tween<Vector3> TweenAnchoredPosition(RectTransform rectTransform, Vector3 startPosition, Vector3 endPosition, float duration)
     {
-        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position";
+        string identifier = $"{rectTransform.GetInstanceID()}_Position";
 
         Tween<Vector3> tween = new Tween<Vector3>(rectTransform, identifier, startPosition, endPosition, duration, value =>
         {
@@ -154,7 +155,7 @@ public class TweenManager : MonoBehaviour
     public static Tween<float> TweenAnchoredPositionY(GameObject gameObject, float startPosition, float endPosition, float duration)
     {
         RectTransform rectTransform = gameObject.transform.GetComponent<RectTransform>();
-        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_Y";
+        string identifier = $"{rectTransform.GetInstanceID()}_Position_Y";
 
         Tween<float> tween = new Tween<float>(gameObject, identifier, startPosition, endPosition, duration, value =>
         {
@@ -166,7 +167,7 @@ public class TweenManager : MonoBehaviour
 
     public static Tween<float> TweenAnchoredPositionY(RectTransform rectTransform, float startPosition, float endPosition, float duration)
     {
-        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_Y";
+        string identifier = $"{rectTransform.GetInstanceID()}_Position_Y";
 
         Tween<float> tween = new Tween<float>(rectTransform, identifier, startPosition, endPosition, duration, value =>
         {
@@ -187,7 +188,7 @@ public class TweenManager : MonoBehaviour
     public static Tween<float> TweenAnchoredPositionX(GameObject gameObject, float startPosition, float endPosition, float duration)
     {
         RectTransform rectTransform = gameObject.transform.GetComponent<RectTransform>();
-        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_X";
+        string identifier = $"{rectTransform.GetInstanceID()}_Position_X";
 
         Tween<float> tween = new Tween<float>(gameObject, identifier, startPosition, endPosition, duration, value =>
         {
@@ -199,7 +200,7 @@ public class TweenManager : MonoBehaviour
 
     public static Tween<float> TweenAnchoredPositionX(RectTransform rectTransform, float startPosition, float endPosition, float duration)
     {
-        string identifier = $"{rectTransform.GetInstanceID()}_Anchored_Position_X";
+        string identifier = $"{rectTransform.GetInstanceID()}_Position_X";
 
         Tween<float> tween = new Tween<float>(rectTransform, identifier, startPosition, endPosition, duration, value =>
         {
@@ -241,6 +242,43 @@ public class TweenManager : MonoBehaviour
             Color color = spriteRenderer.color;
             color.a = value;
             spriteRenderer.color = color;
+        });
+
+        return tween;
+    }
+
+    /// <summary>
+    /// Interpolates <paramref name="startAlpha"/> of an image to <paramref name="endAlpha"/> in <paramref name="duration"/> seconds.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <param name="startAlpha"></param>
+    /// <param name="endAlpha"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
+    public static Tween<float> TweenImageAlpha(GameObject gameObject, float startAlpha, float endAlpha, float duration)
+    {
+        Image image = gameObject.GetComponent<Image>();
+        string identifier = $"{image.GetInstanceID()}_Alpha";
+
+        Tween<float> tween = new Tween<float>(gameObject, identifier, startAlpha, endAlpha, duration, value =>
+        {
+            Color color = image.color;
+            color.a = value;
+            image.color = color;
+        });
+
+        return tween;
+    }
+
+    public static Tween<float> TweenImageAlpha(Image image, float startAlpha, float endAlpha, float duration)
+    {
+        string identifier = $"{image.GetInstanceID()}_Alpha";
+
+        Tween<float> tween = new Tween<float>(image, identifier, startAlpha, endAlpha, duration, value =>
+        {
+            Color color = image.color;
+            color.a = value;
+            image.color = color;
         });
 
         return tween;

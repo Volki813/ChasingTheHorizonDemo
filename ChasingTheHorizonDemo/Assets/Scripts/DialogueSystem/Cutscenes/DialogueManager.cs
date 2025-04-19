@@ -394,6 +394,18 @@ public class DialogueManager : MonoBehaviour
 
             CheckTiming(timing, action);
         });
+
+        currentStory.BindExternalFunction("FadeActor", (string timing, string actorName,
+            float timeToComplete) =>
+        {
+            Action action = () =>
+            {
+                Actor actor = ActorManager.instance.GetActorByName(actorName);
+                actor.FadeAway(timeToComplete);
+            };
+
+            CheckTiming(timing, action);
+        });
     }
 
     private void UnbindExternalFunctions()
