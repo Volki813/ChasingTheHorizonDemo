@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public class TweenManager : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class TweenManager : MonoBehaviour
 
             if (tween.IsComplete)
             {
-                if(tween.onComplete != null)
+                if (tween.onComplete != null)
                 {
                     tween.onComplete.Invoke();
                     tween.onComplete = null;
@@ -119,12 +120,12 @@ public class TweenManager : MonoBehaviour
     /// <param name="endPosition"></param>
     /// <param name="duration"></param>
     /// <returns></returns>
-    public static Tween<Vector3> TweenAnchoredPosition(GameObject gameObject, Vector3 startPosition, Vector3 endPosition, float duration)
+    public static Tween<Vector2> TweenAnchoredPosition(GameObject gameObject, Vector2 startPosition, Vector2 endPosition, float duration)
     {
         RectTransform rectTransform = gameObject.transform.GetComponent<RectTransform>();
         string identifier = $"{rectTransform.GetInstanceID()}_Position";
 
-        Tween<Vector3> tween = new Tween<Vector3>(gameObject, identifier, startPosition, endPosition, duration, value =>
+        Tween<Vector2> tween = new Tween<Vector2>(gameObject, identifier, startPosition, endPosition, duration, value =>
         {
             rectTransform.anchoredPosition = value;
         });
@@ -132,11 +133,11 @@ public class TweenManager : MonoBehaviour
         return tween;
     }
 
-    public static Tween<Vector3> TweenAnchoredPosition(RectTransform rectTransform, Vector3 startPosition, Vector3 endPosition, float duration)
+    public static Tween<Vector2> TweenAnchoredPosition(RectTransform rectTransform, Vector2 startPosition, Vector2 endPosition, float duration)
     {
         string identifier = $"{rectTransform.GetInstanceID()}_Position";
 
-        Tween<Vector3> tween = new Tween<Vector3>(rectTransform, identifier, startPosition, endPosition, duration, value =>
+        Tween<Vector2> tween = new Tween<Vector2>(rectTransform, identifier, startPosition, endPosition, duration, value =>
         {
             rectTransform.anchoredPosition = value;
         });
@@ -279,6 +280,43 @@ public class TweenManager : MonoBehaviour
             Color color = image.color;
             color.a = value;
             image.color = color;
+        });
+
+        return tween;
+    }
+
+    /// <summary>
+    /// Interpolates <paramref name="startAlpha"/> of a text to <paramref name="endAlpha"/> in <paramref name="duration"/> seconds.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <param name="startAlpha"></param>
+    /// <param name="endAlpha"></param>
+    /// <param name="duration"></param>
+    /// <returns></returns>
+    public static Tween<float> TweenTextAlpha(GameObject gameObject, float startAlpha, float endAlpha, float duration)
+    {
+        Text text = gameObject.GetComponent<Text>();
+        string identifier = $"{text.GetInstanceID()}_Alpha";
+
+        Tween<float> tween = new Tween<float>(gameObject, identifier, startAlpha, endAlpha, duration, value =>
+        {
+            Color color = text.color;
+            color.a = value;
+            text.color = color;
+        });
+
+        return tween;
+    }
+
+    public static Tween<float> TweenTextAlpha(Text text, float startAlpha, float endAlpha, float duration)
+    {
+        string identifier = $"{text.GetInstanceID()}_Alpha";
+
+        Tween<float> tween = new Tween<float>(text, identifier, startAlpha, endAlpha, duration, value =>
+        {
+            Color color = text.color;
+            color.a = value;
+            text.color = color;
         });
 
         return tween;

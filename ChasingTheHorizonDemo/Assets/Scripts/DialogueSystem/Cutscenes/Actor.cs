@@ -9,7 +9,7 @@ public class Actor : MonoBehaviour
     public bool isMoving { get; private set; }
     public string positionString { get; private set; }
     public RectTransform positionTransform { get; private set; }
-    private Tween<Vector3> moveTween = null;
+    private Tween<Vector2> moveTween = null;
     
     public void CreateActor(string name, Image portrait, RectTransform positionTransform)
     {
@@ -18,11 +18,11 @@ public class Actor : MonoBehaviour
         this.positionTransform = positionTransform;
     }
 
-    public void MoveTo(Vector3 destinationPos, float timeToComplete)
+    public void MoveTo(Vector2 destinationPos, float timeToComplete)
     {
         isMoving = true;
 
-        Vector3 startPos = positionTransform.anchoredPosition;
+        Vector2 startPos = positionTransform.anchoredPosition;
         moveTween = TweenManager.TweenAnchoredPosition(positionTransform, startPos, 
             destinationPos, timeToComplete).SetOnComplete(() => isMoving = false)
             .SetOnUpdate(CheckIfNextIsPressed);

@@ -99,14 +99,17 @@ public class Tween<T> : ITween
                 {
                     loopsCompleted++;
                     elapsedTime = 0;
-
-                    if (pingPong) reverse = !reverse;
-
+                    
                     // loopCount defaults to 1 so this will be called even if you don't set ping pongs.
                     if (loopCount > 0 && loopsCompleted >= loopCount)
                     {
+                        // correct values to match exactly the desired value
+                        currentValue = reverse ? startValue : endValue;
+                        onTweenUpdate?.Invoke(currentValue);
                         OnCompleteKill();
                     }
+
+                    if (pingPong) reverse = !reverse;
                 }
             }
         }

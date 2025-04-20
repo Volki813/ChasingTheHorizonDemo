@@ -9,11 +9,13 @@ using System.Collections;
 //Eventually there will be an option to load a save or start a new game
 public class StartManager : MonoBehaviour
 {
-    [SerializeField] private Animator animator = null;
+    [SerializeField] private Text[] titleTexts = null;
+    [SerializeField] private Button playButton = null;
+    [SerializeField] private Button optionsButton = null;
+    [SerializeField] private Button quitButton = null;
 
     [SerializeField] private GameObject volumeButton = null;
 
-    [SerializeField] private Button startButton = null;
     [SerializeField] private GameObject optionsMenu = null;
     [SerializeField] private GameObject allButtons = null;
 
@@ -28,19 +30,29 @@ public class StartManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(HighlightButton(startButton.gameObject));
+        foreach (Text titleText in titleTexts) TweenManager.TweenTextAlpha(titleText, 0, 1, 0.5f).SetEase(EaseType.ExpoEaseOut);
+        TweenManager.TweenAnchoredPositionX(playButton.gameObject, -10.54f, -5.3f, 0.25f).SetStartDelay(0.5f).SetEase(EaseType.ExpoEaseIn);
+        TweenManager.TweenAnchoredPositionX(optionsButton.gameObject, -10.54f, -5.3f, 0.5f).SetStartDelay(0.5f).SetEase(EaseType.ExpoEaseIn);
+        TweenManager.TweenAnchoredPositionX(quitButton.gameObject, -10.54f, -5.3f, 0.75f).SetStartDelay(0.5f).SetEase(EaseType.ExpoEaseIn)
+            .SetOnComplete(() =>
+            {
+                playButton.interactable = true;
+                optionsButton.interactable = true;
+                quitButton.interactable = true;
+                EventSystem.current.SetSelectedGameObject(playButton.gameObject);
+            });
     }
 
     private void Update()
-    {        
-        if(EventSystem.current.currentSelectedGameObject == null)
+    {
+        if (EventSystem.current.currentSelectedGameObject == null)
         {
-            EventSystem.current.SetSelectedGameObject(startButton.gameObject);
+            EventSystem.current.SetSelectedGameObject(playButton.gameObject);
         }
 
-        if(optionsMenu.activeSelf)
+        if (optionsMenu.activeSelf)
         {
-            musicVolume.volume = musicSlider.value;            
+            musicVolume.volume = musicSlider.value;
             sfxVolume.volume = sfxSlider.value;
         }
     }
@@ -48,18 +60,28 @@ public class StartManager : MonoBehaviour
     //BUTTONS
     public void Play()
     {
-        normalMode.SetActive(true);
-        hardMode.SetActive(true);
-        StartCoroutine(Highlight(normalMode));
+        if (!normalMode.activeSelf)
+        {
+            normalMode.SetActive(true);
+            hardMode.SetActive(true);
+            StartCoroutine(Highlight(normalMode));
+        }
+        else
+        {
+            normalMode.SetActive(false);
+            hardMode.SetActive(false);
+        }
     }
     public void Options()
     {
-        if(!optionsMenu.activeSelf){
+        if (!optionsMenu.activeSelf)
+        {
             optionsMenu.SetActive(true);
             SetupOptions();
-            StartCoroutine(HighlightButton(volumeButton));
+            StartCoroutine(Highlight(volumeButton));
         }
-        else{
+        else
+        {
             optionsMenu.SetActive(false);
         }
     }
@@ -91,14 +113,6 @@ public class StartManager : MonoBehaviour
         Screen.fullScreen = isFullscreen;
     }
 
-    private IEnumerator HighlightButton(GameObject button)
-    {
-        animator.SetTrigger("Enter");
-
-        EventSystem.current.SetSelectedGameObject(null);
-        yield return new WaitForSeconds(0.05f);
-        EventSystem.current.SetSelectedGameObject(button);
-    }
     private IEnumerator Highlight(GameObject button)
     {
         EventSystem.current.SetSelectedGameObject(null);
