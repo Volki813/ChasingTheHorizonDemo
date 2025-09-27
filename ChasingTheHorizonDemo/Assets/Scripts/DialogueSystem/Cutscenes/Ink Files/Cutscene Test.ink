@@ -10,6 +10,70 @@ INCLUDE Actor Variables.ink
 ~ PlaceActor("start", "roland", "far left")
 ~ SetPortrait("start", "roland", "roland_smiling")
 ~ SetFacingDirection("start", "roland", "right", false)
+Bluesky starts banning child porn and rape porn.
+    + [make this about trans people for some reason.]
+        -> manchild
+    + [gas]
+        -> good
+    + [porn is misogyny]
+        -> misogyny
+
+=== manchild ===
+~ SetPortrait("start", "roland", "roland_tense")
+How dare they do this! What did trans people do to them?
+
+~ CurrentSpeaker("start", "simon")
+~ PlaceActor("start", "simon", "near right")
+~ SetPortrait("start", "simon", "simon_neutral")
+~ SetFacingDirection("start", "simon", "left", false)
+What is even the correlation?
+
+~ CurrentSpeaker("start", "roland")
+Rape and pedophilia are part of trans culture, obviously.
+
+~ CurrentSpeaker("start", "simon")
+So what you are saying is conservatives have a point about the lgbtq community being filled with sexual predators.
+
+~ CurrentSpeaker("start", "roland")
+Have you no empathy? Trans people's rights are being stripped away and here you are malicious ship of theseus my argument?
+
+~ CurrentSpeaker("start", "simon")
+The rules are explicitly about rape scenes. You making this about trans people says more about you than it does about me.
+
+~ CurrentSpeaker("start", "roland")
+Stop painting me like a super villain.
+
+~ CurrentSpeaker("start", "simon")
+...
+I'm asexual by the wa-
+
+~CurrentSpeaker("start", "roland")
+~SetPortrait("start", "roland", "roland_angry")
+<b><color=\#ff0000ff>YOU FASCIST PURITAN</color></b>
+->END
+
+=== good ===
+That's fire! One step closer to getting rid of the constant dehumanization of oppressed classes is awesome and bluesky seems like the kind of place that won't misuse this rule.
+-> END
+
+
+=== misogyny ===
+~SetPortrait("start", "roland", "roland_tense")
+Porn is literally filmed rape. Most actors are coerced or groomed into thinking it's their only choice or that it's normal.
+Thus, they enter an industry that exploits them with no regard of their age, ethnicity, mental health, etc. whatsoever.
+14 year olds get kidnapped, gang-raped and filmed and then that gets uploaded to the biggest porn site for billions to see. Guess what they did when the vicitm found out about it and wanted it removed?
+Exactly. Fucking nothing because m*n are a parasitic utterly useless stain in society and hold us back in our development.
+"It's empowering." Brother do you think slavery was empowering too? Literally bodies are the main attraction of the market in both cases.
+There are multiple studies about how women let men do things to them during sex that they find uncomfortable but don't resist because they think that is normal and how it's supposed to be.
+Not only that, but the dehumanizing acts in porn are so badly normalized that the m*n themselves don't even realize you aren't supposed to hurt your partner during sex and that it is meant to be a pleasant act.
+Multiple studies also confirm that most slaves (slave referring to sex worker as sex work is just slavery) in this industry suffer from depression, ptsd, addictions, anxiety disorders, etc.
+We need to criminalize people who purchase these slaves as well as the pimps.
+->END
+
+~ CurrentSpeaker("start", "roland")
+~ PlaceActor("start", "roland", "far left")
+~ SetPortrait("start", "roland", "roland_smiling")
+~ SetFacingDirection("start", "roland", "right", false)
 ~ PlaySound("end", "SFX Boomy")
 ~ PlayMusic("start", "At Home")
 ~ EditFontSize("end", 20, "speaker")

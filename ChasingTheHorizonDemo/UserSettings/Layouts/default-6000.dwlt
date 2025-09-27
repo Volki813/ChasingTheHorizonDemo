@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 547
     height: 619
-  m_MinSize: {x: 201, y: 226}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 75
+  controlID: 77
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -2446,10 +2446,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 13}
-      m_SelectedIDs: 
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 2ea80000
       m_LastClickedID: 0
-      m_ExpandedIDs: 6405ffff7c1dffff5a65ffff2e76ffff08f7ffffe8faffff24a50000e6a500003ca600008a0101004a020100a00201008e400100d2400100ee400100004101002c4a0100ec4a0100424b0100
+      m_ExpandedIDs: 0af4ffffe8faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2522,7 +2522,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts/DialogueSystem/Cutscenes/Portraits/Simon
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -2532,16 +2532,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts/DialogueSystem/Cutscenes/Portraits/Simon
   m_LastFoldersGridSize: 16
   m_LastProjectPath: A:\Github repos\ChasingTheHorizonDemo\ChasingTheHorizonDemo
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 92}
-    m_SelectedIDs: 76a40000
-    m_LastClickedID: 42102
-    m_ExpandedIDs: 00000000cca30000cea30000d0a30000d2a30000d4a30000d6a30000d8a30000daa3000066a400007aa4000000ca9a3b
+    scrollPos: {x: 0, y: 120}
+    m_SelectedIDs: 1ca80000
+    m_LastClickedID: 43036
+    m_ExpandedIDs: 00000000d0a30000d2a30000d4a30000d6a30000d8a30000daa30000dca30000dea30000b4a600000ea8000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2570,7 +2570,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 347effff
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000cca30000cea30000d0a30000d2a30000d4a30000d6a30000d8a30000daa30000
+    m_ExpandedIDs: 00000000d0a30000d2a30000d4a30000d6a30000d8a30000daa30000dca30000dea30000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2602,15 +2602,15 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000967b0000ac510000043d0000e84300005a3e0000f03e00000e3f0000a8400000ac400000a4400000fa400000f46b0000128b0000228b00004cbd000070be0000d88d0000e88d0000126b000072940100d09601000a1b0100489b00000e6c0000c6f90000366d0000207000007471000082a300006ea6000072a60000ccc30000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: TweeningTest
-      m_OriginalName: TweeningTest
+      m_Name: Ink Files
+      m_OriginalName: Ink Files
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 41968
+      m_UserData: 43020
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
